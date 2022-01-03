@@ -5,7 +5,7 @@ This is for my Portfolio!
 ### Hi there, I'm [TUSHAR BASAK][website] 👋
 
 [![Website](https://img.shields.io/website?label=Basak.com&style=for-the-badge&url=https%3A%2F%2Fcodestackr.com)](https://tushar0o7.github.io/website/)
-[![Twitter Follow](https://img.shields.io/twitter/follow/TUSHARBASAK5?color=%231DA1F2&label=FOLLOW%20%40TUSHARBASAK5&logo=TWITTER&style=for-the-badge)](https://twitter.com/intent/follow/TUSHARBASAK5)
+[![Twitter Follow](https://img.shields.io/twitter/follow/TUSHARBASAK5?color=%231DA1F2&label=FOLLOW%20%40TUSHARBASAK5&logo=TWITTER&style=for-the-badge)](https://twitter.com/intent/follow?original_referer=https%3A%2F%2Fgithub.com%2FTUSHARBASAK5&screen_name=TUSHARBASAK5)
 
 ## I'm a Developer, and Teacher!!
 
@@ -79,7 +79,7 @@ This is for my Portfolio!
 </details>
 
 [website]: https://tushar0o7.github.io/website/
-[twitter]: https://twitter.com/TUSHARBASAK5
+[twitter]: https://twitter.com/intent/follow?original_referer=https%3A%2F%2Fgithub.com%2FTUSHARBASAK5&screen_name=TUSHARBASAK5
 [youtube]: https://youtube.com/channel/UCAmpu78talgJudagNngZB3g
 [instagram]: https://instagram.com/tushar0o7
 [linkedin]: https://linkedin.com/in/tushar-basak-899b381b2/
