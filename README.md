@@ -13,15 +13,15 @@ This is for my Portfolio!
 - 🌱 I’m currently learning everything 🤣
 - 👯 I’m looking to collaborate with other learners.
 - 🥅 2022 Goals: Get Internship as Full Stack Developer!
-- ⚡ Fun fact: I'm a good bathroom singer! 🤣
+- ⚡ Fun fact: I can sing as well! 🤣
 
 ### Connect with me:
 
 [<img align="left" alt="My Portfolio" width="22px" src="https://raw.githubusercontent.com/iconic/open-iconic/master/svg/globe.svg" />][website]
-[<img align="left" alt="codeSTACKr | YouTube" width="22px" src="https://cdn.jsdelivr.net/npm/simple-icons@v3/icons/youtube.svg" />][youtube]
-[<img align="left" alt="codeSTACKr | Twitter" width="22px" src="https://cdn.jsdelivr.net/npm/simple-icons@v3/icons/twitter.svg" />][twitter]
-[<img align="left" alt="codeSTACKr | LinkedIn" width="22px" src="https://cdn.jsdelivr.net/npm/simple-icons@v3/icons/linkedin.svg" />][linkedin]
-[<img align="left" alt="codeSTACKr | Instagram" width="22px" src="https://cdn.jsdelivr.net/npm/simple-icons@v3/icons/instagram.svg" />][instagram]
+[<img align="left" alt="Basak's | YouTube" width="22px" src="https://cdn.jsdelivr.net/npm/simple-icons@v3/icons/youtube.svg" />][youtube]
+[<img align="left" alt="Basak's | Twitter" width="22px" src="https://cdn.jsdelivr.net/npm/simple-icons@v3/icons/twitter.svg" />][twitter]
+[<img align="left" alt="Basak's | LinkedIn" width="22px" src="https://cdn.jsdelivr.net/npm/simple-icons@v3/icons/linkedin.svg" />][linkedin]
+[<img align="left" alt="Basak's | Instagram" width="22px" src="https://cdn.jsdelivr.net/npm/simple-icons@v3/icons/instagram.svg" />][instagram]
 
 <br />
 
@@ -42,7 +42,6 @@ This is for my Portfolio!
 [<img align="left" alt="Terminal" width="26px" src="https://raw.githubusercontent.com/github/explore/80688e429a7d4ef2fca1e82350fe8e3517d3494d/topics/terminal/terminal.png" />]
 
 <br />
-<br />
 
 ---
 
@@ -61,7 +60,7 @@ This is for my Portfolio!
 
 <!-- BLOG-POST-LIST:START -->
 
-- [Not started writing now &lpar;ATS&rpar; &amp; It will be launched with my website only](https://tushar0o7.github.io/website/)
+- [Not started writing now &amp; It will be launched with my website only](https://tushar0o7.github.io/website/)
 <!-- BLOG-POST-LIST:END -->
 
 ➡️ [more blog posts...](https://tushar0o7.github.io/website/)
