@@ -1,6 +1,6 @@
 /* ============================== typing animation ============================ */
 let typed = new Typed(".typing", {
-  strings: ["Data Engineer", "BigData Engineer", "DataBase Administrator"],
+  strings: ["Data Scientist", "Data Analyst", "Data Engineer", "BigData Engineer", "DataBase Administrator"],
   startDelay: 300,
   typeSpeed: 100,
   backSpeed: 60,
