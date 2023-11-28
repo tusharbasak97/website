@@ -4,15 +4,15 @@ This is for my Portfolio!
 
 ### Hi there, I'm [TUSHAR BASAK][website] 👋
 
-[![Website](https://img.shields.io/website?label=Basak.com&style=for-the-badge&url=https%3A%2F%2Fcodestackr.com)](https://tushar0o7.github.io/website/)
-[![Twitter Follow](https://img.shields.io/twitter/follow/TUSHARBASAK5?color=%231DA1F2&label=FOLLOW%20%40TUSHARBASAK5&logo=TWITTER&style=for-the-badge)](https://twitter.com/intent/follow?original_referer=https%3A%2F%2Fgithub.com%2FTUSHARBASAK5&screen_name=TUSHARBASAK5)
+[![Website](https://img.shields.io/website?label=Basak.com&style=for-the-badge&url=https%3A%2F%2Fcodestackr.com)](https://tusharbasak97.github.io/website/)
+[![Twitter Follow](https://img.shields.io/twitter/follow/tusharbasak97?color=%231DA1F2&label=FOLLOW%20%40tusharbasak97&logo=TWITTER&style=for-the-badge)](https://twitter.com/intent/follow?original_referer=https%3A%2F%2Fgithub.com%2Ftusharbasak97&screen_name=tusharbasak97)
 
 ## I'm a Developer, and Teacher!!
 
-- 🔭 I'm currently working on MERN Stack!
+- 🔭 I'm currently working on Data Science Projects!
 - 🌱 I’m currently learning everything 🤣
 - 👯 I’m looking to collaborate with other learners.
-- 🥅 2022 Goals: Get Internship as Full Stack Developer!
+- 🥅 2022 Goals: Get Internship as Data Scientist!
 - ⚡ Fun fact: I can sing as well! 🤣
 
 ### Connect with me:
@@ -37,7 +37,8 @@ This is for my Portfolio!
 <img align="left" alt="SQL" width="26px" src="https://raw.githubusercontent.com/github/explore/80688e429a7d4ef2fca1e82350fe8e3517d3494d/topics/sql/sql.png" />
 <img align="left" alt="MySQL" width="26px" src="https://raw.githubusercontent.com/github/explore/80688e429a7d4ef2fca1e82350fe8e3517d3494d/topics/mysql/mysql.png" />
 <img align="left" alt="MongoDB" width="26px" src="https://raw.githubusercontent.com/github/explore/80688e429a7d4ef2fca1e82350fe8e3517d3494d/topics/mongodb/mongodb.png" />
-<img align="left" alt="Git" width="26px" src="https://raw.githubusercontent.com/github/explore/80688e429a7d4ef2fca1e82350fe8e3517d3494d/topics/git/git.png" />
+<
+img align="left" alt="Git" width="26px" src="https://raw.githubusercontent.com/github/explore/80688e429a7d4ef2fca1e82350fe8e3517d3494d/topics/git/git.png" />
 <img align="left" alt="GitHub" width="26px" src="https://raw.githubusercontent.com/github/explore/78df643247d429f6cc873026c0622819ad797942/topics/github/github.png" />
 <img align="left" alt="Terminal" width="26px" src="https://raw.githubusercontent.com/github/explore/80688e429a7d4ef2fca1e82350fe8e3517d3494d/topics/terminal/terminal.png" />
 
@@ -60,10 +61,10 @@ This is for my Portfolio!
 
 <!-- BLOG-POST-LIST:START -->
 
-- [Not started writing now &amp; It will be launched with my website only](https://tushar0o7.github.io/website/)
+- [Not started writing now &amp; It will be launched with my website only](https://tusharbasak97.github.io/website/)
 <!-- BLOG-POST-LIST:END -->
 
-➡️ [more blog posts...](https://tushar0o7.github.io/website/)
+➡️ [more blog posts...](https://tusharbasak97.github.io/website/)
 
 ---
 
@@ -71,14 +72,14 @@ This is for my Portfolio!
   <summary>:zap: Recent GitHub Activity</summary>
   
 <!--START_SECTION:activity-->
-1. ❗️ Closed issue [#1](https://github.com/Tushar0o7/issues/1) in [have nothing to work on right now!](https://github.com/Tushar0o7)
-2. 🗣 Commented on [#1](https://github.com/Tushar0o7/issues/1) in [codeSTACKr/video-source-code-create-nft-collection](https://github.com/Tushar0o7)
+1. ❗️ Closed issue [#1](https://github.com/tusharbasak97/issues/1) in [have nothing to work on right now!](https://github.com/tusharbasak97)
+2. 🗣 Commented on [#1](https://github.com/tusharbasak97/issues/1) in [codeSTACKr/video-source-code-create-nft-collection](https://github.com/tusharbasak97)
 <!--END_SECTION:activity-->
 
 </details>
 
-[website]: https://tushar0o7.github.io/website/
-[twitter]: https://twitter.com/intent/follow?original_referer=https%3A%2F%2Fgithub.com%2FTUSHARBASAK5&screen_name=TUSHARBASAK5
+[website]: https://tusharbasak97.github.io/website/
+[twitter]: https://twitter.com/intent/follow?original_referer=https%3A%2F%2Fgithub.com%2Ftusharbasak97&screen_name=tusharbasak97
 [youtube]: https://youtube.com/channel/UCAmpu78talgJudagNngZB3g
-[instagram]: https://instagram.com/tushar0o7
+[instagram]: https://instagram.com/tusharbasak97
 [linkedin]: https://linkedin.com/in/tushar-basak-899b381b2/
