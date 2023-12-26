@@ -201,6 +201,7 @@ ul {
   font-size: 30px;
   text-transform: capitalize;
 }
+
 .aside .logo a {
   color: var(--text-black-900);
   font-weight: 700;
@@ -313,6 +314,10 @@ ul {
 .aside .footer {
   position: absolute;
   bottom: 0%;
+}
+.aside .footer .social-icons {
+  display: flex;
+  justify-content: center;
 }
 .aside .footer .social-icons a {
   display: inline-block;

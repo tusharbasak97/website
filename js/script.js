@@ -1,6 +1,12 @@
 /* ============================== typing animation ============================ */
 let typed = new Typed(".typing", {
-  strings: ["Data Scientist", "Data Analyst", "Data Engineer", "BigData Engineer", "DataBase Administrator"],
+  strings: [
+    "Data Scientist",
+    "Data Analyst",
+    "Data Engineer",
+    "BigData Engineer",
+    "DataBase Administrator",
+  ],
   startDelay: 300,
   typeSpeed: 100,
   backSpeed: 60,
@@ -122,4 +128,11 @@ window.addEventListener("DOMContentLoaded", function () {
   calculateAge();
 
   setInterval(calculateAge, 1000 * 60 * 60 * 24);
+});
+
+// Copy_year Update function
+document.addEventListener("DOMContentLoaded", (event) => {
+  const yearElement = document.getElementById("current-year");
+  const currentYear = new Date().getFullYear();
+  yearElement.textContent = currentYear;
 });
