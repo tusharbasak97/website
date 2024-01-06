@@ -354,9 +354,12 @@ ul {
   margin-top: 5px;
   color: var(--text-black-900);
 }
+#current-year {
+  all: unset;
+}
 .aside .footer p span {
   font-family: "Kaushan Script", cursive;
-  font-size: 17px;
+  font-size: 19px;
   color: var(--skin-color);
 }
 /* home */
@@ -439,6 +442,8 @@ h3.my-profession {
 }
 .about .about-content .about-text h3 span {
   color: var(--skin-color);
+  font-family: "Kaushan Script", cursive;
+  font-weight: 600;
 }
 .about .about-content .about-text p {
   font-size: 16px;

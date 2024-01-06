@@ -27,7 +27,7 @@ for (let i = 0; i < totalNavList; i++) {
     for (let j = 0; j < totalNavList; j++) {
       if (navList[j].querySelector("a").classList.contains("active")) {
         addBackSection(j);
-        // allSection[j].classList.add("back-section");
+        allSection[j].classList.add("back-section");
       }
       navList[j].querySelector("a").classList.remove("active");
     }
@@ -67,7 +67,7 @@ function updateNav(element) {
 }
 document.querySelector(".hire-me").addEventListener("click", function () {
   const sectionIndex = this.getAttribute("data-section-index");
-  //console.log(sectionIndex);
+  console.log(sectionIndex);
   showSection(this);
   updateNav(this);
   removeBackSection();

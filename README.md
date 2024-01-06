@@ -46,11 +46,12 @@ _I'm excited to collaborate with developers to bring my portfolio to the next le
 - **Address Technical Issues:**
   - Fix back and forward navigation inconsistencies.
   - Eliminate project reload flashing.
+  - Introduce loading animation in "Skill-Item" upon viewer initiation to enhance the user experience and showcase skills seamlessly.
   - Ensure seamless theme integration for "Buy Me Coffee" widget.
 
 ## Additional Notes:
 
-- Inspiration for hover effects in cards: [Provide links to specific examples or websites you admire]
+- Open for any criticism or issues that you face in this portfolio.
 - Open to suggestions for further enhancements and functionalities.
 
 ###
