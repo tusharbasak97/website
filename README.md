@@ -48,6 +48,7 @@ _I'm excited to collaborate with developers to bring my portfolio to the next le
   - Eliminate project reload flashing.
   - Introduce loading animation in "Skill-Item" upon viewer initiation to enhance the user experience and showcase skills seamlessly.
   - Ensure seamless theme integration for "Buy Me Coffee" widget.
+  - Integration of formspree.io for sending me mail with a pop up card animation.
 
 ## Additional Notes:
 
