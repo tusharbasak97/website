@@ -65,14 +65,14 @@ function updateNav(element) {
     }
   }
 }
-document.querySelector(".hire-me").addEventListener("click", function () {
-  const sectionIndex = this.getAttribute("data-section-index");
-  console.log(sectionIndex);
-  showSection(this);
-  updateNav(this);
-  removeBackSection();
-  addBackSection(sectionIndex);
-});
+// document.querySelector(".hire-me").addEventListener("click", function () {
+//   const sectionIndex = this.getAttribute("data-section-index");
+//   console.log(sectionIndex);
+//   showSection(this);
+//   updateNav(this);
+//   removeBackSection();
+//   addBackSection(sectionIndex);
+// });
 const navTogglerBtn = document.querySelector(".nav-toggler"),
   aside = document.querySelector(".aside");
 navTogglerBtn.addEventListener("click", () => {
@@ -86,6 +86,7 @@ function asideSectionTogglerBtn() {
   }
 }
 
+/* ============================== Cursor Animation ============================ */
 let cursor1 = document.querySelector(".cursor-1");
 let cursor2 = document.querySelector(".cursor-2");
 window.onmousemove = (e) => {
@@ -107,7 +108,7 @@ document.querySelectorAll("a").forEach((links) => {
   };
 });
 
-// Age Update function
+/* ============================== Age ============================ */
 window.addEventListener("DOMContentLoaded", function () {
   var birthDate = new Date("1997-10-02");
   var ageElement = document.getElementById("age");
@@ -130,7 +131,7 @@ window.addEventListener("DOMContentLoaded", function () {
   setInterval(calculateAge, 1000 * 60 * 60 * 24);
 });
 
-// Copy_year Update function
+/* ============================== Year ============================ */
 document.addEventListener("DOMContentLoaded", (event) => {
   const yearElement = document.getElementById("current-year");
   const currentYear = new Date().getFullYear();

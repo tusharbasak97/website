@@ -1,12 +1,19 @@
 const styleSwitcherToggle = document.querySelector(".style-switcher-toggler");
-styleSwitcherToggle.addEventListener("click", () => {
-  document.querySelector(".style-switcher").classList.toggle("open");
+const styleSwitcher = document.querySelector(".style-switcher");
+
+styleSwitcherToggle.addEventListener("click", (event) => {
+  event.stopPropagation();
+  styleSwitcher.classList.toggle("open");
 });
 
-window.addEventListener("scroll", () => {
-  if (document.querySelector(".style-switcher").classList.contains("open")) {
-    document.querySelector(".style-switcher").classList.remove("open");
+document.addEventListener("click", () => {
+  if (styleSwitcher.classList.contains("open")) {
+    styleSwitcher.classList.remove("open");
   }
+});
+
+styleSwitcher.addEventListener("click", (event) => {
+  event.stopPropagation();
 });
 
 const alternateStyles = document.querySelectorAll(".alternative-style");
