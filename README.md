@@ -55,6 +55,14 @@ _I'm excited to collaborate with developers to bring my portfolio to the next le
 - Open for any criticism or issues that you face in this portfolio.
 - Open to suggestions for further enhancements and functionalities.
 
+## Code of Conduct
+
+This project follows the [Contributor Covenant Code of Conduct](CODE_OF_CONDUCT.md).
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
 ###
 
 ---
