@@ -87,26 +87,28 @@ function asideSectionTogglerBtn() {
 }
 
 /* ============================== Cursor Animation ============================ */
-let cursor1 = document.querySelector(".cursor-1");
-let cursor2 = document.querySelector(".cursor-2");
-window.onmousemove = (e) => {
+const cursor1 = document.querySelector(".cursor-1");
+const cursor2 = document.querySelector(".cursor-2");
+function setCursorCoordinates(e) {
   cursor1.style.top = e.pageY + "px";
   cursor1.style.left = e.pageX + "px";
   cursor2.style.top = e.pageY + "px";
   cursor2.style.left = e.pageX + "px";
-};
+}
+
+window.onmousemove = setCursorCoordinates;
+
+function toggleCursorActivity() {
+  cursor1.classList.toggle("active");
+  cursor2.classList.toggle("active");
+}
 
 document.querySelectorAll("a").forEach((links) => {
-  links.onmouseenter = () => {
-    cursor1.classList.add("active");
-    cursor2.classList.add("active");
-  };
-
-  links.onmouseleave = () => {
-    cursor1.classList.remove("active");
-    cursor2.classList.remove("active");
-  };
+  links.onmouseenter = toggleCursorActivity;
+  links.onmouseleave = toggleCursorActivity;
 });
+
+/* ====================== Progress animation ====================== */
 
 /* ============================== Age ============================ */
 window.addEventListener("DOMContentLoaded", function () {
@@ -115,16 +117,20 @@ window.addEventListener("DOMContentLoaded", function () {
 
   function calculateAge() {
     var currentDate = new Date();
-    var age = currentDate.getFullYear() - birthDate.getFullYear();
 
-    if (
-      currentDate.getMonth() < birthDate.getMonth() ||
-      (currentDate.getMonth() === birthDate.getMonth() &&
-        currentDate.getDate() < birthDate.getDate())
-    ) {
-      age--;
+    var years = currentDate.getFullYear() - birthDate.getFullYear();
+    var months = currentDate.getMonth() - birthDate.getMonth();
+
+    if (currentDate.getDate() < birthDate.getDate()) {
+      months--;
     }
-    ageElement.textContent = age;
+
+    if (months < 0) {
+      years--;
+      months += 12;
+    }
+
+    ageElement.textContent = `${years} yrs & ${months} months`;
   }
   calculateAge();
 
