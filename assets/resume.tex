@@ -5,27 +5,25 @@
 \usepackage[most]{tcolorbox}
 \usepackage{enumitem}
 \usepackage{lipsum}
-\usepackage{enumitem}
 \usepackage{xcolor}
-\usepackage{color}
+\usepackage{tabu,marvosym,array,amsfonts}
+\usepackage{array}
 \newlength\boxwid%
 \definecolor{mygrey}{rgb}{0.388, 0.388,0.388}
 \definecolor{lgrey}{rgb}{0.86, 0.86,0.86}
-\let\oldtextbullet=\textbullet
-\def\textbullet{%
-    \settowidth{\boxwid}{\ \indent\oldtextbullet\ }%
-    \hangindent=\boxwid%
-    \oldtextbullet}
+\renewcommand{\labelitemi}{\textbullet}
+
 \usepackage{tabu,marvosym,array,amsfonts}
 \usepackage{array}
 \newcolumntype{L}[1]{>{\raggedright\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
 \newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
 \newcolumntype{R}[1]{>{\raggedleft\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
 \usepackage[hidelinks]{hyperref}
+
 \setlength{\parindent}{0pt}
-\newcommand{\tabitem}{\textbullet~~}
+\newcommand{\tabitem}{\textbullet}
 \setlist[itemize]{noitemsep, topsep=0pt}
-\addtolength{\parskip}{-1.5mm}
+\addtolength{\parskip}{-1mm}
 \tcbset{
     frame code={},
     center title,
@@ -40,24 +38,29 @@
     boxsep=3pt,
     arc=0pt,outer arc=0pt,
 }
+
 \begin{document}
 \begin{flushleft}
-\noindent {\Huge\textbf{Tushar Basak}} \hfill {\footnotesize\faIcon{envelope}} \href{mailto:tushar.basak@yahoo.com}{tushar.basak@yahoo.com} $|$ {\footnotesize\faIcon{globe}} \href{https://bit.ly/basakwebsite}{bit.ly/basakwebsite}
+\noindent {\Huge\textbf{Tushar Basak}} \hfill
+{\footnotesize\faIcon{envelope}} \href{mailto:tushar.basak@yahoo.com}{tushar.basak@yahoo.com} $|$
+{\footnotesize\faIcon{globe}} \href{https://bit.ly/basakwebsite}{bit.ly/basakwebsite}
 \\
+
 \vspace{-0.35mm}
 Post Graduate $|$ Department of Computer Science \hfill  
  {\footnotesize\faIcon{github}} \href{https://www.github.com/tusharbasak97/}{tusharbasak97} $|$ {\footnotesize\faIcon{linkedin}} \href{https://www.linkedin.com/in/tusharbasak97/}{tusharbasak97} $|$  {\footnotesize\faIcon{phone-square-alt}}+91 \href{https://wa.link/owivay}{8299312126}
 \\
-\vspace{-1.1mm}
-{\centering\hrule height 1pt}
+
+\vspace{-0.5mm}
+{\centering\hrule height 1.5pt}
 \end{flushleft}
-\vspace{1.9mm}
-\vspace{-7.83mm}
+\vspace{1.8mm}
+\vspace{-6.83mm}
+
 \begin{flushleft}
-\begin{tcolorbox}[colback=lgrey,height = 5.7mm]\textbf{Personal Details:-} \hfill
-    \textit{\textbf{Gender:}} Male \hfill
-    \textit{\textbf{DOB:}} 02 Oct 1997 \hfill
-    \textit{\textbf{Age:}} 26 \hfill
+\begin{tcolorbox}[colback=lgrey,height = 6.5mm]\textbf{Personal Details:-} \hfill
+    \textit{\textbf{Gender:}} Male \faMale{} \hfill
+    \faCalendar{} \textit{\textbf{DOB:}} 02 Oct 1997 \hfill
     {\footnotesize\faIcon{map-marker}} \textit{\textbf{Address:}} Kanpur, UP.
 \end{tcolorbox}
 \end{flushleft}
@@ -66,17 +69,19 @@ Post Graduate $|$ Department of Computer Science \hfill
 {\textbf{\begin{tcolorbox}[colback=lightgray,height = 6mm]\textcolor{black}{\textsc{ACADEMIC QUALIFICATIONS}}\end{tcolorbox}}}
 \vspace{-3.55mm}
 \begin{center}
-\begin{tabular}{|>{\normalfont}p{2.58cm}|>{\normalfont}p{4.4cm}|>{\normalfont}p{7.35cm}|>{\normalfont}p{4.35cm}|}
+\begin{tabular}{|>{\normalfont}p{2.58cm}|>{\normalfont}p{4cm}|>{\normalfont}p{7cm}|>{\normalfont}p{5.1cm}|}
 \hline
-\centering{\textbf{Year}} & \centering{\textbf{Degree}} & \centering{\textbf{Institute}} & \centering\textbf{{Performance (CGPA)}}\tabularnewline
+\centering{\textbf{Year}} & \centering{\textbf{Degree}} & \centering{\textbf{Institute}} & \centering\textbf{{Performance (CPI/$\%$)}}\tabularnewline
 \hline
 \centering{2021 - 2023} & \centering{MCA} & \centering{Manipal University Jaipur} & \centering{\textbf{8.92}/10.0}\tabularnewline
+\hline
+\centering{2017 - 2019} & \centering{BSc} & \centering{Subharti University, Meerut} & \centering{\textbf{68.5}$\%$}\tabularnewline
 \hline
 \end{tabular}
 \end{center}
 \vspace{0.6mm}
 {\textbf{\begin{tcolorbox}[colback=lightgray,height = 6mm]\textcolor{black}{\textsc{WORK EXPERIENCE}}\end{tcolorbox}}}
-\vspace{-6mm}
+\vspace{-5mm}
 \begin{tcolorbox}[colback=lgrey,height = 5.7mm]\textbf{Data Engineering Trainee, MedTourEasy} \hfill\hfill(\textit{May'23-June'23})
 \end{tcolorbox}
 \vspace{-2mm}
@@ -108,7 +113,7 @@ Post Graduate $|$ Department of Computer Science \hfill
 \end{flushleft}
 \vspace{4mm}
 {\textbf{\begin{tcolorbox}[colback=lightgray,height = 6mm]\textcolor{black}{\textsc{KEY PROJECTS}\hfill }\end{tcolorbox}}}
-\vspace{-6mm}
+\vspace{-5mm}
 \begin{tcolorbox}[colback=lgrey,height = 5.7mm]\textbf{\href{https://github.com/tusharbasak97/Real-Time-Stock-Market-Data-Processing-Engine}{Real-Time Stock Market Data Processing Engine \faGithub}}
 \textit{(Manipal University Jaipur)}\hfill\hfill(\textit{April'23-June'23})
 \end{tcolorbox}
@@ -150,7 +155,7 @@ Post Graduate $|$ Department of Computer Science \hfill
 \vspace{0.4mm}
 \end{flushleft}
 {\textbf{\begin{tcolorbox}[colback=lightgray,height = 6mm]\textcolor{black}{\textsc{POSITIONS OF RESPONSIBILITY}}\end{tcolorbox}}}
-\vspace{-6mm}
+\vspace{-5mm}
 \vspace{0.05mm}
 \begin{tcolorbox}[colback=lgrey,height = 5.7mm]\textbf{City President, BloodConnect Foundation}\hfill\hfill(\textit{Apr'23-Dec'23})
 \end{tcolorbox}
@@ -164,6 +169,7 @@ Post Graduate $|$ Department of Computer Science \hfill
 \\
 \hline
 \vspace{0.75mm}
+
 \centering{\textbf{Initiatives}} & \textbullet\ Improved \textbf{helpline} process, implementing procedures for \textbf{enhanced response time} and \textbf{customer satisfaction}.
 \\
 \hline
