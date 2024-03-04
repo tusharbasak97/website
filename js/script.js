@@ -1,11 +1,13 @@
 /* ============================== typing animation ============================ */
 let typed = new Typed(".typing", {
   strings: [
-    "Data Scientist",
-    "Data Analyst",
-    "Data Engineer",
-    "BigData Engineer",
-    "DataBase Administrator",
+    "Cybersecurity Analyst",
+    "Cloud Security Analyst",
+    "Security Engineer",
+    "Security Consultant",
+    "Security Architect",
+    "Penetration Tester",
+    "Network Administrator",
   ],
   startDelay: 300,
   typeSpeed: 100,
