@@ -1,212 +1,147 @@
-\documentclass{article}
-\usepackage[margin=0.2in]{geometry}
-\usepackage{romannum}
-\usepackage{fontawesome5}
-\usepackage[most]{tcolorbox}
+\documentclass{resume} % Use the custom resume.cls style
+
+\usepackage{multicol}
 \usepackage{enumitem}
-\usepackage{lipsum}
-\usepackage{xcolor}
-\usepackage{tabu,marvosym,array,amsfonts}
-\usepackage{array}
-\newlength\boxwid%
-\definecolor{mygrey}{rgb}{0.388, 0.388,0.388}
-\definecolor{lgrey}{rgb}{0.86, 0.86,0.86}
-\renewcommand{\labelitemi}{\textbullet}
+\usepackage[a4paper, margin=0.2in]{geometry} % Document margins
+\newcommand{\tab}[1]{\hspace{.2667\textwidth}\rlap{#1}} 
+\newcommand{\itab}[1]{\hspace{0em}\rlap{#1}}
 
-\usepackage{tabu,marvosym,array,amsfonts}
-\usepackage{array}
-\newcolumntype{L}[1]{>{\raggedright\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
-\newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
-\newcolumntype{R}[1]{>{\raggedleft\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
-\usepackage[hidelinks]{hyperref}
-
-\setlength{\parindent}{0pt}
-\newcommand{\tabitem}{\textbullet}
-\setlist[itemize]{noitemsep, topsep=0pt}
-\addtolength{\parskip}{-1mm}
-\tcbset{
-    frame code={},
-    center title,
-    left=0pt,
-    right=0pt,
-    top=0pt,
-    bottom=0pt,
-    colback=gray!50,
-    colframe=white,
-    width=\dimexpr\textwidth\relax,
-    enlarge left by=0mm,
-    boxsep=3pt,
-    arc=0pt,outer arc=0pt,
-}
+\name{Tushar Basak} % Your name
+% You can merge both of these into a single line, if you do not have a website.
+\address{+91 8299312126 \\ Delhi, India} 
+\address{\href{mailto:tushar.basak@yahoo.com}{Mail: tushar.basak@yahoo.com} \\ 
+\href{https://bit.ly/basaklinkedin}{LinkedIn: tusharbasak97} \\ \href{https://bit.ly/basakwebsite}{Portfolio: bit.ly/basakwebsite}}
 
 \begin{document}
-\begin{flushleft}
-\noindent {\Huge\textbf{Tushar Basak}} \hfill
-{\footnotesize\faIcon{envelope}} \href{mailto:tushar.basak@yahoo.com}{tushar.basak@yahoo.com} $|$
-{\footnotesize\faIcon{globe}} \href{https://bit.ly/basakwebsite}{bit.ly/basakwebsite}
-\\
 
-\vspace{-0.35mm}
-Post Graduate $|$ Department of Computer Science \hfill  
- {\footnotesize\faIcon{github}} \href{https://www.github.com/tusharbasak97/}{tusharbasak97} $|$ {\footnotesize\faIcon{linkedin}} \href{https://www.linkedin.com/in/tusharbasak97/}{tusharbasak97} $|$  {\footnotesize\faIcon{phone-square-alt}}+91 \href{https://wa.link/owivay}{8299312126}
-\\
+%----------------------------------------------------------------------------------------
+%	OBJECTIVE SECTION
+%----------------------------------------------------------------------------------------
+\begin{rSection}{OBJECTIVE}
 
-\vspace{-0.5mm}
-{\centering\hrule height 1.5pt}
-\end{flushleft}
-\vspace{1.8mm}
-\vspace{-6.83mm}
+{Aspiring cybersecurity professional with hands-on experience from a 3-month internship at VoltSec.io as a cybersecurity content writer and researcher. Seeking to leverage my knowledge in computer networking, ethical hacking, and VAPT to execute the role of L1 Security Analyst at a dynamic Security Operations Center. Eager to contribute to and grow with a leading cybersecurity and IT services provider, specializing in SOC processes and enhancing organizational security.}
 
-\begin{flushleft}
-\begin{tcolorbox}[colback=lgrey,height = 6.5mm]\textbf{Personal Details:-} \hfill
-    \textit{\textbf{Gender:}} Male \faMale{} \hfill
-    \faCalendar{} \textit{\textbf{DOB:}} 02 Oct 1997 \hfill
-    {\footnotesize\faIcon{map-marker}} \textit{\textbf{Address:}} Kanpur, UP.
-\end{tcolorbox}
-\end{flushleft}
-\vspace{6.9mm}
-\vspace{-7.83mm}
-{\textbf{\begin{tcolorbox}[colback=lightgray,height = 6mm]\textcolor{black}{\textsc{ACADEMIC QUALIFICATIONS}}\end{tcolorbox}}}
-\vspace{-3.55mm}
-\begin{center}
-\begin{tabular}{|>{\normalfont}p{2.58cm}|>{\normalfont}p{4cm}|>{\normalfont}p{7cm}|>{\normalfont}p{5.1cm}|}
-\hline
-\centering{\textbf{Year}} & \centering{\textbf{Degree}} & \centering{\textbf{Institute}} & \centering\textbf{{Performance (CPI/$\%$)}}\tabularnewline
-\hline
-\centering{2021 - 2023} & \centering{MCA} & \centering{Manipal University Jaipur} & \centering{\textbf{8.92}/10.0}\tabularnewline
-\hline
-\centering{2017 - 2019} & \centering{BSc} & \centering{Subharti University, Meerut} & \centering{\textbf{68.5}$\%$}\tabularnewline
-\hline
-\end{tabular}
-\end{center}
-\vspace{0.6mm}
-{\textbf{\begin{tcolorbox}[colback=lightgray,height = 6mm]\textcolor{black}{\textsc{WORK EXPERIENCE}}\end{tcolorbox}}}
-\vspace{-5mm}
-\begin{tcolorbox}[colback=lgrey,height = 5.7mm]\textbf{Data Engineering Trainee, MedTourEasy} \hfill\hfill(\textit{May'23-June'23})
-\end{tcolorbox}
-\vspace{-2mm}
-{\textbf{ Mentor:} \textit{Ankit Hasija (Training Head)}}
-\begin{flushleft}
-\:\begin{tabular}{|>{\normalfont}m{1.95cm}|>{\normalfont}m{17.60cm}|}
-\hline
-\centering{\textbf{Objective}} & \textbullet\ Complete a \textbf{self-paced 4-week Data Engineering Traineeship}.
-\vspace{-0.75mm}
-\newline \textbullet\ Master fundamental skills in Data Engineering, including \textbf{data ecosystem} and \textbf{lifecycle}, \textbf{Python programming}, \textbf{ETL}, \textbf{SQL}, and \textbf{relational databases}.
-\\
-\hline
-\centering{\textbf{Apporoach}} & \textbullet\ Engage in a combination of \textbf{theoretical} and \textbf{hands-on learning}.
-\vspace{-0.75mm}
-\newline \textbullet\ Collaborate with \textbf{Coursera course "Data Engineering Foundations"} by IBM.
-\vspace{-0.75mm}
-\newline \textbullet\ Work on projects incorporating various data formats, \textbf{ETL processes}, \textbf{APIs}, \textbf{webscraping}, and \textbf{SQL}.
-\\
-\hline
-\centering{\textbf{Outcome}} & \textbullet\ Demonstrated mastery of fundamental Data Engineering skills.
-\vspace{-0.75mm}
-\newline \textbullet\ Proficiency in \textbf{Python programming}, \textbf{data manipulation}, and \textbf{querying real-world datasets}.
-\vspace{-0.75mm}
-\newline \textbullet\ Ability to tackle foundational Data Engineering challenges and projects.
-\\
-\hline
-\end{tabular}
-\vspace{-3.2mm}
-\end{flushleft}
-\vspace{4mm}
-{\textbf{\begin{tcolorbox}[colback=lightgray,height = 6mm]\textcolor{black}{\textsc{KEY PROJECTS}\hfill }\end{tcolorbox}}}
-\vspace{-5mm}
-\begin{tcolorbox}[colback=lgrey,height = 5.7mm]\textbf{\href{https://github.com/tusharbasak97/Real-Time-Stock-Market-Data-Processing-Engine}{Real-Time Stock Market Data Processing Engine \faGithub}}
-\textit{(Manipal University Jaipur)}\hfill\hfill(\textit{April'23-June'23})
-\end{tcolorbox}
-\vspace{-3.4mm}
-\begin{flushleft}
-\:\begin{tabular}{|>{\normalfont}m{1.95cm}|>{\normalfont}m{17.60cm}|}
-\hline
-\centering{\textbf{Objective}} & Develop real-time data processing and analysis using \textbf{Apache Kafka} and \textbf{AWS} services.
-\\
-\hline
-\centering{\textbf{Approach}} & Implemented Python-based mechanism for data extraction. Established continuous data stream with \textbf{Apache Kafka}. Utilized \textbf{AWS S3}, \textbf{Glue Crawler}, and \textbf{Athena} for efficient storage and querying.
-\\
-\hline
-\centering{\textbf{Outcome}} & Successful real-time data processing and analysis. Seamless data exploration. Enhanced expertise in \textbf{Apache Kafka} and \textbf{AWS} services.
-\\
-\hline
-\end{tabular}
-\vspace{-2.5mm}
-\end{flushleft}
-\begin{tcolorbox}[colback=lgrey,height=5.7mm]\textbf{\href{https://github.com/tusharbasak97/Analysis-of-Chemical-Components}{Analysis of Chemical Components \faGithub}}\textit{ (MedTourEasy)}\hfill\hfill(\textit{May'23-June'23})
-\end{tcolorbox}
-\vspace{-3.4mm}
-\begin{flushleft}
-\:\begin{tabular}{|>{\normalfont}m{1.95cm}|>{\normalfont}m{17.60cm}|}
-\hline
-\centering{\textbf{Objective}} & Develop \textbf{content-based recommendation system} for cosmetic products.
-\\
-\hline
-\vspace{0.75mm}
-\centering{\textbf{Approach}} & \textbf{Data preprocessing}, \textbf{NLP}, \textbf{t-SNE} for dimensionality reduction, interactive \textbf{Bokeh visualizations}.
-\\
-\hline
-\centering{\textbf{Outcome}} & \textbullet\ \textbf{Personalized cosmetic product recommendations} based on ingredient similarities.
-\vspace{-0.75mm}
-\hspace{0.35em} \newline \textbullet\ \textbf{Enhanced shopping experience}. Gained \textbf{data engineering skills} in preprocessing, NLP, and visualization.
-\\
-\hline
-\end{tabular}
-\vspace{0.4mm}
-\end{flushleft}
-{\textbf{\begin{tcolorbox}[colback=lightgray,height = 6mm]\textcolor{black}{\textsc{POSITIONS OF RESPONSIBILITY}}\end{tcolorbox}}}
-\vspace{-5mm}
-\vspace{0.05mm}
-\begin{tcolorbox}[colback=lgrey,height = 5.7mm]\textbf{City President, BloodConnect Foundation}\hfill\hfill(\textit{Apr'23-Dec'23})
-\end{tcolorbox}
-\vspace{-3.25mm}
-\begin{flushleft}
-\:\begin{tabular}{|>{\normalfont}m{1.95cm}|>{\normalfont}m{17.60cm}|}
-\hline
-\centering{\textbf{Leadership}} & \textbullet\ Spearheading \textbf{2-tier} team of \textbf{20+} students to foster and promote a \textbf{noble cause initiative}.
-\vspace{-0.75mm}
-\hspace{0.35em}\newline \textbullet\ Efficiently managing a budget of \textbf{INR 2.5 lpa} for \textbf{events}, overseeing \textbf{seamless reimbursement} procedures
-\\
-\hline
-\vspace{0.75mm}
+\end{rSection}
 
-\centering{\textbf{Initiatives}} & \textbullet\ Improved \textbf{helpline} process, implementing procedures for \textbf{enhanced response time} and \textbf{customer satisfaction}.
-\\
-\hline
-\centering{\textbf{Impact}} & \textbullet\ Organized \textbf{20+} blood donation camps, collecting \textbf{1K+ units} of blood, and impacting \textbf{3K+ lives} in Kanpur.
-\vspace{-0.75mm}
-\hspace{0.35em}\newline \textbullet\ Encouraged and inspired the campus community to actively participate in \textbf{saving lives} through \textbf{blood donation}.
-\\
-\hline
-\end{tabular}
-\vspace{0.6mm}
-\end{flushleft}
-{\textbf{\begin{tcolorbox}[colback=lightgray,height = 6mm]\textcolor{black}{\textsc{EXTRA ACADEMIC ACTIVITIES}}
-\end{tcolorbox}}}
-\vspace{-3.25mm}
-\begin{flushleft}
-\hspace{0.35em}\textbullet\ \textbf{Office Bearer} with the Portfolio of \textbf{Cultural Coordinator}.
-\\
-\hspace{0.35em}\textbullet\ Seminar topic: \textbf{In-Memory Data Management}.
-\\
-\hspace{0.35em}\textbullet\ Specialized in both \textbf{Open Source Database Systems} and \textbf{Cloud Database Systems} as elective subjects.
-\\
-\hspace{0.35em}\textbullet\ \textbf{Proficient in English} language skills, as demonstrated by EFSET certification. \href{https://www.efset.org/cert/vZA4MD}{\emph{\underline{View}}}
-\\
-\hspace{0.35em}\textbullet\ Completed a specialization in \textbf{Data Engineering} on Coursera.\href{https://www.coursera.org/account/accomplishments/specialization/certificate/U84JSKZ8LJ32}{\emph{\underline{View}}}
-\\
-\hspace{0.35em}\textbullet\ Participated in the \textbf{Cloud Security Challenge} up to Level 3 on the Google Cloud Platform.\href{https://googlecloud.qwiklabs.com/public_profiles/d6fe580f-5dfe-42e8-a638-f91489804158}{\emph{\underline{View}}}
-\vspace{4mm}
-\end{flushleft}
-\vspace{-4mm}
-{\textbf{\begin{tcolorbox}[colback=lightgray,height = 6mm]\textcolor{black}{\textsc{SKILLS}}\end{tcolorbox}}}
-\vspace{-6mm}
-\vspace{3mm}
-\begin{flushleft}
-    \hspace{0.2cm}\textbf{Languages:}\hspace{0.52cm} Python, and SQL. \\
-    \hspace{0.2cm}\textbf{Libraries:}\hspace{0.80cm} Pandas, NumPy, Matplotlib, Scikit-learn and Apache Hadoop. \\
-    \hspace{0.2cm}\textbf{Databases:}\hspace{0.57cm} SQL (PostgreSQL and T-SQL), Apache Hive and Amazon S3. \\
-    \hspace{0.2cm}\textbf{Dev Tools:}\hspace{0.60cm} Jupyter Notebooks, Excel, Tableau, Power BI, Docker and Kubernetes.
-    \vspace{-3.2mm}
-\end{flushleft}
+%----------------------------------------------------------------------------------------
+%	WORK EXPERIENCE SECTION
+%----------------------------------------------------------------------------------------
+\begin{rSection}{EXPERIENCE}
+
+\textbf{Cybersecurity Trainee} \hfill May 2024 - Sept 2024\\
+Tata Strive $|$ SAP India \hfill \textit{Anand, Gujarat}
+ \begin{itemize}
+    \itemsep -3pt {} 
+    \item Gained practical and hands-on training in cybersecurity, developing essential skills for the field at an industrial level.
+    \item Training included cybersecurity and personality development modules.
+    \item Performed operations such as ethical hacking, penetration testing, and network security through hands-on labs.
+    \item Developed skills in vulnerability assessment, penetration testing, and incident response.
+ \end{itemize}
+% \textbf{Cybersecurity Analyst} \hfill July 2024\\
+% Tata Group's Forage \hfill \textit{Remote}
+%  \begin{itemize}
+%     \itemsep -3pt {} 
+%      \item Completed a job simulation involving identity and access management (IAM) for Tata Consultancy Services, collaborating with a Cybersecurity Consulting team.
+%      \item Acquired expertise in IAM principles, cybersecurity best practices, and strategic alignment with business objectives.
+%     \item Delivered comprehensive documentation and presentations, showcasing the ability to communicate complex technical concepts effectively.
+%  \end{itemize}
+ 
+\textbf{Intern Security Researcher} \hfill Mar 2024 - June 2024\\
+Voltsec.io \hfill \textit{Varanasi, UP}
+ \begin{itemize}
+    \itemsep -3pt {} 
+     \item Created engaging blog posts and articles on emerging cybersecurity trends, resulting in a 30\% increase in website traffic and reader engagement in Week 1.
+     \item Contributed to VoltSec’s thought leadership and online presence using content creation, SEO, and trend analysis skills. 
+ \end{itemize}
+
+\end{rSection}
+
+%----------------------------------------------------------------------------------------
+% SKILLS SECTION
+%----------------------------------------------------------------------------------------
+\begin{rSection}{TOOLS \& SKILLS}
+\begin{itemize}
+    \item \textbf{Penetration Testing Tools:} Kali Linux, GoBuster, Hydra, Metasploit Framework, Metasploit Venom, NMAP, Ettercap, Responder, Burp Suite
+    \item \textbf{Vulnerability Scanning:} Tenable Nessus, Wireshark, Rapid7
+    \item \textbf{Networking and Protocols:} Basic Networking, Routing Protocols (Static, RIP, EIGRP, OSPF), Access Lists, VLAN, NAT, DHCP, IPv4 and IPv6, Subnetting, Port Security
+    \item \textbf{Security and Analysis Tools:} Splunk, Nessus, VirusTotal, IBM X-Force, MX Toolbox, Barracuda, Zscaler, Cortex XSOAR, Any.run, ServiceNow
+    \item \textbf{Cybersecurity Skills:} Computer Networking, Ethical Hacking, Vulnerability Assessment and Penetration Testing (VAPT), Security Operations Center (SOC), Security Information and Event Management (SIEM), Threat Analysis and Mitigation, Incident Response, Intrusion Detection and Prevention Systems (IDPS), Cybersecurity Best Practices, Documentation and Reporting
+\end{itemize}
+\end{rSection}
+
+%----------------------------------------------------------------------------------------
+%	EDUCATION SECTION
+%----------------------------------------------------------------------------------------
+\begin{rSection}{Education}
+
+{\bf Master of Computer Applications}, Manipal University, Jaipur \hfill {May 2021 - July 2023}\\
+\textbf{CGPA: 8.92}
+
+{\bf Bachelor of Science}, Swami Vivekananda Subharti University, Meerut \hfill {July 2017 - Dec 2019}\\
+\textbf{Percentage: 68.5\%}
+\end{rSection}
+%----------------------------------------------------------------------------------------
+%	CERTIFICATIONS
+%----------------------------------------------------------------------------------------
+\begin{rSection}{CERTIFICATIONS}
+\begin{itemize}
+    \item Tata Group - Cybersecurity Analyst Job Simulation \hfill \href{https://forage-uploads-prod.s3.amazonaws.com/completion-certificates/Tata/gmf3ypEXBj2wvfQWC_Tata%20Group_PynkGwAqrec2LCHy3_1719852016860_completion_certificate.pdf}{View}\\
+    \textbf{Forage} \hfill July 2024
+    \item Certified in Cyber Security \hfill \href{https://}{Applied}\\
+    \textbf{ISC2} \hfill July 2024
+    \item Ethical Hacking Essentials (EHE) \hfill \href{https://}{Applied}\\
+    \textbf{EC-Council} \hfill July 2024
+\end{itemize}
+\end{rSection}
+%----------------------------------------------------------------------------------------
+%	PROJECTS SECTION
+%----------------------------------------------------------------------------------------
+\begin{rSection}{PROJECTS}
+\begin{itemize}
+    \item \textbf{Report on performing VAPT on Vuln. Machine:} {Conducted thorough vulnerability scanning, penetration testing, and exploitation of a simulated vulnerable system. Produced detailed reports outlining identified vulnerabilities, their potential impact, and recommended remediation strategies. Demonstrated proficiency in ethical hacking techniques, security assessment methodologies, and report writing.}
+    \item \textbf{Analysis of Major Ransomware Attack:} {Analyzed the ransomware attack on Bank of America and Infosys McCamish Systems. Investigated the data breach compromising PII and financial data. Conducted vulnerability assessment to identify exploited weaknesses. Created an incident timeline and evaluated financial impact. Highlighted critical lessons learned and provided recommendations to enhance cybersecurity posture and prevent future incidents.}
+\end{itemize}
+\end{rSection} 
+
+%----------------------------------------------------------------------------------------
+%	LEADERSHIP SECTION
+%----------------------------------------------------------------------------------------
+\begin{rSection}{Leadership}
+\textbf{City President} \hfill Jan 2023 - Dec 2023\\
+BloodConnect Foundation \hfill \textit{Kanpur, UP}
+\begin{itemize}[noitemsep]
+    \item Spearheaded a 2-tier team of 20+ students, efficiently managed a budget of INR 2.5 LPA, and improved helpline processes for enhanced customer satisfaction.
+    \item Organized 20+ blood donation camps, collecting 1K+ units of blood, impacting 3K+ lives, and inspiring campus community participation.
+    \item Demonstrated leadership, budget management, process improvement, and community engagement.
+\end{itemize}
+\end{rSection}
+
+%----------------------------------------------------------------------------------------
+%----------------------------------------------------------------------------------------
+% \section*{\textcolor{white}{\fontsize{1}{1.2}\selectfont This is a section with white text and font size 1 point}}
+
+% \textcolor{white}{\fontsize{1}{1.2}\selectfont
+% issues
+% implement
+% development
+% design
+% solutions
+% software developer
+% software
+% scalable
+% python
+% programming language
+% programming
+% javascript
+% java
+% feedback
+% cross functional
+% collaborate
+% code review
+% }
+%----------------------------------------------------------------------------------------
+%Minor in Linguistics \smallskip \\
+%Member of Eta Kappa Nu \\
+%Member of Upsilon Pi Epsilon \\
+
 \end{document}
