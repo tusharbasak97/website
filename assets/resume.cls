@@ -26,24 +26,23 @@
 \usepackage{array} % Required for boldface (\bf and \bfseries) tabular columns
 \usepackage{ifthen} % Required for ifthenelse statements
 \usepackage{parskip}
-\usepackage{fancyhdr}
-\usepackage{lastpage}
-\usepackage{datetime}
+\RequirePackage{xcolor}
+
+\definecolor{Goldenrod}{RGB}{218, 165, 32}
+\definecolor{Teal}{RGB}{0, 128, 128}
+\definecolor{RoyalBlue}{RGB}{65, 105, 225}
 
 % Font setup
 \usepackage{lmodern}
 \usepackage[T1]{fontenc}
 \usepackage[utf8]{inputenc}
 
-\usepackage{hyperref}
+\RequirePackage{hyperref}
 \hypersetup{
     colorlinks=true,
-    linkcolor=blue,
-    filecolor=magenta,      
-    urlcolor=blue,
+    linkcolor=Blue,
+    urlcolor=RoyalBlue,     % Custom color for URLs
 }
-
-\pagestyle{empty} % Suppress page numbers
 
 %----------------------------------------------------------------------------------------
 %	HEADINGS COMMANDS: Commands for printing name and address
