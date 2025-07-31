@@ -725,41 +725,60 @@
               </div>
             </div>
             <div class="row">
+              <div class="certificates-filter padd-15">
+                <div class="filter-buttons">
+                  <button class="filter-btn active" data-filter="all">
+                    <i class="fas fa-list"></i>
+                    <span>All Certificates</span>
+                    <span class="count">0</span>
+                  </button>
+                  <button class="filter-btn" data-filter="active">
+                    <i class="fas fa-check-circle"></i>
+                    <span>Active</span>
+                    <span class="count">0</span>
+                  </button>
+                  <button class="filter-btn" data-filter="expired">
+                    <i class="fas fa-times-circle"></i>
+                    <span>Expired</span>
+                    <span class="count">0</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+            <div class="row">
               <!-- Certificate Card 1 -->
               <article class="certificate-item padd-15" itemscope itemtype="https://schema.org/EducationalOccupationalCredential">
                 <div class="certificate-item-inner shadow-dark">
-                  <div class="certificate-header">
+                  <div class="certificate-left">
                     <div class="certificate-icon">
                       <i class="fas fa-shield-alt"></i>
                     </div>
-                    <div class="certificate-status active" title="Active Certificate">
-                      <i class="fas fa-check-circle"></i>
-                    </div>
                   </div>
                   <div class="certificate-content">
-                    <h3 class="certificate-title" itemprop="name">Cybersecurity Fundamentals</h3>
-                    <p class="certificate-issuer" itemprop="recognizedBy">Tata Strive | SAP India</p>
-                    <div class="certificate-dates">
-                      <div class="date-item">
-                        <i class="fas fa-calendar-plus"></i>
-                        <span class="date-label">Issued:</span>
-                        <time class="date-value" datetime="2024-09-15" itemprop="dateCreated">Sep 15, 2024</time>
-                      </div>
-                      <div class="date-item">
-                        <i class="fas fa-calendar-times"></i>
-                        <span class="date-label">Expires:</span>
-                        <time class="date-value" datetime="2027-09-15">Sep 15, 2027</time>
-                      </div>
+                    <div class="certificate-main">
+                      <h3 class="certificate-title" itemprop="name">Cybersecurity Fundamentals</h3>
+                      <p class="certificate-issuer" itemprop="recognizedBy">Tata Strive | SAP India</p>
                     </div>
-                    <div class="certificate-skills">
-                      <span class="skill-tag">Ethical Hacking</span>
-                      <span class="skill-tag">Network Security</span>
-                      <span class="skill-tag">SOC Operations</span>
-                    </div>
-                    <div class="certificate-actions">
-                      <a href="#" class="btn-certificate verify" aria-label="Verify Certificate">
-                        <i class="fas fa-external-link-alt"></i> Verify
-                      </a>
+                    <div class="certificate-meta">
+                      <div class="certificate-dates">
+                        <div class="date-item">
+                          <span class="date-label">Issued</span>
+                          <time class="date-value" datetime="2024-09-15" itemprop="dateCreated">Sep 15, 2024</time>
+                        </div>
+                        <div class="date-item">
+                          <span class="date-label">Expires</span>
+                          <time class="date-value" datetime="2027-09-15">Sep 15, 2027</time>
+                        </div>
+                      </div>
+                      <div class="certificate-status active" title="Active Certificate">
+                        <i class="fas fa-check-circle"></i>
+                        <span>Active</span>
+                      </div>
+                      <div class="certificate-actions">
+                        <a href="#" class="btn-certificate verify" aria-label="Verify Certificate">
+                          <i class="fas fa-external-link-alt"></i> Verify
+                        </a>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -768,38 +787,36 @@
               <!-- Certificate Card 2 -->
               <article class="certificate-item padd-15" itemscope itemtype="https://schema.org/EducationalOccupationalCredential">
                 <div class="certificate-item-inner shadow-dark">
-                  <div class="certificate-header">
+                  <div class="certificate-left">
                     <div class="certificate-icon">
                       <i class="fas fa-code"></i>
                     </div>
-                    <div class="certificate-status active" title="Active Certificate">
-                      <i class="fas fa-check-circle"></i>
-                    </div>
                   </div>
                   <div class="certificate-content">
-                    <h3 class="certificate-title" itemprop="name">Python for Cybersecurity</h3>
-                    <p class="certificate-issuer" itemprop="recognizedBy">Coursera</p>
-                    <div class="certificate-dates">
-                      <div class="date-item">
-                        <i class="fas fa-calendar-plus"></i>
-                        <span class="date-label">Issued:</span>
-                        <time class="date-value" datetime="2024-08-20" itemprop="dateCreated">Aug 20, 2024</time>
-                      </div>
-                      <div class="date-item">
-                        <i class="fas fa-infinity"></i>
-                        <span class="date-label">Validity:</span>
-                        <span class="date-value lifetime">Lifetime</span>
-                      </div>
+                    <div class="certificate-main">
+                      <h3 class="certificate-title" itemprop="name">Python for Cybersecurity</h3>
+                      <p class="certificate-issuer" itemprop="recognizedBy">Coursera</p>
                     </div>
-                    <div class="certificate-skills">
-                      <span class="skill-tag">Python Programming</span>
-                      <span class="skill-tag">Security Automation</span>
-                      <span class="skill-tag">Scripting</span>
-                    </div>
-                    <div class="certificate-actions">
-                      <a href="#" class="btn-certificate verify" aria-label="Verify Certificate">
-                        <i class="fas fa-external-link-alt"></i> Verify
-                      </a>
+                    <div class="certificate-meta">
+                      <div class="certificate-dates">
+                        <div class="date-item">
+                          <span class="date-label">Issued</span>
+                          <time class="date-value" datetime="2024-08-20" itemprop="dateCreated">Aug 20, 2024</time>
+                        </div>
+                        <div class="date-item">
+                          <span class="date-label">Validity</span>
+                          <span class="date-value lifetime">Lifetime</span>
+                        </div>
+                      </div>
+                      <div class="certificate-status active" title="Active Certificate">
+                        <i class="fas fa-check-circle"></i>
+                        <span>Active</span>
+                      </div>
+                      <div class="certificate-actions">
+                        <a href="#" class="btn-certificate verify" aria-label="Verify Certificate">
+                          <i class="fas fa-external-link-alt"></i> Verify
+                        </a>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -808,38 +825,36 @@
               <!-- Certificate Card 3 -->
               <article class="certificate-item padd-15" itemscope itemtype="https://schema.org/EducationalOccupationalCredential">
                 <div class="certificate-item-inner shadow-dark">
-                  <div class="certificate-header">
+                  <div class="certificate-left">
                     <div class="certificate-icon">
                       <i class="fas fa-cloud"></i>
                     </div>
-                    <div class="certificate-status active" title="Active Certificate">
-                      <i class="fas fa-check-circle"></i>
-                    </div>
                   </div>
                   <div class="certificate-content">
-                    <h3 class="certificate-title" itemprop="name">AWS Cloud Security</h3>
-                    <p class="certificate-issuer" itemprop="recognizedBy">Amazon Web Services</p>
-                    <div class="certificate-dates">
-                      <div class="date-item">
-                        <i class="fas fa-calendar-plus"></i>
-                        <span class="date-label">Issued:</span>
-                        <time class="date-value" datetime="2024-07-10" itemprop="dateCreated">Jul 10, 2024</time>
-                      </div>
-                      <div class="date-item">
-                        <i class="fas fa-calendar-times"></i>
-                        <span class="date-label">Expires:</span>
-                        <time class="date-value" datetime="2027-07-10">Jul 10, 2027</time>
-                      </div>
+                    <div class="certificate-main">
+                      <h3 class="certificate-title" itemprop="name">AWS Cloud Security</h3>
+                      <p class="certificate-issuer" itemprop="recognizedBy">Amazon Web Services</p>
                     </div>
-                    <div class="certificate-skills">
-                      <span class="skill-tag">Cloud Security</span>
-                      <span class="skill-tag">AWS Services</span>
-                      <span class="skill-tag">Infrastructure Security</span>
-                    </div>
-                    <div class="certificate-actions">
-                      <a href="#" class="btn-certificate verify" aria-label="Verify Certificate">
-                        <i class="fas fa-external-link-alt"></i> Verify
-                      </a>
+                    <div class="certificate-meta">
+                      <div class="certificate-dates">
+                        <div class="date-item">
+                          <span class="date-label">Issued</span>
+                          <time class="date-value" datetime="2024-07-10" itemprop="dateCreated">Jul 10, 2024</time>
+                        </div>
+                        <div class="date-item">
+                          <span class="date-label">Expires</span>
+                          <time class="date-value expiring" datetime="2025-02-28">Feb 28, 2025</time>
+                        </div>
+                      </div>
+                      <div class="certificate-status active" title="Active Certificate">
+                        <i class="fas fa-check-circle"></i>
+                        <span>Active</span>
+                      </div>
+                      <div class="certificate-actions">
+                        <a href="#" class="btn-certificate verify" aria-label="Verify Certificate">
+                          <i class="fas fa-external-link-alt"></i> Verify
+                        </a>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -848,38 +863,36 @@
               <!-- Certificate Card 4 -->
               <article class="certificate-item padd-15" itemscope itemtype="https://schema.org/EducationalOccupationalCredential">
                 <div class="certificate-item-inner shadow-dark">
-                  <div class="certificate-header">
+                  <div class="certificate-left">
                     <div class="certificate-icon">
                       <i class="fas fa-bug"></i>
                     </div>
-                    <div class="certificate-status expiring" title="Expiring Soon">
-                      <i class="fas fa-exclamation-triangle"></i>
-                    </div>
                   </div>
                   <div class="certificate-content">
-                    <h3 class="certificate-title" itemprop="name">Penetration Testing Essentials</h3>
-                    <p class="certificate-issuer" itemprop="recognizedBy">EC-Council</p>
-                    <div class="certificate-dates">
-                      <div class="date-item">
-                        <i class="fas fa-calendar-plus"></i>
-                        <span class="date-label">Issued:</span>
-                        <time class="date-value" datetime="2023-12-05" itemprop="dateCreated">Dec 05, 2023</time>
-                      </div>
-                      <div class="date-item">
-                        <i class="fas fa-calendar-times"></i>
-                        <span class="date-label">Expires:</span>
-                        <time class="date-value expiring" datetime="2025-12-05">Dec 05, 2025</time>
-                      </div>
+                    <div class="certificate-main">
+                      <h3 class="certificate-title" itemprop="name">Penetration Testing Essentials</h3>
+                      <p class="certificate-issuer" itemprop="recognizedBy">EC-Council</p>
                     </div>
-                    <div class="certificate-skills">
-                      <span class="skill-tag">Penetration Testing</span>
-                      <span class="skill-tag">Vulnerability Assessment</span>
-                      <span class="skill-tag">Security Testing</span>
-                    </div>
-                    <div class="certificate-actions">
-                      <a href="#" class="btn-certificate verify" aria-label="Verify Certificate">
-                        <i class="fas fa-external-link-alt"></i> Verify
-                      </a>
+                    <div class="certificate-meta">
+                      <div class="certificate-dates">
+                        <div class="date-item">
+                          <span class="date-label">Issued</span>
+                          <time class="date-value" datetime="2023-12-05" itemprop="dateCreated">Dec 05, 2023</time>
+                        </div>
+                        <div class="date-item">
+                          <span class="date-label">Expires</span>
+                          <time class="date-value expiring" datetime="2025-03-15">Mar 15, 2025</time>
+                        </div>
+                      </div>
+                      <div class="certificate-status expiring" title="Expiring Soon">
+                        <i class="fas fa-exclamation-triangle"></i>
+                        <span>Expiring</span>
+                      </div>
+                      <div class="certificate-actions">
+                        <a href="#" class="btn-certificate verify" aria-label="Verify Certificate">
+                          <i class="fas fa-external-link-alt"></i> Verify
+                        </a>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -888,38 +901,36 @@
               <!-- Certificate Card 5 -->
               <article class="certificate-item padd-15" itemscope itemtype="https://schema.org/EducationalOccupationalCredential">
                 <div class="certificate-item-inner shadow-dark">
-                  <div class="certificate-header">
+                  <div class="certificate-left">
                     <div class="certificate-icon">
                       <i class="fas fa-network-wired"></i>
                     </div>
-                    <div class="certificate-status active" title="Active Certificate">
-                      <i class="fas fa-check-circle"></i>
-                    </div>
                   </div>
                   <div class="certificate-content">
-                    <h3 class="certificate-title" itemprop="name">Network Security Fundamentals</h3>
-                    <p class="certificate-issuer" itemprop="recognizedBy">Cisco Networking Academy</p>
-                    <div class="certificate-dates">
-                      <div class="date-item">
-                        <i class="fas fa-calendar-plus"></i>
-                        <span class="date-label">Issued:</span>
-                        <time class="date-value" datetime="2024-06-15" itemprop="dateCreated">Jun 15, 2024</time>
-                      </div>
-                      <div class="date-item">
-                        <i class="fas fa-calendar-times"></i>
-                        <span class="date-label">Expires:</span>
-                        <time class="date-value" datetime="2027-06-15">Jun 15, 2027</time>
-                      </div>
+                    <div class="certificate-main">
+                      <h3 class="certificate-title" itemprop="name">Network Security Fundamentals</h3>
+                      <p class="certificate-issuer" itemprop="recognizedBy">Cisco Networking Academy</p>
                     </div>
-                    <div class="certificate-skills">
-                      <span class="skill-tag">Network Security</span>
-                      <span class="skill-tag">Firewall Configuration</span>
-                      <span class="skill-tag">Network Protocols</span>
-                    </div>
-                    <div class="certificate-actions">
-                      <a href="#" class="btn-certificate verify" aria-label="Verify Certificate">
-                        <i class="fas fa-external-link-alt"></i> Verify
-                      </a>
+                    <div class="certificate-meta">
+                      <div class="certificate-dates">
+                        <div class="date-item">
+                          <span class="date-label">Issued</span>
+                          <time class="date-value" datetime="2023-06-15" itemprop="dateCreated">Jun 15, 2023</time>
+                        </div>
+                        <div class="date-item">
+                          <span class="date-label">Expires</span>
+                          <time class="date-value expired" datetime="2024-06-15">Jun 15, 2024</time>
+                        </div>
+                      </div>
+                      <div class="certificate-status active" title="Active Certificate">
+                        <i class="fas fa-check-circle"></i>
+                        <span>Active</span>
+                      </div>
+                      <div class="certificate-actions">
+                        <a href="#" class="btn-certificate verify" aria-label="Verify Certificate">
+                          <i class="fas fa-external-link-alt"></i> Verify
+                        </a>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -928,38 +939,36 @@
               <!-- Certificate Card 6 -->
               <article class="certificate-item padd-15" itemscope itemtype="https://schema.org/EducationalOccupationalCredential">
                 <div class="certificate-item-inner shadow-dark">
-                  <div class="certificate-header">
+                  <div class="certificate-left">
                     <div class="certificate-icon">
                       <i class="fas fa-eye"></i>
                     </div>
-                    <div class="certificate-status active" title="Active Certificate">
-                      <i class="fas fa-check-circle"></i>
-                    </div>
                   </div>
                   <div class="certificate-content">
-                    <h3 class="certificate-title" itemprop="name">SOC Analyst Level 1</h3>
-                    <p class="certificate-issuer" itemprop="recognizedBy">SANS Institute</p>
-                    <div class="certificate-dates">
-                      <div class="date-item">
-                        <i class="fas fa-calendar-plus"></i>
-                        <span class="date-label">Issued:</span>
-                        <time class="date-value" datetime="2024-05-30" itemprop="dateCreated">May 30, 2024</time>
-                      </div>
-                      <div class="date-item">
-                        <i class="fas fa-calendar-times"></i>
-                        <span class="date-label">Expires:</span>
-                        <time class="date-value" datetime="2026-05-30">May 30, 2026</time>
-                      </div>
+                    <div class="certificate-main">
+                      <h3 class="certificate-title" itemprop="name">SOC Analyst Level 1</h3>
+                      <p class="certificate-issuer" itemprop="recognizedBy">SANS Institute</p>
                     </div>
-                    <div class="certificate-skills">
-                      <span class="skill-tag">SOC Operations</span>
-                      <span class="skill-tag">Incident Response</span>
-                      <span class="skill-tag">Threat Detection</span>
-                    </div>
-                    <div class="certificate-actions">
-                      <a href="#" class="btn-certificate verify" aria-label="Verify Certificate">
-                        <i class="fas fa-external-link-alt"></i> Verify
-                      </a>
+                    <div class="certificate-meta">
+                      <div class="certificate-dates">
+                        <div class="date-item">
+                          <span class="date-label">Issued</span>
+                          <time class="date-value" datetime="2024-05-30" itemprop="dateCreated">May 30, 2024</time>
+                        </div>
+                        <div class="date-item">
+                          <span class="date-label">Expires</span>
+                          <time class="date-value" datetime="2026-05-30">May 30, 2026</time>
+                        </div>
+                      </div>
+                      <div class="certificate-status active" title="Active Certificate">
+                        <i class="fas fa-check-circle"></i>
+                        <span>Active</span>
+                      </div>
+                      <div class="certificate-actions">
+                        <a href="#" class="btn-certificate verify" aria-label="Verify Certificate">
+                          <i class="fas fa-external-link-alt"></i> Verify
+                        </a>
+                      </div>
                     </div>
                   </div>
                 </div>

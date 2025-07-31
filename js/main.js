@@ -189,22 +189,67 @@ function initializeStyleSwitcher() {
 
   // Day/Night mode toggle
   dayNight.addEventListener("click", () => {
-    dayNight.querySelector("i").classList.toggle("fa-sun");
-    dayNight.querySelector("i").classList.toggle("fa-moon");
-    document.body.classList.toggle("dark");
+    const isDarkMode = document.body.classList.contains('dark');
 
-    // Save theme preference
-    localStorage.setItem('theme', document.body.classList.contains('dark') ? 'dark' : 'light');
+    if (isDarkMode) {
+      // Switch to light mode
+      document.body.classList.remove('dark');
+      document.body.classList.add('theme-override');
+      dayNight.querySelector("i").classList.remove("fa-sun");
+      dayNight.querySelector("i").classList.add("fa-moon");
+      localStorage.setItem('theme', 'light');
+    } else {
+      // Switch to dark mode
+      document.body.classList.add('dark');
+      document.body.classList.add('theme-override');
+      dayNight.querySelector("i").classList.remove("fa-moon");
+      dayNight.querySelector("i").classList.add("fa-sun");
+      localStorage.setItem('theme', 'dark');
+    }
   });
 
-  // Load saved theme
+  // Load theme preference (saved theme or system default)
   const savedTheme = localStorage.getItem('theme');
-  if (savedTheme === 'dark') {
+  const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+
+  let shouldUseDarkMode = false;
+
+  if (savedTheme) {
+    // Use saved preference if available
+    shouldUseDarkMode = savedTheme === 'dark';
+  } else {
+    // Use system preference if no saved preference
+    shouldUseDarkMode = systemPrefersDark;
+  }
+
+  if (shouldUseDarkMode) {
     document.body.classList.add('dark');
     dayNight.querySelector("i").classList.add("fa-sun");
   } else {
+    document.body.classList.remove('dark');
     dayNight.querySelector("i").classList.add("fa-moon");
   }
+
+  // Add theme-override class if user has manually set a preference
+  if (savedTheme) {
+    document.body.classList.add('theme-override');
+  }
+
+  // Listen for system theme changes
+  window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
+    // Only auto-switch if user hasn't manually set a preference
+    if (!localStorage.getItem('theme')) {
+      if (e.matches) {
+        document.body.classList.add('dark');
+        dayNight.querySelector("i").classList.remove("fa-moon");
+        dayNight.querySelector("i").classList.add("fa-sun");
+      } else {
+        document.body.classList.remove('dark');
+        dayNight.querySelector("i").classList.remove("fa-sun");
+        dayNight.querySelector("i").classList.add("fa-moon");
+      }
+    }
+  });
 
   // Load saved color scheme
   const savedColor = localStorage.getItem('colorScheme');
@@ -295,8 +340,30 @@ function initializeYear() {
 /* ============================== Certificates Management ============================ */
 function initializeCertificates() {
   updateCertificateStatuses();
+  initializeCertificateFilters();
+  // Initial count update
+  setTimeout(() => {
+    updateFilterCounts();
+  }, 100);
   // Update certificate statuses every hour
   setInterval(updateCertificateStatuses, 3600000);
+}
+
+function initializeCertificateFilters() {
+  const filterButtons = document.querySelectorAll('.filter-btn');
+
+  filterButtons.forEach(button => {
+    button.addEventListener('click', function() {
+      // Remove active class from all buttons
+      filterButtons.forEach(btn => btn.classList.remove('active'));
+      // Add active class to clicked button
+      this.classList.add('active');
+
+      // Filter certificates
+      const filter = this.getAttribute('data-filter');
+      filterCertificates(filter);
+    });
+  });
 }
 
 function updateCertificateStatuses() {
@@ -304,35 +371,52 @@ function updateCertificateStatuses() {
   const currentDate = new Date();
 
   certificates.forEach(cert => {
-    const expiryElement = cert.querySelector('.date-value[datetime]');
+    const dateElements = cert.querySelectorAll('.date-value');
     const statusElement = cert.querySelector('.certificate-status');
+    let expiryElement = null;
 
-    if (expiryElement && statusElement && expiryElement.getAttribute('datetime')) {
-      const expiryDate = new Date(expiryElement.getAttribute('datetime'));
-      const daysUntilExpiry = Math.ceil((expiryDate - currentDate) / (1000 * 60 * 60 * 24));
+    // Find the expiry date element
+    dateElements.forEach(el => {
+      const parent = el.parentElement;
+      const label = parent.querySelector('.date-label');
+      if (label && (label.textContent.includes('Expires') || el.textContent.includes('Lifetime'))) {
+        expiryElement = el;
+      }
+    });
 
-      // Update status based on expiry
-      if (daysUntilExpiry < 0) {
-        // Expired
-        statusElement.className = 'certificate-status expired';
-        statusElement.innerHTML = '<i class="fas fa-times-circle"></i>';
-        statusElement.title = 'Certificate Expired';
-        expiryElement.classList.add('expired');
-      } else if (daysUntilExpiry <= 90) {
-        // Expiring within 90 days
-        statusElement.className = 'certificate-status expiring';
-        statusElement.innerHTML = '<i class="fas fa-exclamation-triangle"></i>';
-        statusElement.title = `Expires in ${daysUntilExpiry} days`;
-        expiryElement.classList.add('expiring');
-      } else {
-        // Active
+    if (statusElement) {
+      // Handle lifetime certificates
+      if (expiryElement && expiryElement.textContent.includes('Lifetime')) {
         statusElement.className = 'certificate-status active';
-        statusElement.innerHTML = '<i class="fas fa-check-circle"></i>';
-        statusElement.title = 'Active Certificate';
-        expiryElement.classList.remove('expiring', 'expired');
+        statusElement.innerHTML = '<i class="fas fa-check-circle"></i><span>Active</span>';
+        statusElement.title = 'Active Certificate - Lifetime Validity';
+        return;
+      }
+
+      // Handle dated certificates
+      if (expiryElement && expiryElement.getAttribute('datetime')) {
+        const expiryDate = new Date(expiryElement.getAttribute('datetime'));
+        const daysUntilExpiry = Math.ceil((expiryDate - currentDate) / (1000 * 60 * 60 * 24));
+
+        if (daysUntilExpiry < 0) {
+          // Expired
+          statusElement.className = 'certificate-status expired';
+          statusElement.innerHTML = '<i class="fas fa-times-circle"></i><span>Expired</span>';
+          statusElement.title = 'Certificate Expired';
+          expiryElement.classList.add('expired');
+        } else {
+          // Active (includes previously "expiring" certificates)
+          statusElement.className = 'certificate-status active';
+          statusElement.innerHTML = '<i class="fas fa-check-circle"></i><span>Active</span>';
+          statusElement.title = 'Active Certificate';
+          expiryElement.classList.remove('expiring', 'expired');
+        }
       }
     }
   });
+
+  // Update filter counts after status update
+  updateFilterCounts();
 }
 
 function formatCertificateDate(dateString) {
@@ -363,16 +447,13 @@ function showCertificateVerificationModal(certificateId) {
 function filterCertificates(filter) {
   const certificates = document.querySelectorAll('.certificate-item');
 
-  certificates.forEach(cert => {
+  certificates.forEach((cert, index) => {
     const status = cert.querySelector('.certificate-status').classList;
     let show = true;
 
     switch(filter) {
       case 'active':
         show = status.contains('active');
-        break;
-      case 'expiring':
-        show = status.contains('expiring');
         break;
       case 'expired':
         show = status.contains('expired');
@@ -383,8 +464,51 @@ function filterCertificates(filter) {
         break;
     }
 
-    cert.style.display = show ? 'block' : 'none';
+    if (show) {
+      cert.style.display = 'block';
+      cert.style.opacity = '0';
+      cert.style.transform = 'translateY(20px)';
+
+      // Staggered animation
+      setTimeout(() => {
+        cert.style.transition = 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)';
+        cert.style.opacity = '1';
+        cert.style.transform = 'translateY(0)';
+      }, index * 100);
+    } else {
+      cert.style.transition = 'all 0.3s ease';
+      cert.style.opacity = '0';
+      cert.style.transform = 'translateY(-20px)';
+
+      setTimeout(() => {
+        cert.style.display = 'none';
+      }, 300);
+    }
   });
+
+  // Update filter button counts
+  updateFilterCounts();
+}
+
+function updateFilterCounts() {
+  // Wait a bit for status updates to complete
+  setTimeout(() => {
+    const certificates = document.querySelectorAll('.certificate-item');
+    const activeCount = document.querySelectorAll('.certificate-status.active').length;
+    const expiredCount = document.querySelectorAll('.certificate-status.expired').length;
+    const totalCount = certificates.length;
+
+    // Update count displays
+    const allBtn = document.querySelector('[data-filter="all"] .count');
+    const activeBtn = document.querySelector('[data-filter="active"] .count');
+    const expiredBtn = document.querySelector('[data-filter="expired"] .count');
+
+    if (allBtn) allBtn.textContent = totalCount;
+    if (activeBtn) activeBtn.textContent = activeCount;
+    if (expiredBtn) expiredBtn.textContent = expiredCount;
+
+    console.log('Filter counts updated:', { total: totalCount, active: activeCount, expired: expiredCount });
+  }, 50);
 }
 
 /* ============================== Utility Functions ============================ */
