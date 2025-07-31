@@ -3,6 +3,7 @@
 // Initialize the application
 document.addEventListener('DOMContentLoaded', function() {
   initializeApp();
+  initializePageLoading();
 });
 
 function initializeApp() {
@@ -87,14 +88,26 @@ function navigateToSection(sectionId) {
   const targetSection = document.querySelector(`#${sectionId}`);
   if (!targetSection) return;
 
-  // Update browser history
-  const newUrl = `${window.location.pathname}${window.location.search}#${sectionId}`;
-  history.pushState({ section: sectionId }, '', newUrl);
+  // Show loading overlay for smooth transition
+  showLoadingOverlay();
 
-  // Update the UI
-  showSection(sectionId);
+  // Update navigation immediately for visual feedback
   updateNavigation(sectionId);
-  currentSection = sectionId;
+
+  // Delay the section transition to allow loading overlay to appear
+  setTimeout(() => {
+    showSection(sectionId);
+    currentSection = sectionId;
+
+    // Update browser history
+    const newUrl = `${window.location.pathname}${window.location.search}#${sectionId}`;
+    history.pushState({ section: sectionId }, '', newUrl);
+
+    // Hide loading overlay after section is shown
+    setTimeout(() => {
+      hideLoadingOverlay();
+    }, 300);
+  }, 150);
 
   // Close mobile menu if open
   if (window.innerWidth < 1200) {
@@ -110,23 +123,31 @@ function navigateToSection(sectionId) {
 
 function showSection(sectionId) {
   const allSection = document.querySelectorAll(".section");
+  const targetSection = document.querySelector(`#${sectionId}`);
+
+  if (!targetSection) return;
+
+  // Find current active section before removing classes
+  const currentActiveSection = document.querySelector(".section.active");
+
+  // If it's the same section, don't do anything
+  if (currentActiveSection === targetSection) return;
 
   // Remove active and back-section classes from all sections
   allSection.forEach(section => {
     section.classList.remove("active", "back-section");
   });
 
-  // Add back-section to current section before switching
-  const currentActiveSection = document.querySelector(".section.active");
+  // Add back-section to previous active section (for smooth transition)
   if (currentActiveSection) {
     currentActiveSection.classList.add("back-section");
   }
 
-  // Activate target section
-  const targetSection = document.querySelector(`#${sectionId}`);
-  if (targetSection) {
+  // Use requestAnimationFrame to ensure smooth transition
+  requestAnimationFrame(() => {
+    // Activate target section
     targetSection.classList.add("active");
-  }
+  });
 }
 
 function updateNavigation(sectionId) {
@@ -145,21 +166,71 @@ function updateNavigation(sectionId) {
 function initializeHistoryManagement() {
   // Handle initial page load
   const initialHash = window.location.hash.slice(1) || 'home';
-  showSection(initialHash);
-  updateNavigation(initialHash);
   currentSection = initialHash;
 
   // Handle browser back/forward buttons
   window.addEventListener('popstate', function(event) {
     const sectionId = event.state ? event.state.section : (window.location.hash.slice(1) || 'home');
-    showSection(sectionId);
+
+    // Use loading overlay for back/forward navigation too
+    showLoadingOverlay();
     updateNavigation(sectionId);
-    currentSection = sectionId;
+
+    setTimeout(() => {
+      showSection(sectionId);
+      currentSection = sectionId;
+
+      setTimeout(() => {
+        hideLoadingOverlay();
+      }, 300);
+    }, 150);
   });
 
   // Set initial history state
   if (!history.state) {
     history.replaceState({ section: currentSection }, '', `${window.location.pathname}${window.location.search}#${currentSection}`);
+  }
+}
+
+/* ============================== Page Loading Management ============================ */
+function initializePageLoading() {
+  const loadingOverlay = document.getElementById('loadingOverlay');
+
+  // Show loading overlay immediately
+  showLoadingOverlay();
+
+  // Wait for all resources to load
+  window.addEventListener('load', function() {
+    // Additional delay to ensure smooth experience
+    setTimeout(() => {
+      // Remove page-loading class and show initial section
+      document.body.classList.remove('page-loading');
+
+      const initialHash = window.location.hash.slice(1) || 'home';
+      showSection(initialHash);
+      updateNavigation(initialHash);
+      currentSection = initialHash;
+
+      // Hide loading overlay
+      setTimeout(() => {
+        hideLoadingOverlay();
+      }, 400);
+    }, 800);
+  });
+}
+
+/* ============================== Loading Overlay Functions ============================ */
+function showLoadingOverlay() {
+  const loadingOverlay = document.getElementById('loadingOverlay');
+  if (loadingOverlay) {
+    loadingOverlay.classList.add('active');
+  }
+}
+
+function hideLoadingOverlay() {
+  const loadingOverlay = document.getElementById('loadingOverlay');
+  if (loadingOverlay) {
+    loadingOverlay.classList.remove('active');
   }
 }
 
@@ -338,15 +409,110 @@ function initializeYear() {
 }
 
 /* ============================== Certificates Management ============================ */
+// Certificate data structure for dynamic management
+const certificateData = {
+  'cybersecurity-trainee': {
+    name: 'Cybersecurity Trainee',
+    issuer: 'Tata Strive | SAP India',
+    issued: '2024-09-15',
+    expires: 'lifetime',
+    verifyUrl: './assets/Strive.pdf'
+  },
+  'python-cybersecurity': {
+    name: 'Python for Cybersecurity',
+    issuer: 'Coursera',
+    issued: '2024-08-20',
+    expires: '2027-09-15',
+    verifyUrl: '#'
+  },
+  'aws-cloud-security': {
+    name: 'AWS Cloud Security',
+    issuer: 'Amazon Web Services',
+    issued: '2024-07-10',
+    expires: '2027-07-10',
+    verifyUrl: '#'
+  },
+  'penetration-testing': {
+    name: 'Penetration Testing Essentials',
+    issuer: 'EC-Council',
+    issued: '2023-12-05',
+    expires: '2025-12-05',
+    verifyUrl: '#'
+  },
+  'network-security': {
+    name: 'Network Security Fundamentals',
+    issuer: 'Cisco Networking Academy',
+    issued: '2024-06-15',
+    expires: '2027-06-15',
+    verifyUrl: '#'
+  },
+  'soc-analyst': {
+    name: 'SOC Analyst Level 1',
+    issuer: 'SANS Institute',
+    issued: '2024-05-30',
+    expires: '2026-05-30',
+    verifyUrl: '#'
+  }
+};
+
 function initializeCertificates() {
   updateCertificateStatuses();
   initializeCertificateFilters();
+  setupCertificateAutoUpdate();
   // Initial count update
   setTimeout(() => {
     updateFilterCounts();
   }, 100);
+}
+
+function setupCertificateAutoUpdate() {
   // Update certificate statuses every hour
   setInterval(updateCertificateStatuses, 3600000);
+
+  // Update at midnight every day for date changes
+  const now = new Date();
+  const tomorrow = new Date(now);
+  tomorrow.setDate(tomorrow.getDate() + 1);
+  tomorrow.setHours(0, 0, 0, 0);
+
+  const msUntilMidnight = tomorrow.getTime() - now.getTime();
+
+  setTimeout(() => {
+    updateCertificateStatuses();
+    checkExpiringCertificates();
+    // Then update every 24 hours
+    setInterval(() => {
+      updateCertificateStatuses();
+      checkExpiringCertificates();
+    }, 24 * 60 * 60 * 1000);
+  }, msUntilMidnight);
+
+  // Also update when page becomes visible (user returns to tab)
+  document.addEventListener('visibilitychange', () => {
+    if (!document.hidden) {
+      updateCertificateStatuses();
+    }
+  });
+}
+
+function checkExpiringCertificates() {
+  const certificates = document.querySelectorAll('.certificate-item');
+  const expiringCerts = [];
+
+  certificates.forEach(cert => {
+    const statusElement = cert.querySelector('.certificate-status');
+    if (statusElement && statusElement.classList.contains('expiring')) {
+      const titleElement = cert.querySelector('.certificate-title');
+      if (titleElement) {
+        expiringCerts.push(titleElement.textContent);
+      }
+    }
+  });
+
+  if (expiringCerts.length > 0) {
+    console.log(`⚠️ ${expiringCerts.length} certificate(s) expiring soon:`, expiringCerts);
+    // You can add notification logic here if needed
+  }
 }
 
 function initializeCertificateFilters() {
@@ -379,7 +545,7 @@ function updateCertificateStatuses() {
     dateElements.forEach(el => {
       const parent = el.parentElement;
       const label = parent.querySelector('.date-label');
-      if (label && (label.textContent.includes('Expires') || el.textContent.includes('Lifetime'))) {
+      if (label && (label.textContent.includes('Expires') || label.textContent.includes('Validity') || el.textContent.includes('Lifetime'))) {
         expiryElement = el;
       }
     });
@@ -387,9 +553,9 @@ function updateCertificateStatuses() {
     if (statusElement) {
       // Handle lifetime certificates
       if (expiryElement && expiryElement.textContent.includes('Lifetime')) {
-        statusElement.className = 'certificate-status active';
-        statusElement.innerHTML = '<i class="fas fa-check-circle"></i><span>Active</span>';
-        statusElement.title = 'Active Certificate - Lifetime Validity';
+        updateCertificateStatus(statusElement, 'active', 'Active', 'fas fa-check-circle', 'Active Certificate - Lifetime Validity');
+        expiryElement.classList.remove('expiring', 'expired');
+        expiryElement.classList.add('lifetime');
         return;
       }
 
@@ -398,18 +564,20 @@ function updateCertificateStatuses() {
         const expiryDate = new Date(expiryElement.getAttribute('datetime'));
         const daysUntilExpiry = Math.ceil((expiryDate - currentDate) / (1000 * 60 * 60 * 24));
 
+        // Remove all status classes first
+        expiryElement.classList.remove('expiring', 'expired', 'lifetime');
+
         if (daysUntilExpiry < 0) {
           // Expired
-          statusElement.className = 'certificate-status expired';
-          statusElement.innerHTML = '<i class="fas fa-times-circle"></i><span>Expired</span>';
-          statusElement.title = 'Certificate Expired';
+          updateCertificateStatus(statusElement, 'expired', 'Expired', 'fas fa-times-circle', `Certificate expired ${Math.abs(daysUntilExpiry)} days ago`);
           expiryElement.classList.add('expired');
+        } else if (daysUntilExpiry <= 30) {
+          // Expiring soon (within 30 days)
+          updateCertificateStatus(statusElement, 'expiring', 'Expiring', 'fas fa-exclamation-triangle', `Certificate expires in ${daysUntilExpiry} days`);
+          expiryElement.classList.add('expiring');
         } else {
-          // Active (includes previously "expiring" certificates)
-          statusElement.className = 'certificate-status active';
-          statusElement.innerHTML = '<i class="fas fa-check-circle"></i><span>Active</span>';
-          statusElement.title = 'Active Certificate';
-          expiryElement.classList.remove('expiring', 'expired');
+          // Active
+          updateCertificateStatus(statusElement, 'active', 'Active', 'fas fa-check-circle', `Certificate expires in ${daysUntilExpiry} days`);
         }
       }
     }
@@ -419,13 +587,75 @@ function updateCertificateStatuses() {
   updateFilterCounts();
 }
 
+function updateCertificateStatus(statusElement, statusClass, statusText, iconClass, title) {
+  statusElement.className = `certificate-status ${statusClass}`;
+  statusElement.innerHTML = `<i class="${iconClass}"></i><span>${statusText}</span>`;
+  statusElement.title = title;
+}
+
 function formatCertificateDate(dateString) {
+  if (dateString === 'lifetime') {
+    return 'Lifetime';
+  }
+
   const date = new Date(dateString);
   return date.toLocaleDateString('en-US', {
     year: 'numeric',
     month: 'short',
     day: '2-digit'
   });
+}
+
+function getDaysUntilExpiry(expiryDate) {
+  if (expiryDate === 'lifetime') {
+    return Infinity;
+  }
+
+  const currentDate = new Date();
+  const expiry = new Date(expiryDate);
+  return Math.ceil((expiry - currentDate) / (1000 * 60 * 60 * 24));
+}
+
+function getCertificateStatusInfo(expiryDate) {
+  const days = getDaysUntilExpiry(expiryDate);
+
+  if (days === Infinity) {
+    return {
+      status: 'active',
+      text: 'Active',
+      icon: 'fas fa-check-circle',
+      title: 'Active Certificate - Lifetime Validity',
+      class: 'lifetime'
+    };
+  }
+
+  if (days < 0) {
+    return {
+      status: 'expired',
+      text: 'Expired',
+      icon: 'fas fa-times-circle',
+      title: `Certificate expired ${Math.abs(days)} days ago`,
+      class: 'expired'
+    };
+  }
+
+  if (days <= 30) {
+    return {
+      status: 'expiring',
+      text: 'Expiring',
+      icon: 'fas fa-exclamation-triangle',
+      title: `Certificate expires in ${days} days`,
+      class: 'expiring'
+    };
+  }
+
+  return {
+    status: 'active',
+    text: 'Active',
+    icon: 'fas fa-check-circle',
+    title: `Certificate expires in ${days} days`,
+    class: 'active'
+  };
 }
 
 // Certificate verification functionality
@@ -454,6 +684,9 @@ function filterCertificates(filter) {
     switch(filter) {
       case 'active':
         show = status.contains('active');
+        break;
+      case 'expiring':
+        show = status.contains('expiring');
         break;
       case 'expired':
         show = status.contains('expired');
@@ -495,6 +728,7 @@ function updateFilterCounts() {
   setTimeout(() => {
     const certificates = document.querySelectorAll('.certificate-item');
     const activeCount = document.querySelectorAll('.certificate-status.active').length;
+    const expiringCount = document.querySelectorAll('.certificate-status.expiring').length;
     const expiredCount = document.querySelectorAll('.certificate-status.expired').length;
     const totalCount = certificates.length;
 
@@ -507,7 +741,12 @@ function updateFilterCounts() {
     if (activeBtn) activeBtn.textContent = activeCount;
     if (expiredBtn) expiredBtn.textContent = expiredCount;
 
-    console.log('Filter counts updated:', { total: totalCount, active: activeCount, expired: expiredCount });
+    console.log('Filter counts updated:', {
+      total: totalCount,
+      active: activeCount,
+      expiring: expiringCount,
+      expired: expiredCount
+    });
   }, 50);
 }
 

@@ -99,7 +99,7 @@
           "addressRegion": "India"
         },
         "email": "tushar.basak9936@gmail.com",
-        "telephone": "+91-XXXXXXXXXX",
+        "telephone": "+91-7239051434",
         "knowsAbout": [
           "Cybersecurity",
           "Ethical Hacking",
@@ -351,10 +351,16 @@
     />
     <link rel="stylesheet" href="css/style-switcher.css" />
   </head>
-  <body>
+  <body class="page-loading">
     <!-- custom cursors -->
     <div class="cursor-1"></div>
     <div class="cursor-2"></div>
+
+    <!-- Glassmorphism Loading Overlay -->
+    <div class="loading-overlay" id="loadingOverlay">
+      <div class="loading-spinner"></div>
+      <div class="loading-text">Loading...</div>
+    </div>
 
     <!-- Main Container Start-->
     <div class="main-container">
@@ -381,49 +387,58 @@
             >
           </li>
         </ul>
-        <div class="footer">
-          <div class="social-icons padd-24">
+        <footer class="footer">
+          <div class="social-icons">
             <a
               href="https://bit.ly/basakgithub"
               target="_blank"
-              aria-label="GitHub"
-              ><i class="fab fa-github"></i
-            ></a>
+              rel="noopener noreferrer"
+              aria-label="Visit Tushar Basak's GitHub Profile"
+              title="GitHub"
+            >
+              <i class="fab fa-github"></i>
+            </a>
             <a
               href="https://bit.ly/basaklinkedin"
               target="_blank"
-              aria-label="LinkedIn"
-              ><i class="fa-brands fa-linkedin-in"></i
-            ></a>
+              rel="noopener noreferrer"
+              aria-label="Connect with Tushar Basak on LinkedIn"
+              title="LinkedIn"
+            >
+              <i class="fa-brands fa-linkedin-in"></i>
+            </a>
             <a
               href="https://leetcode.com/tusharbasak97/"
               target="_blank"
-              aria-label="LeetCode"
-              ><i class="fa fa-code"></i
-            ></a>
+              rel="noopener noreferrer"
+              aria-label="View Tushar Basak's LeetCode Profile"
+              title="LeetCode"
+            >
+              <i class="fa fa-code"></i>
+            </a>
             <a
               href="https://medium.com/@tusharbasak97/"
               target="_blank"
-              aria-label="Medium"
-              ><i class="fa-brands fa-medium"></i
-            ></a>
-            <!-- <a
-              href="https://www.kaggle.com/tusharbasak97/"
-              target="_blank"
-              aria-label="Kaggle"
-              ><i class="fa-brands fa-kaggle"></i
-            ></a> -->
+              rel="noopener noreferrer"
+              aria-label="Read Tushar Basak's Articles on Medium"
+              title="Medium"
+            >
+              <i class="fa-brands fa-medium"></i>
+            </a>
           </div>
           <p>
-            &copy; Copyright <span id="current-year"></span><br />Designed by
+            &copy; Copyright <span id="current-year"></span><br />
+            Designed by
             <a
               href="https://bit.ly/m/DataBasak"
               target="_blank"
               rel="noopener noreferrer"
-              ><span>Tushar Basak</span></a
+              aria-label="Visit Tushar Basak's Portfolio"
             >
+              <span>Tushar Basak</span>
+            </a>
           </p>
-        </div>
+        </footer>
       </div>
       <div class="main-content">
         <!-- HOME SECTION -->
@@ -653,28 +668,7 @@
                           <div class="timeline-item">
                             <div class="circle-dot"></div>
                             <h3 class="timeline-date">
-                              <i class="fa fa-calendar"></i> May'24 - Sept'24
-                            </h3>
-                            <h4 class="timeline-title">
-                              Cybersecurity Trainee: Tata Strive | SAP India
-                            </h4>
-                            <p class="timeline-text">
-                              Experienced in <strong>ethical hacking</strong>,
-                              SOC operations, and network security training.
-                              Proficient in TCP/IP, HTTP, SSL protocols and
-                              vulnerability research. Skilled in incident
-                              response, threat analysis, and mitigation using
-                              tools like Nmap, Burp Suite, and Wireshark.
-                              Possess a strong understanding of browser security
-                              concepts including
-                              <strong>Content Security Policy</strong>.
-                            </p>
-                          </div>
-                          <!-- timeline item -->
-                          <div class="timeline-item">
-                            <div class="circle-dot"></div>
-                            <h3 class="timeline-date">
-                              <i class="fa fa-calendar"></i> Jan'23 - Mar'24
+                              <i class="fa fa-calendar"></i> Jan'23 - June'25
                             </h3>
                             <h4 class="timeline-title">
                               IT Support Engineer: Secure Life HR Service
@@ -755,27 +749,31 @@
                     </div>
                   </div>
                   <div class="certificate-content">
-                    <div class="certificate-main">
-                      <h3 class="certificate-title" itemprop="name">Cybersecurity Fundamentals</h3>
-                      <p class="certificate-issuer" itemprop="recognizedBy">Tata Strive | SAP India</p>
-                    </div>
-                    <div class="certificate-meta">
-                      <div class="certificate-dates">
-                        <div class="date-item">
-                          <span class="date-label">Issued</span>
-                          <time class="date-value" datetime="2024-09-15" itemprop="dateCreated">Sep 15, 2024</time>
-                        </div>
-                        <div class="date-item">
-                          <span class="date-label">Expires</span>
-                          <time class="date-value" datetime="2027-09-15">Sep 15, 2027</time>
-                        </div>
+                    <div class="certificate-header">
+                      <div class="certificate-main">
+                        <h3 class="certificate-title" itemprop="name">Cybersecurity Trainee</h3>
+                        <p class="certificate-issuer" itemprop="recognizedBy">Tata Strive | SAP India</p>
                       </div>
-                      <div class="certificate-status active" title="Active Certificate">
-                        <i class="fas fa-check-circle"></i>
-                        <span>Active</span>
+                    </div>
+                    <div class="certificate-footer">
+                      <div class="certificate-meta">
+                        <div class="certificate-dates">
+                          <div class="date-item">
+                            <span class="date-label">Issued</span>
+                            <time class="date-value" datetime="2024-09-07" itemprop="dateCreated">Sep 07, 2024</time>
+                          </div>
+                          <div class="date-item">
+                            <span class="date-label">Expires</span>
+                            <span class="date-value lifetime">Lifetime</span>
+                          </div>
+                        </div>
                       </div>
                       <div class="certificate-actions">
-                        <a href="#" class="btn-certificate verify" aria-label="Verify Certificate">
+                        <div class="certificate-status active" title="Active Certificate">
+                          <i class="fas fa-check-circle"></i>
+                          <span>Active</span>
+                        </div>
+                        <a href="./assets/Strive.pdf" class="btn-certificate verify" aria-label="Verify Certificate">
                           <i class="fas fa-external-link-alt"></i> Verify
                         </a>
                       </div>
@@ -793,26 +791,30 @@
                     </div>
                   </div>
                   <div class="certificate-content">
-                    <div class="certificate-main">
-                      <h3 class="certificate-title" itemprop="name">Python for Cybersecurity</h3>
-                      <p class="certificate-issuer" itemprop="recognizedBy">Coursera</p>
-                    </div>
-                    <div class="certificate-meta">
-                      <div class="certificate-dates">
-                        <div class="date-item">
-                          <span class="date-label">Issued</span>
-                          <time class="date-value" datetime="2024-08-20" itemprop="dateCreated">Aug 20, 2024</time>
-                        </div>
-                        <div class="date-item">
-                          <span class="date-label">Validity</span>
-                          <span class="date-value lifetime">Lifetime</span>
-                        </div>
+                    <div class="certificate-header">
+                      <div class="certificate-main">
+                        <h3 class="certificate-title" itemprop="name">Python for Cybersecurity</h3>
+                        <p class="certificate-issuer" itemprop="recognizedBy">Coursera</p>
                       </div>
-                      <div class="certificate-status active" title="Active Certificate">
-                        <i class="fas fa-check-circle"></i>
-                        <span>Active</span>
+                    </div>
+                    <div class="certificate-footer">
+                      <div class="certificate-meta">
+                        <div class="certificate-dates">
+                          <div class="date-item">
+                            <span class="date-label">Issued</span>
+                            <time class="date-value" datetime="2024-08-20" itemprop="dateCreated">Aug 20, 2024</time>
+                          </div>
+                          <div class="date-item">
+                            <span class="date-label">Validity</span>
+                            <time class="date-value" datetime="2027-09-15">Sep 15, 2027</time>
+                          </div>
+                        </div>
                       </div>
                       <div class="certificate-actions">
+                        <div class="certificate-status active" title="Active Certificate">
+                          <i class="fas fa-check-circle"></i>
+                          <span>Active</span>
+                        </div>
                         <a href="#" class="btn-certificate verify" aria-label="Verify Certificate">
                           <i class="fas fa-external-link-alt"></i> Verify
                         </a>
@@ -831,26 +833,30 @@
                     </div>
                   </div>
                   <div class="certificate-content">
-                    <div class="certificate-main">
-                      <h3 class="certificate-title" itemprop="name">AWS Cloud Security</h3>
-                      <p class="certificate-issuer" itemprop="recognizedBy">Amazon Web Services</p>
-                    </div>
-                    <div class="certificate-meta">
-                      <div class="certificate-dates">
-                        <div class="date-item">
-                          <span class="date-label">Issued</span>
-                          <time class="date-value" datetime="2024-07-10" itemprop="dateCreated">Jul 10, 2024</time>
-                        </div>
-                        <div class="date-item">
-                          <span class="date-label">Expires</span>
-                          <time class="date-value expiring" datetime="2025-02-28">Feb 28, 2025</time>
-                        </div>
+                    <div class="certificate-header">
+                      <div class="certificate-main">
+                        <h3 class="certificate-title" itemprop="name">AWS Cloud Security</h3>
+                        <p class="certificate-issuer" itemprop="recognizedBy">Amazon Web Services</p>
                       </div>
-                      <div class="certificate-status active" title="Active Certificate">
-                        <i class="fas fa-check-circle"></i>
-                        <span>Active</span>
+                    </div>
+                    <div class="certificate-footer">
+                      <div class="certificate-meta">
+                        <div class="certificate-dates">
+                          <div class="date-item">
+                            <span class="date-label">Issued</span>
+                            <time class="date-value" datetime="2024-07-10" itemprop="dateCreated">Jul 10, 2024</time>
+                          </div>
+                          <div class="date-item">
+                            <span class="date-label">Expires</span>
+                            <time class="date-value expiring" datetime="2025-02-28">Feb 28, 2025</time>
+                          </div>
+                        </div>
                       </div>
                       <div class="certificate-actions">
+                        <div class="certificate-status active" title="Active Certificate">
+                          <i class="fas fa-check-circle"></i>
+                          <span>Active</span>
+                        </div>
                         <a href="#" class="btn-certificate verify" aria-label="Verify Certificate">
                           <i class="fas fa-external-link-alt"></i> Verify
                         </a>
@@ -869,26 +875,30 @@
                     </div>
                   </div>
                   <div class="certificate-content">
-                    <div class="certificate-main">
-                      <h3 class="certificate-title" itemprop="name">Penetration Testing Essentials</h3>
-                      <p class="certificate-issuer" itemprop="recognizedBy">EC-Council</p>
-                    </div>
-                    <div class="certificate-meta">
-                      <div class="certificate-dates">
-                        <div class="date-item">
-                          <span class="date-label">Issued</span>
-                          <time class="date-value" datetime="2023-12-05" itemprop="dateCreated">Dec 05, 2023</time>
-                        </div>
-                        <div class="date-item">
-                          <span class="date-label">Expires</span>
-                          <time class="date-value expiring" datetime="2025-03-15">Mar 15, 2025</time>
-                        </div>
+                    <div class="certificate-header">
+                      <div class="certificate-main">
+                        <h3 class="certificate-title" itemprop="name">Penetration Testing Essentials</h3>
+                        <p class="certificate-issuer" itemprop="recognizedBy">EC-Council</p>
                       </div>
-                      <div class="certificate-status expiring" title="Expiring Soon">
-                        <i class="fas fa-exclamation-triangle"></i>
-                        <span>Expiring</span>
+                    </div>
+                    <div class="certificate-footer">
+                      <div class="certificate-meta">
+                        <div class="certificate-dates">
+                          <div class="date-item">
+                            <span class="date-label">Issued</span>
+                            <time class="date-value" datetime="2023-12-05" itemprop="dateCreated">Dec 05, 2023</time>
+                          </div>
+                          <div class="date-item">
+                            <span class="date-label">Expires</span>
+                            <time class="date-value expiring" datetime="2025-03-15">Mar 15, 2025</time>
+                          </div>
+                        </div>
                       </div>
                       <div class="certificate-actions">
+                        <div class="certificate-status expiring" title="Expiring Soon">
+                          <i class="fas fa-exclamation-triangle"></i>
+                          <span>Expiring</span>
+                        </div>
                         <a href="#" class="btn-certificate verify" aria-label="Verify Certificate">
                           <i class="fas fa-external-link-alt"></i> Verify
                         </a>
@@ -907,26 +917,30 @@
                     </div>
                   </div>
                   <div class="certificate-content">
-                    <div class="certificate-main">
-                      <h3 class="certificate-title" itemprop="name">Network Security Fundamentals</h3>
-                      <p class="certificate-issuer" itemprop="recognizedBy">Cisco Networking Academy</p>
-                    </div>
-                    <div class="certificate-meta">
-                      <div class="certificate-dates">
-                        <div class="date-item">
-                          <span class="date-label">Issued</span>
-                          <time class="date-value" datetime="2023-06-15" itemprop="dateCreated">Jun 15, 2023</time>
-                        </div>
-                        <div class="date-item">
-                          <span class="date-label">Expires</span>
-                          <time class="date-value expired" datetime="2024-06-15">Jun 15, 2024</time>
-                        </div>
+                    <div class="certificate-header">
+                      <div class="certificate-main">
+                        <h3 class="certificate-title" itemprop="name">Network Security Fundamentals</h3>
+                        <p class="certificate-issuer" itemprop="recognizedBy">Cisco Networking Academy</p>
                       </div>
-                      <div class="certificate-status active" title="Active Certificate">
-                        <i class="fas fa-check-circle"></i>
-                        <span>Active</span>
+                    </div>
+                    <div class="certificate-footer">
+                      <div class="certificate-meta">
+                        <div class="certificate-dates">
+                          <div class="date-item">
+                            <span class="date-label">Issued</span>
+                            <time class="date-value" datetime="2023-06-15" itemprop="dateCreated">Jun 15, 2023</time>
+                          </div>
+                          <div class="date-item">
+                            <span class="date-label">Expires</span>
+                            <time class="date-value expired" datetime="2024-06-15">Jun 15, 2024</time>
+                          </div>
+                        </div>
                       </div>
                       <div class="certificate-actions">
+                        <div class="certificate-status active" title="Active Certificate">
+                          <i class="fas fa-check-circle"></i>
+                          <span>Active</span>
+                        </div>
                         <a href="#" class="btn-certificate verify" aria-label="Verify Certificate">
                           <i class="fas fa-external-link-alt"></i> Verify
                         </a>
@@ -945,26 +959,30 @@
                     </div>
                   </div>
                   <div class="certificate-content">
-                    <div class="certificate-main">
-                      <h3 class="certificate-title" itemprop="name">SOC Analyst Level 1</h3>
-                      <p class="certificate-issuer" itemprop="recognizedBy">SANS Institute</p>
-                    </div>
-                    <div class="certificate-meta">
-                      <div class="certificate-dates">
-                        <div class="date-item">
-                          <span class="date-label">Issued</span>
-                          <time class="date-value" datetime="2024-05-30" itemprop="dateCreated">May 30, 2024</time>
-                        </div>
-                        <div class="date-item">
-                          <span class="date-label">Expires</span>
-                          <time class="date-value" datetime="2026-05-30">May 30, 2026</time>
-                        </div>
+                    <div class="certificate-header">
+                      <div class="certificate-main">
+                        <h3 class="certificate-title" itemprop="name">SOC Analyst Level 1</h3>
+                        <p class="certificate-issuer" itemprop="recognizedBy">SANS Institute</p>
                       </div>
-                      <div class="certificate-status active" title="Active Certificate">
-                        <i class="fas fa-check-circle"></i>
-                        <span>Active</span>
+                    </div>
+                    <div class="certificate-footer">
+                      <div class="certificate-meta">
+                        <div class="certificate-dates">
+                          <div class="date-item">
+                            <span class="date-label">Issued</span>
+                            <time class="date-value" datetime="2024-05-30" itemprop="dateCreated">May 30, 2024</time>
+                          </div>
+                          <div class="date-item">
+                            <span class="date-label">Expires</span>
+                            <time class="date-value" datetime="2026-05-30">May 30, 2026</time>
+                          </div>
+                        </div>
                       </div>
                       <div class="certificate-actions">
+                        <div class="certificate-status active" title="Active Certificate">
+                          <i class="fas fa-check-circle"></i>
+                          <span>Active</span>
+                        </div>
                         <a href="#" class="btn-certificate verify" aria-label="Verify Certificate">
                           <i class="fas fa-external-link-alt"></i> Verify
                         </a>
@@ -990,144 +1008,246 @@
               <!-- Python Security Projects -->
               <article class="portfolio-item padd-15" itemscope itemtype="https://schema.org/CreativeWork">
                 <div class="portfolio-item-inner shadow-dark">
-                  <div class="portfolio-img">
-                    <a
-                      href="https://github.com/tusharbasak97/Projects/tree/main/Python"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      aria-label="View Python Security Projects by Tushar Basak on GitHub"
-                    >
-                      <img
-                        src="assets/images/portfolio/Python.webp"
-                        alt="Python Security Projects - Cybersecurity tools and scripts developed by Tushar Basak"
-                        loading="lazy"
-                        width="300"
-                        height="300"
-                        itemprop="image"
-                    /></a>
+                  <div class="flip-card">
+                    <div class="flip-card-inner">
+                      <div class="flip-card-front">
+                        <div class="portfolio-img">
+                          <img
+                            src="assets/images/portfolio/Python.webp"
+                            alt="Python Security Projects - Cybersecurity tools and scripts developed by Tushar Basak"
+                            loading="lazy"
+                            width="300"
+                            height="300"
+                            itemprop="image"
+                          />
+                        </div>
+                        <div class="card-content">
+                          <h3 itemprop="name">Python Security Projects</h3>
+                          <div class="project-type">Security Automation</div>
+                        </div>
+                      </div>
+                      <div class="flip-card-back">
+                        <div class="flip-card-content">
+                          <h3>Python Security Projects</h3>
+                          <p itemprop="description">Collection of Python-based cybersecurity tools and automation scripts</p>
+                          <a
+                            href="https://github.com/tusharbasak97/Projects/tree/main/Python"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            class="btn"
+                            aria-label="View Python Security Projects by Tushar Basak on GitHub"
+                          >
+                            View Project
+                          </a>
+                        </div>
+                      </div>
+                    </div>
                   </div>
-                  <h3 itemprop="name" class="sr-only">Python Security Projects</h3>
-                  <p itemprop="description" class="sr-only">Collection of Python-based cybersecurity tools and automation scripts</p>
                 </div>
               </article>
 
               <!-- SQL Security Projects -->
               <article class="portfolio-item padd-15" itemscope itemtype="https://schema.org/CreativeWork">
                 <div class="portfolio-item-inner shadow-dark">
-                  <div class="portfolio-img">
-                    <a
-                      href="https://github.com/tusharbasak97/Projects/tree/main/SQL"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      aria-label="View SQL Security Projects by Tushar Basak on GitHub"
-                    >
-                      <img
-                        src="assets/images/portfolio/SQL.webp"
-                        alt="SQL Security Projects - Database security and SQL injection testing projects by Tushar Basak"
-                        loading="lazy"
-                        width="300"
-                        height="300"
-                        itemprop="image"
-                    /></a>
+                  <div class="flip-card">
+                    <div class="flip-card-inner">
+                      <div class="flip-card-front">
+                        <div class="portfolio-img">
+                          <img
+                            src="assets/images/portfolio/SQL.webp"
+                            alt="SQL Security Projects - Database security and SQL injection testing projects by Tushar Basak"
+                            loading="lazy"
+                            width="300"
+                            height="300"
+                            itemprop="image"
+                          />
+                        </div>
+                        <div class="card-content">
+                          <h3 itemprop="name">SQL Security Projects</h3>
+                          <div class="project-type">Database Security</div>
+                        </div>
+                      </div>
+                      <div class="flip-card-back">
+                        <div class="flip-card-content">
+                          <h3>SQL Security Projects</h3>
+                          <p itemprop="description">Database security analysis and SQL injection testing methodologies</p>
+                          <a
+                            href="https://github.com/tusharbasak97/Projects/tree/main/SQL"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            class="btn"
+                            aria-label="View SQL Security Projects by Tushar Basak on GitHub"
+                          >
+                            View Project
+                          </a>
+                        </div>
+                      </div>
+                    </div>
                   </div>
-                  <h3 itemprop="name" class="sr-only">SQL Security Projects</h3>
-                  <p itemprop="description" class="sr-only">Database security analysis and SQL injection testing methodologies</p>
                 </div>
               </article>
 
               <!-- Cybersecurity Projects -->
               <article class="portfolio-item padd-15" itemscope itemtype="https://schema.org/CreativeWork">
                 <div class="portfolio-item-inner shadow-dark">
-                  <div class="portfolio-img">
-                    <a
-                      href="https://github.com/tusharbasak97/Projects/tree/main/Cybersecurity"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      aria-label="View Cybersecurity Projects by Tushar Basak on GitHub"
-                    >
-                      <img
-                        src="assets/images/portfolio/Cybersecurity.webp"
-                        alt="Cybersecurity Projects - Ethical hacking tools, penetration testing scripts, and security analysis by Tushar Basak"
-                        loading="lazy"
-                        width="300"
-                        height="300"
-                        itemprop="image"
-                    /></a>
+                  <div class="flip-card">
+                    <div class="flip-card-inner">
+                      <div class="flip-card-front">
+                        <div class="portfolio-img">
+                          <img
+                            src="assets/images/portfolio/Cybersecurity.webp"
+                            alt="Cybersecurity Projects - Ethical hacking tools, penetration testing scripts, and security analysis by Tushar Basak"
+                            loading="lazy"
+                            width="300"
+                            height="300"
+                            itemprop="image"
+                          />
+                        </div>
+                        <div class="card-content">
+                          <h3 itemprop="name">Cybersecurity Projects</h3>
+                          <div class="project-type">Ethical Hacking</div>
+                        </div>
+                      </div>
+                      <div class="flip-card-back">
+                        <div class="flip-card-content">
+                          <h3>Cybersecurity Projects</h3>
+                          <p itemprop="description">Comprehensive cybersecurity projects including ethical hacking tools and penetration testing frameworks</p>
+                          <a
+                            href="https://github.com/tusharbasak97/Projects/tree/main/Cybersecurity"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            class="btn"
+                            aria-label="View Cybersecurity Projects by Tushar Basak on GitHub"
+                          >
+                            View Project
+                          </a>
+                        </div>
+                      </div>
+                    </div>
                   </div>
-                  <h3 itemprop="name" class="sr-only">Cybersecurity Projects</h3>
-                  <p itemprop="description" class="sr-only">Comprehensive cybersecurity projects including ethical hacking tools and penetration testing frameworks</p>
                 </div>
               </article>
 
               <!-- Cloud Security Projects -->
               <article class="portfolio-item padd-15" itemscope itemtype="https://schema.org/CreativeWork">
                 <div class="portfolio-item-inner shadow-dark">
-                  <div class="portfolio-img">
-                    <a
-                      href="https://github.com/tusharbasak97/Projects/tree/main/Cloud"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      aria-label="View Cloud Security Projects by Tushar Basak on GitHub"
-                    >
-                      <img
-                        src="assets/images/portfolio/Cloud.webp"
-                        alt="Cloud Security Projects - AWS, Azure, and GCP security implementations by Tushar Basak"
-                        loading="lazy"
-                        width="300"
-                        height="300"
-                        itemprop="image"
-                    /></a>
+                  <div class="flip-card">
+                    <div class="flip-card-inner">
+                      <div class="flip-card-front">
+                        <div class="portfolio-img">
+                          <img
+                            src="assets/images/portfolio/Cloud.webp"
+                            alt="Cloud Security Projects - AWS, Azure, and GCP security implementations by Tushar Basak"
+                            loading="lazy"
+                            width="300"
+                            height="300"
+                            itemprop="image"
+                          />
+                        </div>
+                        <div class="card-content">
+                          <h3 itemprop="name">Cloud Security Projects</h3>
+                          <div class="project-type">Cloud Infrastructure</div>
+                        </div>
+                      </div>
+                      <div class="flip-card-back">
+                        <div class="flip-card-content">
+                          <h3>Cloud Security Projects</h3>
+                          <p itemprop="description">Cloud security implementations and infrastructure protection strategies</p>
+                          <a
+                            href="https://github.com/tusharbasak97/Projects/tree/main/Cloud"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            class="btn"
+                            aria-label="View Cloud Security Projects by Tushar Basak on GitHub"
+                          >
+                            View Project
+                          </a>
+                        </div>
+                      </div>
+                    </div>
                   </div>
-                  <h3 itemprop="name" class="sr-only">Cloud Security Projects</h3>
-                  <p itemprop="description" class="sr-only">Cloud security implementations and infrastructure protection strategies</p>
                 </div>
               </article>
 
               <!-- Machine Learning Security Projects -->
               <article class="portfolio-item padd-15" itemscope itemtype="https://schema.org/CreativeWork">
                 <div class="portfolio-item-inner shadow-dark">
-                  <div class="portfolio-img">
-                    <a
-                      href="https://github.com/tusharbasak97/Projects/tree/main/Machine Learning"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      aria-label="View Machine Learning Security Projects by Tushar Basak on GitHub"
-                    >
-                      <img
-                        src="assets/images/portfolio/ML.webp"
-                        alt="Machine Learning Security Projects - AI-powered threat detection and security analytics by Tushar Basak"
-                        loading="lazy"
-                        width="300"
-                        height="300"
-                        itemprop="image"
-                    /></a>
+                  <div class="flip-card">
+                    <div class="flip-card-inner">
+                      <div class="flip-card-front">
+                        <div class="portfolio-img">
+                          <img
+                            src="assets/images/portfolio/ML.webp"
+                            alt="Machine Learning Security Projects - AI-powered threat detection and security analytics by Tushar Basak"
+                            loading="lazy"
+                            width="300"
+                            height="300"
+                            itemprop="image"
+                          />
+                        </div>
+                        <div class="card-content">
+                          <h3 itemprop="name">Machine Learning Security</h3>
+                          <div class="project-type">AI & Analytics</div>
+                        </div>
+                      </div>
+                      <div class="flip-card-back">
+                        <div class="flip-card-content">
+                          <h3>Machine Learning Security</h3>
+                          <p itemprop="description">AI and machine learning applications in cybersecurity and threat detection</p>
+                          <a
+                            href="https://github.com/tusharbasak97/Projects/tree/main/Machine Learning"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            class="btn"
+                            aria-label="View Machine Learning Security Projects by Tushar Basak on GitHub"
+                          >
+                            View Project
+                          </a>
+                        </div>
+                      </div>
+                    </div>
                   </div>
-                  <h3 itemprop="name" class="sr-only">Machine Learning Security Projects</h3>
-                  <p itemprop="description" class="sr-only">AI and machine learning applications in cybersecurity and threat detection</p>
                 </div>
               </article>
 
               <!-- AI Security Projects -->
               <article class="portfolio-item padd-15" itemscope itemtype="https://schema.org/CreativeWork">
                 <div class="portfolio-item-inner shadow-dark">
-                  <div class="portfolio-img">
-                    <a
-                      href="https://github.com/tusharbasak97/Projects/tree/main/Artificial Intelligence"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      aria-label="View Artificial Intelligence Security Projects by Tushar Basak on GitHub"
-                    >
-                      <img
-                        src="assets/images/portfolio/AI.webp"
-                        alt="Artificial Intelligence Security Projects - AI-driven security solutions and intelligent threat analysis by Tushar Basak"
-                        loading="lazy"
-                        width="300"
-                        height="300"
-                        itemprop="image"
-                    /></a>
+                  <div class="flip-card">
+                    <div class="flip-card-inner">
+                      <div class="flip-card-front">
+                        <div class="portfolio-img">
+                          <img
+                            src="assets/images/portfolio/AI.webp"
+                            alt="Artificial Intelligence Security Projects - AI-driven security solutions and intelligent threat analysis by Tushar Basak"
+                            loading="lazy"
+                            width="300"
+                            height="300"
+                            itemprop="image"
+                          />
+                        </div>
+                        <div class="card-content">
+                          <h3 itemprop="name">AI Security Projects</h3>
+                          <div class="project-type">Intelligent Security</div>
+                        </div>
+                      </div>
+                      <div class="flip-card-back">
+                        <div class="flip-card-content">
+                          <h3>AI Security Projects</h3>
+                          <p itemprop="description">Artificial intelligence applications in cybersecurity and automated threat response</p>
+                          <a
+                            href="https://github.com/tusharbasak97/Projects/tree/main/Artificial Intelligence"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            class="btn"
+                            aria-label="View Artificial Intelligence Security Projects by Tushar Basak on GitHub"
+                          >
+                            View Project
+                          </a>
+                        </div>
+                      </div>
+                    </div>
                   </div>
-                  <h3 itemprop="name" class="sr-only">AI Security Projects</h3>
-                  <p itemprop="description" class="sr-only">Artificial intelligence applications in cybersecurity and automated threat response</p>
                 </div>
               </article>
             </div>
