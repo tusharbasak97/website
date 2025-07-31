@@ -12,6 +12,7 @@ function initializeApp() {
   initializeCursor();
   initializeAge();
   initializeYear();
+  initializeCertificates();
   initializeHistoryManagement();
 }
 
@@ -52,7 +53,7 @@ function initializeNavigation() {
   const totalNavList = navList.length;
   const allSection = document.querySelectorAll(".section");
   const totalSection = allSection.length;
-  
+
   // Add click listeners to navigation links
   for (let i = 0; i < totalNavList; i++) {
     const a = navList[i].querySelector("a");
@@ -66,7 +67,7 @@ function initializeNavigation() {
   // Mobile navigation toggle
   const navTogglerBtn = document.querySelector(".nav-toggler");
   const aside = document.querySelector(".aside");
-  
+
   navTogglerBtn.addEventListener("click", () => {
     asideSectionTogglerBtn();
   });
@@ -82,25 +83,25 @@ function initializeNavigation() {
 
 function navigateToSection(sectionId) {
   if (sectionId === currentSection) return; // Don't navigate to same section
-  
+
   const targetSection = document.querySelector(`#${sectionId}`);
   if (!targetSection) return;
-  
+
   // Update browser history
   const newUrl = `${window.location.pathname}${window.location.search}#${sectionId}`;
   history.pushState({ section: sectionId }, '', newUrl);
-  
+
   // Update the UI
   showSection(sectionId);
   updateNavigation(sectionId);
   currentSection = sectionId;
-  
+
   // Close mobile menu if open
   if (window.innerWidth < 1200) {
     const aside = document.querySelector(".aside");
     const navTogglerBtn = document.querySelector(".nav-toggler");
     const allSection = document.querySelectorAll(".section");
-    
+
     aside.classList.remove("open");
     navTogglerBtn.classList.remove("open");
     allSection.forEach(section => section.classList.remove("open"));
@@ -109,18 +110,18 @@ function navigateToSection(sectionId) {
 
 function showSection(sectionId) {
   const allSection = document.querySelectorAll(".section");
-  
+
   // Remove active and back-section classes from all sections
   allSection.forEach(section => {
     section.classList.remove("active", "back-section");
   });
-  
+
   // Add back-section to current section before switching
   const currentActiveSection = document.querySelector(".section.active");
   if (currentActiveSection) {
     currentActiveSection.classList.add("back-section");
   }
-  
+
   // Activate target section
   const targetSection = document.querySelector(`#${sectionId}`);
   if (targetSection) {
@@ -130,7 +131,7 @@ function showSection(sectionId) {
 
 function updateNavigation(sectionId) {
   const navLinks = document.querySelectorAll(".nav a");
-  
+
   navLinks.forEach(link => {
     link.classList.remove("active");
     const linkSection = link.getAttribute("href").split("#")[1];
@@ -147,7 +148,7 @@ function initializeHistoryManagement() {
   showSection(initialHash);
   updateNavigation(initialHash);
   currentSection = initialHash;
-  
+
   // Handle browser back/forward buttons
   window.addEventListener('popstate', function(event) {
     const sectionId = event.state ? event.state.section : (window.location.hash.slice(1) || 'home');
@@ -155,7 +156,7 @@ function initializeHistoryManagement() {
     updateNavigation(sectionId);
     currentSection = sectionId;
   });
-  
+
   // Set initial history state
   if (!history.state) {
     history.replaceState({ section: currentSection }, '', `${window.location.pathname}${window.location.search}#${currentSection}`);
@@ -191,7 +192,7 @@ function initializeStyleSwitcher() {
     dayNight.querySelector("i").classList.toggle("fa-sun");
     dayNight.querySelector("i").classList.toggle("fa-moon");
     document.body.classList.toggle("dark");
-    
+
     // Save theme preference
     localStorage.setItem('theme', document.body.classList.contains('dark') ? 'dark' : 'light');
   });
@@ -204,7 +205,7 @@ function initializeStyleSwitcher() {
   } else {
     dayNight.querySelector("i").classList.add("fa-moon");
   }
-  
+
   // Load saved color scheme
   const savedColor = localStorage.getItem('colorScheme');
   if (savedColor) {
@@ -222,7 +223,7 @@ function setActiveStyle(color) {
       style.setAttribute("disabled", "true");
     }
   });
-  
+
   // Save color preference
   localStorage.setItem('colorScheme', color);
 }
@@ -231,7 +232,7 @@ function setActiveStyle(color) {
 function initializeCursor() {
   const cursor1 = document.querySelector(".cursor-1");
   const cursor2 = document.querySelector(".cursor-2");
-  
+
   if (!cursor1 || !cursor2) return;
 
   function setCursorCoordinates(e) {
@@ -258,7 +259,7 @@ function initializeCursor() {
 function initializeAge() {
   const birthDate = new Date("1997-10-02");
   const ageElement = document.getElementById("age");
-  
+
   if (!ageElement) return;
 
   function calculateAge() {
@@ -277,7 +278,7 @@ function initializeAge() {
 
     ageElement.textContent = `${years} yrs & ${months} months`;
   }
-  
+
   calculateAge();
   // Update age daily
   setInterval(calculateAge, 1000 * 60 * 60 * 24);
@@ -289,6 +290,101 @@ function initializeYear() {
   if (yearElement) {
     yearElement.textContent = new Date().getFullYear();
   }
+}
+
+/* ============================== Certificates Management ============================ */
+function initializeCertificates() {
+  updateCertificateStatuses();
+  // Update certificate statuses every hour
+  setInterval(updateCertificateStatuses, 3600000);
+}
+
+function updateCertificateStatuses() {
+  const certificates = document.querySelectorAll('.certificate-item');
+  const currentDate = new Date();
+
+  certificates.forEach(cert => {
+    const expiryElement = cert.querySelector('.date-value[datetime]');
+    const statusElement = cert.querySelector('.certificate-status');
+
+    if (expiryElement && statusElement && expiryElement.getAttribute('datetime')) {
+      const expiryDate = new Date(expiryElement.getAttribute('datetime'));
+      const daysUntilExpiry = Math.ceil((expiryDate - currentDate) / (1000 * 60 * 60 * 24));
+
+      // Update status based on expiry
+      if (daysUntilExpiry < 0) {
+        // Expired
+        statusElement.className = 'certificate-status expired';
+        statusElement.innerHTML = '<i class="fas fa-times-circle"></i>';
+        statusElement.title = 'Certificate Expired';
+        expiryElement.classList.add('expired');
+      } else if (daysUntilExpiry <= 90) {
+        // Expiring within 90 days
+        statusElement.className = 'certificate-status expiring';
+        statusElement.innerHTML = '<i class="fas fa-exclamation-triangle"></i>';
+        statusElement.title = `Expires in ${daysUntilExpiry} days`;
+        expiryElement.classList.add('expiring');
+      } else {
+        // Active
+        statusElement.className = 'certificate-status active';
+        statusElement.innerHTML = '<i class="fas fa-check-circle"></i>';
+        statusElement.title = 'Active Certificate';
+        expiryElement.classList.remove('expiring', 'expired');
+      }
+    }
+  });
+}
+
+function formatCertificateDate(dateString) {
+  const date = new Date(dateString);
+  return date.toLocaleDateString('en-US', {
+    year: 'numeric',
+    month: 'short',
+    day: '2-digit'
+  });
+}
+
+// Certificate verification functionality
+function verifyCertificate(certificateId, verificationUrl) {
+  if (verificationUrl && verificationUrl !== '#') {
+    window.open(verificationUrl, '_blank', 'noopener,noreferrer');
+  } else {
+    // Show modal or notification for verification
+    showCertificateVerificationModal(certificateId);
+  }
+}
+
+function showCertificateVerificationModal(certificateId) {
+  // This could be expanded to show a modal with verification details
+  alert(`Certificate verification for ${certificateId} - Feature coming soon!`);
+}
+
+// Add certificate filtering functionality
+function filterCertificates(filter) {
+  const certificates = document.querySelectorAll('.certificate-item');
+
+  certificates.forEach(cert => {
+    const status = cert.querySelector('.certificate-status').classList;
+    let show = true;
+
+    switch(filter) {
+      case 'active':
+        show = status.contains('active');
+        break;
+      case 'expiring':
+        show = status.contains('expiring');
+        break;
+      case 'expired':
+        show = status.contains('expired');
+        break;
+      case 'all':
+      default:
+        show = true;
+        break;
+    }
+
+    cert.style.display = show ? 'block' : 'none';
+  });
 }
 
 /* ============================== Utility Functions ============================ */
