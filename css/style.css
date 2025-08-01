@@ -797,11 +797,14 @@ body.dark .loading-overlay {
   padding-right: 30px;
 }
 
+h1.hello,
 h3.hello {
   font-size: 28px;
   margin: 15px 0;
 }
 
+h1.hello span,
+h1.hello .name,
 h3.hello span {
   font-family: "Kaushan Script", cursive;
   font-size: 30px;
@@ -1630,6 +1633,7 @@ h3.my-profession {
   .certificates .filter-btn .count {font-size: 10px;padding: 1px 6px;}
   .home .container {padding: 20px;}
   .home .home-info {padding: 0 15px;}
+  .home .home-info h1.hello,
   .home .home-info h3.hello {font-size: 24px;}
   .home .home-info h3.my-profession {font-size: 26px;}
   .home .home-info p {font-size: 18px;margin-bottom: 30px;}
