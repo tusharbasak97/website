@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Kaushan+Script&family=Poppins:wght@200;300;400;500;600&display=swap");:root {--bg-black-900: #f2f2fc;--bg-black-100: #fdf9ff;--bg-black-50: #e8dfec;--text-black-900: #302e4d;--text-black-700: #504e70;}::-moz-selection {color: #ffffff;background: var(--skin-color);}::selection {color: #ffffff;background: var(--skin-color);}/* Dark mode styles */
+@import url("https://fonts.googleapis.com/css2?family=Kaushan+Script&family=Poppins:wght@200;300;400;500;600&display=swap");:root {--bg-black-900: #f2f2fc;--bg-black-100: #fdf9ff;--bg-black-50: #e8dfec;--text-black-900: #1a1a1a;--text-black-700: #333333;}::-moz-selection {color: #ffffff;background: var(--skin-color);}::selection {color: #ffffff;background: var(--skin-color);}/* Dark mode styles */
 body.dark {--bg-black-900: #151515;--bg-black-100: #222222;--bg-black-50: #393939;--text-black-900: #ffffff;--text-black-700: #e9e9e9;}
 
 /* System preference detection - applies dark mode if system prefers dark and no manual preference is set */
@@ -866,8 +866,10 @@ h3.my-profession {
 .home .home-img img {
   margin: auto;
   border-radius: 5px;
-  height: 400px;
-  width: auto;
+  width: 400px;
+  height: 480px;
+  aspect-ratio: 400/480;
+  object-fit: cover;
   max-width: 100%;
 }.about .about-content {flex: 0 0 100%;max-width: 100%;}.about .about-content .about-text {flex: 0 0 100%;max-width: 100%;}.about .about-content .about-text h3 {font-size: 24px;margin-bottom: 15px;font-weight: 700;color: var(--text-black-900);}.about .about-content .about-text h3 span {
   background: linear-gradient(135deg, var(--skin-color), rgba(var(--skin-color-rgb, 255, 107, 107), 0.8));

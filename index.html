@@ -28,22 +28,18 @@
     <meta name="rating" content="general" />
     <meta name="distribution" content="global" />
 
-    <!-- Preconnect and Preload for third-party hosts -->
+    <!-- Preconnect for performance -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link rel="preconnect" href="https://cdnjs.cloudflare.com" />
-    <link
-      rel="preload"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
-      as="style"
-      async
-    />
-
     <link rel="preconnect" href="https://unpkg.com" />
-    <link
-      rel="preload"
-      href="https://unpkg.com/typed.js@2.1.0/dist/typed.umd.js"
-      as="script"
-      defer
-    />
+
+
+
+    <!-- Preload critical resources -->
+    <link rel="preload" href="assets/images/hero.webp" as="image" />
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Kaushan+Script&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'" />
+    <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Kaushan+Script&display=swap" /></noscript>
 
     <!-- <link rel="preconnect" href="https://cdnjs.buymeacoffee.com" />
     <link
@@ -304,52 +300,25 @@
     <link rel="dns-prefetch" href="//leetcode.com" />
     <link rel="dns-prefetch" href="//medium.com" />
 
-    <!-- PRE LOADER -->
-    <link rel="stylesheet" href="css/preloader.min.css" />
+    <!-- Non-critical CSS loaded asynchronously -->
+    <link rel="preload" href="css/style.css" as="style" onload="this.onload=null;this.rel='stylesheet'" />
+    <noscript><link rel="stylesheet" href="css/style.css" /></noscript>
 
-    <!-- CSS FILES -->
-    <link rel="stylesheet" href="css/style.css" />
+    <link rel="preload" href="css/preloader.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'" />
+    <noscript><link rel="stylesheet" href="css/preloader.min.css" /></noscript>
+
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'" />
+    <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" /></noscript>
+
+    <!-- Theme CSS loaded after main content -->
     <link rel="stylesheet" href="css/skins/color-1.css" />
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
-    />
-    <link
-      rel="stylesheet"
-      href="css/skins/color-1.css"
-      class="alternative-style"
-      title="color-1"
-      disabled
-    />
-    <link
-      rel="stylesheet"
-      href="css/skins/color-2.css"
-      class="alternative-style"
-      title="color-2"
-      disabled
-    />
-    <link
-      rel="stylesheet"
-      href="css/skins/color-3.css"
-      class="alternative-style"
-      title="color-3"
-      disabled
-    />
-    <link
-      rel="stylesheet"
-      href="css/skins/color-4.css"
-      class="alternative-style"
-      title="color-4"
-      disabled
-    />
-    <link
-      rel="stylesheet"
-      href="css/skins/color-5.css"
-      class="alternative-style"
-      title="color-5"
-      disabled
-    />
-    <link rel="stylesheet" href="css/style-switcher.css" />
+    <link rel="stylesheet" href="css/skins/color-1.css" class="alternative-style" title="color-1" disabled />
+    <link rel="stylesheet" href="css/skins/color-2.css" class="alternative-style" title="color-2" disabled />
+    <link rel="stylesheet" href="css/skins/color-3.css" class="alternative-style" title="color-3" disabled />
+    <link rel="stylesheet" href="css/skins/color-4.css" class="alternative-style" title="color-4" disabled />
+    <link rel="stylesheet" href="css/skins/color-5.css" class="alternative-style" title="color-5" disabled />
+    <link rel="preload" href="css/style-switcher.css" as="style" onload="this.onload=null;this.rel='stylesheet'" />
+    <noscript><link rel="stylesheet" href="css/style-switcher.css" /></noscript>
   </head>
   <body class="page-loading">
     <!-- custom cursors -->
@@ -473,8 +442,10 @@
                   alt="Tushar Basak - Professional Cybersecurity Analyst and Ethical Hacker"
                   loading="eager"
                   width="400"
-                  height="400"
+                  height="480"
+                  style="aspect-ratio: 400/480; object-fit: cover;"
                   itemprop="image"
+                  fetchpriority="high"
                 />
               </div>
             </div>
@@ -1296,9 +1267,24 @@
     ></script> -->
     <!-- coffee -->
 
-    <!-- JS FILES -->
-    <script src="https://unpkg.com/typed.js@2.1.0/dist/typed.umd.js"></script>
-    <script src="js/main.js"></script>
-    <script src="js/preloader.min.js"></script>
+    <!-- JS FILES - Optimized loading -->
+    <script>
+      // Inline critical JavaScript for immediate execution
+      document.addEventListener('DOMContentLoaded', function() {
+        // Remove loading overlay after DOM is ready
+        const loadingOverlay = document.getElementById('loadingOverlay');
+        if (loadingOverlay) {
+          setTimeout(() => {
+            loadingOverlay.classList.add('hidden');
+            document.body.classList.remove('page-loading');
+          }, 500);
+        }
+      });
+    </script>
+
+    <!-- Load non-critical JS asynchronously -->
+    <script src="https://unpkg.com/typed.js@2.1.0/dist/typed.umd.js" defer></script>
+    <script src="js/main.js" defer></script>
+    <script src="js/preloader.min.js" defer></script>
   </body>
 </html>
