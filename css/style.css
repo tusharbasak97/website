@@ -1307,19 +1307,28 @@ h3.my-profession {
 
 .portfolio .portfolio-item-inner {
   background: var(--bg-black-100);
-  border-radius: 15px;
+  border-radius: 20px;
   overflow: hidden;
   cursor: pointer;
   height: 380px;
   perspective: 1000px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 1px 1px rgba(0,0,0,0.1),
+    0 2px 2px rgba(0,0,0,0.1),
+    0 4px 4px rgba(0,0,0,0.1),
+    0 8px 8px rgba(0,0,0,0.1),
+    0 16px 16px rgba(0,0,0,0.1);
+  transition: all 0.4s cubic-bezier(0.19, 1, 0.22, 1);
   border: 1px solid var(--bg-black-50);
+  position: relative;
 }
 
 .portfolio .portfolio-item-inner:hover {
-  transform: translateY(-8px);
-  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+  transform: translateY(-12px) scale(1.02);
+  box-shadow: 0 2px 2px rgba(0,0,0,0.12),
+    0 4px 4px rgba(0,0,0,0.12),
+    0 8px 8px rgba(0,0,0,0.12),
+    0 16px 16px rgba(0,0,0,0.12),
+    0 32px 32px rgba(0,0,0,0.12);
   border-color: var(--skin-color);
 }
 
@@ -1336,7 +1345,7 @@ h3.my-profession {
   width: 100%;
   height: 100%;
   text-align: center;
-  transition: transform 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: transform 0.8s cubic-bezier(0.19, 1, 0.22, 1);
   transform-style: preserve-3d;
 }
 
@@ -1350,7 +1359,7 @@ h3.my-profession {
   height: 100%;
   -webkit-backface-visibility: hidden;
   backface-visibility: hidden;
-  border-radius: 15px;
+  border-radius: 20px;
   display: flex;
   flex-direction: column;
   overflow: hidden;
@@ -1362,11 +1371,12 @@ h3.my-profession {
 }
 
 .flip-card-back {
-  background: linear-gradient(135deg, var(--skin-color) 0%, rgba(var(--skin-color-rgb, 255, 107, 107), 0.9) 100%);
+  background: linear-gradient(135deg, var(--skin-color) 0%, rgba(var(--skin-color-rgb, 255, 107, 107), 0.95) 100%);
   color: white;
   transform: rotateY(180deg);
   padding: 30px 25px;
   position: relative;
+  backdrop-filter: blur(10px);
 }
 
 .flip-card-back::before {
@@ -1376,8 +1386,9 @@ h3.my-profession {
   left: 0;
   right: 0;
   bottom: 0;
-  background: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.05) 100%);
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.15) 0%, rgba(255, 255, 255, 0.08) 100%);
   pointer-events: none;
+  border-radius: 20px;
 }
 
 .flip-card-front .portfolio-img {
@@ -1402,11 +1413,13 @@ h3.my-profession {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transition: transform 0.3s ease;
+  transition: transform 0.6s cubic-bezier(0.19, 1, 0.22, 1);
+  filter: brightness(1.1) contrast(1.05);
 }
 
 .portfolio-item-inner:hover .flip-card-front .portfolio-img img {
-  transform: scale(1.05);
+  transform: scale(1.08);
+  filter: brightness(1.2) contrast(1.1);
 }
 
 .flip-card-front .card-content {
@@ -1468,20 +1481,21 @@ h3.my-profession {
 }
 
 .flip-card-back .btn {
-  background: rgba(255, 255, 255, 0.15);
+  background: rgba(255, 255, 255, 0.2);
   color: white;
-  border: 2px solid rgba(255, 255, 255, 0.3);
-  padding: 12px 24px;
-  font-size: 14px;
+  border: 2px solid rgba(255, 255, 255, 0.4);
+  padding: 14px 28px;
+  font-size: 13px;
   font-weight: 700;
   text-decoration: none;
-  border-radius: 30px;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  border-radius: 50px;
+  transition: all 0.4s cubic-bezier(0.19, 1, 0.22, 1);
   backdrop-filter: blur(20px);
   text-transform: uppercase;
-  letter-spacing: 0.5px;
+  letter-spacing: 0.8px;
   position: relative;
   overflow: hidden;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
 }
 
 .flip-card-back .btn::before {
@@ -1500,10 +1514,11 @@ h3.my-profession {
 }
 
 .flip-card-back .btn:hover {
-  background: rgba(255, 255, 255, 0.25);
-  border-color: rgba(255, 255, 255, 0.5);
-  transform: translateY(-2px);
-  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+  background: rgba(255, 255, 255, 0.3);
+  border-color: rgba(255, 255, 255, 0.6);
+  transform: translateY(-3px) scale(1.05);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.25);
+  letter-spacing: 1px;
 }@media screen and (max-width: 64rem) {.section .container {padding-top: 70px;padding-bottom: 50%;}.aside {left: -270px;}.aside.open {left: 0;}.aside .nav-toggler {display: flex;left: 30px;}.aside .nav-toggler.open {left: 300px;}.section {left: 0;}.section.open {left: 270px;}.about .about-content .personal-info .info-item p span {display: block;margin-left: 0;}}@media screen and (max-width: 48rem) {
   body {cursor: auto;}
   .cursor-1, .cursor-2 {display: none;}
