@@ -22,6 +22,42 @@ body.dark {--bg-black-900: #151515;--bg-black-100: #222222;--bg-black-50: #39393
   color: var(--skin-color);
 }
 
+/* Hide default scrollbar in Firefox */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--skin-color) transparent;
+}
+
+/* Hide default scrollbar in Webkit browsers (Chrome, Edge, Safari) */
+*::-webkit-scrollbar {
+  width: 0.65rem;   /* scrollbar width */
+  height: 0.65rem;  /* scrollbar height for horizontal */
+}
+
+/* Track */
+*::-webkit-scrollbar-track {
+  background: transparent; /* fully clean look */
+}
+
+/* Thumb */
+*::-webkit-scrollbar-thumb {
+  background: linear-gradient(135deg, var(--skin-color), rgba(var(--skin-color-rgb, 255, 107, 107), 0.8));
+  border-radius: 10px;
+  border: 2px solid transparent; /* gives “floating thumb” look */
+  background-clip: padding-box;
+  transition: background 0.3s ease;
+}
+
+/* Thumb on hover */
+*::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(135deg, rgba(var(--skin-color-rgb, 255, 107, 107), 1), var(--skin-color));
+}
+
+/* Corner for both directions */
+*::-webkit-scrollbar-corner {
+  background: transparent;
+}
+
 /* General link styling */
 a:not(.btn):not(.btn-certificate):not(.nav a) {
   transition: all 0.3s ease;
