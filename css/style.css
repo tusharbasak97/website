@@ -1,4 +1,11 @@
-@import url("https://fonts.googleapis.com/css2?family=Kaushan+Script&family=Poppins:wght@200;300;400;500;600&display=swap");:root {--bg-black-900: #f2f2fc;--bg-black-100: #fdf9ff;--bg-black-50: #e8dfec;--text-black-900: #1a1a1a;--text-black-700: #333333;}::-moz-selection {color: #ffffff;background: var(--skin-color);}::selection {color: #ffffff;background: var(--skin-color);}/* Dark mode styles */
+@import url("https://fonts.googleapis.com/css2?family=Kaushan+Script&family=Poppins:wght@200;300;400;500;600&display=swap");:root {--bg-black-900: #f2f2fc;--bg-black-100: #fdf9ff;--bg-black-50: #e8dfec;--text-black-900: #1a1a1a;--text-black-700: #333333;}::-moz-selection {
+  color: #ffffff;
+  background: var(--skin-color);
+}
+::selection {
+  color: #ffffff;
+  background: var(--skin-color);
+}/* Dark mode styles */
 body.dark {--bg-black-900: #151515;--bg-black-100: #222222;--bg-black-50: #393939;--text-black-900: #ffffff;--text-black-700: #e9e9e9;}
 
 /* System preference detection - applies dark mode if system prefers dark and no manual preference is set */
@@ -10,7 +17,9 @@ body.dark {--bg-black-900: #151515;--bg-black-100: #222222;--bg-black-50: #39393
     --text-black-900: #ffffff;
     --text-black-700: #e9e9e9;
   }
-}body {line-height: 1.5;font-size: 16px;font-family: "Poppins" sans-serif;cursor: none;}* {margin: 0;padding: 0;outline: none;text-decoration: none;box-sizing: border-box;}
+}body {line-height: 1.5;font-size: 16px;font-family: "Poppins" sans-serif;cursor: none;}
+
+* {margin: 0;padding: 0;outline: none;text-decoration: none;box-sizing: border-box;}
 
 /* Gradient text utility class */
 .gradient-text {
@@ -556,7 +565,25 @@ body.dark .loading-overlay {
   clip: rect(0, 0, 0, 0);
   white-space: nowrap;
   border: 0;
-}.padd-15 {padding-left: 15px;padding-right: 15px;}.padd-25 {padding-left: 25px;}.container {max-width: 1100px;width: 100%;margin: auto;}.section .container {padding-top: 60px;padding-bottom: 70px;}.section-title {flex: 0 0 100%;max-width: 100%;margin-bottom: 60px;}.section-title h2 {font-size: 40px;color: var(--text-black-900);font-weight: 700;position: relative;}.section-title h2::before {content: "";height: 4px;width: 50px;background-color: var(--skin-color);position: absolute;top: 100%;left: 0;}.section-title h2::after {content: "";height: 4px;width: 25px;background-color: var(--skin-color);position: absolute;top: 100%;left: 0;margin-top: 8px;}.row {display: flex;flex-wrap: wrap;margin-left: -15px;margin-right: -15px;position: relative;}.btn {
+}.padd-15 {padding-left: 15px;padding-right: 15px;}.padd-25 {padding-left: 25px;}.container {max-width: 1100px;width: 100%;margin: auto;}.section .container {padding-top: 60px;padding-bottom: 70px;}.section-title {flex: 0 0 100%;max-width: 100%;margin-bottom: 60px;}.section-title h2 {font-size: 40px;color: var(--text-black-900);font-weight: 700;position: relative;}.section-title h2::before {
+  content: "";
+  height: 4px;
+  width: 70px;
+  background: linear-gradient(135deg, var(--skin-color), rgba(var(--skin-color-rgb, 255, 107, 107), 0.8));
+  position: absolute;
+  top: 100%;
+  left: 0;
+}
+.section-title h2::after {
+  content: "";
+  height: 4px;
+  width: 40px;
+  background: linear-gradient(135deg, var(--skin-color), rgba(var(--skin-color-rgb, 255, 107, 107), 0.8));
+  position: absolute;
+  top: 100%;
+  left: 0;
+  margin-top: 8px;
+}.row {display: flex;flex-wrap: wrap;margin-left: -15px;margin-right: -15px;position: relative;}.btn {
   font-size: 18px;
   font-family: "Kaushan Script", cursive;
   font-weight: 500;
@@ -626,8 +653,9 @@ body.dark .loading-overlay {
   position: absolute;
   width: 20px;
   height: 20px;
-  border-bottom: 5px solid var(--skin-color);
-  border-left: 5px solid var(--skin-color);
+  border-bottom: 5px solid;
+  border-left: 5px solid;
+  border-image: linear-gradient(135deg, var(--skin-color), rgba(var(--skin-color-rgb, 255, 107, 107), 0.8)) 1;
   bottom: 0;
   left: 0;
 }
@@ -637,8 +665,9 @@ body.dark .loading-overlay {
   position: absolute;
   width: 20px;
   height: 20px;
-  border-top: 5px solid var(--skin-color);
-  border-right: 5px solid var(--skin-color);
+  border-top: 5px solid;
+  border-right: 5px solid;
+  border-image: linear-gradient(135deg, var(--skin-color), rgba(var(--skin-color-rgb, 255, 107, 107), 0.8)) 1;
   top: 0;
   right: 0;
 }
@@ -704,6 +733,94 @@ body.dark .loading-overlay {
 .aside .nav {
   text-align: center;
   margin-top: 50px;
+}
+
+/* Professional Secured Badge Styling */
+/* Professional Badge Form - Positioned under Tushar logo */
+.aside .secured-badge {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  background: var(--bg-black-100);
+  padding: 8px 14px;
+  border-radius: 12px;
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  color: #00ff88;
+  border: 1.5px solid #00ff88;
+  margin: 15px auto 0 auto;
+  transition: all 0.3s ease;
+  position: absolute;
+  top: 110px;
+  left: 50%;
+  transform: translateX(-50%);
+  box-shadow: 0 2px 8px rgba(0, 255, 136, 0.15);
+  width: fit-content;
+  animation: securedBlink 2s ease-in-out infinite;
+  z-index: 100;
+}
+
+.aside .secured-badge::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(135deg, rgba(0, 255, 136, 0.1), rgba(0, 255, 136, 0.05));
+  border-radius: 10px;
+  z-index: -1;
+}
+
+.aside .secured-badge i {
+  font-size: 10px;
+  color: #00ff88;
+  filter: drop-shadow(0 0 2px rgba(0, 255, 136, 0.3));
+}
+
+.aside .secured-badge:hover {
+  transform: translateX(-50%) translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0, 255, 136, 0.25);
+  border-color: #00ff88;
+  animation-play-state: paused;
+}
+
+@keyframes securedBlink {
+  0%, 50%, 100% {
+    opacity: 1;
+    box-shadow: 0 2px 8px rgba(0, 255, 136, 0.15);
+  }
+  25%, 75% {
+    opacity: 0.7;
+    box-shadow: 0 2px 8px rgba(0, 255, 136, 0.3);
+  }
+}
+
+/* Dark mode adjustments for secured badge */
+body.dark .aside .secured-badge {
+  background: var(--bg-black-50);
+  box-shadow: 0 2px 8px rgba(0, 255, 136, 0.2);
+}
+
+body.dark .aside .secured-badge:hover {
+  box-shadow: 0 4px 12px rgba(0, 255, 136, 0.3);
+}
+
+/* Mobile responsive secured badge */
+@media screen and (max-width: 64rem) {
+  .aside .secured-badge {
+    padding: 6px 12px;
+    font-size: 9px;
+    border-radius: 10px;
+    top: 100px;
+  }
+
+  .aside .secured-badge i {
+    font-size: 9px;
+  }
 }
 
 .aside .nav li {
@@ -885,8 +1002,9 @@ h3.my-profession {
   position: absolute;
   height: 80px;
   width: 80px;
-  border-bottom: 10px solid var(--skin-color);
-  border-right: 10px solid var(--skin-color);
+  border-bottom: 10px solid;
+  border-right: 10px solid;
+  border-image: linear-gradient(135deg, var(--skin-color), rgba(var(--skin-color-rgb, 255, 107, 107), 0.8)) 1;
   right: 20px;
   bottom: -40px;
 }
@@ -896,8 +1014,9 @@ h3.my-profession {
   position: absolute;
   height: 80px;
   width: 80px;
-  border-top: 10px solid var(--skin-color);
-  border-left: 10px solid var(--skin-color);
+  border-top: 10px solid;
+  border-left: 10px solid;
+  border-image: linear-gradient(135deg, var(--skin-color), rgba(var(--skin-color-rgb, 255, 107, 107), 0.8)) 1;
   left: 20px;
   top: -60px;
 }
@@ -1041,7 +1160,7 @@ h3.my-profession {
   border: 1px solid var(--bg-black-50);
   border-radius: 12px;
   padding: 0;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: all 0.4s cubic-bezier(0.19, 1, 0.22, 1);
   position: relative;
   overflow: hidden;
   display: flex;
@@ -1050,8 +1169,12 @@ h3.my-profession {
 }
 
 .certificates .certificate-item-inner:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+  transform: translateY(-8px) scale(1.01);
+  box-shadow: 0 2px 2px rgba(0,0,0,0.12),
+    0 4px 4px rgba(0,0,0,0.12),
+    0 8px 8px rgba(0,0,0,0.12),
+    0 16px 16px rgba(0,0,0,0.12),
+    0 32px 32px rgba(0,0,0,0.12);
   border-color: var(--skin-color);
 }
 
