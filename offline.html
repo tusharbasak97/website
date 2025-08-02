@@ -7,80 +7,128 @@
     <meta name="description" content="You're currently offline. Some content may not be available.">
     <link rel="icon" type="image/png" sizes="32x32" href="assets/images/favicon-32x32.png">
     <style>
+        :root {
+            --skin-color: #ff9900;
+            --bg-black-900: #f2f2fc;
+            --bg-black-100: #fdf9ff;
+            --bg-black-50: #e8dfec;
+            --text-black-900: #1a1a1a;
+            --text-black-700: #333333;
+        }
+
+        /* Dark mode styles */
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --bg-black-900: #151515;
+                --bg-black-100: #222222;
+                --bg-black-50: #393939;
+                --text-black-900: #ffffff;
+                --text-black-700: #e9e9e9;
+            }
+        }
+
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
-        
+
         body {
             font-family: 'Poppins', sans-serif;
-            background: linear-gradient(135deg, #ff6b6b 0%, #ffa500 100%);
+            background: var(--bg-black-900);
             min-height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
-            color: white;
+            color: var(--text-black-900);
+            line-height: 1.5;
         }
-        
+
         .offline-container {
             text-align: center;
             max-width: 600px;
-            padding: 2rem;
+            padding: 3rem 2rem;
+            background: var(--bg-black-100);
+            border-radius: 20px;
+            box-shadow: 0 0 30px rgba(0, 0, 0, 0.1);
+            border: 1px solid var(--bg-black-50);
+            position: relative;
+            overflow: hidden;
         }
-        
+
+        .offline-container::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(135deg, var(--skin-color), rgba(255, 153, 0, 0.8));
+        }
+
         .offline-icon {
             font-size: 4rem;
             margin-bottom: 1rem;
-            opacity: 0.8;
+            background: linear-gradient(135deg, var(--skin-color), rgba(255, 153, 0, 0.8));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
-        
+
         .offline-title {
             font-size: 2rem;
             margin-bottom: 1rem;
             font-weight: 700;
+            color: var(--text-black-900);
         }
-        
+
         .offline-message {
             font-size: 1.1rem;
             margin-bottom: 2rem;
-            opacity: 0.9;
+            color: var(--text-black-700);
             line-height: 1.6;
         }
-        
+
         .retry-btn {
             display: inline-block;
-            padding: 12px 30px;
-            background: rgba(255,255,255,0.2);
-            color: white;
+            padding: 12px 35px;
+            background: linear-gradient(135deg, var(--skin-color), rgba(255, 153, 0, 0.8));
+            color: var(--bg-black-900);
             text-decoration: none;
-            border-radius: 25px;
-            border: 2px solid rgba(255,255,255,0.3);
+            border-radius: 40px;
+            font-weight: 500;
+            font-family: "Kaushan Script", cursive;
+            font-size: 18px;
             transition: all 0.3s ease;
-            backdrop-filter: blur(10px);
+            border: none;
             cursor: pointer;
-            font-size: 1rem;
         }
-        
+
         .retry-btn:hover {
-            background: rgba(255,255,255,0.3);
             transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+            filter: brightness(0.9);
         }
-        
+
         .cached-content {
             margin-top: 2rem;
-            padding: 1rem;
-            background: rgba(255,255,255,0.1);
-            border-radius: 10px;
-            backdrop-filter: blur(10px);
+            padding: 1.5rem;
+            background: var(--bg-black-50);
+            border-radius: 15px;
+            border: 1px solid var(--bg-black-50);
         }
-        
+
+        .cached-content h3 {
+            color: var(--text-black-900);
+            margin-bottom: 1rem;
+            font-weight: 600;
+        }
+
         @media (max-width: 768px) {
             .offline-title {
                 font-size: 1.5rem;
             }
-            
+
             .offline-container {
                 padding: 1rem;
             }
@@ -92,13 +140,13 @@
         <div class="offline-icon">📡</div>
         <h1 class="offline-title">You're Offline</h1>
         <p class="offline-message">
-            It looks like you're not connected to the internet. 
+            It looks like you're not connected to the internet.
             Some content may not be available, but you can still browse cached pages.
         </p>
         <button class="retry-btn" onclick="window.location.reload()">
             Try Again
         </button>
-        
+
         <div class="cached-content">
             <h3>Available Offline:</h3>
             <ul style="list-style: none; padding: 0; margin-top: 1rem;">
@@ -120,7 +168,7 @@
 
         // Listen for online event
         window.addEventListener('online', checkConnectivity);
-        
+
         // Periodic connectivity check
         setInterval(checkConnectivity, 5000);
     </script>
