@@ -1104,48 +1104,93 @@ h3.my-profession {
 .about .about-content .timeline:hover {
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.06), 0 1px 2px rgba(0, 0, 0, 0.04);
   transform: translateY(1px);
-}.about .about-content .timeline .timeline-item {position: relative;padding-left: 37px;padding-bottom: 50px;}.about .about-content .timeline .timeline-item:last-child {padding-bottom: 0;}.about .about-content .timeline .timeline-item::before {content: "";width: 1px;position: absolute;height: 100%;left: 7px;top: 0;background: linear-gradient(180deg, var(--skin-color), rgba(var(--skin-color-rgb, 255, 107, 107), 0.8));}.about .about-content .timeline .circle-dot {position: absolute;left: 0;top: 0;height: 15px;width: 15px;border-radius: 50%;background: linear-gradient(135deg, var(--skin-color), rgba(var(--skin-color-rgb, 255, 107, 107), 0.8));}.about .about-content .timeline .timeline-date {font-weight: 400;font-size: 14px;margin-bottom: 12px;color: var(--text-black-700);}.about .about-content .timeline .timeline-date .fa {margin-right: 5px;}.about .about-content .timeline .timeline-title {font-weight: 700;font-size: 18px;margin-bottom: 15px;text-transform: capitalize;color: var(--text-black-900);}.about .about-content .timeline .timeline-text {line-height: 25px;font-size: 16px;text-align: justify;color: var(--text-black-700);}/* ============================== Contact Form in About Section ============================== */
-.about .contact-title {
-  color: var(--text-black-900);
-  text-align: center;
-  font-size: 25px;
+}.about .about-content .timeline .timeline-item {position: relative;padding-left: 37px;padding-bottom: 50px;}.about .about-content .timeline .timeline-item:last-child {padding-bottom: 0;}.about .about-content .timeline .timeline-item::before {content: "";width: 1px;position: absolute;height: 100%;left: 7px;top: 0;background: linear-gradient(180deg, var(--skin-color), rgba(var(--skin-color-rgb, 255, 107, 107), 0.8));}.about .about-content .timeline .circle-dot {position: absolute;left: 0;top: 0;height: 15px;width: 15px;border-radius: 50%;background: linear-gradient(135deg, var(--skin-color), rgba(var(--skin-color-rgb, 255, 107, 107), 0.8));}.about .about-content .timeline .timeline-date {font-weight: 400;font-size: 14px;margin-bottom: 12px;color: var(--text-black-700);}.about .about-content .timeline .timeline-date .fa {margin-right: 5px;}.about .about-content .timeline .timeline-title {font-weight: 700;font-size: 18px;margin-bottom: 15px;text-transform: capitalize;color: var(--text-black-900);}.about .about-content .timeline .timeline-text {line-height: 25px;font-size: 16px;text-align: justify;color: var(--text-black-700);}/* ============================== Contact Section in About ============================== */
+.about .contact {
+  flex: 0 0 100%;
+  max-width: 100%;
+  margin-top: 30px;
+}
+
+.about .contact .title {
+  font-size: 24px;
   margin-bottom: 30px;
+  font-weight: 700;
+  color: var(--text-black-900);
 }
 
 .about .contact-info-item {
-  flex: 0 0 25%;
-  max-width: 25%;
-  text-align: center;
-  margin-bottom: 40px;
+  flex: 0 0 50%;
+  max-width: 50%;
+  margin-top: 30px;
 }
 
-.about .contact-info-item .icon {
-  display: inline-block;
+.about .contact-form-item {
+  flex: 0 0 50%;
+  max-width: 50%;
+  margin-top: 30px;
 }
 
-.about .contact-info-item .icon .fa {
-  font-size: 25px;
-  color: var(--skin-color);
-}
-
-.about .contact-info-item h4 {
-  font-size: 18px;
-  font-weight: 700;
-  color: var(--text-black-900);
-  text-transform: capitalize;
-  margin: 15px 0 5px;
-}
-
-.about .contact-info-item p {
-  font-size: 16px;
-  line-height: 25px;
-  color: var(--text-black-700);
-  font-weight: 400;
-}
-
-.about .contact-form {
+.about .contact-info-box {
   flex: 0 0 100%;
   max-width: 100%;
+}
+
+.about .contact-info-inner {
+  background-color: var(--bg-black-100);
+  padding: 30px 15px;
+  border: 1px solid var(--bg-black-50);
+  border-radius: 10px;
+  width: 100%;
+  position: relative;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.08), 0 2px 4px rgba(0, 0, 0, 0.06);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.about .contact-info-inner:hover {
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.06), 0 1px 2px rgba(0, 0, 0, 0.04);
+  transform: translateY(1px);
+}
+
+.about .contact-info-details {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.about .contact-detail-item {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.about .contact-detail-item .icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--skin-color), rgba(var(--skin-color-rgb, 255, 107, 107), 0.8));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.about .contact-detail-item .icon .fa {
+  font-size: 16px;
+  color: white;
+}
+
+.about .contact-detail-item .text h4 {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--text-black-900);
+  margin: 0 0 5px 0;
+}
+
+.about .contact-detail-item .text p {
+  font-size: 14px;
+  color: var(--text-black-700);
+  margin: 0;
+  line-height: 1.4;
 }
 
 .about .form-title {
@@ -1153,64 +1198,87 @@ h3.my-profession {
   font-size: 20px;
   font-weight: 600;
   margin-bottom: 30px;
-  text-align: center;
 }
 
-.about .contact-form .col-6 {
-  flex: 0 0 50%;
-  max-width: 50%;
-}
-
-.about .contact-form .col-12 {
+.about .contact-form-box {
   flex: 0 0 100%;
   max-width: 100%;
 }
 
-.about .contact-form .form-item {
-  margin-bottom: 30px;
+.about .contact-form-inner {
+  background-color: var(--bg-black-100);
+  padding: 30px 15px;
+  border: 1px solid var(--bg-black-50);
+  border-radius: 10px;
+  width: 100%;
+  position: relative;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.08), 0 2px 4px rgba(0, 0, 0, 0.06);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.about .contact-form .form-control {
+.about .contact-form-inner:hover {
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.06), 0 1px 2px rgba(0, 0, 0, 0.04);
+  transform: translateY(1px);
+}
+
+.about .contact-form-inner .col-6 {
+  flex: 0 0 50%;
+  max-width: 50%;
+}
+
+.about .contact-form-inner .col-12 {
+  flex: 0 0 100%;
+  max-width: 100%;
+}
+
+.about .contact-form-inner .form-item {
+  margin-bottom: 20px;
+}
+
+.about .contact-form-inner .form-control {
   width: 100%;
-  height: 50px;
-  border-radius: 25px;
-  background: var(--bg-black-100);
+  height: 45px;
+  border-radius: 8px;
+  background: var(--bg-black-900);
   border: 1px solid var(--bg-black-50);
-  padding: 10px 25px;
-  font-size: 16px;
+  padding: 10px 15px;
+  font-size: 14px;
   color: var(--text-black-700);
   transition: all 0.3s ease;
 }
 
-.about .contact-form .form-control::-webkit-input-placeholder {
+.about .contact-form-inner .form-control::-webkit-input-placeholder {
   color: var(--text-black-700);
-  opacity: 0.8;
+  opacity: 0.7;
   font-weight: 400;
 }
 
-.about .contact-form .form-control:focus {
+.about .contact-form-inner .form-control:focus {
   border-color: var(--skin-color);
   outline: none;
-  box-shadow: 0 0 0 3px rgba(var(--skin-color-rgb, 255, 107, 107), 0.1);
+  box-shadow: 0 0 0 2px rgba(var(--skin-color-rgb, 255, 107, 107), 0.1);
+  background: var(--bg-black-900);
 }
 
-.about .contact-form textarea.form-control {
-  height: 140px;
+.about .contact-form-inner textarea.form-control {
+  height: 120px;
   resize: vertical;
+  padding-top: 12px;
 }
 
-.about .contact-form .btn {
-  height: 50px;
-  padding: 0 50px;
+.about .contact-form-inner .btn {
+  height: 45px;
+  padding: 0 30px;
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 8px;
   justify-content: center;
-  margin: 0 auto;
+  margin: 20px auto 0;
+  font-size: 14px;
 }
 
-.about .contact-form .btn i {
-  font-size: 16px;
+.about .contact-form-inner .btn i {
+  font-size: 14px;
 }
 
 /* ============================== Certificates Section ============================== */
@@ -1964,18 +2032,19 @@ h3.my-profession {
   .home .home-info h3.my-profession {font-size: 26px;}
   .home .home-info p {font-size: 18px;margin-bottom: 30px;}
 
-  .about .contact-info-item {
-    flex: 0 0 50%;
-    max-width: 50%;
-    margin-bottom: 30px;
+  .about .contact-info-item,
+  .about .contact-form-item {
+    flex: 0 0 100%;
+    max-width: 100%;
+    margin-bottom: 20px;
   }
 
-  .about .contact-form .col-6 {
+  .about .contact-form-inner .col-6 {
     flex: 0 0 100%;
     max-width: 100%;
   }
 
-  .about .contact-title {
+  .about .contact .title {
     font-size: 22px;
     margin-bottom: 20px;
   }
@@ -1985,11 +2054,20 @@ h3.my-profession {
     margin-bottom: 20px;
   }
 
-  .about .contact-info-item h4 {
-    font-size: 16px;
+  .about .contact-detail-item .text h4 {
+    font-size: 14px;
   }
 
-  .about .contact-info-item p {
+  .about .contact-detail-item .text p {
+    font-size: 13px;
+  }
+
+  .about .contact-detail-item .icon {
+    width: 35px;
+    height: 35px;
+  }
+
+  .about .contact-detail-item .icon .fa {
     font-size: 14px;
   }
 }
