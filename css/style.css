@@ -994,14 +994,14 @@ body.dark .aside .secured-badge:hover {
 }
 
 h1.hello,
-h3.hello {
+h2.hello {
   font-size: 28px;
   margin: 15px 0;
 }
 
 h1.hello span,
 h1.hello .name,
-h3.hello span {
+h2.hello span {
   font-family: "Kaushan Script", cursive;
   font-size: 30px;
   font-weight: 700;
@@ -1011,7 +1011,7 @@ h3.hello span {
   background-clip: text;
 }
 
-h3.my-profession {
+h2.my-profession {
   font-size: 30px;
   margin: 15px 0;
 }
@@ -1024,10 +1024,9 @@ h3.my-profession {
 }
 
 .home-info p {
-  margin-bottom: 40px;
-  font-size: 20px;
+  margin: 30px;
+  font-size: 14px;
   color: var(--text-black-700);
-  line-height: 1.6;
 }
 
 .home .home-img {
@@ -1140,17 +1139,17 @@ h3.my-profession {
 .about .contact-form {
   flex: 0 0 100%;
   max-width: 100%;
-  margin-top: 40px;
+  margin-top: 20px;
 }
 
 .about .contact-form-inner {
   background-color: var(--bg-black-100);
-  padding: 30px 15px;
+  padding: 40px 30px;
   border: 1px solid var(--bg-black-50);
-  border-radius: 10px;
+  border-radius: 15px;
   width: 100%;
   position: relative;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.08), 0 2px 4px rgba(0, 0, 0, 0.06);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1), 0 4px 10px rgba(0, 0, 0, 0.08);
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
@@ -1170,19 +1169,20 @@ h3.my-profession {
 }
 
 .about .contact-form-inner .form-item {
-  margin-bottom: 20px;
+  margin-bottom: 25px;
 }
 
 .about .contact-form-inner .form-control {
   width: 100%;
-  height: 45px;
-  border-radius: 8px;
+  height: 50px;
+  border-radius: 10px;
   background: var(--bg-black-900);
-  border: 1px solid var(--bg-black-50);
-  padding: 10px 15px;
-  font-size: 14px;
+  border: 2px solid var(--bg-black-50);
+  padding: 12px 18px;
+  font-size: 16px;
   color: var(--text-black-700);
   transition: all 0.3s ease;
+  font-weight: 400;
 }
 
 .about .contact-form-inner .form-control::-webkit-input-placeholder {
@@ -1199,20 +1199,22 @@ h3.my-profession {
 }
 
 .about .contact-form-inner textarea.form-control {
-  height: 120px;
+  height: 140px;
   resize: vertical;
-  padding-top: 12px;
+  padding-top: 15px;
+  line-height: 1.5;
 }
 
 .about .contact-form-inner .btn {
-  height: 45px;
-  padding: 0 30px;
+  height: 50px;
+  padding: 0 40px;
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 10px;
   justify-content: center;
-  margin: 20px auto 0;
-  font-size: 14px;
+  margin: 30px auto 0;
+  font-size: 16px;
+  font-weight: 600;
 }
 
 .about .contact-form-inner .btn i {
@@ -1968,7 +1970,6 @@ h3.my-profession {
   .home .home-info h1.hello,
   .home .home-info h3.hello {font-size: 24px;}
   .home .home-info h3.my-profession {font-size: 26px;}
-  .home .home-info p {font-size: 18px;margin-bottom: 30px;}
 
   .about .contact-form-inner .col-6 {
     flex: 0 0 100%;
@@ -1981,6 +1982,16 @@ h3.my-profession {
   }
 
   .about .contact-content .contact-text p {
+    font-size: 14px;
+    line-height: 22px;
+  }
+
+  .about .about-content .about-text h3 {
+    font-size: 20px;
+    margin-bottom: 12px;
+  }
+
+  .about .about-content .about-text p {
     font-size: 14px;
     line-height: 22px;
   }
