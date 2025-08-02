@@ -50,6 +50,16 @@
     <meta name="format-detection" content="address=yes" />
     <meta name="format-detection" content="email=yes" />
 
+    <!-- Security Headers -->
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com https://unpkg.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdnjs.cloudflare.com; font-src 'self' https://fonts.gstatic.com https://cdnjs.cloudflare.com; img-src 'self' data: https:; connect-src 'self';">
+    <meta http-equiv="X-Content-Type-Options" content="nosniff">
+    <meta http-equiv="X-Frame-Options" content="DENY">
+    <meta http-equiv="X-XSS-Protection" content="1; mode=block">
+    <meta name="referrer" content="strict-origin-when-cross-origin">
+
+    <!-- Performance Hints -->
+    <meta http-equiv="x-dns-prefetch-control" content="on">
+
     <!-- Preconnect for performance -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -532,9 +542,13 @@
     <noscript><link rel="stylesheet" href="css/style-switcher.css" /></noscript>
   </head>
   <body class="page-loading">
+    <!-- Skip Links for Accessibility -->
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+    <a href="#navigation" class="skip-link">Skip to navigation</a>
+
     <!-- custom cursors -->
-    <div class="cursor-1"></div>
-    <div class="cursor-2"></div>
+    <div class="cursor-1" aria-hidden="true"></div>
+    <div class="cursor-2" aria-hidden="true"></div>
 
     <!-- Glassmorphism Loading Overlay -->
     <div class="loading-overlay" id="loadingOverlay">
@@ -554,22 +568,22 @@
         <div class="nav-toggler">
           <span></span>
         </div>
-        <ul class="nav">
-          <li>
-            <a href="#home" class="active"><i class="fa fa-home"></i>Home</a>
-          </li>
-          <li>
-            <a href="#about"><i class="fa fa-user"></i>About</a>
-          </li>
-          <li>
-            <a href="#certificates"><i class="fa fa-certificate"></i>Certificates</a>
-          </li>
-          <li>
-            <a href="#portfolio"
-              ><i class="fa-solid fa-code-fork"></i>Projects</a
-            >
-          </li>
-        </ul>
+        <nav id="navigation" role="navigation" aria-label="Main navigation">
+          <ul class="nav">
+            <li>
+              <a href="#home" class="active" aria-current="page"><i class="fa fa-home" aria-hidden="true"></i>Home</a>
+            </li>
+            <li>
+              <a href="#about"><i class="fa fa-user" aria-hidden="true"></i>About</a>
+            </li>
+            <li>
+              <a href="#certificates"><i class="fa fa-certificate" aria-hidden="true"></i>Certificates</a>
+            </li>
+            <li>
+              <a href="#portfolio"><i class="fa-solid fa-code-fork" aria-hidden="true"></i>Projects</a>
+            </li>
+          </ul>
+        </nav>
         <footer class="footer">
           <div class="social-icons">
             <a
@@ -623,9 +637,9 @@
           </p>
         </footer>
       </div>
-      <div class="main-content">
+      <main id="main-content" class="main-content">
         <!-- HOME SECTION -->
-        <section class="home active section" id="home" role="main" aria-labelledby="home-heading">
+        <section class="home active section" id="home" role="region" aria-labelledby="home-heading">
           <div class="container">
             <div class="row">
               <div class="home-info padd-15">
@@ -910,22 +924,29 @@
             </div>
             <div class="row">
               <div class="certificates-filter padd-15">
-                <div class="filter-buttons">
-                  <button class="filter-btn active" data-filter="all">
-                    <i class="fas fa-list"></i>
+                <div class="filter-buttons" role="group" aria-label="Certificate filter options">
+                  <button class="filter-btn active" data-filter="all" aria-pressed="true" aria-describedby="all-desc">
+                    <i class="fas fa-list" aria-hidden="true"></i>
                     <span>All Certificates</span>
-                    <span class="count">0</span>
+                    <span class="count" aria-label="certificate count">0</span>
                   </button>
-                  <button class="filter-btn" data-filter="active">
-                    <i class="fas fa-check-circle"></i>
+                  <button class="filter-btn" data-filter="active" aria-pressed="false" aria-describedby="active-desc">
+                    <i class="fas fa-check-circle" aria-hidden="true"></i>
                     <span>Active</span>
-                    <span class="count">0</span>
+                    <span class="count" aria-label="active certificate count">0</span>
                   </button>
-                  <button class="filter-btn" data-filter="expired">
-                    <i class="fas fa-times-circle"></i>
+                  <button class="filter-btn" data-filter="expired" aria-pressed="false" aria-describedby="expired-desc">
+                    <i class="fas fa-times-circle" aria-hidden="true"></i>
                     <span>Expired</span>
-                    <span class="count">0</span>
+                    <span class="count" aria-label="expired certificate count">0</span>
                   </button>
+                </div>
+
+                <!-- Screen reader descriptions -->
+                <div class="sr-only">
+                  <div id="all-desc">Show all certificates regardless of status</div>
+                  <div id="active-desc">Show only currently valid certificates</div>
+                  <div id="expired-desc">Show only expired certificates</div>
                 </div>
               </div>
             </div>

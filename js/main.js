@@ -2,8 +2,27 @@
 
 // Initialize the application
 document.addEventListener('DOMContentLoaded', function() {
-  initializeApp();
-  initializePageLoading();
+  try {
+    initializeApp();
+    initializePageLoading();
+    registerServiceWorker();
+  } catch (error) {
+    console.error('Error initializing application:', error);
+    // Ensure basic functionality works even if some features fail
+    document.body.classList.remove('page-loading');
+  }
+});
+
+// Global error handler
+window.addEventListener('error', function(event) {
+  console.error('Global error:', event.error);
+  // You can add error reporting here
+});
+
+// Unhandled promise rejection handler
+window.addEventListener('unhandledrejection', function(event) {
+  console.error('Unhandled promise rejection:', event.reason);
+  // You can add error reporting here
 });
 
 function initializeApp() {
@@ -15,33 +34,49 @@ function initializeApp() {
   initializeYear();
   initializeCertificates();
   initializeHistoryManagement();
+  initializePerformanceMonitoring();
 }
 
 /* ============================== Typing Animation ============================ */
 function initializeTyping() {
-  if (typeof Typed !== 'undefined') {
-    new Typed(".typing", {
-      strings: [
-        "Cybersecurity Analyst",
-        "Penetration Tester",
-        "Network Administrator",
-        "System Administrator",
-        "Network Engineer",
-        "IT Manager",
-        "IT Security Analyst",
-        "IT Support Specialist",
-        "Cloud Security Analyst",
-        "Security Engineer",
-        "Security Consultant",
-        "Security Architect",
-      ],
-      startDelay: 300,
-      typeSpeed: 100,
-      backSpeed: 60,
-      backDelay: 700,
-      smartBackspace: true,
-      loop: true,
-    });
+  try {
+    if (typeof Typed !== 'undefined') {
+      new Typed(".typing", {
+        strings: [
+          "Cybersecurity Analyst",
+          "Penetration Tester",
+          "Network Administrator",
+          "System Administrator",
+          "Network Engineer",
+          "IT Manager",
+          "IT Security Analyst",
+          "IT Support Specialist",
+          "Cloud Security Analyst",
+          "Security Engineer",
+          "Security Consultant",
+          "Security Architect",
+        ],
+        startDelay: 300,
+        typeSpeed: 100,
+        backSpeed: 60,
+        backDelay: 700,
+        smartBackspace: true,
+        loop: true,
+      });
+    } else {
+      // Fallback if Typed.js fails to load
+      const typingElement = document.querySelector('.typing');
+      if (typingElement) {
+        typingElement.textContent = 'Cybersecurity Analyst';
+      }
+    }
+  } catch (error) {
+    console.error('Error initializing typing animation:', error);
+    // Fallback
+    const typingElement = document.querySelector('.typing');
+    if (typingElement) {
+      typingElement.textContent = 'Cybersecurity Analyst';
+    }
   }
 }
 
@@ -750,6 +785,37 @@ function updateFilterCounts() {
   }, 50);
 }
 
+/* ============================== Service Worker Registration ============================ */
+function registerServiceWorker() {
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+      navigator.serviceWorker.register('/sw.js')
+        .then((registration) => {
+          console.log('Service Worker registered successfully:', registration.scope);
+
+          // Check for updates
+          registration.addEventListener('updatefound', () => {
+            const newWorker = registration.installing;
+            newWorker.addEventListener('statechange', () => {
+              if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
+                // New content is available, show update notification
+                showUpdateNotification();
+              }
+            });
+          });
+        })
+        .catch((error) => {
+          console.log('Service Worker registration failed:', error);
+        });
+    });
+  }
+}
+
+function showUpdateNotification() {
+  // You can implement a custom notification here
+  console.log('New content is available! Please refresh the page.');
+}
+
 /* ============================== Utility Functions ============================ */
 // Debounce function for performance optimization
 function debounce(func, wait) {
@@ -768,5 +834,24 @@ function debounce(func, wait) {
 function smoothScrollTo(element) {
   if (element.scrollIntoView) {
     element.scrollIntoView({ behavior: 'smooth' });
+  }
+}
+
+// Performance monitoring
+function initializePerformanceMonitoring() {
+  if ('performance' in window) {
+    window.addEventListener('load', () => {
+      setTimeout(() => {
+        const perfData = performance.getEntriesByType('navigation')[0];
+        console.log('Page Load Performance:', {
+          'DNS Lookup': perfData.domainLookupEnd - perfData.domainLookupStart,
+          'TCP Connection': perfData.connectEnd - perfData.connectStart,
+          'Request': perfData.responseStart - perfData.requestStart,
+          'Response': perfData.responseEnd - perfData.responseStart,
+          'DOM Processing': perfData.domContentLoadedEventStart - perfData.responseEnd,
+          'Total Load Time': perfData.loadEventEnd - perfData.navigationStart
+        });
+      }, 0);
+    });
   }
 }
