@@ -1104,38 +1104,31 @@ h3.my-profession {
 .about .about-content .timeline:hover {
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.06), 0 1px 2px rgba(0, 0, 0, 0.04);
   transform: translateY(1px);
-}.about .about-content .timeline .timeline-item {position: relative;padding-left: 37px;padding-bottom: 50px;}.about .about-content .timeline .timeline-item:last-child {padding-bottom: 0;}.about .about-content .timeline .timeline-item::before {content: "";width: 1px;position: absolute;height: 100%;left: 7px;top: 0;background: linear-gradient(180deg, var(--skin-color), rgba(var(--skin-color-rgb, 255, 107, 107), 0.8));}.about .about-content .timeline .circle-dot {position: absolute;left: 0;top: 0;height: 15px;width: 15px;border-radius: 50%;background: linear-gradient(135deg, var(--skin-color), rgba(var(--skin-color-rgb, 255, 107, 107), 0.8));}.about .about-content .timeline .timeline-date {font-weight: 400;font-size: 14px;margin-bottom: 12px;color: var(--text-black-700);}.about .about-content .timeline .timeline-date .fa {margin-right: 5px;}.about .about-content .timeline .timeline-title {font-weight: 700;font-size: 18px;margin-bottom: 15px;text-transform: capitalize;color: var(--text-black-900);}.about .about-content .timeline .timeline-text {line-height: 25px;font-size: 16px;text-align: justify;color: var(--text-black-700);}/* ============================== Contact Section ============================== */
-.contact .contact-title {
+}.about .about-content .timeline .timeline-item {position: relative;padding-left: 37px;padding-bottom: 50px;}.about .about-content .timeline .timeline-item:last-child {padding-bottom: 0;}.about .about-content .timeline .timeline-item::before {content: "";width: 1px;position: absolute;height: 100%;left: 7px;top: 0;background: linear-gradient(180deg, var(--skin-color), rgba(var(--skin-color-rgb, 255, 107, 107), 0.8));}.about .about-content .timeline .circle-dot {position: absolute;left: 0;top: 0;height: 15px;width: 15px;border-radius: 50%;background: linear-gradient(135deg, var(--skin-color), rgba(var(--skin-color-rgb, 255, 107, 107), 0.8));}.about .about-content .timeline .timeline-date {font-weight: 400;font-size: 14px;margin-bottom: 12px;color: var(--text-black-700);}.about .about-content .timeline .timeline-date .fa {margin-right: 5px;}.about .about-content .timeline .timeline-title {font-weight: 700;font-size: 18px;margin-bottom: 15px;text-transform: capitalize;color: var(--text-black-900);}.about .about-content .timeline .timeline-text {line-height: 25px;font-size: 16px;text-align: justify;color: var(--text-black-700);}/* ============================== Contact Form in About Section ============================== */
+.about .contact-title {
   color: var(--text-black-900);
   text-align: center;
   font-size: 25px;
   margin-bottom: 30px;
 }
 
-.contact .contact-sub-title {
-  color: var(--text-black-700);
-  text-align: center;
-  font-size: 15px;
-  margin-bottom: 60px;
-}
-
-.contact .contact-info-item {
+.about .contact-info-item {
   flex: 0 0 25%;
   max-width: 25%;
   text-align: center;
-  margin-bottom: 60px;
+  margin-bottom: 40px;
 }
 
-.contact .contact-info-item .icon {
+.about .contact-info-item .icon {
   display: inline-block;
 }
 
-.contact .contact-info-item .icon .fa {
+.about .contact-info-item .icon .fa {
   font-size: 25px;
   color: var(--skin-color);
 }
 
-.contact .contact-info-item h4 {
+.about .contact-info-item h4 {
   font-size: 18px;
   font-weight: 700;
   color: var(--text-black-900);
@@ -1143,33 +1136,41 @@ h3.my-profession {
   margin: 15px 0 5px;
 }
 
-.contact .contact-info-item p {
+.about .contact-info-item p {
   font-size: 16px;
   line-height: 25px;
   color: var(--text-black-700);
   font-weight: 400;
 }
 
-.contact .contact-form {
+.about .contact-form {
   flex: 0 0 100%;
   max-width: 100%;
 }
 
-.contact .contact-form .col-6 {
+.about .form-title {
+  color: var(--text-black-900);
+  font-size: 20px;
+  font-weight: 600;
+  margin-bottom: 30px;
+  text-align: center;
+}
+
+.about .contact-form .col-6 {
   flex: 0 0 50%;
   max-width: 50%;
 }
 
-.contact .contact-form .col-12 {
+.about .contact-form .col-12 {
   flex: 0 0 100%;
   max-width: 100%;
 }
 
-.contact .contact-form .form-item {
+.about .contact-form .form-item {
   margin-bottom: 30px;
 }
 
-.contact .contact-form .form-control {
+.about .contact-form .form-control {
   width: 100%;
   height: 50px;
   border-radius: 25px;
@@ -1181,24 +1182,24 @@ h3.my-profession {
   transition: all 0.3s ease;
 }
 
-.contact .contact-form .form-control::-webkit-input-placeholder {
+.about .contact-form .form-control::-webkit-input-placeholder {
   color: var(--text-black-700);
   opacity: 0.8;
   font-weight: 400;
 }
 
-.contact .contact-form .form-control:focus {
+.about .contact-form .form-control:focus {
   border-color: var(--skin-color);
   outline: none;
   box-shadow: 0 0 0 3px rgba(var(--skin-color-rgb, 255, 107, 107), 0.1);
 }
 
-.contact .contact-form textarea.form-control {
+.about .contact-form textarea.form-control {
   height: 140px;
   resize: vertical;
 }
 
-.contact .contact-form .btn {
+.about .contact-form .btn {
   height: 50px;
   padding: 0 50px;
   display: flex;
@@ -1208,7 +1209,7 @@ h3.my-profession {
   margin: 0 auto;
 }
 
-.contact .contact-form .btn i {
+.about .contact-form .btn i {
   font-size: 16px;
 }
 
@@ -1963,27 +1964,32 @@ h3.my-profession {
   .home .home-info h3.my-profession {font-size: 26px;}
   .home .home-info p {font-size: 18px;margin-bottom: 30px;}
 
-  .contact .contact-info-item {
+  .about .contact-info-item {
     flex: 0 0 50%;
     max-width: 50%;
     margin-bottom: 30px;
   }
 
-  .contact .contact-form .col-6 {
+  .about .contact-form .col-6 {
     flex: 0 0 100%;
     max-width: 100%;
   }
 
-  .contact .contact-title {
+  .about .contact-title {
     font-size: 22px;
     margin-bottom: 20px;
   }
 
-  .contact .contact-info-item h4 {
+  .about .form-title {
+    font-size: 18px;
+    margin-bottom: 20px;
+  }
+
+  .about .contact-info-item h4 {
     font-size: 16px;
   }
 
-  .contact .contact-info-item p {
+  .about .contact-info-item p {
     font-size: 14px;
   }
 }
