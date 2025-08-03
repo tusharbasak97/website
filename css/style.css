@@ -977,7 +977,7 @@ body.dark .aside .secured-badge:hover {
   display: flex;
   align-items: center;
   min-height: 80vh;
-  padding-bottom: 40px;
+  padding-bottom: 70px; 
 }
 
 .home .row {
