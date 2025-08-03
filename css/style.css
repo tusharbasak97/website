@@ -1012,7 +1012,7 @@ h2.hello span {
 }
 
 h2.my-profession {
-  font-size: 30px;
+  font-size: 25px;
   margin: 15px 0;
 }
 
@@ -1024,10 +1024,16 @@ h2.my-profession {
 }
 
 .home-info p {
-  margin: 30px;
+  margin: 15px 0;
   font-size: 14px;
   color: var(--text-black-700);
 }
+
+.hire-me {
+  margin-top: 30px;
+  margin-bottom: 15px;
+}
+
 
 .home .home-img {
   flex: 0 0 40%;
