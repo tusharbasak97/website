@@ -13,28 +13,53 @@ Crawl-delay: 1
 # Allow all major search engines
 User-agent: Googlebot
 Allow: /
+Crawl-delay: 1
 
 User-agent: Bingbot
 Allow: /
+Crawl-delay: 1
 
 User-agent: Slurp
 Allow: /
+Crawl-delay: 1
 
 User-agent: DuckDuckBot
 Allow: /
+Crawl-delay: 1
 
 User-agent: Baiduspider
 Allow: /
+Crawl-delay: 2
 
 User-agent: YandexBot
 Allow: /
+Crawl-delay: 2
+
+# Block malicious bots
+User-agent: AhrefsBot
+Disallow: /
+
+User-agent: MJ12bot
+Disallow: /
+
+User-agent: DotBot
+Disallow: /
+
+User-agent: SemrushBot
+Disallow: /
 
 # Disallow certain file types that shouldn't be indexed
 Disallow: /*.json$
 Disallow: /js/
 Disallow: /css/
+Disallow: /.well-known/
+Disallow: /sw.js
+Disallow: /offline.html
+Disallow: /404.html
 
 # Allow important assets
 Allow: /assets/
 Allow: /favicon.ico
 Allow: /sitemap.xml
+Allow: /robots.txt
+Allow: /.well-known/security.txt

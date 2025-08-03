@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>404 - Page Not Found | Tushar Basak</title>
+    <meta name="description" content="The page you're looking for doesn't exist. Return to Tushar Basak's cybersecurity portfolio.">
+    <link rel="canonical" href="https://tusharbasak97.github.io/website/404.html">
+    <link rel="icon" type="image/png" sizes="32x32" href="assets/images/favicon-32x32.png">
+
+    <!-- Preconnect for performance -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Kaushan+Script&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'" />
+    <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Kaushan+Script&display=swap" /></noscript>
+
+    <style>
+        :root {
+            --skin-color: #ff9900;
+            --bg-black-900: #f2f2fc;
+            --bg-black-100: #fdf9ff;
+            --bg-black-50: #e8dfec;
+            --text-black-900: #1a1a1a;
+            --text-black-700: #333333;
+        }
+
+        /* Dark mode styles */
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --bg-black-900: #151515;
+                --bg-black-100: #222222;
+                --bg-black-50: #393939;
+                --text-black-900: #ffffff;
+                --text-black-700: #e9e9e9;
+            }
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: "Poppins", sans-serif;
+            background: var(--bg-black-900);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-black-900);
+            line-height: 1.5;
+        }
+
+        .error-container {
+            text-align: center;
+            max-width: 600px;
+            padding: 3rem 2rem;
+            background: var(--bg-black-100);
+            border-radius: 20px;
+            box-shadow: 0 0 30px rgba(0, 0, 0, 0.1);
+            border: 1px solid var(--bg-black-50);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .error-container::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(135deg, var(--skin-color), rgba(255, 153, 0, 0.8));
+        }
+
+        .error-code {
+            font-size: 8rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, var(--skin-color), rgba(255, 153, 0, 0.8));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-shadow: none;
+        }
+
+        .error-message {
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            color: var(--text-black-900);
+            font-weight: 600;
+        }
+
+        .error-description {
+            font-size: 1.1rem;
+            margin-bottom: 2rem;
+            color: var(--text-black-700);
+            line-height: 1.6;
+        }
+
+        .countdown-text {
+            font-size: 0.9rem;
+            color: var(--text-black-700);
+            margin-bottom: 2rem;
+            opacity: 0.8;
+        }
+
+        .countdown {
+            font-weight: 600;
+            color: var(--skin-color);
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 12px 35px;
+            background: linear-gradient(135deg, var(--skin-color), rgba(255, 153, 0, 0.8));
+            color: var(--bg-black-900);
+            text-decoration: none;
+            border-radius: 40px;
+            font-weight: 500;
+            font-family: "Kaushan Script", cursive;
+            font-size: 18px;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+            filter: brightness(0.9);
+        }
+
+        .secured-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: var(--bg-black-100);
+            padding: 6px 12px;
+            border-radius: 12px;
+            font-size: 10px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            color: #00ff88;
+            border: 1.5px solid #00ff88;
+            margin-top: 2rem;
+            box-shadow: 0 2px 8px rgba(0, 255, 136, 0.15);
+        }
+
+        .secured-badge i {
+            font-size: 10px;
+            color: #00ff88;
+        }
+
+        @media (max-width: 768px) {
+            .error-code {
+                font-size: 6rem;
+            }
+
+            .error-message {
+                font-size: 1.5rem;
+            }
+
+            .error-container {
+                padding: 2rem 1rem;
+                margin: 1rem;
+            }
+
+            .btn {
+                padding: 10px 25px;
+                font-size: 16px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .error-code {
+                font-size: 4rem;
+            }
+
+            .error-message {
+                font-size: 1.2rem;
+            }
+
+            .error-description {
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="error-container">
+        <div class="error-code">404</div>
+        <h1 class="error-message">Page Not Found</h1>
+        <p class="error-description">
+            The page you're looking for doesn't exist or has been moved.
+            Let's get you back to exploring my cybersecurity portfolio.
+        </p>
+        <p class="countdown-text">
+            Redirecting automatically in <span class="countdown" id="countdown">5</span> seconds...
+        </p>
+        <a href="https://tusharbasak97.github.io/website/" class="btn" id="returnBtn">Return Home</a>
+
+        <div class="secured-badge">
+            <i>🔒</i>[secured]
+        </div>
+    </div>
+
+    <script>
+        // Countdown and auto-redirect functionality
+        let countdownTime = 5;
+        const countdownElement = document.getElementById('countdown');
+        const returnBtn = document.getElementById('returnBtn');
+        const redirectUrl = 'https://tusharbasak97.github.io/website/';
+
+        // Update countdown display
+        function updateCountdown() {
+            countdownElement.textContent = countdownTime;
+
+            if (countdownTime <= 0) {
+                window.location.href = redirectUrl;
+                return;
+            }
+
+            countdownTime--;
+        }
+
+        // Start countdown
+        const countdownInterval = setInterval(updateCountdown, 1000);
+
+        // Clear countdown if user clicks the button
+        returnBtn.addEventListener('click', function(e) {
+            clearInterval(countdownInterval);
+            // Let the default link behavior handle the redirect
+        });
+
+        // Clear countdown if user interacts with the page
+        document.addEventListener('click', function() {
+            clearInterval(countdownInterval);
+        });
+
+        document.addEventListener('keydown', function() {
+            clearInterval(countdownInterval);
+        });
+
+        // Accessibility: Allow Enter key on button
+        returnBtn.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter') {
+                clearInterval(countdownInterval);
+                window.location.href = redirectUrl;
+            }
+        });
+
+        // Handle page visibility change (user switches tabs)
+        document.addEventListener('visibilitychange', function() {
+            if (document.hidden) {
+                clearInterval(countdownInterval);
+            }
+        });
+    </script>
+</body>
+</html>

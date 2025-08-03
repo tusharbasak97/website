@@ -50,11 +50,22 @@
     <meta name="format-detection" content="address=yes" />
     <meta name="format-detection" content="email=yes" />
 
+    <!-- Security Headers -->
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com https://unpkg.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdnjs.cloudflare.com; font-src 'self' https://fonts.gstatic.com https://cdnjs.cloudflare.com; img-src 'self' data: https:; connect-src 'self' https://formspree.io; form-action 'self' https://formspree.io;">
+    <meta http-equiv="X-Content-Type-Options" content="nosniff">
+    <meta http-equiv="X-Frame-Options" content="DENY">
+    <meta http-equiv="X-XSS-Protection" content="1; mode=block">
+    <meta name="referrer" content="strict-origin-when-cross-origin">
+
+    <!-- Performance Hints -->
+    <meta http-equiv="x-dns-prefetch-control" content="on">
+
     <!-- Preconnect for performance -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link rel="preconnect" href="https://cdnjs.cloudflare.com" />
     <link rel="preconnect" href="https://unpkg.com" />
+    <link rel="preconnect" href="https://formspree.io" />
 
 
 
@@ -532,9 +543,10 @@
     <noscript><link rel="stylesheet" href="css/style-switcher.css" /></noscript>
   </head>
   <body class="page-loading">
+
     <!-- custom cursors -->
-    <div class="cursor-1"></div>
-    <div class="cursor-2"></div>
+    <div class="cursor-1" aria-hidden="true"></div>
+    <div class="cursor-2" aria-hidden="true"></div>
 
     <!-- Glassmorphism Loading Overlay -->
     <div class="loading-overlay" id="loadingOverlay">
@@ -549,27 +561,27 @@
           <a href="#"><span>Tushar</span></a>
         </div>
         <div class="secured-badge">
-          <i class="fas fa-shield-alt"></i>[secured]
+          <i class="fas fa-shield-alt"></i>secured
         </div>
         <div class="nav-toggler">
           <span></span>
         </div>
-        <ul class="nav">
-          <li>
-            <a href="#home" class="active"><i class="fa fa-home"></i>Home</a>
-          </li>
-          <li>
-            <a href="#about"><i class="fa fa-user"></i>About</a>
-          </li>
-          <li>
-            <a href="#certificates"><i class="fa fa-certificate"></i>Certificates</a>
-          </li>
-          <li>
-            <a href="#portfolio"
-              ><i class="fa-solid fa-code-fork"></i>Projects</a
-            >
-          </li>
-        </ul>
+        <nav id="navigation" role="navigation" aria-label="Main navigation">
+          <ul class="nav">
+            <li>
+              <a href="#home" class="active" aria-current="page"><i class="fa fa-home" aria-hidden="true"></i>Home</a>
+            </li>
+            <li>
+              <a href="#about"><i class="fa fa-user" aria-hidden="true"></i>About</a>
+            </li>
+            <li>
+              <a href="#certificates"><i class="fa fa-certificate" aria-hidden="true"></i>Certificates</a>
+            </li>
+            <li>
+              <a href="#portfolio"><i class="fa-solid fa-code-fork" aria-hidden="true"></i>Projects</a>
+            </li>
+          </ul>
+        </nav>
         <footer class="footer">
           <div class="social-icons">
             <a
@@ -623,9 +635,9 @@
           </p>
         </footer>
       </div>
-      <div class="main-content">
+      <main id="main-content" class="main-content">
         <!-- HOME SECTION -->
-        <section class="home active section" id="home" role="main" aria-labelledby="home-heading">
+        <section class="home active section" id="home" role="region" aria-labelledby="home-heading">
           <div class="container">
             <div class="row">
               <div class="home-info padd-15">
@@ -648,8 +660,9 @@
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label="Contact Tushar Basak on LinkedIn for hiring opportunities"
-                  >Hire Me</a
                 >
+                  <i class="fa fa-handshake"></i> Hire Me
+                </a>
               </div>
               <div class="home-img">
                 <img
@@ -751,9 +764,9 @@
                     </div>
                     <div class="row">
                       <div class="buttons padd-15">
-                        <a href="assets/resume.pdf" class="btn"
-                          >Download Resume</a
-                        >
+                        <a href="assets/resume.pdf" class="btn">
+                          <i class="fa fa-download"></i> Download Resume
+                        </a>
                       </div>
                     </div>
                   </div>
@@ -896,6 +909,56 @@
                 </div>
               </div>
             </div>
+
+            <!-- Get In Touch Section -->
+            <div class="row" style="margin-top: 60px;">
+              <div class="section-title padd-15">
+                <h2>Get In Touch</h2>
+              </div>
+            </div>
+            <div class="row">
+              <div class="contact-content padd-15">
+                <div class="row">
+                  <div class="contact-form padd-15">
+                    <form action="https://formspree.io/f/xvoeggne" method="POST" class="contact-form-inner">
+                      <div class="row">
+                        <div class="form-item col-6 padd-15">
+                          <div class="form-group">
+                            <input type="text" name="name" class="form-control" placeholder="Name" required>
+                          </div>
+                        </div>
+                        <div class="form-item col-6 padd-15">
+                          <div class="form-group">
+                            <input type="email" name="email" class="form-control" placeholder="Email" required>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="form-item col-12 padd-15">
+                          <div class="form-group">
+                            <input type="text" name="subject" class="form-control" placeholder="Subject" required>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="form-item col-12 padd-15">
+                          <div class="form-group">
+                            <textarea name="message" class="form-control" placeholder="Message" required></textarea>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="form-item col-12 padd-15">
+                          <button type="submit" class="btn">
+                            <i class="fa fa-paper-plane"></i> Send Message
+                          </button>
+                        </div>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </section>
         <!-- ABOUT SECTION -->
@@ -910,22 +973,29 @@
             </div>
             <div class="row">
               <div class="certificates-filter padd-15">
-                <div class="filter-buttons">
-                  <button class="filter-btn active" data-filter="all">
-                    <i class="fas fa-list"></i>
+                <div class="filter-buttons" role="group" aria-label="Certificate filter options">
+                  <button class="filter-btn active" data-filter="all" aria-pressed="true" aria-describedby="all-desc">
+                    <i class="fas fa-list" aria-hidden="true"></i>
                     <span>All Certificates</span>
-                    <span class="count">0</span>
+                    <span class="count" aria-label="certificate count">0</span>
                   </button>
-                  <button class="filter-btn" data-filter="active">
-                    <i class="fas fa-check-circle"></i>
+                  <button class="filter-btn" data-filter="active" aria-pressed="false" aria-describedby="active-desc">
+                    <i class="fas fa-check-circle" aria-hidden="true"></i>
                     <span>Active</span>
-                    <span class="count">0</span>
+                    <span class="count" aria-label="active certificate count">0</span>
                   </button>
-                  <button class="filter-btn" data-filter="expired">
-                    <i class="fas fa-times-circle"></i>
+                  <button class="filter-btn" data-filter="expired" aria-pressed="false" aria-describedby="expired-desc">
+                    <i class="fas fa-times-circle" aria-hidden="true"></i>
                     <span>Expired</span>
-                    <span class="count">0</span>
+                    <span class="count" aria-label="expired certificate count">0</span>
                   </button>
+                </div>
+
+                <!-- Screen reader descriptions -->
+                <div class="sr-only">
+                  <div id="all-desc">Show all certificates regardless of status</div>
+                  <div id="active-desc">Show only currently valid certificates</div>
+                  <div id="expired-desc">Show only expired certificates</div>
                 </div>
               </div>
             </div>
