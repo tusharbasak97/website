@@ -792,7 +792,7 @@ body.dark .loading-overlay {
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.8px;
-  color: #00ff88;
+  color: #00d06fff;
   border: 1.5px solid #00ff88;
   margin: 15px auto 0 auto;
   transition: all 0.3s ease;
@@ -820,7 +820,7 @@ body.dark .loading-overlay {
 
 .aside .secured-badge i {
   font-size: 10px;
-  color: #00ff88;
+  color: #00d06fff;
   filter: drop-shadow(0 0 2px rgba(0, 255, 136, 0.3));
 }
 
@@ -1027,6 +1027,7 @@ h2.my-profession {
 .home-info p {
   margin: 15px 0;
   font-size: 14px;
+  line-height: 25px;
   color: var(--text-black-700);
 }
 
@@ -1079,6 +1080,7 @@ h2.my-profession {
   aspect-ratio: 400/480;
   object-fit: cover;
   max-width: 100%;
+
 }.about .about-content {flex: 0 0 100%;max-width: 100%;}.about .about-content .about-text {flex: 0 0 100%;max-width: 100%;}.about .about-content .about-text h3 {font-size: 24px;margin-bottom: 15px;font-weight: 700;color: var(--text-black-900);}.about .about-content .about-text h3 span {
   background: linear-gradient(135deg, var(--skin-color), rgba(var(--skin-color-rgb, 255, 107, 107), 0.8));
   -webkit-background-clip: text;
@@ -1220,8 +1222,8 @@ h2.my-profession {
   gap: 10px;
   justify-content: center;
   margin: 30px auto 0;
-  font-size: 16px;
-  font-weight: 600;
+  font-size: 17px;
+  font-weight: 400;
 }
 
 .about .contact-form-inner .btn i {
@@ -1531,7 +1533,7 @@ h2.my-profession {
   gap: 6px;
   padding: 8px 16px;
   border-radius: 6px;
-  font-size: 12px;
+  font-size: 13px;
   font-weight: 600;
   text-decoration: none;
   transition: all 0.3s ease;
@@ -1822,7 +1824,7 @@ h2.my-profession {
   background: rgba(255, 255, 255, 0.2);
   color: white;
   border: 2px solid rgba(255, 255, 255, 0.4);
-  padding: 14px 28px;
+  padding: 10px 20px;
   font-size: 13px;
   font-weight: 700;
   text-decoration: none;
@@ -1960,8 +1962,8 @@ h2.my-profession {
   }
 
   .flip-card-back .btn {
-    padding: 8px 16px;
-    font-size: 12px;
+    padding: 10px 20px;
+    font-size: 13px;
   }
 
   .certificates .filter-btn {padding: 8px 12px;font-size: 12px;}
