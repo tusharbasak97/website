@@ -82,14 +82,48 @@ function updateNav(element) {
 // });
 const navTogglerBtn = document.querySelector(".nav-toggler"),
   aside = document.querySelector(".aside");
-navTogglerBtn.addEventListener("click", () => {
+
+navTogglerBtn.addEventListener("click", (e) => {
+  e.stopPropagation(); // Prevent event bubbling
   asideSectionTogglerBtn();
 });
+
+// Close mobile navigation when clicking outside
+document.addEventListener("click", (e) => {
+  // Check if mobile navigation is open
+  if (aside.classList.contains("open")) {
+    // Check if click is outside the aside navigation
+    if (!aside.contains(e.target) && !navTogglerBtn.contains(e.target)) {
+      closeMobileNavigation();
+    }
+  }
+});
+
+// Prevent closing when clicking inside the navigation
+aside.addEventListener("click", (e) => {
+  e.stopPropagation();
+});
+
+// Close mobile navigation when pressing Escape key
+document.addEventListener("keydown", (e) => {
+  if (e.key === "Escape" && aside.classList.contains("open")) {
+    closeMobileNavigation();
+  }
+});
+
 function asideSectionTogglerBtn() {
   aside.classList.toggle("open");
   navTogglerBtn.classList.toggle("open");
   for (let i = 0; i < totalSection; i++) {
     allSection[i].classList.toggle("open");
+  }
+}
+
+function closeMobileNavigation() {
+  aside.classList.remove("open");
+  navTogglerBtn.classList.remove("open");
+  for (let i = 0; i < totalSection; i++) {
+    allSection[i].classList.remove("open");
   }
 }
 

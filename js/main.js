@@ -83,6 +83,19 @@ function initializeTyping() {
 /* ============================== Navigation System ============================ */
 let currentSection = 'home'; // Track current section
 
+// Mobile navigation control function (global scope)
+function closeMobileNavigation() {
+  const aside = document.querySelector(".aside");
+  const navTogglerBtn = document.querySelector(".nav-toggler");
+  const allSection = document.querySelectorAll(".section");
+
+  aside.classList.remove("open");
+  navTogglerBtn.classList.remove("open");
+  for (let i = 0; i < allSection.length; i++) {
+    allSection[i].classList.remove("open");
+  }
+}
+
 function initializeNavigation() {
   const nav = document.querySelector(".nav");
   const navList = nav.querySelectorAll("li");
@@ -104,8 +117,32 @@ function initializeNavigation() {
   const navTogglerBtn = document.querySelector(".nav-toggler");
   const aside = document.querySelector(".aside");
 
-  navTogglerBtn.addEventListener("click", () => {
+  navTogglerBtn.addEventListener("click", (e) => {
+    e.stopPropagation(); // Prevent event bubbling
     asideSectionTogglerBtn();
+  });
+
+  // Close mobile navigation when clicking outside
+  document.addEventListener("click", (e) => {
+    // Check if mobile navigation is open
+    if (aside.classList.contains("open")) {
+      // Check if click is outside the aside navigation
+      if (!aside.contains(e.target) && !navTogglerBtn.contains(e.target)) {
+        closeMobileNavigation();
+      }
+    }
+  });
+
+  // Prevent closing when clicking inside the navigation
+  aside.addEventListener("click", (e) => {
+    e.stopPropagation();
+  });
+
+  // Close mobile navigation when pressing Escape key
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape" && aside.classList.contains("open")) {
+      closeMobileNavigation();
+    }
   });
 
   function asideSectionTogglerBtn() {
@@ -146,13 +183,7 @@ function navigateToSection(sectionId) {
 
   // Close mobile menu if open
   if (window.innerWidth < 1200) {
-    const aside = document.querySelector(".aside");
-    const navTogglerBtn = document.querySelector(".nav-toggler");
-    const allSection = document.querySelectorAll(".section");
-
-    aside.classList.remove("open");
-    navTogglerBtn.classList.remove("open");
-    allSection.forEach(section => section.classList.remove("open"));
+    closeMobileNavigation();
   }
 }
 
