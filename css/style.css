@@ -947,12 +947,12 @@ body.dark .aside .secured-badge:hover {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  padding-right: 30px;
+  padding-right: 60px;
 }
 
 h1.hello,
 h3.hello {
-  font-size: 28px;
+  font-size: 32px;
   margin: 15px 0;
 }
 
@@ -960,7 +960,7 @@ h1.hello span,
 h1.hello .name,
 h3.hello span {
   font-family: "Kaushan Script", cursive;
-  font-size: 30px;
+  font-size: 36px;
   font-weight: 700;
   background: linear-gradient(135deg, var(--skin-color), rgba(var(--skin-color-rgb, 255, 107, 107), 0.8));
   -webkit-background-clip: text;
@@ -969,7 +969,7 @@ h3.hello span {
 }
 
 h3.my-profession {
-  font-size: 30px;
+  font-size: 34px;
   margin: 15px 0;
 }
 
@@ -982,7 +982,7 @@ h3.my-profession {
 
 .home-info p {
   margin-bottom: 40px;
-  font-size: 20px;
+  font-size: 22px;
   color: var(--text-black-700);
   line-height: 1.6;
 }
@@ -1119,9 +1119,15 @@ h3.my-profession {
   transition: all 0.3s ease;
 }
 
+.about .contact-form .form-item input[name="subject"] {
+  height: 60px;
+  padding: 15px 25px;
+}
+
 .about .contact-form .form-item textarea {
-  height: 140px;
+  height: 180px;
   resize: vertical;
+  padding: 15px 25px;
 }
 
 .about .contact-form .form-item input:focus,
@@ -1137,10 +1143,15 @@ h3.my-profession {
 }
 
 .about .contact-form-inner .btn {
-  margin-top: 20px;
+  margin: 20px auto 0 auto;
   display: inline-flex;
   align-items: center;
   gap: 8px;
+}
+
+.about .contact-form .form-item:has(.btn) {
+  display: flex;
+  justify-content: center;
 }
 
 .about .contact-form-inner .btn i {
@@ -1894,7 +1905,35 @@ h3.my-profession {
   .home .container {padding: 20px;}
   .home .home-info {padding: 0 15px;}
   .home .home-info h1.hello,
-  .home .home-info h3.hello {font-size: 24px;}
-  .home .home-info h3.my-profession {font-size: 26px;}
-  .home .home-info p {font-size: 18px;margin-bottom: 30px;}
+  .home .home-info h3.hello {font-size: 28px;}
+  .home .home-info h3.my-profession {font-size: 30px;}
+  .home .home-info p {font-size: 20px;margin-bottom: 30px;}
+
+  /* Mobile Contact Form Improvements */
+  .about .contact-form .form-item {
+    flex: 0 0 100%;
+    max-width: 100%;
+    padding: 0 5px;
+  }
+
+  .about .contact-form-inner {
+    padding: 25px 15px;
+  }
+
+  .about .contact-form .form-item input[name="subject"] {
+    height: 55px;
+    padding: 12px 20px;
+  }
+
+  .about .contact-form .form-item textarea {
+    height: 160px;
+    padding: 12px 20px;
+  }
+
+  .about .contact-form-inner .btn {
+    width: 100%;
+    justify-content: center;
+    padding: 14px 30px;
+    margin-top: 25px;
+  }
 }
