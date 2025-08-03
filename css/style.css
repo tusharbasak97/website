@@ -977,6 +977,7 @@ body.dark .aside .secured-badge:hover {
   display: flex;
   align-items: center;
   min-height: 80vh;
+  padding-bottom: 40px;
 }
 
 .home .row {
@@ -1512,12 +1513,6 @@ h2.my-profession {
   background: rgba(16, 185, 129, 0.1);
   color: #10b981;
   border: 1px solid rgba(16, 185, 129, 0.2);
-}
-
-.certificates .certificate-status.expiring {
-  background: rgba(245, 158, 11, 0.1);
-  color: #f59e0b;
-  border: 1px solid rgba(245, 158, 11, 0.2);
 }
 
 .certificates .certificate-status.expired {
