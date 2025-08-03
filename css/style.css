@@ -565,44 +565,6 @@ body.dark .loading-overlay {
   clip: rect(0, 0, 0, 0);
   white-space: nowrap;
   border: 0;
-}
-
-/* Skip Links for Accessibility */
-.skip-link {
-  position: absolute;
-  top: -40px;
-  left: 6px;
-  background: var(--skin-color);
-  color: white;
-  padding: 8px 16px;
-  text-decoration: none;
-  border-radius: 4px;
-  font-weight: 600;
-  z-index: 10001;
-  transition: top 0.3s ease;
-}
-
-.skip-link:focus {
-  top: 6px;
-  outline: 2px solid white;
-  outline-offset: 2px;
-}
-
-/* Focus management */
-*:focus {
-  outline: 2px solid var(--skin-color);
-  outline-offset: 2px;
-}
-
-/* Remove focus outline for mouse users */
-.js-focus-visible *:focus:not(.focus-visible) {
-  outline: none;
-}
-
-/* Ensure focus is visible for keyboard users */
-.js-focus-visible *:focus.focus-visible {
-  outline: 2px solid var(--skin-color);
-  outline-offset: 2px;
 }.padd-15 {padding-left: 15px;padding-right: 15px;}.padd-25 {padding-left: 25px;}.container {max-width: 1100px;width: 100%;margin: auto;}.section .container {padding-top: 60px;padding-bottom: 70px;}.section-title {flex: 0 0 100%;max-width: 100%;margin-bottom: 60px;}.section-title h2 {font-size: 40px;color: var(--text-black-900);font-weight: 700;position: relative;}.section-title h2::before {
   content: "";
   height: 4px;
@@ -624,7 +586,7 @@ body.dark .loading-overlay {
 }.row {display: flex;flex-wrap: wrap;margin-left: -15px;margin-right: -15px;position: relative;}.btn {
   font-size: 18px;
   font-family: "Kaushan Script", cursive;
-  font-weight: 500;
+  font-weight: 400;
   padding: 12px 35px;
   color: var(--bg-black-900);
   border-radius: 40px;
@@ -643,11 +605,6 @@ body.dark .loading-overlay {
   transform: translateY(-2px);
   box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
   filter: brightness(0.9);
-}
-
-.btn i {
-  margin-right: 8px;
-  font-size: 16px;
 }
 
 .shadow-dark {
@@ -977,7 +934,6 @@ body.dark .aside .secured-badge:hover {
   display: flex;
   align-items: center;
   min-height: 80vh;
-  padding-bottom: 70px; 
 }
 
 .home .row {
@@ -995,16 +951,16 @@ body.dark .aside .secured-badge:hover {
 }
 
 h1.hello,
-h2.hello {
-  font-size: 28px;
+h3.hello {
+  font-size: 32px;
   margin: 15px 0;
 }
 
 h1.hello span,
 h1.hello .name,
-h2.hello span {
+h3.hello span {
   font-family: "Kaushan Script", cursive;
-  font-size: 30px;
+  font-size: 36px;
   font-weight: 700;
   background: linear-gradient(135deg, var(--skin-color), rgba(var(--skin-color-rgb, 255, 107, 107), 0.8));
   -webkit-background-clip: text;
@@ -1012,8 +968,8 @@ h2.hello span {
   background-clip: text;
 }
 
-h2.my-profession {
-  font-size: 25px;
+h3.my-profession {
+  font-size: 34px;
   margin: 15px 0;
 }
 
@@ -1027,15 +983,9 @@ h2.my-profession {
 .home-info p {
   margin: 15px 0;
   font-size: 14px;
-  line-height: 25px;
   color: var(--text-black-700);
+  line-height: 1.6;
 }
-
-.hire-me {
-  margin-top: 30px;
-  margin-bottom: 15px;
-}
-
 
 .home .home-img {
   flex: 0 0 40%;
@@ -1045,7 +995,6 @@ h2.my-profession {
   display: flex;
   align-items: center;
   justify-content: center;
-  padding-left: 30px;
 }
 
 .home-img::after {
@@ -1098,39 +1047,27 @@ h2.my-profession {
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
-}.about .about-content .personal-info .buttons {margin-top: 30px;}.about .about-content .personal-info .buttons .btn {margin-top: 10px;}.about .about-content .skills {flex: 0 0 40%;max-width: 40%;margin-top: 40px;}.about .about-content .skills .skill-item {flex: 0 0 100%;max-width: 100%;}.about .about-content .skills .skill-item h5 {line-height: 40px;font-weight: 600;font-size: 16px;color: var(--text-black-900);text-transform: capitalize;}.about .about-content .skills .skill-item .progress {background-color: var(--bg-black-50);height: 7px;border-radius: 4px;width: 100%;position: relative;}.about .about-content .skills .skill-item {margin-bottom: 25px;}.about .about-content .skills .skill-item .progress .progress-in {position: absolute;left: 0;top: 0;height: 100%;border-radius: 4px;background: linear-gradient(135deg, var(--skin-color), rgba(var(--skin-color-rgb, 255, 107, 107), 0.8));}.about .about-content .skills .skill-item .skill-percent {position: absolute;right: 0;color: var(--text-black-900);top: -40px;font-weight: 400;line-height: 40px;}.about .about-content .education, .about .about-content .experience {flex: 0 0 50%;max-width: 50%;margin-top: 30px;}.about .about-content h3.title {font-size: 24px;margin-bottom: 30px;font-weight: 700;color: var(--text-black-900);}.about .about-content .timeline-box {flex: 0 0 100%;max-width: 100%;}.about .about-content .timeline {
-  background-color: var(--bg-black-100);
-  padding: 30px 15px;
-  border: 1px solid var(--bg-black-50);
-  border-radius: 10px;
-  width: 100%;
-  position: relative;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.08), 0 2px 4px rgba(0, 0, 0, 0.06);
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.about .about-content .timeline:hover {
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.06), 0 1px 2px rgba(0, 0, 0, 0.04);
-  transform: translateY(1px);
-}.about .about-content .timeline .timeline-item {position: relative;padding-left: 37px;padding-bottom: 50px;}.about .about-content .timeline .timeline-item:last-child {padding-bottom: 0;}.about .about-content .timeline .timeline-item::before {content: "";width: 1px;position: absolute;height: 100%;left: 7px;top: 0;background: linear-gradient(180deg, var(--skin-color), rgba(var(--skin-color-rgb, 255, 107, 107), 0.8));}.about .about-content .timeline .circle-dot {position: absolute;left: 0;top: 0;height: 15px;width: 15px;border-radius: 50%;background: linear-gradient(135deg, var(--skin-color), rgba(var(--skin-color-rgb, 255, 107, 107), 0.8));}.about .about-content .timeline .timeline-date {font-weight: 400;font-size: 14px;margin-bottom: 12px;color: var(--text-black-700);}.about .about-content .timeline .timeline-date .fa {margin-right: 5px;}.about .about-content .timeline .timeline-title {font-weight: 700;font-size: 18px;margin-bottom: 15px;text-transform: capitalize;color: var(--text-black-900);}.about .about-content .timeline .timeline-text {line-height: 25px;font-size: 16px;text-align: justify;color: var(--text-black-700);}/* ============================== Get In Touch Section in About ============================== */
+  font-size: 18px;
+}.about .about-content .personal-info .buttons {margin-top: 30px;}.about .about-content .personal-info .buttons .btn {margin-top: 10px;}.about .about-content .skills {flex: 0 0 40%;max-width: 40%;margin-top: 40px;}.about .about-content .skills .skill-item {flex: 0 0 100%;max-width: 100%;}.about .about-content .skills .skill-item h5 {line-height: 40px;font-weight: 600;font-size: 16px;color: var(--text-black-900);text-transform: capitalize;}.about .about-content .skills .skill-item .progress {background-color: var(--bg-black-50);height: 7px;border-radius: 4px;width: 100%;position: relative;}.about .about-content .skills .skill-item {margin-bottom: 25px;}.about .about-content .skills .skill-item .progress .progress-in {position: absolute;left: 0;top: 0;height: 100%;border-radius: 4px;background: linear-gradient(135deg, var(--skin-color), rgba(var(--skin-color-rgb, 255, 107, 107), 0.8));}.about .about-content .skills .skill-item .skill-percent {position: absolute;right: 0;color: var(--text-black-900);top: -40px;font-weight: 400;line-height: 40px;}.about .about-content .education, .about .about-content .experience {flex: 0 0 50%;max-width: 50%;margin-top: 30px;}.about .about-content h3.title {font-size: 24px;margin-bottom: 30px;font-weight: 700;color: var(--text-black-900);}.about .about-content .timeline-box {flex: 0 0 100%;max-width: 100%;}.about .about-content .timeline {background-color: var(--bg-black-100);padding: 30px 15px;border: 1px solid var(--bg-black-50);border-radius: 10px;width: 100%;position: relative;}.about .about-content .timeline .timeline-item {position: relative;padding-left: 37px;padding-bottom: 50px;}.about .about-content .timeline .timeline-item:last-child {padding-bottom: 0;}.about .about-content .timeline .timeline-item::before {content: "";width: 1px;position: absolute;height: 100%;left: 7px;top: 0;background: linear-gradient(180deg, var(--skin-color), rgba(var(--skin-color-rgb, 255, 107, 107), 0.8));}.about .about-content .timeline .circle-dot {position: absolute;left: 0;top: 0;height: 15px;width: 15px;border-radius: 50%;background: linear-gradient(135deg, var(--skin-color), rgba(var(--skin-color-rgb, 255, 107, 107), 0.8));}.about .about-content .timeline .timeline-date {font-weight: 400;font-size: 14px;margin-bottom: 12px;color: var(--text-black-700);}.about .about-content .timeline .timeline-date .fa {margin-right: 5px;}.about .about-content .timeline .timeline-title {font-weight: 700;font-size: 18px;margin-bottom: 15px;text-transform: capitalize;color: var(--text-black-900);}.about .about-content .timeline .timeline-text {line-height: 25px;font-size: 16px;text-align: justify;color: var(--text-black-700);}/* ============================== Get In Touch Section in About ============================== */
 .about .contact-content {
   flex: 0 0 100%;
   max-width: 100%;
 }
 
-.about .contact-content .contact-text {
+.about .contact-content .contact-title {
   flex: 0 0 100%;
   max-width: 100%;
+  margin-bottom: 30px;
 }
 
-.about .contact-content .contact-text h3 {
+.about .contact-content .contact-title h3 {
   font-size: 24px;
   margin-bottom: 15px;
   font-weight: 700;
   color: var(--text-black-900);
 }
 
-.about .contact-content .contact-text h3 span {
+.about .contact-content .contact-title h3 span {
   background: linear-gradient(135deg, var(--skin-color), rgba(var(--skin-color-rgb, 255, 107, 107), 0.8));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -1139,91 +1076,86 @@ h2.my-profession {
   font-weight: 600;
 }
 
-.about .contact-content .contact-text p {
+.about .contact-content .contact-title p {
   font-size: 16px;
   line-height: 25px;
   color: var(--text-black-700);
+  margin-bottom: 20px;
 }
 
 .about .contact-form {
   flex: 0 0 100%;
   max-width: 100%;
-  margin-top: 20px;
 }
 
 .about .contact-form-inner {
-  background-color: var(--bg-black-100);
-  padding: 40px 30px;
+  background: var(--bg-black-100);
   border: 1px solid var(--bg-black-50);
-  border-radius: 15px;
-  width: 100%;
-  position: relative;
-  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1), 0 4px 10px rgba(0, 0, 0, 0.08);
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  border-radius: 10px;
+  padding: 30px;
+  box-shadow: 0 0 20px rgba(48, 46, 77, 0.15);
 }
 
-.about .contact-form-inner:hover {
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.06), 0 1px 2px rgba(0, 0, 0, 0.04);
-  transform: translateY(1px);
-}
-
-.about .contact-form-inner .col-6 {
+.about .contact-form .form-item {
   flex: 0 0 50%;
   max-width: 50%;
+  margin-bottom: 25px;
 }
 
-.about .contact-form-inner .col-12 {
+.about .contact-form .form-item.full-width {
   flex: 0 0 100%;
   max-width: 100%;
 }
 
-.about .contact-form-inner .form-item {
-  margin-bottom: 25px;
-}
-
-.about .contact-form-inner .form-control {
+.about .contact-form .form-item input,
+.about .contact-form .form-item textarea {
   width: 100%;
   height: 50px;
-  border-radius: 10px;
+  border-radius: 25px;
   background: var(--bg-black-900);
-  border: 2px solid var(--bg-black-50);
-  padding: 12px 18px;
+  border: 1px solid var(--bg-black-50);
+  padding: 10px 25px;
   font-size: 16px;
-  color: var(--text-black-700);
+  color: var(--text-black-900);
   transition: all 0.3s ease;
-  font-weight: 400;
 }
 
-.about .contact-form-inner .form-control::-webkit-input-placeholder {
-  color: var(--text-black-700);
-  opacity: 0.7;
-  font-weight: 400;
+.about .contact-form .form-item input[name="subject"] {
+  height: 60px;
+  padding: 15px 25px;
 }
 
-.about .contact-form-inner .form-control:focus {
-  border-color: var(--skin-color);
-  outline: none;
-  box-shadow: 0 0 0 2px rgba(var(--skin-color-rgb, 255, 107, 107), 0.1);
-  background: var(--bg-black-900);
-}
-
-.about .contact-form-inner textarea.form-control {
-  height: 140px;
+.about .contact-form .form-item textarea {
+  height: 180px;
   resize: vertical;
-  padding-top: 15px;
-  line-height: 1.5;
+  padding: 15px 25px;
+}
+
+.about .contact-form .form-item input:focus,
+.about .contact-form .form-item textarea:focus {
+  border-color: var(--skin-color);
+  box-shadow: 0 0 15px rgba(var(--skin-color-rgb, 255, 107, 107), 0.2);
+}
+
+.about .contact-form .form-item input::placeholder,
+.about .contact-form .form-item textarea::placeholder {
+  color: var(--text-black-700);
+  opacity: 0.8;
 }
 
 .about .contact-form-inner .btn {
-  height: 50px;
-  padding: 0 40px;
-  display: flex;
+  margin: 20px auto 0 auto;
+  display: inline-flex;
   align-items: center;
-  gap: 10px;
+  gap: 8px;
+}
+
+.about .contact-form .form-item:has(.btn) {
+  display: flex;
   justify-content: center;
   margin: 30px auto 0;
-  font-size: 17px;
-  font-weight: 400;
+  font-size: 16px;
+  font-weight: 600;
 }
 
 .about .contact-form-inner .btn i {
@@ -1515,6 +1447,12 @@ h2.my-profession {
   background: rgba(16, 185, 129, 0.1);
   color: #10b981;
   border: 1px solid rgba(16, 185, 129, 0.2);
+}
+
+.certificates .certificate-status.expiring {
+  background: rgba(245, 158, 11, 0.1);
+  color: #f59e0b;
+  border: 1px solid rgba(245, 158, 11, 0.2);
 }
 
 .certificates .certificate-status.expired {
@@ -1859,7 +1797,7 @@ h2.my-profession {
   transform: translateY(-3px) scale(1.05);
   box-shadow: 0 12px 30px rgba(0, 0, 0, 0.25);
   letter-spacing: 1px;
-}@media screen and (max-width: 64rem) {.section .container {padding-top: 70px;padding-bottom: 50%;}.aside {left: -270px;}.aside.open {left: 0;}.aside .nav-toggler {display: flex;left: 30px;}.aside .nav-toggler.open {left: 300px;}.section {left: 0;}.section.open {left: 270px;}.home .home-img {display: none;}.home .home-info {flex: 0 0 100%;max-width: 100%;padding-right: 0;text-align: center;}.about .about-content .personal-info .info-item p span {display: block;margin-left: 0;}}@media screen and (max-width: 48rem) {
+}@media screen and (max-width: 64rem) {.section .container {padding-top: 70px;padding-bottom: 50%;}.aside {left: -270px;}.aside.open {left: 0;}.aside .nav-toggler {display: flex;left: 30px;}.aside .nav-toggler.open {left: 300px;}.section {left: 0;}.section.open {left: 270px;}.about .about-content .personal-info .info-item p span {display: block;margin-left: 0;}}@media screen and (max-width: 48rem) {
   body {cursor: auto;}
   .cursor-1, .cursor-2 {display: none;}
 
@@ -1971,31 +1909,35 @@ h2.my-profession {
   .home .container {padding: 20px;}
   .home .home-info {padding: 0 15px;}
   .home .home-info h1.hello,
-  .home .home-info h3.hello {font-size: 24px;}
-  .home .home-info h3.my-profession {font-size: 26px;}
+  .home .home-info h3.hello {font-size: 28px;}
+  .home .home-info h3.my-profession {font-size: 30px;}
+  .home .home-info p {font-size: 20px;margin-bottom: 30px;}
 
-  .about .contact-form-inner .col-6 {
+  /* Mobile Contact Form Improvements */
+  .about .contact-form .form-item {
     flex: 0 0 100%;
     max-width: 100%;
+    padding: 0 5px;
   }
 
-  .about .contact-content .contact-text h3 {
-    font-size: 20px;
-    margin-bottom: 12px;
+  .about .contact-form-inner {
+    padding: 25px 15px;
   }
 
-  .about .contact-content .contact-text p {
-    font-size: 14px;
-    line-height: 22px;
+  .about .contact-form .form-item input[name="subject"] {
+    height: 55px;
+    padding: 12px 20px;
   }
 
-  .about .about-content .about-text h3 {
-    font-size: 20px;
-    margin-bottom: 12px;
+  .about .contact-form .form-item textarea {
+    height: 160px;
+    padding: 12px 20px;
   }
 
-  .about .about-content .about-text p {
-    font-size: 14px;
-    line-height: 22px;
+  .about .contact-form-inner .btn {
+    width: 100%;
+    justify-content: center;
+    padding: 14px 30px;
+    margin-top: 25px;
   }
 }
