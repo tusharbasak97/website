@@ -1349,7 +1349,7 @@ h2.my-profession {
   overflow: hidden;
   display: flex;
   align-items: stretch;
-  min-height: 140px;
+  min-height: auto;
 }
 
 .certificates .certificate-item-inner:hover {
@@ -1392,7 +1392,7 @@ h2.my-profession {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  min-height: 140px;
+  min-height: auto;
 }
 
 .certificates .certificate-header {
@@ -1597,77 +1597,7 @@ h2.my-profession {
   display: none;
 }
 
-/* ============================== Offline/Online Status Notifications ============================== */
-.connection-status {
-  position: fixed;
-  top: 20px;
-  right: 20px;
-  z-index: 10001;
-  padding: 12px 20px;
-  border-radius: 8px;
-  font-size: 14px;
-  font-weight: 500;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-  transform: translateX(100%);
-  animation: slideInStatus 0.3s ease forwards;
-  max-width: 300px;
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-}
-
-.connection-status.success {
-  background: rgba(16, 185, 129, 0.9);
-  color: white;
-  border: 1px solid rgba(16, 185, 129, 0.3);
-}
-
-.connection-status.warning {
-  background: rgba(245, 158, 11, 0.9);
-  color: white;
-  border: 1px solid rgba(245, 158, 11, 0.3);
-}
-
-.connection-status.info {
-  background: rgba(59, 130, 246, 0.9);
-  color: white;
-  border: 1px solid rgba(59, 130, 246, 0.3);
-}
-
-.connection-status .status-content {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-.connection-status .status-content i {
-  font-size: 16px;
-}
-
-.connection-status.fade-out {
-  animation: slideOutStatus 0.3s ease forwards;
-}
-
-@keyframes slideInStatus {
-  from {
-    transform: translateX(100%);
-    opacity: 0;
-  }
-  to {
-    transform: translateX(0);
-    opacity: 1;
-  }
-}
-
-@keyframes slideOutStatus {
-  from {
-    transform: translateX(0);
-    opacity: 1;
-  }
-  to {
-    transform: translateX(100%);
-    opacity: 0;
-  }
-}
+/* Status notification styles removed to eliminate banner popups */
 
 /* Offline state styling */
 body.offline {
@@ -1692,22 +1622,12 @@ body.offline::before {
   -webkit-backdrop-filter: blur(10px);
 }
 
-/* Mobile responsive status notifications */
-@media screen and (max-width: 48rem) {
-  .connection-status {
-    top: 10px;
-    right: 10px;
-    left: 10px;
-    max-width: none;
-    font-size: 13px;
-    padding: 10px 16px;
-  }
+/* Mobile responsive status styles removed */
 
   body.offline::before {
     font-size: 11px;
     padding: 6px;
   }
-}
 
 /* Responsive adjustments */
 @media screen and (max-width: 768px) {
@@ -2047,9 +1967,21 @@ body.offline::before {
   }
 
   .certificates .certificate-item {flex: 0 0 100%;max-width: 100%;}
-  .certificates .filter-buttons {justify-content: flex-start;overflow-x: auto;padding-bottom: 10px;gap: 8px;}
-  .certificates .filter-btn {flex-shrink: 0;padding: 10px 16px;font-size: 13px;}
-  .certificates .filter-btn span:not(.count) {display: none;}
+  .certificates .filter-buttons {
+    justify-content: center;
+    gap: 8px;
+    padding: 0 10px;
+    margin-bottom: 20px;
+  }
+  .certificates .filter-btn {
+    flex-shrink: 0;
+    padding: 10px 14px;
+    font-size: 12px;
+    min-height: 44px;
+    border-radius: 22px;
+    white-space: nowrap;
+  }
+  /* Keep filter button text visible on mobile for better UX */
   .home {justify-content: center;align-items: center;}
   .home .container {min-height: 80vh;display: flex;align-items: center;justify-content: center;}
   .home .row {flex-direction: column;text-align: center;align-items: center;justify-content: center;width: 100%;}
@@ -2106,8 +2038,25 @@ body.offline::before {
     font-size: 13px;
   }
 
-  .certificates .filter-btn {padding: 8px 12px;font-size: 12px;}
-  .certificates .filter-btn .count {font-size: 10px;padding: 1px 6px;}
+  .certificates .filter-buttons {
+    gap: 6px;
+    padding: 0 5px;
+    justify-content: center;
+  }
+  .certificates .filter-btn {
+    padding: 8px 12px;
+    font-size: 11px;
+    min-height: 40px;
+    white-space: nowrap;
+    border-radius: 20px;
+    letter-spacing: 0.3px;
+  }
+  .certificates .filter-btn .count {
+    font-size: 10px;
+    padding: 1px 5px;
+    min-width: 18px;
+    text-align: center;
+  }
   .home .container {padding: 20px;}
   .home .home-info {padding: 0 15px;}
   .home .home-info h1.hello,
@@ -2137,5 +2086,32 @@ body.offline::before {
   .about .about-content .about-text p {
     font-size: 14px;
     line-height: 22px;
+  }
+}
+
+/* Extra small screens (phones in portrait) */
+@media screen and (max-width: 24rem) {
+  .certificates .filter-buttons {
+    gap: 4px;
+    padding: 0 10px;
+    margin-bottom: 25px;
+  }
+
+  .certificates .filter-btn {
+    padding: 8px 10px;
+    font-size: 10px;
+    min-height: 38px;
+    border-radius: 19px;
+    letter-spacing: 0.2px;
+  }
+
+  .certificates .filter-btn .count {
+    font-size: 9px;
+    padding: 1px 4px;
+    min-width: 16px;
+  }
+
+  .certificates .certificates-filter {
+    margin-bottom: 25px;
   }
 }

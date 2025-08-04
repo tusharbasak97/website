@@ -738,7 +738,7 @@ function verifyCertificate(certificateId, verificationUrl) {
 
 function showCertificateVerificationModal(certificateId) {
   // This could be expanded to show a modal with verification details
-  alert(`Certificate verification for ${certificateId} - Feature coming soon!`);
+  console.log(`Certificate verification for ${certificateId} - Feature coming soon!`);
 }
 
 // Add certificate filtering functionality
@@ -830,7 +830,9 @@ function updateFilterCounts() {
 function registerServiceWorker() {
   if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => {
-      navigator.serviceWorker.register('/sw.js')
+      // Use correct service worker path for GitHub Pages
+      const swPath = window.location.pathname.startsWith('/website/') ? '/website/sw.js' : '/sw.js';
+      navigator.serviceWorker.register(swPath)
         .then((registration) => {
           console.log('Service Worker registered successfully:', registration.scope);
           console.log('Complete offline support enabled');
@@ -843,13 +845,11 @@ function registerServiceWorker() {
             newWorker.addEventListener('statechange', () => {
               if (newWorker.state === 'installed') {
                 if (navigator.serviceWorker.controller) {
-                  // New content is available, show update notification
+                  // New content is available
                   console.log('New service worker installed, update available');
-                  showUpdateNotification();
                 } else {
                   // First time installation
                   console.log('Service Worker installed for the first time');
-                  showInstallNotification();
                 }
               }
             });
@@ -886,17 +886,11 @@ function checkCacheStatus() {
   }
 }
 
-function showUpdateNotification() {
-  console.log('New content is available! Please refresh the page.');
-  showConnectionStatus('🔄 Update available! Refresh for latest version.', 'info');
-}
-
-function showInstallNotification() {
-  console.log('Website is now available offline!');
-  showConnectionStatus('✅ Website cached! Now available offline.', 'success');
-}
+// Notification functions removed to eliminate banner popups
 
 /* ============================== Offline Detection ============================ */
+// Offline notification tracking removed
+
 function initializeOfflineDetection() {
   // Check initial online status
   updateOnlineStatus();
@@ -905,18 +899,18 @@ function initializeOfflineDetection() {
   window.addEventListener('online', handleOnline);
   window.addEventListener('offline', handleOffline);
 
-  // More frequent connectivity checking
-  setInterval(checkConnectivity, 5000); // Check every 5 seconds
+  // Less frequent connectivity checking to avoid banner spam
+  setInterval(checkConnectivity, 30000); // Check every 30 seconds instead of 5
 
   // Also check on page visibility change
   document.addEventListener('visibilitychange', () => {
     if (!document.hidden) {
-      setTimeout(checkConnectivity, 1000);
+      setTimeout(checkConnectivity, 2000);
     }
   });
 
-  // Initial connectivity check
-  setTimeout(checkConnectivity, 2000);
+  // Initial connectivity check - delayed to avoid immediate banner
+  setTimeout(checkConnectivity, 5000);
 }
 
 function updateOnlineStatus() {
@@ -932,10 +926,9 @@ function updateOnlineStatus() {
 function handleOnline() {
   console.log('Connection restored');
   updateOnlineStatus();
-  showConnectionStatus('You\'re back online!', 'success');
 
   // Redirect to main site if we're on the offline page
-  if (window.location.pathname === '/offline.html') {
+  if (window.location.pathname === '/offline.html' || window.location.pathname === '/website/offline.html') {
     setTimeout(() => {
       window.location.href = 'https://tusharbasak97.github.io/website/';
     }, 1000);
@@ -945,13 +938,19 @@ function handleOnline() {
 function handleOffline() {
   console.log('Connection lost');
   updateOnlineStatus();
-  showConnectionStatus('You\'re offline. Redirecting to offline page...', 'warning');
+
+  // Notification removed to eliminate banner popups
 
   // Redirect to offline page after a short delay if not already there
   setTimeout(() => {
-    if (!navigator.onLine && window.location.pathname !== '/offline.html') {
+    const currentPath = window.location.pathname;
+    const isOnOfflinePage = currentPath === '/offline.html' || currentPath === '/website/offline.html';
+
+    if (!navigator.onLine && !isOnOfflinePage) {
       console.log('Redirecting to offline page');
-      window.location.href = '/offline.html';
+      // Use the correct offline page path
+      const offlineUrl = currentPath.startsWith('/website/') ? '/website/offline.html' : '/offline.html';
+      window.location.href = offlineUrl;
     }
   }, 2000);
 }
@@ -961,7 +960,10 @@ function checkConnectivity() {
   const controller = new AbortController();
   const timeoutId = setTimeout(() => controller.abort(), 3000); // 3 second timeout
 
-  fetch('/favicon.ico?' + Date.now(), {
+  // Use the correct path based on whether we're on GitHub Pages or local
+  const testUrl = window.location.pathname.startsWith('/website/') ? '/website/favicon.ico' : '/favicon.ico';
+
+  fetch(testUrl + '?' + Date.now(), {
     method: 'HEAD',
     cache: 'no-cache',
     signal: controller.signal
@@ -987,36 +989,7 @@ function checkConnectivity() {
   });
 }
 
-function showConnectionStatus(message, type) {
-  // Remove any existing status notifications
-  const existingNotification = document.querySelector('.connection-status');
-  if (existingNotification) {
-    existingNotification.remove();
-  }
-
-  // Create status notification
-  const notification = document.createElement('div');
-  notification.className = `connection-status ${type}`;
-  notification.innerHTML = `
-    <div class="status-content">
-      <i class="fas ${type === 'success' ? 'fa-wifi' : 'fa-exclamation-triangle'}"></i>
-      <span>${message}</span>
-    </div>
-  `;
-
-  // Add to page
-  document.body.appendChild(notification);
-
-  // Auto-remove after 5 seconds
-  setTimeout(() => {
-    if (notification.parentNode) {
-      notification.classList.add('fade-out');
-      setTimeout(() => {
-        notification.remove();
-      }, 300);
-    }
-  }, 5000);
-}
+// showConnectionStatus function removed to eliminate banner popups
 
 /* ============================== 404 Route Handling ============================ */
 function initialize404Handling() {
@@ -1029,17 +1002,33 @@ function initialize404Handling() {
     '/404.html',
     '/test-offline.html',
     '/test-404.html',
-    '/test-complete-offline.html'
+    '/test-complete-offline.html',
+    // GitHub Pages paths
+    '/website/',
+    '/website/index.html',
+    '/website/offline.html',
+    '/website/404.html',
+    '/website/test-offline.html',
+    '/website/test-404.html',
+    '/website/test-complete-offline.html'
   ];
 
   // Check if it's a valid file extension (assets)
-  const validExtensions = ['.css', '.js', '.png', '.jpg', '.jpeg', '.webp', '.ico', '.pdf', '.svg', '.woff', '.woff2', '.ttf', '.webmanifest'];
+  const validExtensions = ['.css', '.js', '.png', '.jpg', '.jpeg', '.webp', '.ico', '.pdf', '.svg', '.woff', '.woff2', '.ttf', '.webmanifest', '.xml', '.txt'];
   const isAssetFile = validExtensions.some(ext => currentPath.endsWith(ext));
 
+  // Check if it's a valid GitHub Pages asset path
+  const isGitHubPagesAsset = currentPath.startsWith('/website/') && isAssetFile;
+
   // If it's not a valid route and not an asset file, redirect to 404
-  if (!validRoutes.includes(currentPath) && !isAssetFile && currentPath !== '/404.html') {
+  if (!validRoutes.includes(currentPath) && !isAssetFile && !isGitHubPagesAsset && currentPath !== '/404.html' && currentPath !== '/website/404.html') {
     console.log('Invalid route detected:', currentPath);
-    window.location.replace('/404.html');
+    // Redirect to the appropriate 404 page based on current path
+    if (currentPath.startsWith('/website/')) {
+      window.location.replace('/website/404.html');
+    } else {
+      window.location.replace('/404.html');
+    }
   }
 }
 

@@ -1,78 +1,68 @@
 // Service Worker for Tushar Basak Portfolio - Complete Offline Support
 const CACHE_NAME = 'tushar-basak-portfolio-v1.0.0';
-const OFFLINE_URL = '/website/offline.html';
-const NOT_FOUND_URL = '/website/404.html';
 
-// COMPLETE list of ALL files for full offline functionality
-const STATIC_CACHE_URLS = [
-  // Root files (GitHub Pages paths)
-  '/website/',
-  '/website/index.html',
-  '/website/offline.html',
-  '/website/404.html',
-  '/website/test-offline.html',
-  '/website/test-404.html',
-  '/website/test-complete-offline.html',
-  '/website/favicon.ico',
-  '/website/robots.txt',
-  '/website/sitemap.xml',
-  // Also cache root-relative paths for compatibility
-  '/',
-  '/index.html',
-  '/offline.html',
-  '/404.html',
-  '/favicon.ico',
+// Determine if we're on GitHub Pages or local development
+const isGitHubPages = self.location.pathname.startsWith('/website/') || self.location.hostname === 'tusharbasak97.github.io';
+const basePath = isGitHubPages ? '/website' : '';
 
-  // CSS Files - ALL themes and styles
-  '/website/css/style.css',
-  '/website/css/preloader.min.css',
-  '/website/css/style-switcher.css',
-  '/website/css/skins/color-1.css',
-  '/website/css/skins/color-2.css',
-  '/website/css/skins/color-3.css',
-  '/website/css/skins/color-4.css',
-  '/website/css/skins/color-5.css',
-
-  // JavaScript Files - ALL functionality
-  '/website/js/main.js',
-  '/website/js/script.js',
-  '/website/js/preloader.min.js',
-  '/website/js/style-switcher.js',
-
-  // Images - ALL images for complete visual experience
-  '/website/assets/images/hero.webp',
-  '/website/assets/images/hero.jpg',
-  '/website/assets/images/logo.png',
-  '/website/assets/images/favicon-16x16.png',
-  '/website/assets/images/favicon-32x32.png',
-  '/website/assets/images/apple-touch-icon.png',
-  '/website/assets/images/android-chrome-192x192.png',
-  '/website/assets/images/android-chrome-512x512.png',
-  '/website/assets/images/mstile-150x150.png',
-  '/website/assets/images/safari-pinned-tab.svg',
-
-  // Portfolio Images - ALL project images
-  '/website/assets/images/portfolio/AI.webp',
-  '/website/assets/images/portfolio/Cloud.webp',
-  '/website/assets/images/portfolio/Cybersecurity.webp',
-  '/website/assets/images/portfolio/ML.webp',
-  '/website/assets/images/portfolio/Python.webp',
-  '/website/assets/images/portfolio/SQL.webp',
-
-  // Documents - ALL PDFs and certificates
-  '/website/assets/resume.pdf',
-  '/website/assets/Strive.pdf',
-
-  // Configuration files
-  '/website/assets/site.webmanifest',
-  '/website/assets/browserconfig.xml',
-  '/website/.well-known/security.txt'
-];
+// Define offline and 404 URLs with proper basePath
+const OFFLINE_URL = basePath + '/offline.html';
+const NOT_FOUND_URL = basePath + '/404.html';
 
 // External resources to cache (CDN files)
 const EXTERNAL_CACHE_URLS = [
   'https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Kaushan+Script&display=swap',
-  'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css'
+  'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css',
+  'https://unpkg.com/typed.js@2.1.0/dist/typed.umd.js'
+];
+
+const STATIC_CACHE_URLS = [
+  basePath + '/',
+  basePath + '/index.html',
+  basePath + '/offline.html',
+  basePath + '/404.html',
+
+  // CSS Files - ALL themes and styles
+  basePath + '/css/style.css',
+  basePath + '/css/preloader.min.css',
+  basePath + '/css/style-switcher.css',
+  basePath + '/css/skins/color-1.css',
+  basePath + '/css/skins/color-2.css',
+  basePath + '/css/skins/color-3.css',
+  basePath + '/css/skins/color-4.css',
+  basePath + '/css/skins/color-5.css',
+
+  // JavaScript Files - ALL functionality
+  basePath + '/js/main.js',
+  basePath + '/js/preloader.min.js',
+  basePath + '/js/style-switcher.js',
+
+  // Images - Critical images for functionality
+  basePath + '/assets/images/hero.webp',
+  basePath + '/assets/images/hero.jpg',
+  basePath + '/assets/images/favicon-32x32.png',
+  basePath + '/assets/images/favicon-16x16.png',
+  basePath + '/assets/images/apple-touch-icon.png',
+  basePath + '/assets/images/android-chrome-192x192.png',
+  basePath + '/assets/images/android-chrome-512x512.png',
+
+  // Portfolio Images - ALL project images
+  basePath + '/assets/images/portfolio/AI.webp',
+  basePath + '/assets/images/portfolio/Cloud.webp',
+  basePath + '/assets/images/portfolio/Cybersecurity.webp',
+  basePath + '/assets/images/portfolio/ML.webp',
+  basePath + '/assets/images/portfolio/Python.webp',
+  basePath + '/assets/images/portfolio/SQL.webp',
+
+  // Documents
+  basePath + '/assets/resume.pdf',
+  basePath + '/assets/Strive.pdf',
+
+  // Configuration files
+  basePath + '/assets/site.webmanifest',
+  basePath + '/favicon.ico',
+  basePath + '/robots.txt',
+  basePath + '/sitemap.xml'
 ];
 
 // Install event - cache ALL resources for complete offline experience
@@ -144,7 +134,7 @@ self.addEventListener('fetch', (event) => {
 
   const requestUrl = new URL(event.request.url);
 
-  // Handle external requests (CDN, fonts, etc.)
+  // Handle external requests (CDN, fonts, etc.) - FIXED the boolean logic
   if (requestUrl.origin !== self.location.origin) {
     event.respondWith(
       caches.match(event.request)
@@ -182,9 +172,9 @@ self.addEventListener('fetch', (event) => {
     return request.destination === 'document' ||
            request.mode === 'navigate' ||
            request.url.endsWith('.html') ||
+           request.url === self.location.origin + basePath + '/' ||
            request.url === self.location.origin + '/' ||
-           request.url === self.location.origin + '/website/' ||
-           request.url.includes('/website/') && (!request.url.includes('.') || request.url.includes('#')) ||
+           (request.url.includes(basePath) && (!request.url.includes('.') || request.url.includes('#'))) ||
            (!request.url.includes('.') && !request.url.includes('?'));
   };
 
@@ -192,17 +182,13 @@ self.addEventListener('fetch', (event) => {
     const pathname = new URL(url).pathname;
 
     // For GitHub Pages, handle both root and /website/ paths
-    const basePath = pathname.startsWith('/website/') ? '/website' : '';
-    const relativePath = pathname.replace('/website', '');
+    const relativePath = pathname.replace(basePath, '');
 
     const validRoutes = [
       '/',
       '/index.html',
       '/offline.html',
-      '/404.html',
-      '/test-offline.html',
-      '/test-404.html',
-      '/test-complete-offline.html'
+      '/404.html'
     ];
 
     // Check exact matches (with and without base path)
@@ -331,8 +317,8 @@ self.addEventListener('push', (event) => {
     const data = event.data.json();
     const options = {
       body: data.body,
-      icon: '/assets/images/favicon-32x32.png',
-      badge: '/assets/images/favicon-16x16.png',
+      icon: basePath + '/assets/images/favicon-32x32.png',
+      badge: basePath + '/assets/images/favicon-16x16.png',
       vibrate: [100, 50, 100],
       data: {
         dateOfArrival: Date.now(),
@@ -342,12 +328,12 @@ self.addEventListener('push', (event) => {
         {
           action: 'explore',
           title: 'View Portfolio',
-          icon: '/assets/images/favicon-16x16.png'
+          icon: basePath + '/assets/images/favicon-16x16.png'
         },
         {
           action: 'close',
           title: 'Close',
-          icon: '/assets/images/favicon-16x16.png'
+          icon: basePath + '/assets/images/favicon-16x16.png'
         }
       ]
     };
@@ -364,7 +350,7 @@ self.addEventListener('notificationclick', (event) => {
 
   if (event.action === 'explore') {
     event.waitUntil(
-      clients.openWindow('/')
+      clients.openWindow(basePath + '/')
     );
   }
 });
