@@ -830,7 +830,9 @@ function updateFilterCounts() {
 function registerServiceWorker() {
   if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => {
-      navigator.serviceWorker.register('/sw.js')
+      // Use correct service worker path for GitHub Pages
+      const swPath = window.location.pathname.startsWith('/website/') ? '/website/sw.js' : '/sw.js';
+      navigator.serviceWorker.register(swPath)
         .then((registration) => {
           console.log('Service Worker registered successfully:', registration.scope);
           console.log('Complete offline support enabled');

@@ -1,21 +1,26 @@
 // Service Worker for Tushar Basak Portfolio
-const CACHE_NAME = 'tushar-basak-portfolio-v1.0.0';
+const CACHE_NAME = 'tushar-basak-portfolio-v2.0.0';
+
+// Determine if we're on GitHub Pages or local development
+const isGitHubPages = self.location.pathname.startsWith('/website/') || self.location.hostname === 'tusharbasak97.github.io';
+const basePath = isGitHubPages ? '/website' : '';
+
 const STATIC_CACHE_URLS = [
-  '/',
-  '/index.html',
-  '/css/style.css',
-  '/css/preloader.min.css',
-  '/css/style-switcher.css',
-  '/css/skins/color-1.css',
-  '/js/main.js',
-  '/js/script.js',
-  '/js/preloader.min.js',
-  '/js/style-switcher.js',
-  '/assets/images/hero.webp',
-  '/assets/images/favicon-32x32.png',
-  '/assets/images/favicon-16x16.png',
-  '/assets/resume.pdf',
-  '/manifest.json'
+  basePath + '/',
+  basePath + '/index.html',
+  basePath + '/css/style.css',
+  basePath + '/css/preloader.min.css',
+  basePath + '/css/style-switcher.css',
+  basePath + '/css/skins/color-1.css',
+  basePath + '/js/main.js',
+  basePath + '/js/script.js',
+  basePath + '/js/preloader.min.js',
+  basePath + '/js/style-switcher.js',
+  basePath + '/assets/images/hero.webp',
+  basePath + '/assets/images/favicon-32x32.png',
+  basePath + '/assets/images/favicon-16x16.png',
+  basePath + '/assets/resume.pdf',
+  basePath + '/offline.html'
 ];
 
 // Install event - cache static assets
@@ -105,7 +110,7 @@ self.addEventListener('fetch', (event) => {
 
             // Return offline page for navigation requests
             if (event.request.destination === 'document') {
-              return caches.match('/offline.html');
+              return caches.match(basePath + '/offline.html');
             }
 
             throw error;
@@ -130,8 +135,8 @@ self.addEventListener('push', (event) => {
     const data = event.data.json();
     const options = {
       body: data.body,
-      icon: '/assets/images/favicon-32x32.png',
-      badge: '/assets/images/favicon-16x16.png',
+      icon: basePath + '/assets/images/favicon-32x32.png',
+      badge: basePath + '/assets/images/favicon-16x16.png',
       vibrate: [100, 50, 100],
       data: {
         dateOfArrival: Date.now(),
@@ -141,12 +146,12 @@ self.addEventListener('push', (event) => {
         {
           action: 'explore',
           title: 'View Portfolio',
-          icon: '/assets/images/favicon-16x16.png'
+          icon: basePath + '/assets/images/favicon-16x16.png'
         },
         {
           action: 'close',
           title: 'Close',
-          icon: '/assets/images/favicon-16x16.png'
+          icon: basePath + '/assets/images/favicon-16x16.png'
         }
       ]
     };
@@ -163,7 +168,7 @@ self.addEventListener('notificationclick', (event) => {
 
   if (event.action === 'explore') {
     event.waitUntil(
-      clients.openWindow('/')
+      clients.openWindow(basePath + '/')
     );
   }
 });
