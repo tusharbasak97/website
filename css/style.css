@@ -1349,7 +1349,7 @@ h2.my-profession {
   overflow: hidden;
   display: flex;
   align-items: stretch;
-  min-height: 140px;
+  min-height: auto;
 }
 
 .certificates .certificate-item-inner:hover {
@@ -1392,7 +1392,7 @@ h2.my-profession {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  min-height: 140px;
+  min-height: auto;
 }
 
 .certificates .certificate-header {
@@ -1628,7 +1628,6 @@ body.offline::before {
     font-size: 11px;
     padding: 6px;
   }
-}
 
 /* Responsive adjustments */
 @media screen and (max-width: 768px) {
