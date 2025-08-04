@@ -738,7 +738,7 @@ function verifyCertificate(certificateId, verificationUrl) {
 
 function showCertificateVerificationModal(certificateId) {
   // This could be expanded to show a modal with verification details
-  alert(`Certificate verification for ${certificateId} - Feature coming soon!`);
+  console.log(`Certificate verification for ${certificateId} - Feature coming soon!`);
 }
 
 // Add certificate filtering functionality
@@ -845,13 +845,11 @@ function registerServiceWorker() {
             newWorker.addEventListener('statechange', () => {
               if (newWorker.state === 'installed') {
                 if (navigator.serviceWorker.controller) {
-                  // New content is available, show update notification
+                  // New content is available
                   console.log('New service worker installed, update available');
-                  showUpdateNotification();
                 } else {
                   // First time installation
                   console.log('Service Worker installed for the first time');
-                  showInstallNotification();
                 }
               }
             });
@@ -888,18 +886,10 @@ function checkCacheStatus() {
   }
 }
 
-function showUpdateNotification() {
-  console.log('New content is available! Please refresh the page.');
-  showConnectionStatus('🔄 Update available! Refresh for latest version.', 'info');
-}
-
-function showInstallNotification() {
-  console.log('Website is now available offline!');
-  showConnectionStatus('✅ Website cached! Now available offline.', 'success');
-}
+// Notification functions removed to eliminate banner popups
 
 /* ============================== Offline Detection ============================ */
-let lastOfflineNotification = 0; // Track when we last showed offline notification
+// Offline notification tracking removed
 
 function initializeOfflineDetection() {
   // Check initial online status
@@ -936,7 +926,6 @@ function updateOnlineStatus() {
 function handleOnline() {
   console.log('Connection restored');
   updateOnlineStatus();
-  showConnectionStatus('You\'re back online!', 'success');
 
   // Redirect to main site if we're on the offline page
   if (window.location.pathname === '/offline.html' || window.location.pathname === '/website/offline.html') {
@@ -950,12 +939,7 @@ function handleOffline() {
   console.log('Connection lost');
   updateOnlineStatus();
 
-  // Only show notification if we haven't shown one recently (prevent spam)
-  const now = Date.now();
-  if (now - lastOfflineNotification > 10000) { // 10 seconds minimum between notifications
-    showConnectionStatus('You\'re offline. Redirecting to offline page...', 'warning');
-    lastOfflineNotification = now;
-  }
+  // Notification removed to eliminate banner popups
 
   // Redirect to offline page after a short delay if not already there
   setTimeout(() => {
@@ -1005,36 +989,7 @@ function checkConnectivity() {
   });
 }
 
-function showConnectionStatus(message, type) {
-  // Remove any existing status notifications
-  const existingNotification = document.querySelector('.connection-status');
-  if (existingNotification) {
-    existingNotification.remove();
-  }
-
-  // Create status notification
-  const notification = document.createElement('div');
-  notification.className = `connection-status ${type}`;
-  notification.innerHTML = `
-    <div class="status-content">
-      <i class="fas ${type === 'success' ? 'fa-wifi' : 'fa-exclamation-triangle'}"></i>
-      <span>${message}</span>
-    </div>
-  `;
-
-  // Add to page
-  document.body.appendChild(notification);
-
-  // Auto-remove after 5 seconds
-  setTimeout(() => {
-    if (notification.parentNode) {
-      notification.classList.add('fade-out');
-      setTimeout(() => {
-        notification.remove();
-      }, 300);
-    }
-  }, 5000);
-}
+// showConnectionStatus function removed to eliminate banner popups
 
 /* ============================== 404 Route Handling ============================ */
 function initialize404Handling() {
