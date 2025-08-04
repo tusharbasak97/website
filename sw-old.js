@@ -1,23 +1,17 @@
-// Service Worker for Tushar Basak Portfolio - Complete Offline Support
-const CACHE_NAME = 'tushar-basak-portfolio-v2.0.0';
+// Service Worker for Tushar Basak Portfolio
+const CACHE_NAME = 'tushar-basak-portfolio-v1.0.0';
 const OFFLINE_URL = '/offline.html';
 const NOT_FOUND_URL = '/404.html';
 
-// COMPLETE list of ALL files for full offline functionality
+// Complete list of files to cache for full offline functionality
 const STATIC_CACHE_URLS = [
-  // Root files
   '/',
   '/index.html',
   '/offline.html',
   '/404.html',
-  '/test-offline.html',
-  '/test-404.html',
-  '/test-complete-offline.html',
   '/favicon.ico',
-  '/robots.txt',
-  '/sitemap.xml',
 
-  // CSS Files - ALL themes and styles
+  // CSS Files
   '/css/style.css',
   '/css/preloader.min.css',
   '/css/style-switcher.css',
@@ -27,15 +21,14 @@ const STATIC_CACHE_URLS = [
   '/css/skins/color-4.css',
   '/css/skins/color-5.css',
 
-  // JavaScript Files - ALL functionality
+  // JavaScript Files
   '/js/main.js',
   '/js/script.js',
   '/js/preloader.min.js',
   '/js/style-switcher.js',
 
-  // Images - ALL images for complete visual experience
+  // Images
   '/assets/images/hero.webp',
-  '/assets/images/hero.jpg',
   '/assets/images/logo.png',
   '/assets/images/favicon-16x16.png',
   '/assets/images/favicon-32x32.png',
@@ -43,9 +36,8 @@ const STATIC_CACHE_URLS = [
   '/assets/images/android-chrome-192x192.png',
   '/assets/images/android-chrome-512x512.png',
   '/assets/images/mstile-150x150.png',
-  '/assets/images/safari-pinned-tab.svg',
 
-  // Portfolio Images - ALL project images
+  // Portfolio Images
   '/assets/images/portfolio/AI.webp',
   '/assets/images/portfolio/Cloud.webp',
   '/assets/images/portfolio/Cybersecurity.webp',
@@ -53,69 +45,40 @@ const STATIC_CACHE_URLS = [
   '/assets/images/portfolio/Python.webp',
   '/assets/images/portfolio/SQL.webp',
 
-  // Documents - ALL PDFs and certificates
+  // Documents
   '/assets/resume.pdf',
   '/assets/Strive.pdf',
-
-  // Configuration files
-  '/assets/site.webmanifest',
-  '/assets/browserconfig.xml',
-  '/.well-known/security.txt'
+  '/assets/site.webmanifest'
 ];
 
-// External resources to cache (CDN files)
-const EXTERNAL_CACHE_URLS = [
-  'https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Kaushan+Script&display=swap',
-  'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css'
-];
-
-// Install event - cache ALL resources for complete offline experience
+// Install event - cache static assets
 self.addEventListener('install', (event) => {
-  console.log('Service Worker: Installing with complete offline support...');
+  console.log('Service Worker: Installing...');
   event.waitUntil(
-    Promise.all([
-      // Cache all static resources
-      caches.open(CACHE_NAME).then((cache) => {
-        console.log('Service Worker: Caching all static assets');
+    caches.open(CACHE_NAME)
+      .then((cache) => {
+        console.log('Service Worker: Caching static assets');
         return cache.addAll(STATIC_CACHE_URLS);
-      }),
-      // Cache external resources
-      caches.open(CACHE_NAME + '-external').then((cache) => {
-        console.log('Service Worker: Caching external resources');
-        return Promise.allSettled(
-          EXTERNAL_CACHE_URLS.map(url =>
-            fetch(url, { mode: 'cors' })
-              .then(response => {
-                if (response.ok) {
-                  return cache.put(url, response);
-                }
-              })
-              .catch(error => {
-                console.warn('Failed to cache external resource:', url, error);
-              })
-          )
-        );
       })
-    ])
-    .then(() => {
-      console.log('Service Worker: Installation complete - Full offline support enabled');
-      return self.skipWaiting();
-    })
-    .catch((error) => {
-      console.error('Service Worker: Installation failed', error);
-    })
+      .then(() => {
+        console.log('Service Worker: Installation complete');
+        return self.skipWaiting();
+      })
+      .catch((error) => {
+        console.error('Service Worker: Installation failed', error);
+      })
   );
 });
 
-// Activate event - clean up old caches and claim clients
+// Activate event - clean up old caches
 self.addEventListener('activate', (event) => {
-  console.log('Service Worker: Activating with complete offline support...');
+  console.log('Service Worker: Activating...');
   event.waitUntil(
     caches.keys()
       .then((cacheNames) => {
         return Promise.all(
           cacheNames.map((cacheName) => {
-            if (cacheName !== CACHE_NAME && cacheName !== CACHE_NAME + '-external') {
+            if (cacheName !== CACHE_NAME) {
               console.log('Service Worker: Deleting old cache', cacheName);
               return caches.delete(cacheName);
             }
@@ -123,55 +86,31 @@ self.addEventListener('activate', (event) => {
         );
       })
       .then(() => {
-        console.log('Service Worker: Activation complete - Ready for full offline experience');
+        console.log('Service Worker: Activation complete');
         return self.clients.claim();
       })
   );
 });
 
-// Fetch event - Comprehensive offline-first strategy
+// Fetch event - Cache First strategy with 404 and offline handling
 self.addEventListener('fetch', (event) => {
   // Skip non-GET requests
   if (event.request.method !== 'GET') {
     return;
   }
 
-  const requestUrl = new URL(event.request.url);
-
-  // Handle external requests (CDN, fonts, etc.)
-  if (!requestUrl.origin === self.location.origin) {
+  // Skip external requests (CDN, fonts, etc.)
+  if (!event.request.url.startsWith(self.location.origin)) {
     event.respondWith(
-      caches.match(event.request)
-        .then((cachedResponse) => {
-          if (cachedResponse) {
-            console.log('Service Worker: Serving external resource from cache', event.request.url);
-            return cachedResponse;
-          }
-
-          // Try network for external resources
-          return fetch(event.request)
-            .then((response) => {
-              if (response && response.ok) {
-                // Cache successful external responses
-                const responseToCache = response.clone();
-                caches.open(CACHE_NAME + '-external')
-                  .then((cache) => {
-                    cache.put(event.request, responseToCache);
-                  });
-                return response;
-              }
-              return response;
-            })
-            .catch(() => {
-              // Silently fail for external resources when offline
-              return new Response('', { status: 404 });
-            });
-        })
+      fetch(event.request).catch(() => {
+        // Silently fail for external resources when offline
+        return new Response('', { status: 404 });
+      })
     );
     return;
   }
 
-  // Helper functions for local requests
+  // Helper function to check if request is for a page/navigation
   const isNavigationRequest = (request) => {
     return request.destination === 'document' ||
            request.mode === 'navigate' ||
@@ -180,6 +119,7 @@ self.addEventListener('fetch', (event) => {
            (!request.url.includes('.') && !request.url.includes('?'));
   };
 
+  // Helper function to check if URL is a valid route
   const isValidRoute = (url) => {
     const validRoutes = [
       '/',
@@ -198,7 +138,7 @@ self.addEventListener('fetch', (event) => {
     }
 
     // Check if it's a valid file extension (assets)
-    const validExtensions = ['.css', '.js', '.png', '.jpg', '.jpeg', '.webp', '.ico', '.pdf', '.svg', '.woff', '.woff2', '.ttf', '.webmanifest', '.xml', '.txt'];
+    const validExtensions = ['.css', '.js', '.png', '.jpg', '.jpeg', '.webp', '.ico', '.pdf', '.svg', '.woff', '.woff2', '.ttf', '.webmanifest'];
     if (validExtensions.some(ext => pathname.endsWith(ext))) {
       return true;
     }
@@ -206,36 +146,18 @@ self.addEventListener('fetch', (event) => {
     return false;
   };
 
-  // OFFLINE-FIRST strategy for local requests
+  // Cache First strategy for all local requests
   event.respondWith(
     caches.match(event.request)
       .then((cachedResponse) => {
-        // ALWAYS serve from cache first if available (offline-first)
+        // If we have a cached response, return it
         if (cachedResponse) {
-          console.log('Service Worker: Serving from cache (offline-first)', event.request.url);
-
-          // For HTML pages, try to update cache in background (stale-while-revalidate)
-          if (isNavigationRequest(event.request)) {
-            fetch(event.request)
-              .then((response) => {
-                if (response && response.ok) {
-                  caches.open(CACHE_NAME).then((cache) => {
-                    cache.put(event.request, response.clone());
-                    console.log('Service Worker: Updated cache in background', event.request.url);
-                  });
-                }
-              })
-              .catch(() => {
-                // Network failed, but we already have cached version
-                console.log('Service Worker: Background update failed, using cached version');
-              });
-          }
-
+          console.log('Service Worker: Serving from cache', event.request.url);
           return cachedResponse;
         }
 
-        // No cached response, try network (fallback)
-        console.log('Service Worker: Not in cache, trying network', event.request.url);
+        // No cached response, try network
+        console.log('Service Worker: Fetching from network', event.request.url);
         return fetch(event.request)
           .then((response) => {
             // Handle different response statuses
@@ -249,7 +171,7 @@ self.addEventListener('fetch', (event) => {
             }
 
             if (!response || response.status !== 200) {
-              // For navigation requests with other errors, serve offline page
+              // For navigation requests with other errors, check if offline
               if (isNavigationRequest(event.request)) {
                 console.log('Service Worker: Network error for navigation, serving offline page');
                 return caches.match(OFFLINE_URL);
@@ -270,7 +192,7 @@ self.addEventListener('fetch', (event) => {
           .catch((error) => {
             console.error('Service Worker: Network request failed', event.request.url, error);
 
-            // For navigation requests, determine appropriate fallback
+            // For navigation requests, determine if it's a 404 or offline issue
             if (isNavigationRequest(event.request)) {
               // Check if the route is invalid (should be 404)
               if (!isValidRoute(event.request.url)) {
@@ -286,23 +208,24 @@ self.addEventListener('fetch', (event) => {
             // For other resources, return error response
             return new Response('', {
               status: 408,
-              statusText: 'Network request failed - resource not cached'
+              statusText: 'Network request failed'
             });
           });
       })
   );
 });
 
-// Background sync for future enhancements
+// Background sync for form submissions (if needed in future)
 self.addEventListener('sync', (event) => {
-  if (event.tag === 'background-sync') {
+  if (event.tag === 'contact-form') {
     event.waitUntil(
+      // Handle background sync for contact forms
       console.log('Service Worker: Background sync triggered')
     );
   }
 });
 
-// Push notification handling for future enhancements
+// Push notification handling (if needed in future)
 self.addEventListener('push', (event) => {
   if (event.data) {
     const data = event.data.json();
@@ -345,21 +268,3 @@ self.addEventListener('notificationclick', (event) => {
     );
   }
 });
-
-// Message handling for communication with main thread
-self.addEventListener('message', (event) => {
-  if (event.data && event.data.type === 'SKIP_WAITING') {
-    self.skipWaiting();
-  }
-
-  if (event.data && event.data.type === 'GET_CACHE_STATUS') {
-    caches.keys().then(cacheNames => {
-      event.ports[0].postMessage({
-        caches: cacheNames,
-        version: CACHE_NAME
-      });
-    });
-  }
-});
-
-console.log('Service Worker: Loaded with complete offline support - Version', CACHE_NAME);

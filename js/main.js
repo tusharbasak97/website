@@ -3,9 +3,11 @@
 // Initialize the application
 document.addEventListener('DOMContentLoaded', function() {
   try {
+    initialize404Handling();
     initializeApp();
     initializePageLoading();
     registerServiceWorker();
+    initializeOfflineDetection();
   } catch (error) {
     console.error('Error initializing application:', error);
     // Ensure basic functionality works even if some features fail
@@ -745,17 +747,21 @@ function filterCertificates(filter) {
 
   certificates.forEach((cert, index) => {
     const status = cert.querySelector('.certificate-status').classList;
+    const dataStatus = cert.getAttribute('data-status');
     let show = true;
 
     switch(filter) {
       case 'active':
-        show = status.contains('active');
+        show = status.contains('active') || dataStatus === 'active';
         break;
       case 'expiring':
         show = status.contains('expiring');
         break;
       case 'expired':
         show = status.contains('expired');
+        break;
+      case 'coming-soon':
+        show = dataStatus === 'coming-soon' || status.contains('pending');
         break;
       case 'all':
       default:
@@ -796,22 +802,26 @@ function updateFilterCounts() {
     const activeCount = document.querySelectorAll('.certificate-status.active').length;
     const expiringCount = document.querySelectorAll('.certificate-status.expiring').length;
     const expiredCount = document.querySelectorAll('.certificate-status.expired').length;
+    const comingSoonCount = document.querySelectorAll('[data-status="coming-soon"]').length;
     const totalCount = certificates.length;
 
     // Update count displays
     const allBtn = document.querySelector('[data-filter="all"] .count');
     const activeBtn = document.querySelector('[data-filter="active"] .count');
     const expiredBtn = document.querySelector('[data-filter="expired"] .count');
+    const comingSoonBtn = document.querySelector('[data-filter="coming-soon"] .count');
 
     if (allBtn) allBtn.textContent = totalCount;
     if (activeBtn) activeBtn.textContent = activeCount;
     if (expiredBtn) expiredBtn.textContent = expiredCount;
+    if (comingSoonBtn) comingSoonBtn.textContent = comingSoonCount;
 
     console.log('Filter counts updated:', {
       total: totalCount,
       active: activeCount,
       expiring: expiringCount,
-      expired: expiredCount
+      expired: expiredCount,
+      comingSoon: comingSoonCount
     });
   }, 50);
 }
@@ -823,17 +833,30 @@ function registerServiceWorker() {
       navigator.serviceWorker.register('/sw.js')
         .then((registration) => {
           console.log('Service Worker registered successfully:', registration.scope);
+          console.log('Complete offline support enabled');
 
           // Check for updates
           registration.addEventListener('updatefound', () => {
             const newWorker = registration.installing;
+            console.log('Service Worker update found, installing...');
+
             newWorker.addEventListener('statechange', () => {
-              if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
-                // New content is available, show update notification
-                showUpdateNotification();
+              if (newWorker.state === 'installed') {
+                if (navigator.serviceWorker.controller) {
+                  // New content is available, show update notification
+                  console.log('New service worker installed, update available');
+                  showUpdateNotification();
+                } else {
+                  // First time installation
+                  console.log('Service Worker installed for the first time');
+                  showInstallNotification();
+                }
               }
             });
           });
+
+          // Check cache status
+          checkCacheStatus();
         })
         .catch((error) => {
           console.log('Service Worker registration failed:', error);
@@ -842,9 +865,182 @@ function registerServiceWorker() {
   }
 }
 
+function checkCacheStatus() {
+  if ('serviceWorker' in navigator && navigator.serviceWorker.controller) {
+    // Create a message channel to communicate with service worker
+    const messageChannel = new MessageChannel();
+    messageChannel.port1.onmessage = (event) => {
+      const { caches, version } = event.data;
+      console.log('Cache Status:', {
+        version: version,
+        caches: caches,
+        totalCaches: caches.length
+      });
+    };
+
+    // Send message to service worker
+    navigator.serviceWorker.controller.postMessage(
+      { type: 'GET_CACHE_STATUS' },
+      [messageChannel.port2]
+    );
+  }
+}
+
 function showUpdateNotification() {
-  // You can implement a custom notification here
   console.log('New content is available! Please refresh the page.');
+  showConnectionStatus('🔄 Update available! Refresh for latest version.', 'info');
+}
+
+function showInstallNotification() {
+  console.log('Website is now available offline!');
+  showConnectionStatus('✅ Website cached! Now available offline.', 'success');
+}
+
+/* ============================== Offline Detection ============================ */
+function initializeOfflineDetection() {
+  // Check initial online status
+  updateOnlineStatus();
+
+  // Listen for online/offline events
+  window.addEventListener('online', handleOnline);
+  window.addEventListener('offline', handleOffline);
+
+  // More frequent connectivity checking
+  setInterval(checkConnectivity, 5000); // Check every 5 seconds
+
+  // Also check on page visibility change
+  document.addEventListener('visibilitychange', () => {
+    if (!document.hidden) {
+      setTimeout(checkConnectivity, 1000);
+    }
+  });
+
+  // Initial connectivity check
+  setTimeout(checkConnectivity, 2000);
+}
+
+function updateOnlineStatus() {
+  if (navigator.onLine) {
+    document.body.classList.remove('offline');
+    document.body.classList.add('online');
+  } else {
+    document.body.classList.remove('online');
+    document.body.classList.add('offline');
+  }
+}
+
+function handleOnline() {
+  console.log('Connection restored');
+  updateOnlineStatus();
+  showConnectionStatus('You\'re back online!', 'success');
+
+  // Redirect to main site if we're on the offline page
+  if (window.location.pathname === '/offline.html') {
+    setTimeout(() => {
+      window.location.href = 'https://tusharbasak97.github.io/website/';
+    }, 1000);
+  }
+}
+
+function handleOffline() {
+  console.log('Connection lost');
+  updateOnlineStatus();
+  showConnectionStatus('You\'re offline. Redirecting to offline page...', 'warning');
+
+  // Redirect to offline page after a short delay if not already there
+  setTimeout(() => {
+    if (!navigator.onLine && window.location.pathname !== '/offline.html') {
+      console.log('Redirecting to offline page');
+      window.location.href = '/offline.html';
+    }
+  }, 2000);
+}
+
+function checkConnectivity() {
+  // More robust connectivity check with timeout
+  const controller = new AbortController();
+  const timeoutId = setTimeout(() => controller.abort(), 3000); // 3 second timeout
+
+  fetch('/favicon.ico?' + Date.now(), {
+    method: 'HEAD',
+    cache: 'no-cache',
+    signal: controller.signal
+  })
+  .then((response) => {
+    clearTimeout(timeoutId);
+    if (response.ok) {
+      if (document.body.classList.contains('offline')) {
+        handleOnline();
+      }
+    } else {
+      if (!document.body.classList.contains('offline')) {
+        handleOffline();
+      }
+    }
+  })
+  .catch((error) => {
+    clearTimeout(timeoutId);
+    console.log('Connectivity check failed:', error.name);
+    if (!document.body.classList.contains('offline')) {
+      handleOffline();
+    }
+  });
+}
+
+function showConnectionStatus(message, type) {
+  // Remove any existing status notifications
+  const existingNotification = document.querySelector('.connection-status');
+  if (existingNotification) {
+    existingNotification.remove();
+  }
+
+  // Create status notification
+  const notification = document.createElement('div');
+  notification.className = `connection-status ${type}`;
+  notification.innerHTML = `
+    <div class="status-content">
+      <i class="fas ${type === 'success' ? 'fa-wifi' : 'fa-exclamation-triangle'}"></i>
+      <span>${message}</span>
+    </div>
+  `;
+
+  // Add to page
+  document.body.appendChild(notification);
+
+  // Auto-remove after 5 seconds
+  setTimeout(() => {
+    if (notification.parentNode) {
+      notification.classList.add('fade-out');
+      setTimeout(() => {
+        notification.remove();
+      }, 300);
+    }
+  }, 5000);
+}
+
+/* ============================== 404 Route Handling ============================ */
+function initialize404Handling() {
+  // Check if current URL is a valid route
+  const currentPath = window.location.pathname;
+  const validRoutes = [
+    '/',
+    '/index.html',
+    '/offline.html',
+    '/404.html',
+    '/test-offline.html',
+    '/test-404.html',
+    '/test-complete-offline.html'
+  ];
+
+  // Check if it's a valid file extension (assets)
+  const validExtensions = ['.css', '.js', '.png', '.jpg', '.jpeg', '.webp', '.ico', '.pdf', '.svg', '.woff', '.woff2', '.ttf', '.webmanifest'];
+  const isAssetFile = validExtensions.some(ext => currentPath.endsWith(ext));
+
+  // If it's not a valid route and not an asset file, redirect to 404
+  if (!validRoutes.includes(currentPath) && !isAssetFile && currentPath !== '/404.html') {
+    console.log('Invalid route detected:', currentPath);
+    window.location.replace('/404.html');
+  }
 }
 
 /* ============================== Utility Functions ============================ */

@@ -977,7 +977,7 @@ body.dark .aside .secured-badge:hover {
   display: flex;
   align-items: center;
   min-height: 80vh;
-  padding-bottom: 70px; 
+  padding-bottom: 70px;
 }
 
 .home .row {
@@ -1523,6 +1523,12 @@ h2.my-profession {
   border: 1px solid rgba(239, 68, 68, 0.2);
 }
 
+.certificates .certificate-status.pending {
+  background: rgba(251, 191, 36, 0.1);
+  color: #f59e0b;
+  border: 1px solid rgba(251, 191, 36, 0.2);
+}
+
 .certificates .certificate-status i {
   font-size: 10px;
 }
@@ -1564,9 +1570,143 @@ h2.my-profession {
   font-size: 11px;
 }
 
+.certificates .btn-certificate.coming-soon {
+  background: #6c757d;
+  color: #ffffff;
+  border: 1px solid #6c757d;
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+
+.certificates .btn-certificate.coming-soon:hover {
+  background: #6c757d;
+  color: #ffffff;
+  border: 1px solid #6c757d;
+  transform: none;
+  box-shadow: none;
+  filter: none;
+  cursor: not-allowed;
+}
+
+.certificates .btn-certificate.coming-soon:disabled {
+  pointer-events: none;
+}
+
 /* Skills section removed for cleaner look */
 .certificates .certificate-skills {
   display: none;
+}
+
+/* ============================== Offline/Online Status Notifications ============================== */
+.connection-status {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 10001;
+  padding: 12px 20px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 500;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  transform: translateX(100%);
+  animation: slideInStatus 0.3s ease forwards;
+  max-width: 300px;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+.connection-status.success {
+  background: rgba(16, 185, 129, 0.9);
+  color: white;
+  border: 1px solid rgba(16, 185, 129, 0.3);
+}
+
+.connection-status.warning {
+  background: rgba(245, 158, 11, 0.9);
+  color: white;
+  border: 1px solid rgba(245, 158, 11, 0.3);
+}
+
+.connection-status.info {
+  background: rgba(59, 130, 246, 0.9);
+  color: white;
+  border: 1px solid rgba(59, 130, 246, 0.3);
+}
+
+.connection-status .status-content {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.connection-status .status-content i {
+  font-size: 16px;
+}
+
+.connection-status.fade-out {
+  animation: slideOutStatus 0.3s ease forwards;
+}
+
+@keyframes slideInStatus {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slideOutStatus {
+  from {
+    transform: translateX(0);
+    opacity: 1;
+  }
+  to {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+}
+
+/* Offline state styling */
+body.offline {
+  filter: grayscale(20%);
+}
+
+body.offline::before {
+  content: "OFFLINE MODE";
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  background: rgba(245, 158, 11, 0.9);
+  color: white;
+  text-align: center;
+  padding: 8px;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  z-index: 10000;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+/* Mobile responsive status notifications */
+@media screen and (max-width: 48rem) {
+  .connection-status {
+    top: 10px;
+    right: 10px;
+    left: 10px;
+    max-width: none;
+    font-size: 13px;
+    padding: 10px 16px;
+  }
+
+  body.offline::before {
+    font-size: 11px;
+    padding: 6px;
+  }
 }
 
 /* Responsive adjustments */

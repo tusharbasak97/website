@@ -6,6 +6,10 @@
     <title>Offline - Tushar Basak Portfolio</title>
     <meta name="description" content="You're currently offline. Some content may not be available.">
     <link rel="icon" type="image/png" sizes="32x32" href="assets/images/favicon-32x32.png">
+
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
     <style>
         :root {
             --skin-color: #ff9900;
@@ -124,6 +128,104 @@
             font-weight: 600;
         }
 
+        .offline-link {
+            color: var(--text-black-700);
+            text-decoration: none;
+            display: block;
+            padding: 8px 12px;
+            margin: 4px 0;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            border: 1px solid transparent;
+        }
+
+        .offline-link:hover {
+            background: linear-gradient(135deg, var(--skin-color), rgba(255, 153, 0, 0.1));
+            color: var(--skin-color);
+            border-color: rgba(255, 153, 0, 0.3);
+            transform: translateX(5px);
+        }
+
+        .connection-status {
+            margin-top: 1.5rem;
+            padding: 12px;
+            border-radius: 8px;
+            font-weight: 500;
+            text-align: center;
+            display: none;
+        }
+
+        .connection-status.online {
+            background: rgba(16, 185, 129, 0.1);
+            color: #10b981;
+            border: 1px solid rgba(16, 185, 129, 0.3);
+            display: block;
+        }
+
+        .connection-status.checking {
+            background: rgba(245, 158, 11, 0.1);
+            color: #f59e0b;
+            border: 1px solid rgba(245, 158, 11, 0.3);
+            display: block;
+        }
+
+        .secured-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: var(--bg-black-100);
+            padding: 8px 14px;
+            border-radius: 12px;
+            font-size: 10px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            color: #00d06fff;
+            border: 1.5px solid #00ff88;
+            margin: 15px auto 0 auto;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 8px rgba(0, 255, 136, 0.15);
+            width: fit-content;
+            animation: securedBlink 2s ease-in-out infinite;
+            position: relative;
+        }
+
+        .secured-badge::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(0, 255, 136, 0.1), rgba(0, 255, 136, 0.05));
+            border-radius: 10px;
+            z-index: -1;
+        }
+
+        .secured-badge i {
+            font-size: 10px;
+            color: #00d06fff;
+            filter: drop-shadow(0 0 2px rgba(0, 255, 136, 0.3));
+        }
+
+        .secured-badge:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(0, 255, 136, 0.25);
+            border-color: #00ff88;
+            animation-play-state: paused;
+        }
+
+        @keyframes securedBlink {
+            0%, 50%, 100% {
+                opacity: 1;
+                box-shadow: 0 2px 8px rgba(0, 255, 136, 0.15);
+            }
+            25%, 75% {
+                opacity: 0.7;
+                box-shadow: 0 2px 8px rgba(0, 255, 136, 0.3);
+            }
+        }
+
         @media (max-width: 768px) {
             .offline-title {
                 font-size: 1.5rem;
@@ -132,45 +234,153 @@
             .offline-container {
                 padding: 1rem;
             }
+
+            .offline-link {
+                padding: 10px;
+                font-size: 14px;
+            }
+
+            .secured-badge {
+                padding: 6px 12px;
+                font-size: 9px;
+                border-radius: 10px;
+            }
+
+            .secured-badge i {
+                font-size: 9px;
+            }
         }
     </style>
 </head>
 <body>
     <div class="offline-container">
         <div class="offline-icon">📡</div>
+        <div class="secured-badge">
+            <i class="fas fa-shield-alt"></i>
+            <span>secured</span>
+        </div>
         <h1 class="offline-title">You're Offline</h1>
         <p class="offline-message">
             It looks like you're not connected to the internet.
             Some content may not be available, but you can still browse cached pages.
         </p>
-        <button class="retry-btn" onclick="window.location.reload()">
-            Try Again
-        </button>
-
         <div class="cached-content">
             <h3>Available Offline:</h3>
             <ul style="list-style: none; padding: 0; margin-top: 1rem;">
-                <li>✓ Portfolio Overview</li>
-                <li>✓ About Information</li>
-                <li>✓ Certificates</li>
-                <li>✓ Project Gallery</li>
+                <li><a href="/#home" class="offline-link">✓ Portfolio Overview</a></li>
+                <li><a href="/#about" class="offline-link">✓ About Information</a></li>
+                <li><a href="/#certificates" class="offline-link">✓ Certificates</a></li>
+                <li><a href="/#portfolio" class="offline-link">✓ Project Gallery</a></li>
             </ul>
+        </div>
+
+        <div id="connectionStatus" class="connection-status">
+            <span id="statusText">Checking connection...</span>
         </div>
     </div>
 
     <script>
-        // Check for connectivity and auto-retry
-        function checkConnectivity() {
-            if (navigator.onLine) {
-                window.location.reload();
-            }
+        const statusElement = document.getElementById('statusText');
+        const statusContainer = document.getElementById('connectionStatus');
+        const redirectUrl = 'https://tusharbasak97.github.io/website/';
+        let isRedirecting = false;
+
+        // Update connection status display
+        function updateConnectionStatus(status, message) {
+            statusContainer.className = `connection-status ${status}`;
+            statusElement.textContent = message;
         }
 
-        // Listen for online event
-        window.addEventListener('online', checkConnectivity);
+        // Enhanced connectivity check with actual network request
+        function checkConnectivity() {
+            if (isRedirecting) return;
 
-        // Periodic connectivity check
-        setInterval(checkConnectivity, 5000);
+            updateConnectionStatus('checking', 'Checking connection...');
+
+            // Try to fetch a small resource to verify actual connectivity
+            const controller = new AbortController();
+            const timeoutId = setTimeout(() => controller.abort(), 5000);
+
+            fetch('https://tusharbasak97.github.io/website/favicon.ico?' + Date.now(), {
+                method: 'HEAD',
+                cache: 'no-cache',
+                signal: controller.signal,
+                mode: 'no-cors'
+            })
+            .then(() => {
+                clearTimeout(timeoutId);
+                handleOnlineDetected();
+            })
+            .catch((error) => {
+                clearTimeout(timeoutId);
+                if (error.name !== 'AbortError') {
+                    console.log('Still offline:', error.message);
+                }
+                // Don't show status if still offline, keep it hidden
+                statusContainer.style.display = 'none';
+            });
+        }
+
+        // Handle when connection is restored
+        function handleOnlineDetected() {
+            if (isRedirecting) return;
+
+            isRedirecting = true;
+            updateConnectionStatus('online', '🎉 Connection restored! Redirecting to main site...');
+
+            console.log('Connection restored, redirecting to main site');
+
+            // Redirect after a short delay to show the message
+            setTimeout(() => {
+                window.location.href = redirectUrl;
+            }, 2000);
+        }
+
+        // Listen for browser online event
+        window.addEventListener('online', () => {
+            console.log('Browser online event detected');
+            setTimeout(checkConnectivity, 500);
+        });
+
+        // Listen for browser offline event
+        window.addEventListener('offline', () => {
+            console.log('Browser offline event detected');
+            statusContainer.style.display = 'none';
+            isRedirecting = false;
+        });
+
+        // Enhanced periodic connectivity check
+        function startConnectivityMonitoring() {
+            // Check immediately
+            setTimeout(checkConnectivity, 1000);
+
+            // Then check every 3 seconds
+            setInterval(() => {
+                if (!isRedirecting) {
+                    checkConnectivity();
+                }
+            }, 3000);
+        }
+
+        // Handle page visibility change (when user returns to tab)
+        document.addEventListener('visibilitychange', () => {
+            if (!document.hidden && !isRedirecting) {
+                setTimeout(checkConnectivity, 500);
+            }
+        });
+
+        // Initialize when page loads
+        document.addEventListener('DOMContentLoaded', () => {
+            console.log('Offline page loaded, starting connectivity monitoring');
+            startConnectivityMonitoring();
+        });
+
+        // Fallback: Also check when user interacts with the page
+        document.addEventListener('click', () => {
+            if (!isRedirecting) {
+                setTimeout(checkConnectivity, 100);
+            }
+        });
     </script>
 </body>
 </html>

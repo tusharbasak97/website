@@ -989,6 +989,11 @@
                     <span>Expired</span>
                     <span class="count" aria-label="expired certificate count">0</span>
                   </button>
+                  <button class="filter-btn" data-filter="coming-soon" aria-pressed="false" aria-describedby="coming-soon-desc">
+                    <i class="fas fa-clock" aria-hidden="true"></i>
+                    <span>Coming Soon</span>
+                    <span class="count" aria-label="coming soon certificate count">0</span>
+                  </button>
                 </div>
 
                 <!-- Screen reader descriptions -->
@@ -996,12 +1001,13 @@
                   <div id="all-desc">Show all certificates regardless of status</div>
                   <div id="active-desc">Show only currently valid certificates</div>
                   <div id="expired-desc">Show only expired certificates</div>
+                  <div id="coming-soon-desc">Show certificates that are in progress or coming soon</div>
                 </div>
               </div>
             </div>
             <div class="row">
               <!-- Certificate Card 1 -->
-              <article class="certificate-item padd-15" itemscope itemtype="https://schema.org/EducationalOccupationalCredential">
+              <article class="certificate-item padd-15" itemscope itemtype="https://schema.org/EducationalOccupationalCredential" data-status="active">
                 <div class="certificate-item-inner shadow-dark">
                   <div class="certificate-left">
                     <div class="certificate-icon">
@@ -1043,41 +1049,41 @@
               </article>
 
               <!-- Certificate Card 2 -->
-              <article class="certificate-item padd-15" itemscope itemtype="https://schema.org/EducationalOccupationalCredential">
+              <article class="certificate-item padd-15" itemscope itemtype="https://schema.org/EducationalOccupationalCredential" data-status="coming-soon">
                 <div class="certificate-item-inner shadow-dark">
                   <div class="certificate-left">
                     <div class="certificate-icon">
-                      <i class="fas fa-code"></i>
+                      <i class="fas fa-shield-alt"></i>
                     </div>
                   </div>
                   <div class="certificate-content">
                     <div class="certificate-header">
                       <div class="certificate-main">
-                        <h3 class="certificate-title" itemprop="name">Python for Cybersecurity</h3>
-                        <p class="certificate-issuer" itemprop="recognizedBy">Coursera</p>
+                        <h3 class="certificate-title" itemprop="name">CompTIA Security+</h3>
+                        <p class="certificate-issuer" itemprop="recognizedBy">CompTIA</p>
                       </div>
                     </div>
                     <div class="certificate-footer">
                       <div class="certificate-meta">
                         <div class="certificate-dates">
                           <div class="date-item">
-                            <span class="date-label">Issued</span>
-                            <time class="date-value" datetime="2024-08-20" itemprop="dateCreated">Aug 20, 2024</time>
+                            <span class="date-label">Status</span>
+                            <span class="date-value">In Progress</span>
                           </div>
                           <div class="date-item">
-                            <span class="date-label">Validity</span>
-                            <time class="date-value" datetime="2027-09-15">Sep 15, 2027</time>
+                            <span class="date-label">Expected</span>
+                            <span class="date-value">2026</span>
                           </div>
                         </div>
                       </div>
                       <div class="certificate-actions">
-                        <div class="certificate-status active" title="Active Certificate">
-                          <i class="fas fa-check-circle"></i>
-                          <span>Active</span>
+                        <div class="certificate-status pending" title="Certificate In Progress">
+                          <i class="fas fa-clock"></i>
+                          <span>In Progress</span>
                         </div>
-                        <a href="#" class="btn-certificate verify" aria-label="Verify Certificate">
-                          <i class="fas fa-external-link-alt"></i> Verify
-                        </a>
+                        <button class="btn-certificate coming-soon" disabled aria-label="Certificate verification coming soon">
+                          <i class="fas fa-clock"></i> Coming Soon
+                        </button>
                       </div>
                     </div>
                   </div>
@@ -1085,41 +1091,41 @@
               </article>
 
               <!-- Certificate Card 3 -->
-              <article class="certificate-item padd-15" itemscope itemtype="https://schema.org/EducationalOccupationalCredential">
+              <article class="certificate-item padd-15" itemscope itemtype="https://schema.org/EducationalOccupationalCredential" data-status="coming-soon">
                 <div class="certificate-item-inner shadow-dark">
                   <div class="certificate-left">
                     <div class="certificate-icon">
-                      <i class="fas fa-cloud"></i>
+                      <i class="fas fa-user-shield"></i>
                     </div>
                   </div>
                   <div class="certificate-content">
                     <div class="certificate-header">
                       <div class="certificate-main">
-                        <h3 class="certificate-title" itemprop="name">AWS Cloud Security</h3>
-                        <p class="certificate-issuer" itemprop="recognizedBy">Amazon Web Services</p>
+                        <h3 class="certificate-title" itemprop="name">CISSP</h3>
+                        <p class="certificate-issuer" itemprop="recognizedBy">(ISC)² - International Information System Security Certification Consortium</p>
                       </div>
                     </div>
                     <div class="certificate-footer">
                       <div class="certificate-meta">
                         <div class="certificate-dates">
                           <div class="date-item">
-                            <span class="date-label">Issued</span>
-                            <time class="date-value" datetime="2024-07-10" itemprop="dateCreated">Jul 10, 2024</time>
+                            <span class="date-label">Status</span>
+                            <span class="date-value">In Progress</span>
                           </div>
                           <div class="date-item">
-                            <span class="date-label">Expires</span>
-                            <time class="date-value expiring" datetime="2025-02-28">Feb 28, 2025</time>
+                            <span class="date-label">Expected</span>
+                            <span class="date-value">2026</span>
                           </div>
                         </div>
                       </div>
                       <div class="certificate-actions">
-                        <div class="certificate-status active" title="Active Certificate">
-                          <i class="fas fa-check-circle"></i>
-                          <span>Active</span>
+                        <div class="certificate-status pending" title="Certificate In Progress">
+                          <i class="fas fa-clock"></i>
+                          <span>In Progress</span>
                         </div>
-                        <a href="#" class="btn-certificate verify" aria-label="Verify Certificate">
-                          <i class="fas fa-external-link-alt"></i> Verify
-                        </a>
+                        <button class="btn-certificate coming-soon" disabled aria-label="Certificate verification coming soon">
+                          <i class="fas fa-clock"></i> Coming Soon
+                        </button>
                       </div>
                     </div>
                   </div>
@@ -1127,7 +1133,49 @@
               </article>
 
               <!-- Certificate Card 4 -->
-              <article class="certificate-item padd-15" itemscope itemtype="https://schema.org/EducationalOccupationalCredential">
+              <article class="certificate-item padd-15" itemscope itemtype="https://schema.org/EducationalOccupationalCredential" data-status="coming-soon">
+                <div class="certificate-item-inner shadow-dark">
+                  <div class="certificate-left">
+                    <div class="certificate-icon">
+                      <i class="fas fa-graduation-cap"></i>
+                    </div>
+                  </div>
+                  <div class="certificate-content">
+                    <div class="certificate-header">
+                      <div class="certificate-main">
+                        <h3 class="certificate-title" itemprop="name">GSEC</h3>
+                        <p class="certificate-issuer" itemprop="recognizedBy">SANS Institute</p>
+                      </div>
+                    </div>
+                    <div class="certificate-footer">
+                      <div class="certificate-meta">
+                        <div class="certificate-dates">
+                          <div class="date-item">
+                            <span class="date-label">Status</span>
+                            <span class="date-value">In Progress</span>
+                          </div>
+                          <div class="date-item">
+                            <span class="date-label">Expected</span>
+                            <span class="date-value">2026</span>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="certificate-actions">
+                        <div class="certificate-status pending" title="Certificate In Progress">
+                          <i class="fas fa-clock"></i>
+                          <span>In Progress</span>
+                        </div>
+                        <button class="btn-certificate coming-soon" disabled aria-label="Certificate verification coming soon">
+                          <i class="fas fa-clock"></i> Coming Soon
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </article>
+
+              <!-- Certificate Card 5 -->
+              <article class="certificate-item padd-15" itemscope itemtype="https://schema.org/EducationalOccupationalCredential" data-status="coming-soon">
                 <div class="certificate-item-inner shadow-dark">
                   <div class="certificate-left">
                     <div class="certificate-icon">
@@ -1137,73 +1185,31 @@
                   <div class="certificate-content">
                     <div class="certificate-header">
                       <div class="certificate-main">
-                        <h3 class="certificate-title" itemprop="name">Penetration Testing Essentials</h3>
-                        <p class="certificate-issuer" itemprop="recognizedBy">EC-Council</p>
+                        <h3 class="certificate-title" itemprop="name">eJPT</h3>
+                        <p class="certificate-issuer" itemprop="recognizedBy">eLearnSecurity</p>
                       </div>
                     </div>
                     <div class="certificate-footer">
                       <div class="certificate-meta">
                         <div class="certificate-dates">
                           <div class="date-item">
-                            <span class="date-label">Issued</span>
-                            <time class="date-value" datetime="2023-12-05" itemprop="dateCreated">Dec 05, 2023</time>
+                            <span class="date-label">Status</span>
+                            <span class="date-value">In Progress</span>
                           </div>
                           <div class="date-item">
-                            <span class="date-label">Expires</span>
-                            <time class="date-value expiring" datetime="2025-03-15">Mar 15, 2025</time>
+                            <span class="date-label">Expected</span>
+                            <span class="date-value">2026</span>
                           </div>
                         </div>
                       </div>
                       <div class="certificate-actions">
-                        <div class="certificate-status expiring" title="Expiring Soon">
-                          <i class="fas fa-exclamation-triangle"></i>
-                          <span>Expiring</span>
+                        <div class="certificate-status pending" title="Certificate In Progress">
+                          <i class="fas fa-clock"></i>
+                          <span>In Progress</span>
                         </div>
-                        <a href="#" class="btn-certificate verify" aria-label="Verify Certificate">
-                          <i class="fas fa-external-link-alt"></i> Verify
-                        </a>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </article>
-
-              <!-- Certificate Card 5 -->
-              <article class="certificate-item padd-15" itemscope itemtype="https://schema.org/EducationalOccupationalCredential">
-                <div class="certificate-item-inner shadow-dark">
-                  <div class="certificate-left">
-                    <div class="certificate-icon">
-                      <i class="fas fa-network-wired"></i>
-                    </div>
-                  </div>
-                  <div class="certificate-content">
-                    <div class="certificate-header">
-                      <div class="certificate-main">
-                        <h3 class="certificate-title" itemprop="name">Network Security Fundamentals</h3>
-                        <p class="certificate-issuer" itemprop="recognizedBy">Cisco Networking Academy</p>
-                      </div>
-                    </div>
-                    <div class="certificate-footer">
-                      <div class="certificate-meta">
-                        <div class="certificate-dates">
-                          <div class="date-item">
-                            <span class="date-label">Issued</span>
-                            <time class="date-value" datetime="2023-06-15" itemprop="dateCreated">Jun 15, 2023</time>
-                          </div>
-                          <div class="date-item">
-                            <span class="date-label">Expires</span>
-                            <time class="date-value expired" datetime="2024-06-15">Jun 15, 2024</time>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="certificate-actions">
-                        <div class="certificate-status active" title="Active Certificate">
-                          <i class="fas fa-check-circle"></i>
-                          <span>Active</span>
-                        </div>
-                        <a href="#" class="btn-certificate verify" aria-label="Verify Certificate">
-                          <i class="fas fa-external-link-alt"></i> Verify
-                        </a>
+                        <button class="btn-certificate coming-soon" disabled aria-label="Certificate verification coming soon">
+                          <i class="fas fa-clock"></i> Coming Soon
+                        </button>
                       </div>
                     </div>
                   </div>
@@ -1211,41 +1217,41 @@
               </article>
 
               <!-- Certificate Card 6 -->
-              <article class="certificate-item padd-15" itemscope itemtype="https://schema.org/EducationalOccupationalCredential">
+              <article class="certificate-item padd-15" itemscope itemtype="https://schema.org/EducationalOccupationalCredential" data-status="coming-soon">
                 <div class="certificate-item-inner shadow-dark">
                   <div class="certificate-left">
                     <div class="certificate-icon">
-                      <i class="fas fa-eye"></i>
+                      <i class="fas fa-terminal"></i>
                     </div>
                   </div>
                   <div class="certificate-content">
                     <div class="certificate-header">
                       <div class="certificate-main">
-                        <h3 class="certificate-title" itemprop="name">SOC Analyst Level 1</h3>
-                        <p class="certificate-issuer" itemprop="recognizedBy">SANS Institute</p>
+                        <h3 class="certificate-title" itemprop="name">OSCP</h3>
+                        <p class="certificate-issuer" itemprop="recognizedBy">Offensive Security</p>
                       </div>
                     </div>
                     <div class="certificate-footer">
                       <div class="certificate-meta">
                         <div class="certificate-dates">
                           <div class="date-item">
-                            <span class="date-label">Issued</span>
-                            <time class="date-value" datetime="2024-05-30" itemprop="dateCreated">May 30, 2024</time>
+                            <span class="date-label">Status</span>
+                            <span class="date-value">In Progress</span>
                           </div>
                           <div class="date-item">
-                            <span class="date-label">Expires</span>
-                            <time class="date-value" datetime="2026-05-30">May 30, 2026</time>
+                            <span class="date-label">Expected</span>
+                            <span class="date-value">2026</span>
                           </div>
                         </div>
                       </div>
                       <div class="certificate-actions">
-                        <div class="certificate-status active" title="Active Certificate">
-                          <i class="fas fa-check-circle"></i>
-                          <span>Active</span>
+                        <div class="certificate-status pending" title="Certificate In Progress">
+                          <i class="fas fa-clock"></i>
+                          <span>In Progress</span>
                         </div>
-                        <a href="#" class="btn-certificate verify" aria-label="Verify Certificate">
-                          <i class="fas fa-external-link-alt"></i> Verify
-                        </a>
+                        <button class="btn-certificate coming-soon" disabled aria-label="Certificate verification coming soon">
+                          <i class="fas fa-clock"></i> Coming Soon
+                        </button>
                       </div>
                     </div>
                   </div>

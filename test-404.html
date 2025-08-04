@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>404 Test - Tushar Basak Portfolio</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .test-container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        button {
+            background: #ff6b6b;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 10px 5px;
+        }
+        button:hover {
+            background: #ff5252;
+        }
+        .test-links {
+            background: #f5f5f5;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 15px 0;
+        }
+        .test-links a {
+            display: block;
+            margin: 5px 0;
+            color: #ff6b6b;
+            text-decoration: none;
+        }
+        .test-links a:hover {
+            text-decoration: underline;
+        }
+        .log {
+            background: #f5f5f5;
+            padding: 15px;
+            border-radius: 5px;
+            max-height: 200px;
+            overflow-y: auto;
+            font-family: monospace;
+            font-size: 12px;
+        }
+    </style>
+</head>
+<body>
+    <div class="test-container">
+        <h1>🚫 404 Error Handling Test</h1>
+        <p>Use this page to test the 404 error handling functionality.</p>
+        
+        <h3>Test Invalid Routes:</h3>
+        <div class="test-links">
+            <p>Click these links to test 404 handling:</p>
+            <a href="/invalid-page" target="_blank">❌ /invalid-page</a>
+            <a href="/nonexistent" target="_blank">❌ /nonexistent</a>
+            <a href="/random-route" target="_blank">❌ /random-route</a>
+            <a href="/admin" target="_blank">❌ /admin</a>
+            <a href="/dashboard" target="_blank">❌ /dashboard</a>
+            <a href="/api/users" target="_blank">❌ /api/users</a>
+            <a href="/blog/post-1" target="_blank">❌ /blog/post-1</a>
+        </div>
+
+        <h3>Test Valid Routes:</h3>
+        <div class="test-links">
+            <p>These should work normally:</p>
+            <a href="/" target="_blank">✅ / (Home)</a>
+            <a href="/index.html" target="_blank">✅ /index.html</a>
+            <a href="/offline.html" target="_blank">✅ /offline.html</a>
+            <a href="/404.html" target="_blank">✅ /404.html</a>
+            <a href="/test-offline.html" target="_blank">✅ /test-offline.html</a>
+        </div>
+
+        <div>
+            <button onclick="testRandomRoute()">Test Random Invalid Route</button>
+            <button onclick="goToMainSite()">Go to Main Site</button>
+            <button onclick="clearLog()">Clear Log</button>
+        </div>
+        
+        <h3>Test Log:</h3>
+        <div id="log" class="log"></div>
+        
+        <h3>Expected Behavior:</h3>
+        <ul>
+            <li>✅ <strong>Invalid routes</strong> should redirect to 404.html</li>
+            <li>✅ <strong>404 page</strong> should show countdown and auto-redirect to home</li>
+            <li>✅ <strong>Valid routes</strong> should load normally</li>
+            <li>✅ <strong>Service worker</strong> should handle routing in background</li>
+        </ul>
+
+        <h3>How to Test:</h3>
+        <ol>
+            <li>Click on any "❌" link above - should redirect to 404 page</li>
+            <li>Try typing invalid URLs in address bar</li>
+            <li>Check browser console for service worker logs</li>
+            <li>Verify 404 page auto-redirects after 5 seconds</li>
+        </ol>
+    </div>
+
+    <script>
+        let logElement = document.getElementById('log');
+
+        function log(message) {
+            const timestamp = new Date().toLocaleTimeString();
+            logElement.innerHTML += `[${timestamp}] ${message}<br>`;
+            logElement.scrollTop = logElement.scrollHeight;
+            console.log(message);
+        }
+
+        function testRandomRoute() {
+            const randomRoutes = [
+                '/test-' + Math.random().toString(36).substr(2, 9),
+                '/page-' + Math.floor(Math.random() * 1000),
+                '/invalid-' + Date.now(),
+                '/nonexistent-' + Math.random().toString(36).substr(2, 5)
+            ];
+            
+            const randomRoute = randomRoutes[Math.floor(Math.random() * randomRoutes.length)];
+            log('Testing random invalid route: ' + randomRoute);
+            window.open(randomRoute, '_blank');
+        }
+
+        function goToMainSite() {
+            log('Navigating to main site...');
+            window.location.href = '/';
+        }
+
+        function clearLog() {
+            logElement.innerHTML = '';
+            log('Log cleared');
+        }
+
+        // Initialize
+        log('404 test page loaded');
+        log('Ready to test 404 functionality');
+
+        // Check service worker status
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.ready.then(registration => {
+                log('✅ Service Worker is ready for 404 handling');
+            });
+        } else {
+            log('❌ Service Worker not supported');
+        }
+    </script>
+</body>
+</html>

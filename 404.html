@@ -8,6 +8,9 @@
     <link rel="canonical" href="https://tusharbasak97.github.io/website/404.html">
     <link rel="icon" type="image/png" sizes="32x32" href="assets/images/favicon-32x32.png">
 
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
     <!-- Preconnect for performance -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -137,21 +140,56 @@
             align-items: center;
             gap: 6px;
             background: var(--bg-black-100);
-            padding: 6px 12px;
+            padding: 8px 14px;
             border-radius: 12px;
             font-size: 10px;
             font-weight: 600;
             text-transform: uppercase;
             letter-spacing: 0.8px;
-            color: #00ff88;
+            color: #00d06fff;
             border: 1.5px solid #00ff88;
-            margin-top: 2rem;
+            margin: 15px auto 0 auto;
+            transition: all 0.3s ease;
             box-shadow: 0 2px 8px rgba(0, 255, 136, 0.15);
+            width: fit-content;
+            animation: securedBlink 2s ease-in-out infinite;
+            position: relative;
+        }
+
+        .secured-badge::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(0, 255, 136, 0.1), rgba(0, 255, 136, 0.05));
+            border-radius: 10px;
+            z-index: -1;
         }
 
         .secured-badge i {
             font-size: 10px;
-            color: #00ff88;
+            color: #00d06fff;
+            filter: drop-shadow(0 0 2px rgba(0, 255, 136, 0.3));
+        }
+
+        .secured-badge:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(0, 255, 136, 0.25);
+            border-color: #00ff88;
+            animation-play-state: paused;
+        }
+
+        @keyframes securedBlink {
+            0%, 50%, 100% {
+                opacity: 1;
+                box-shadow: 0 2px 8px rgba(0, 255, 136, 0.15);
+            }
+            25%, 75% {
+                opacity: 0.7;
+                box-shadow: 0 2px 8px rgba(0, 255, 136, 0.3);
+            }
         }
 
         @media (max-width: 768px) {
@@ -171,6 +209,16 @@
             .btn {
                 padding: 10px 25px;
                 font-size: 16px;
+            }
+
+            .secured-badge {
+                padding: 6px 12px;
+                font-size: 9px;
+                border-radius: 10px;
+            }
+
+            .secured-badge i {
+                font-size: 9px;
             }
         }
 
@@ -192,6 +240,10 @@
 <body>
     <div class="error-container">
         <div class="error-code">404</div>
+        <div class="secured-badge">
+            <i class="fas fa-shield-alt"></i>
+            <span>secured</span>
+        </div>
         <h1 class="error-message">Page Not Found</h1>
         <p class="error-description">
             The page you're looking for doesn't exist or has been moved.
@@ -201,10 +253,6 @@
             Redirecting automatically in <span class="countdown" id="countdown">5</span> seconds...
         </p>
         <a href="https://tusharbasak97.github.io/website/" class="btn" id="returnBtn">Return Home</a>
-
-        <div class="secured-badge">
-            <i>🔒</i>[secured]
-        </div>
     </div>
 
     <script>
