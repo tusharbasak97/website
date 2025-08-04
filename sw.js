@@ -1,66 +1,72 @@
 // Service Worker for Tushar Basak Portfolio - Complete Offline Support
-const CACHE_NAME = 'tushar-basak-portfolio-v2.0.0';
-const OFFLINE_URL = '/offline.html';
-const NOT_FOUND_URL = '/404.html';
+const CACHE_NAME = 'tushar-basak-portfolio-v1.0.0';
+const OFFLINE_URL = '/website/offline.html';
+const NOT_FOUND_URL = '/website/404.html';
 
 // COMPLETE list of ALL files for full offline functionality
 const STATIC_CACHE_URLS = [
-  // Root files
+  // Root files (GitHub Pages paths)
+  '/website/',
+  '/website/index.html',
+  '/website/offline.html',
+  '/website/404.html',
+  '/website/test-offline.html',
+  '/website/test-404.html',
+  '/website/test-complete-offline.html',
+  '/website/favicon.ico',
+  '/website/robots.txt',
+  '/website/sitemap.xml',
+  // Also cache root-relative paths for compatibility
   '/',
   '/index.html',
   '/offline.html',
   '/404.html',
-  '/test-offline.html',
-  '/test-404.html',
-  '/test-complete-offline.html',
   '/favicon.ico',
-  '/robots.txt',
-  '/sitemap.xml',
 
   // CSS Files - ALL themes and styles
-  '/css/style.css',
-  '/css/preloader.min.css',
-  '/css/style-switcher.css',
-  '/css/skins/color-1.css',
-  '/css/skins/color-2.css',
-  '/css/skins/color-3.css',
-  '/css/skins/color-4.css',
-  '/css/skins/color-5.css',
+  '/website/css/style.css',
+  '/website/css/preloader.min.css',
+  '/website/css/style-switcher.css',
+  '/website/css/skins/color-1.css',
+  '/website/css/skins/color-2.css',
+  '/website/css/skins/color-3.css',
+  '/website/css/skins/color-4.css',
+  '/website/css/skins/color-5.css',
 
   // JavaScript Files - ALL functionality
-  '/js/main.js',
-  '/js/script.js',
-  '/js/preloader.min.js',
-  '/js/style-switcher.js',
+  '/website/js/main.js',
+  '/website/js/script.js',
+  '/website/js/preloader.min.js',
+  '/website/js/style-switcher.js',
 
   // Images - ALL images for complete visual experience
-  '/assets/images/hero.webp',
-  '/assets/images/hero.jpg',
-  '/assets/images/logo.png',
-  '/assets/images/favicon-16x16.png',
-  '/assets/images/favicon-32x32.png',
-  '/assets/images/apple-touch-icon.png',
-  '/assets/images/android-chrome-192x192.png',
-  '/assets/images/android-chrome-512x512.png',
-  '/assets/images/mstile-150x150.png',
-  '/assets/images/safari-pinned-tab.svg',
+  '/website/assets/images/hero.webp',
+  '/website/assets/images/hero.jpg',
+  '/website/assets/images/logo.png',
+  '/website/assets/images/favicon-16x16.png',
+  '/website/assets/images/favicon-32x32.png',
+  '/website/assets/images/apple-touch-icon.png',
+  '/website/assets/images/android-chrome-192x192.png',
+  '/website/assets/images/android-chrome-512x512.png',
+  '/website/assets/images/mstile-150x150.png',
+  '/website/assets/images/safari-pinned-tab.svg',
 
   // Portfolio Images - ALL project images
-  '/assets/images/portfolio/AI.webp',
-  '/assets/images/portfolio/Cloud.webp',
-  '/assets/images/portfolio/Cybersecurity.webp',
-  '/assets/images/portfolio/ML.webp',
-  '/assets/images/portfolio/Python.webp',
-  '/assets/images/portfolio/SQL.webp',
+  '/website/assets/images/portfolio/AI.webp',
+  '/website/assets/images/portfolio/Cloud.webp',
+  '/website/assets/images/portfolio/Cybersecurity.webp',
+  '/website/assets/images/portfolio/ML.webp',
+  '/website/assets/images/portfolio/Python.webp',
+  '/website/assets/images/portfolio/SQL.webp',
 
   // Documents - ALL PDFs and certificates
-  '/assets/resume.pdf',
-  '/assets/Strive.pdf',
+  '/website/assets/resume.pdf',
+  '/website/assets/Strive.pdf',
 
   // Configuration files
-  '/assets/site.webmanifest',
-  '/assets/browserconfig.xml',
-  '/.well-known/security.txt'
+  '/website/assets/site.webmanifest',
+  '/website/assets/browserconfig.xml',
+  '/website/.well-known/security.txt'
 ];
 
 // External resources to cache (CDN files)
@@ -177,29 +183,46 @@ self.addEventListener('fetch', (event) => {
            request.mode === 'navigate' ||
            request.url.endsWith('.html') ||
            request.url === self.location.origin + '/' ||
+           request.url === self.location.origin + '/website/' ||
+           request.url.includes('/website/') && (!request.url.includes('.') || request.url.includes('#')) ||
            (!request.url.includes('.') && !request.url.includes('?'));
   };
 
   const isValidRoute = (url) => {
+    const pathname = new URL(url).pathname;
+
+    // For GitHub Pages, handle both root and /website/ paths
+    const basePath = pathname.startsWith('/website/') ? '/website' : '';
+    const relativePath = pathname.replace('/website', '');
+
     const validRoutes = [
       '/',
       '/index.html',
       '/offline.html',
       '/404.html',
       '/test-offline.html',
-      '/test-404.html'
+      '/test-404.html',
+      '/test-complete-offline.html'
     ];
 
-    const pathname = new URL(url).pathname;
+    // Check exact matches (with and without base path)
+    if (validRoutes.includes(relativePath) || validRoutes.includes(pathname)) {
+      return true;
+    }
 
-    // Check exact matches
-    if (validRoutes.includes(pathname)) {
+    // For single-page applications, allow hash routes and main page access
+    if (relativePath === '/' || pathname === basePath + '/' || pathname === basePath) {
       return true;
     }
 
     // Check if it's a valid file extension (assets)
     const validExtensions = ['.css', '.js', '.png', '.jpg', '.jpeg', '.webp', '.ico', '.pdf', '.svg', '.woff', '.woff2', '.ttf', '.webmanifest', '.xml', '.txt'];
     if (validExtensions.some(ext => pathname.endsWith(ext))) {
+      return true;
+    }
+
+    // Allow any path that doesn't have an extension (SPA routing)
+    if (!pathname.includes('.') && !pathname.includes('?')) {
       return true;
     }
 
