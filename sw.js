@@ -139,7 +139,7 @@ self.addEventListener('fetch', (event) => {
   const requestUrl = new URL(event.request.url);
 
   // Handle external requests (CDN, fonts, etc.)
-  if (!requestUrl.origin === self.location.origin) {
+  if (requestUrl.origin !== self.location.origin) {
     event.respondWith(
       caches.match(event.request)
         .then((cachedResponse) => {
