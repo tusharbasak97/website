@@ -897,6 +897,8 @@ function showInstallNotification() {
 }
 
 /* ============================== Offline Detection ============================ */
+let lastOfflineNotification = 0; // Track when we last showed offline notification
+
 function initializeOfflineDetection() {
   // Check initial online status
   updateOnlineStatus();
@@ -905,18 +907,18 @@ function initializeOfflineDetection() {
   window.addEventListener('online', handleOnline);
   window.addEventListener('offline', handleOffline);
 
-  // More frequent connectivity checking
-  setInterval(checkConnectivity, 5000); // Check every 5 seconds
+  // Less frequent connectivity checking to avoid banner spam
+  setInterval(checkConnectivity, 30000); // Check every 30 seconds instead of 5
 
   // Also check on page visibility change
   document.addEventListener('visibilitychange', () => {
     if (!document.hidden) {
-      setTimeout(checkConnectivity, 1000);
+      setTimeout(checkConnectivity, 2000);
     }
   });
 
-  // Initial connectivity check
-  setTimeout(checkConnectivity, 2000);
+  // Initial connectivity check - delayed to avoid immediate banner
+  setTimeout(checkConnectivity, 5000);
 }
 
 function updateOnlineStatus() {
@@ -935,7 +937,7 @@ function handleOnline() {
   showConnectionStatus('You\'re back online!', 'success');
 
   // Redirect to main site if we're on the offline page
-  if (window.location.pathname === '/offline.html') {
+  if (window.location.pathname === '/offline.html' || window.location.pathname === '/website/offline.html') {
     setTimeout(() => {
       window.location.href = 'https://tusharbasak97.github.io/website/';
     }, 1000);
@@ -945,13 +947,24 @@ function handleOnline() {
 function handleOffline() {
   console.log('Connection lost');
   updateOnlineStatus();
-  showConnectionStatus('You\'re offline. Redirecting to offline page...', 'warning');
+
+  // Only show notification if we haven't shown one recently (prevent spam)
+  const now = Date.now();
+  if (now - lastOfflineNotification > 10000) { // 10 seconds minimum between notifications
+    showConnectionStatus('You\'re offline. Redirecting to offline page...', 'warning');
+    lastOfflineNotification = now;
+  }
 
   // Redirect to offline page after a short delay if not already there
   setTimeout(() => {
-    if (!navigator.onLine && window.location.pathname !== '/offline.html') {
+    const currentPath = window.location.pathname;
+    const isOnOfflinePage = currentPath === '/offline.html' || currentPath === '/website/offline.html';
+
+    if (!navigator.onLine && !isOnOfflinePage) {
       console.log('Redirecting to offline page');
-      window.location.href = '/offline.html';
+      // Use the correct offline page path
+      const offlineUrl = currentPath.startsWith('/website/') ? '/website/offline.html' : '/offline.html';
+      window.location.href = offlineUrl;
     }
   }, 2000);
 }
@@ -961,7 +974,10 @@ function checkConnectivity() {
   const controller = new AbortController();
   const timeoutId = setTimeout(() => controller.abort(), 3000); // 3 second timeout
 
-  fetch('/favicon.ico?' + Date.now(), {
+  // Use the correct path based on whether we're on GitHub Pages or local
+  const testUrl = window.location.pathname.startsWith('/website/') ? '/website/favicon.ico' : '/favicon.ico';
+
+  fetch(testUrl + '?' + Date.now(), {
     method: 'HEAD',
     cache: 'no-cache',
     signal: controller.signal
