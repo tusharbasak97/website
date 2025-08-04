@@ -1029,17 +1029,33 @@ function initialize404Handling() {
     '/404.html',
     '/test-offline.html',
     '/test-404.html',
-    '/test-complete-offline.html'
+    '/test-complete-offline.html',
+    // GitHub Pages paths
+    '/website/',
+    '/website/index.html',
+    '/website/offline.html',
+    '/website/404.html',
+    '/website/test-offline.html',
+    '/website/test-404.html',
+    '/website/test-complete-offline.html'
   ];
 
   // Check if it's a valid file extension (assets)
-  const validExtensions = ['.css', '.js', '.png', '.jpg', '.jpeg', '.webp', '.ico', '.pdf', '.svg', '.woff', '.woff2', '.ttf', '.webmanifest'];
+  const validExtensions = ['.css', '.js', '.png', '.jpg', '.jpeg', '.webp', '.ico', '.pdf', '.svg', '.woff', '.woff2', '.ttf', '.webmanifest', '.xml', '.txt'];
   const isAssetFile = validExtensions.some(ext => currentPath.endsWith(ext));
 
+  // Check if it's a valid GitHub Pages asset path
+  const isGitHubPagesAsset = currentPath.startsWith('/website/') && isAssetFile;
+
   // If it's not a valid route and not an asset file, redirect to 404
-  if (!validRoutes.includes(currentPath) && !isAssetFile && currentPath !== '/404.html') {
+  if (!validRoutes.includes(currentPath) && !isAssetFile && !isGitHubPagesAsset && currentPath !== '/404.html' && currentPath !== '/website/404.html') {
     console.log('Invalid route detected:', currentPath);
-    window.location.replace('/404.html');
+    // Redirect to the appropriate 404 page based on current path
+    if (currentPath.startsWith('/website/')) {
+      window.location.replace('/website/404.html');
+    } else {
+      window.location.replace('/404.html');
+    }
   }
 }
 
