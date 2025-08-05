@@ -167,12 +167,13 @@
                 // Clean up test data
                 localStorage.removeItem('contactFormSubmissions');
                 addResult('✅ Form limiter test data cleaned up', 'success');
+                addResult('ℹ️ New limits: 2 submissions per 7 days, 24-hour cooldown', 'info');
 
             } catch (e) {
                 addResult('❌ Form limiter test failed: ' + e.message, 'error');
             }
 
-            addResult('Form limiter test completed!', 'info');
+            addResult('Form limiter test completed! (Limits are now hidden for security)', 'info');
         }
 
         function testRefreshBehavior() {
