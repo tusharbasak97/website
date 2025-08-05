@@ -521,14 +521,64 @@
     <link rel="dns-prefetch" href="//linkedin.com" />
     <link rel="dns-prefetch" href="//leetcode.com" />
     <link rel="dns-prefetch" href="//medium.com" />
+    <link rel="dns-prefetch" href="//www.googletagmanager.com" />
+    <link rel="dns-prefetch" href="//www.google-analytics.com" />
+    <link rel="dns-prefetch" href="//px.ads.linkedin.com" />
+
+    <!-- Google Analytics 4 -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=GA_MEASUREMENT_ID"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'GA_MEASUREMENT_ID', {
+        page_title: 'Tushar Basak - Cybersecurity Analyst Portfolio',
+        page_location: window.location.href,
+        send_page_view: true,
+        anonymize_ip: true,
+        allow_google_signals: false,
+        allow_ad_personalization_signals: false
+      });
+
+      // Enhanced ecommerce and conversion tracking
+      gtag('config', 'GA_MEASUREMENT_ID', {
+        custom_map: {
+          'custom_parameter_1': 'section_viewed',
+          'custom_parameter_2': 'certificate_viewed',
+          'custom_parameter_3': 'project_viewed',
+          'custom_parameter_4': 'contact_initiated'
+        }
+      });
+    </script>
+
+    <!-- Google Search Console Verification -->
+    <meta name="google-site-verification" content="GOOGLE_SEARCH_CONSOLE_VERIFICATION_CODE" />
+
+    <!-- LinkedIn Insight Tag -->
+    <script type="text/javascript">
+      _linkedin_partner_id = "LINKEDIN_PARTNER_ID";
+      window._linkedin_data_partner_ids = window._linkedin_data_partner_ids || [];
+      window._linkedin_data_partner_ids.push(_linkedin_partner_id);
+    </script>
+    <script type="text/javascript">
+      (function(l) {
+        if (!l){window.lintrk = function(a,b){window.lintrk.q.push([a,b])};
+        window.lintrk.q=[]}
+        var s = document.getElementsByTagName("script")[0];
+        var b = document.createElement("script");
+        b.type = "text/javascript";b.async = true;
+        b.src = "https://snap.licdn.com/li.lms-analytics/insight.min.js";
+        s.parentNode.insertBefore(b, s);
+      })(window.lintrk);
+    </script>
+    <noscript>
+      <img height="1" width="1" style="display:none;" alt="" src="https://px.ads.linkedin.com/collect/?pid=LINKEDIN_PARTNER_ID&fmt=gif" />
+    </noscript>
+
+    <!-- Critical CSS Inlining System -->
+    <script src="js/critical-css.js"></script>
 
     <!-- Non-critical CSS loaded asynchronously -->
-    <link rel="preload" href="css/style.css" as="style" onload="this.onload=null;this.rel='stylesheet'" />
-    <noscript><link rel="stylesheet" href="css/style.css" /></noscript>
-
-    <link rel="preload" href="css/preloader.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'" />
-    <noscript><link rel="stylesheet" href="css/preloader.min.css" /></noscript>
-
     <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'" />
     <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" /></noscript>
 
@@ -665,16 +715,23 @@
                 </a>
               </div>
               <div class="home-img">
-                <img
-                  src="assets/images/hero.webp"
-                  alt="Tushar Basak - Professional Cybersecurity Analyst and Ethical Hacker"
-                  loading="eager"
-                  width="400"
-                  height="480"
-                  style="aspect-ratio: 400/480; object-fit: cover;"
-                  itemprop="image"
-                  fetchpriority="high"
-                />
+                <picture>
+                  <source srcset="assets/images/hero.webp" type="image/webp">
+                  <img
+                    src="assets/images/hero.jpg"
+                    data-src="assets/images/hero.webp"
+                    data-fallback="assets/images/hero.jpg"
+                    data-critical="true"
+                    alt="Tushar Basak - Professional Cybersecurity Analyst and Ethical Hacker"
+                    loading="eager"
+                    width="400"
+                    height="480"
+                    style="aspect-ratio: 400/480; object-fit: cover;"
+                    itemprop="image"
+                    class="no-lazy"
+                    fetchpriority="high"
+                  />
+                </picture>
               </div>
             </div>
           </div>
@@ -1278,14 +1335,20 @@
                     <div class="flip-card-inner">
                       <div class="flip-card-front">
                         <div class="portfolio-img">
-                          <img
-                            src="assets/images/portfolio/Python.webp"
-                            alt="Python Security Projects - Cybersecurity tools and scripts developed by Tushar Basak"
-                            loading="lazy"
-                            width="300"
-                            height="300"
-                            itemprop="image"
-                          />
+                          <picture>
+                            <source data-srcset="assets/images/portfolio/Python.webp" type="image/webp">
+                            <img
+                              data-src="assets/images/portfolio/Python.webp"
+                              data-fallback="assets/images/portfolio/Python.jpg"
+                              alt="Python Security Projects - Cybersecurity tools and scripts developed by Tushar Basak"
+                              loading="lazy"
+                              width="300"
+                              height="300"
+                              itemprop="image"
+                              data-project="Python Security Projects"
+                              data-type="Cybersecurity"
+                            />
+                          </picture>
                         </div>
                         <div class="card-content">
                           <h3 itemprop="name">Python Security Projects</h3>
@@ -1579,7 +1642,10 @@
 
     <!-- Load non-critical JS asynchronously -->
     <script src="https://unpkg.com/typed.js@2.1.0/dist/typed.umd.js" defer></script>
+    <script src="js/lazy-loading.js"></script>
+    <script src="js/spa-navigation.js"></script>
     <script src="js/main.js" defer></script>
     <script src="js/preloader.min.js" defer></script>
+    <script src="js/analytics.js" defer></script>
   </body>
 </html>

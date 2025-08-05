@@ -1,5 +1,15 @@
-// Service Worker for Tushar Basak Portfolio - Complete Offline Support
-const CACHE_NAME = 'tushar-basak-portfolio-v1.0.0';
+// Service Worker for Tushar Basak Portfolio - Enhanced Caching Strategy
+const CACHE_NAME = 'tushar-basak-portfolio-v2.1.0';
+const RUNTIME_CACHE = 'runtime-cache-v2.1.0';
+const IMAGE_CACHE = 'image-cache-v2.1.0';
+const FONT_CACHE = 'font-cache-v2.1.0';
+const API_CACHE = 'api-cache-v2.1.0';
+
+// Performance configuration
+const SW_CONFIG = {
+  ENABLE_CONSOLE_LOGGING: false, // Disabled for production performance
+  ENABLE_PERFORMANCE_LOGGING: false
+};
 
 // Determine if we're on GitHub Pages or local development
 const isGitHubPages = self.location.pathname.startsWith('/website/') || self.location.hostname === 'tusharbasak97.github.io';
@@ -16,13 +26,22 @@ const EXTERNAL_CACHE_URLS = [
   'https://unpkg.com/typed.js@2.1.0/dist/typed.umd.js'
 ];
 
+// Core static resources (cache-first strategy)
 const STATIC_CACHE_URLS = [
   basePath + '/',
   basePath + '/index.html',
   basePath + '/offline.html',
   basePath + '/404.html',
 
-  // CSS Files - ALL themes and styles
+  // Critical JavaScript Files
+  basePath + '/js/critical-css.js',
+  basePath + '/js/lazy-loading.js',
+  basePath + '/js/main.js',
+  basePath + '/js/preloader.min.js',
+  basePath + '/js/style-switcher.js',
+  basePath + '/js/analytics.js',
+
+  // Critical CSS Files
   basePath + '/css/style.css',
   basePath + '/css/preloader.min.css',
   basePath + '/css/style-switcher.css',
@@ -32,31 +51,12 @@ const STATIC_CACHE_URLS = [
   basePath + '/css/skins/color-4.css',
   basePath + '/css/skins/color-5.css',
 
-  // JavaScript Files - ALL functionality
-  basePath + '/js/main.js',
-  basePath + '/js/preloader.min.js',
-  basePath + '/js/style-switcher.js',
-
-  // Images - Critical images for functionality
-  basePath + '/assets/images/hero.webp',
-  basePath + '/assets/images/hero.jpg',
+  // Critical Images (icons and favicons)
   basePath + '/assets/images/favicon-32x32.png',
   basePath + '/assets/images/favicon-16x16.png',
   basePath + '/assets/images/apple-touch-icon.png',
   basePath + '/assets/images/android-chrome-192x192.png',
   basePath + '/assets/images/android-chrome-512x512.png',
-
-  // Portfolio Images - ALL project images
-  basePath + '/assets/images/portfolio/AI.webp',
-  basePath + '/assets/images/portfolio/Cloud.webp',
-  basePath + '/assets/images/portfolio/Cybersecurity.webp',
-  basePath + '/assets/images/portfolio/ML.webp',
-  basePath + '/assets/images/portfolio/Python.webp',
-  basePath + '/assets/images/portfolio/SQL.webp',
-
-  // Documents
-  basePath + '/assets/resume.pdf',
-  basePath + '/assets/Strive.pdf',
 
   // Configuration files
   basePath + '/assets/site.webmanifest',
@@ -65,19 +65,130 @@ const STATIC_CACHE_URLS = [
   basePath + '/sitemap.xml'
 ];
 
-// Install event - cache ALL resources for complete offline experience
+// Images for runtime caching (stale-while-revalidate)
+const IMAGE_CACHE_URLS = [
+  basePath + '/assets/images/hero.webp',
+  basePath + '/assets/images/hero.jpg',
+  basePath + '/assets/images/logo.webp',
+  basePath + '/assets/images/logo.png',
+  basePath + '/assets/images/portfolio/AI.webp',
+  basePath + '/assets/images/portfolio/Cloud.webp',
+  basePath + '/assets/images/portfolio/Cybersecurity.webp',
+  basePath + '/assets/images/portfolio/ML.webp',
+  basePath + '/assets/images/portfolio/Python.webp',
+  basePath + '/assets/images/portfolio/SQL.webp'
+];
+
+// Documents for runtime caching
+const DOCUMENT_CACHE_URLS = [
+  basePath + '/assets/resume.pdf',
+  basePath + '/assets/Strive.pdf'
+];
+
+// Enhanced caching strategies
+const CacheStrategies = {
+  // Cache first - for static resources that rarely change
+  cacheFirst: async (request, cacheName) => {
+    const cache = await caches.open(cacheName);
+    const cachedResponse = await cache.match(request);
+
+    if (cachedResponse) {
+      return cachedResponse;
+    }
+
+    try {
+      const networkResponse = await fetch(request);
+      if (networkResponse.ok) {
+        cache.put(request, networkResponse.clone());
+      }
+      return networkResponse;
+    } catch (error) {
+      swLog('Cache first strategy failed:', request.url, error);
+      throw error;
+    }
+  },
+
+  // Network first - for dynamic content
+  networkFirst: async (request, cacheName, timeout = 3000) => {
+    const cache = await caches.open(cacheName);
+
+    try {
+      const networkResponse = await Promise.race([
+        fetch(request),
+        new Promise((_, reject) =>
+          setTimeout(() => reject(new Error('Network timeout')), timeout)
+        )
+      ]);
+
+      if (networkResponse.ok) {
+        cache.put(request, networkResponse.clone());
+      }
+      return networkResponse;
+    } catch (error) {
+      swLog('Network first failed, trying cache:', request.url);
+      const cachedResponse = await cache.match(request);
+      if (cachedResponse) {
+        return cachedResponse;
+      }
+      throw error;
+    }
+  },
+
+  // Stale while revalidate - for images and assets
+  staleWhileRevalidate: async (request, cacheName) => {
+    const cache = await caches.open(cacheName);
+    const cachedResponse = await cache.match(request);
+
+    const fetchPromise = fetch(request).then(networkResponse => {
+      if (networkResponse.ok) {
+        cache.put(request, networkResponse.clone());
+      }
+      return networkResponse;
+    }).catch(error => {
+      swLog('Background fetch failed:', request.url, error);
+    });
+
+    return cachedResponse || fetchPromise;
+  }
+};
+
+// Utility function for conditional logging
+const swLog = (message, data = null) => {
+  if (SW_CONFIG.ENABLE_CONSOLE_LOGGING) {
+    swLog('[SW]', message, data);
+  }
+};
+
+// Install event - Enhanced caching with different strategies
 self.addEventListener('install', (event) => {
-  console.log('Service Worker: Installing with complete offline support...');
+  swLog('Installing with enhanced caching strategies...');
   event.waitUntil(
     Promise.all([
-      // Cache all static resources
+      // Cache static resources
       caches.open(CACHE_NAME).then((cache) => {
-        console.log('Service Worker: Caching all static assets');
+        swLog('Service Worker: Caching static assets');
         return cache.addAll(STATIC_CACHE_URLS);
       }),
-      // Cache external resources
-      caches.open(CACHE_NAME + '-external').then((cache) => {
-        console.log('Service Worker: Caching external resources');
+
+      // Pre-cache images with error handling
+      caches.open(IMAGE_CACHE).then((cache) => {
+        swLog('Service Worker: Pre-caching images');
+        return Promise.allSettled(
+          IMAGE_CACHE_URLS.map(url =>
+            fetch(url).then(response => {
+              if (response.ok) {
+                return cache.put(url, response);
+              }
+            }).catch(error => {
+              swLog('Failed to pre-cache image:', url, error);
+            })
+          )
+        );
+      }),
+
+      // Cache external resources (fonts, CDN)
+      caches.open(FONT_CACHE).then((cache) => {
+        swLog('Service Worker: Caching external resources');
         return Promise.allSettled(
           EXTERNAL_CACHE_URLS.map(url =>
             fetch(url, { mode: 'cors' })
@@ -87,45 +198,62 @@ self.addEventListener('install', (event) => {
                 }
               })
               .catch(error => {
-                console.warn('Failed to cache external resource:', url, error);
+                swLog('Failed to cache external resource:', url, error);
               })
           )
         );
       })
     ])
     .then(() => {
-      console.log('Service Worker: Installation complete - Full offline support enabled');
+      swLog('Service Worker: Installation complete - Enhanced caching enabled');
       return self.skipWaiting();
     })
     .catch((error) => {
-      console.error('Service Worker: Installation failed', error);
+      swLog('Service Worker: Installation failed', error);
     })
   );
 });
 
-// Activate event - clean up old caches and claim clients
+// Activate event - Enhanced cache management
 self.addEventListener('activate', (event) => {
-  console.log('Service Worker: Activating with complete offline support...');
+  swLog('Service Worker: Activating with enhanced cache management...');
+
+  const currentCaches = [CACHE_NAME, RUNTIME_CACHE, IMAGE_CACHE, FONT_CACHE, API_CACHE];
+
   event.waitUntil(
     caches.keys()
       .then((cacheNames) => {
         return Promise.all(
           cacheNames.map((cacheName) => {
-            if (cacheName !== CACHE_NAME && cacheName !== CACHE_NAME + '-external') {
-              console.log('Service Worker: Deleting old cache', cacheName);
+            if (!currentCaches.includes(cacheName)) {
+              swLog('Service Worker: Deleting old cache', cacheName);
               return caches.delete(cacheName);
             }
           })
         );
       })
       .then(() => {
-        console.log('Service Worker: Activation complete - Ready for full offline experience');
+        swLog('Service Worker: Cache cleanup complete');
         return self.clients.claim();
+      })
+      .then(() => {
+        // Notify clients about the update
+        return self.clients.matchAll().then(clients => {
+          clients.forEach(client => {
+            client.postMessage({
+              type: 'SW_UPDATED',
+              version: CACHE_NAME
+            });
+          });
+        });
+      })
+      .then(() => {
+        swLog('Service Worker: Activation complete - Enhanced caching ready');
       })
   );
 });
 
-// Fetch event - Comprehensive offline-first strategy
+// Enhanced fetch event with intelligent routing
 self.addEventListener('fetch', (event) => {
   // Skip non-GET requests
   if (event.request.method !== 'GET') {
@@ -133,180 +261,139 @@ self.addEventListener('fetch', (event) => {
   }
 
   const requestUrl = new URL(event.request.url);
+  const pathname = requestUrl.pathname;
 
-  // Handle external requests (CDN, fonts, etc.) - FIXED the boolean logic
+  // Route requests to appropriate caching strategies
   if (requestUrl.origin !== self.location.origin) {
-    event.respondWith(
-      caches.match(event.request)
-        .then((cachedResponse) => {
-          if (cachedResponse) {
-            console.log('Service Worker: Serving external resource from cache', event.request.url);
-            return cachedResponse;
-          }
+    // External resources (fonts, CDN, analytics)
+    event.respondWith(handleExternalRequest(event.request));
+  } else if (isImageRequest(pathname)) {
+    // Images - stale while revalidate
+    event.respondWith(CacheStrategies.staleWhileRevalidate(event.request, IMAGE_CACHE));
+  } else if (isDocumentRequest(pathname)) {
+    // Documents - cache first with network fallback
+    event.respondWith(CacheStrategies.cacheFirst(event.request, RUNTIME_CACHE));
+  } else if (isNavigationRequest(event.request)) {
+    // HTML pages - network first with cache fallback
+    event.respondWith(handleNavigationRequest(event.request));
+  } else {
+    // Static assets - cache first
+    event.respondWith(CacheStrategies.cacheFirst(event.request, CACHE_NAME));
+  }
+});
 
-          // Try network for external resources
-          return fetch(event.request)
-            .then((response) => {
-              if (response && response.ok) {
-                // Cache successful external responses
-                const responseToCache = response.clone();
-                caches.open(CACHE_NAME + '-external')
-                  .then((cache) => {
-                    cache.put(event.request, responseToCache);
-                  });
-                return response;
-              }
-              return response;
-            })
-            .catch(() => {
-              // Silently fail for external resources when offline
-              return new Response('', { status: 404 });
-            });
-        })
-    );
-    return;
+// Handle external requests (fonts, CDN, analytics)
+const handleExternalRequest = async (request) => {
+  const requestUrl = new URL(request.url);
+
+  // Determine cache based on resource type
+  let cacheName = FONT_CACHE;
+  if (requestUrl.hostname.includes('google-analytics') ||
+      requestUrl.hostname.includes('googletagmanager') ||
+      requestUrl.hostname.includes('linkedin')) {
+    cacheName = API_CACHE;
   }
 
-  // Helper functions for local requests
-  const isNavigationRequest = (request) => {
-    return request.destination === 'document' ||
-           request.mode === 'navigate' ||
-           request.url.endsWith('.html') ||
-           request.url === self.location.origin + basePath + '/' ||
-           request.url === self.location.origin + '/' ||
-           (request.url.includes(basePath) && (!request.url.includes('.') || request.url.includes('#'))) ||
-           (!request.url.includes('.') && !request.url.includes('?'));
-  };
+  try {
+    return await CacheStrategies.staleWhileRevalidate(request, cacheName);
+  } catch (error) {
+    swLog('External request failed:', request.url, error);
+    // Return empty response for failed external resources
+    return new Response('', {
+      status: 200,
+      statusText: 'OK',
+      headers: { 'Content-Type': 'text/plain' }
+    });
+  }
+};
 
-  const isValidRoute = (url) => {
-    const pathname = new URL(url).pathname;
+// Handle navigation requests with enhanced fallbacks
+const handleNavigationRequest = async (request) => {
+  try {
+    // Try network first for fresh content
+    const networkResponse = await CacheStrategies.networkFirst(request, RUNTIME_CACHE, 2000);
+    return networkResponse;
+  } catch (error) {
+    swLog('Navigation request failed, checking cache and fallbacks:', request.url);
 
-    // For GitHub Pages, handle both root and /website/ paths
-    const relativePath = pathname.replace(basePath, '');
+    // Try cache
+    const cache = await caches.open(CACHE_NAME);
+    const cachedResponse = await cache.match(request);
 
-    const validRoutes = [
-      '/',
-      '/index.html',
-      '/offline.html',
-      '/404.html'
-    ];
-
-    // Check exact matches (with and without base path)
-    if (validRoutes.includes(relativePath) || validRoutes.includes(pathname)) {
-      return true;
+    if (cachedResponse) {
+      return cachedResponse;
     }
 
-    // For single-page applications, allow hash routes and main page access
-    if (relativePath === '/' || pathname === basePath + '/' || pathname === basePath) {
-      return true;
+    // Determine appropriate fallback
+    const requestUrl = new URL(request.url);
+    if (!isValidRoute(request.url)) {
+      swLog('Service Worker: Invalid route, serving 404 page');
+      return caches.match(NOT_FOUND_URL);
     }
 
-    // Check if it's a valid file extension (assets)
-    const validExtensions = ['.css', '.js', '.png', '.jpg', '.jpeg', '.webp', '.ico', '.pdf', '.svg', '.woff', '.woff2', '.ttf', '.webmanifest', '.xml', '.txt'];
-    if (validExtensions.some(ext => pathname.endsWith(ext))) {
-      return true;
-    }
+    // Valid route but offline
+    swLog('Service Worker: Valid route but offline, serving offline page');
+    return caches.match(OFFLINE_URL);
+  }
+};
 
-    // Allow any path that doesn't have an extension (SPA routing)
-    if (!pathname.includes('.') && !pathname.includes('?')) {
-      return true;
-    }
+// Utility functions for request classification
+const isImageRequest = (pathname) => {
+  return /\.(jpg|jpeg|png|gif|webp|svg|ico)$/i.test(pathname);
+};
 
-    return false;
-  };
+const isDocumentRequest = (pathname) => {
+  return /\.(pdf|doc|docx|xls|xlsx|ppt|pptx)$/i.test(pathname);
+};
 
-  // OFFLINE-FIRST strategy for local requests
-  event.respondWith(
-    caches.match(event.request)
-      .then((cachedResponse) => {
-        // ALWAYS serve from cache first if available (offline-first)
-        if (cachedResponse) {
-          console.log('Service Worker: Serving from cache (offline-first)', event.request.url);
+const isNavigationRequest = (request) => {
+  return request.destination === 'document' ||
+         request.mode === 'navigate' ||
+         request.url.endsWith('.html') ||
+         (!request.url.includes('.') && !request.url.includes('?'));
+};
 
-          // For HTML pages, try to update cache in background (stale-while-revalidate)
-          if (isNavigationRequest(event.request)) {
-            fetch(event.request)
-              .then((response) => {
-                if (response && response.ok) {
-                  caches.open(CACHE_NAME).then((cache) => {
-                    cache.put(event.request, response.clone());
-                    console.log('Service Worker: Updated cache in background', event.request.url);
-                  });
-                }
-              })
-              .catch(() => {
-                // Network failed, but we already have cached version
-                console.log('Service Worker: Background update failed, using cached version');
-              });
-          }
+// Enhanced route validation
+const isValidRoute = (url) => {
+  const pathname = new URL(url).pathname;
+  const relativePath = pathname.replace(basePath, '');
 
-          return cachedResponse;
-        }
+  const validRoutes = [
+    '/',
+    '/index.html',
+    '/offline.html',
+    '/404.html'
+  ];
 
-        // No cached response, try network (fallback)
-        console.log('Service Worker: Not in cache, trying network', event.request.url);
-        return fetch(event.request)
-          .then((response) => {
-            // Handle different response statuses
-            if (response.status === 404) {
-              // For navigation requests to invalid routes, serve 404 page
-              if (isNavigationRequest(event.request)) {
-                console.log('Service Worker: 404 for navigation, serving 404 page');
-                return caches.match(NOT_FOUND_URL);
-              }
-              return response;
-            }
+  // Check exact matches
+  if (validRoutes.includes(relativePath) || validRoutes.includes(pathname)) {
+    return true;
+  }
 
-            if (!response || response.status !== 200) {
-              // For navigation requests with other errors, serve offline page
-              if (isNavigationRequest(event.request)) {
-                console.log('Service Worker: Network error for navigation, serving offline page');
-                return caches.match(OFFLINE_URL);
-              }
-              return response;
-            }
+  // SPA routing - allow hash routes and main page access
+  if (relativePath === '/' || pathname === basePath + '/' || pathname === basePath) {
+    return true;
+  }
 
-            // Clone and cache successful responses
-            const responseToCache = response.clone();
-            caches.open(CACHE_NAME)
-              .then((cache) => {
-                cache.put(event.request, responseToCache);
-                console.log('Service Worker: Cached new resource', event.request.url);
-              });
+  // Valid file extensions
+  const validExtensions = ['.css', '.js', '.png', '.jpg', '.jpeg', '.webp', '.ico', '.pdf', '.svg', '.woff', '.woff2', '.ttf', '.webmanifest', '.xml', '.txt'];
+  if (validExtensions.some(ext => pathname.endsWith(ext))) {
+    return true;
+  }
 
-            return response;
-          })
-          .catch((error) => {
-            console.error('Service Worker: Network request failed', event.request.url, error);
+  // SPA routes (no extension, no query params)
+  if (!pathname.includes('.') && !pathname.includes('?')) {
+    return true;
+  }
 
-            // For navigation requests, determine appropriate fallback
-            if (isNavigationRequest(event.request)) {
-              // Check if the route is invalid (should be 404)
-              if (!isValidRoute(event.request.url)) {
-                console.log('Service Worker: Invalid route, serving 404 page');
-                return caches.match(NOT_FOUND_URL);
-              }
-
-              // Valid route but network failed (offline)
-              console.log('Service Worker: Valid route but offline, serving offline page');
-              return caches.match(OFFLINE_URL);
-            }
-
-            // For other resources, return error response
-            return new Response('', {
-              status: 408,
-              statusText: 'Network request failed - resource not cached'
-            });
-          });
-      })
-  );
-});
+  return false;
+};
 
 // Background sync for future enhancements
 self.addEventListener('sync', (event) => {
   if (event.tag === 'background-sync') {
     event.waitUntil(
-      console.log('Service Worker: Background sync triggered')
+      swLog('Service Worker: Background sync triggered')
     );
   }
 });
@@ -371,4 +458,201 @@ self.addEventListener('message', (event) => {
   }
 });
 
-console.log('Service Worker: Loaded with complete offline support - Version', CACHE_NAME);
+// Enhanced background sync for analytics and form submissions
+self.addEventListener('sync', (event) => {
+  swLog('Service Worker: Background sync triggered', event.tag);
+
+  if (event.tag === 'analytics-sync') {
+    event.waitUntil(syncAnalyticsData());
+  } else if (event.tag === 'form-sync') {
+    event.waitUntil(syncFormSubmissions());
+  }
+});
+
+// Sync analytics data when back online
+const syncAnalyticsData = async () => {
+  try {
+    const cache = await caches.open(API_CACHE);
+    const requests = await cache.keys();
+
+    // Process any queued analytics requests
+    for (const request of requests) {
+      if (request.url.includes('google-analytics') || request.url.includes('linkedin')) {
+        try {
+          await fetch(request);
+          await cache.delete(request);
+          swLog('Service Worker: Synced analytics data', request.url);
+        } catch (error) {
+          swLog('Service Worker: Failed to sync analytics', error);
+        }
+      }
+    }
+  } catch (error) {
+    swLog('Service Worker: Analytics sync failed', error);
+  }
+};
+
+// Sync form submissions when back online
+const syncFormSubmissions = async () => {
+  try {
+    // Implementation for form sync would go here
+    swLog('Service Worker: Form sync completed');
+  } catch (error) {
+    swLog('Service Worker: Form sync failed', error);
+  }
+};
+
+// Enhanced push notification handling
+self.addEventListener('push', (event) => {
+  swLog('Service Worker: Push notification received');
+
+  if (event.data) {
+    const data = event.data.json();
+    const options = {
+      body: data.body || 'New update available!',
+      icon: basePath + '/assets/images/android-chrome-192x192.png',
+      badge: basePath + '/assets/images/favicon-32x32.png',
+      vibrate: [100, 50, 100],
+      data: {
+        dateOfArrival: Date.now(),
+        primaryKey: data.primaryKey || 'default',
+        url: data.url || basePath + '/'
+      },
+      actions: [
+        {
+          action: 'explore',
+          title: 'View Portfolio',
+          icon: basePath + '/assets/images/favicon-16x16.png'
+        },
+        {
+          action: 'close',
+          title: 'Close',
+          icon: basePath + '/assets/images/favicon-16x16.png'
+        }
+      ],
+      requireInteraction: true,
+      tag: 'portfolio-update'
+    };
+
+    event.waitUntil(
+      self.registration.showNotification(data.title || 'Portfolio Update', options)
+    );
+  }
+});
+
+// Enhanced notification click handling
+self.addEventListener('notificationclick', (event) => {
+  swLog('Service Worker: Notification clicked', event.action);
+
+  event.notification.close();
+
+  if (event.action === 'explore') {
+    const urlToOpen = event.notification.data.url || basePath + '/';
+
+    event.waitUntil(
+      clients.matchAll({ type: 'window', includeUncontrolled: true })
+        .then(clientList => {
+          // Check if there's already a window/tab open with the target URL
+          for (const client of clientList) {
+            if (client.url === urlToOpen && 'focus' in client) {
+              return client.focus();
+            }
+          }
+
+          // If not, open a new window/tab
+          if (clients.openWindow) {
+            return clients.openWindow(urlToOpen);
+          }
+        })
+    );
+  }
+});
+
+// Enhanced message handling for communication with main thread
+self.addEventListener('message', (event) => {
+  swLog('Service Worker: Message received', event.data);
+
+  if (event.data && event.data.type === 'SKIP_WAITING') {
+    self.skipWaiting();
+  }
+
+  if (event.data && event.data.type === 'GET_CACHE_STATUS') {
+    caches.keys().then(cacheNames => {
+      const cacheInfo = {
+        caches: cacheNames,
+        version: CACHE_NAME,
+        strategies: {
+          static: CACHE_NAME,
+          runtime: RUNTIME_CACHE,
+          images: IMAGE_CACHE,
+          fonts: FONT_CACHE,
+          api: API_CACHE
+        }
+      };
+
+      event.ports[0].postMessage(cacheInfo);
+    });
+  }
+
+  if (event.data && event.data.type === 'CLEAR_CACHE') {
+    const cacheName = event.data.cacheName;
+    if (cacheName) {
+      caches.delete(cacheName).then(success => {
+        event.ports[0].postMessage({ success, cacheName });
+      });
+    }
+  }
+
+  if (event.data && event.data.type === 'PREFETCH_RESOURCES') {
+    const resources = event.data.resources || [];
+    event.waitUntil(prefetchResources(resources));
+  }
+});
+
+// Prefetch resources on demand
+const prefetchResources = async (resources) => {
+  const cache = await caches.open(RUNTIME_CACHE);
+
+  for (const resource of resources) {
+    try {
+      const response = await fetch(resource);
+      if (response.ok) {
+        await cache.put(resource, response);
+        swLog('Service Worker: Prefetched resource', resource);
+      }
+    } catch (error) {
+      swLog('Service Worker: Failed to prefetch resource', resource, error);
+    }
+  }
+};
+
+// Performance monitoring
+const logPerformanceMetrics = () => {
+  if ('performance' in self) {
+    const entries = performance.getEntriesByType('navigation');
+    if (entries.length > 0) {
+      const navigation = entries[0];
+      swLog('Service Worker: Performance metrics', {
+        domContentLoaded: navigation.domContentLoadedEventEnd - navigation.domContentLoadedEventStart,
+        loadComplete: navigation.loadEventEnd - navigation.loadEventStart,
+        cacheHitRatio: self.cacheHitCount / (self.cacheHitCount + self.cacheMissCount) || 0
+      });
+    }
+  }
+};
+
+// Initialize performance counters
+self.cacheHitCount = 0;
+self.cacheMissCount = 0;
+
+// Log performance metrics periodically
+setInterval(logPerformanceMetrics, 60000); // Every minute
+
+swLog('Service Worker: Enhanced version loaded - Version', CACHE_NAME);
+swLog('Service Worker: Cache strategies initialized:', {
+  static: CACHE_NAME,
+  runtime: RUNTIME_CACHE,
+  images: IMAGE_CACHE,
+  fonts: FONT_CACHE,
+  api: API_CACHE
+});

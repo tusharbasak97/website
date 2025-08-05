@@ -37,6 +37,8 @@ function initializeApp() {
   initializeCertificates();
   initializeHistoryManagement();
   initializePerformanceMonitoring();
+  initializeLazyLoadingIntegration();
+  initializeAnalyticsIntegration();
 }
 
 /* ============================== Typing Animation ============================ */
@@ -83,148 +85,20 @@ function initializeTyping() {
 }
 
 /* ============================== Navigation System ============================ */
-let currentSection = 'home'; // Track current section
-
-// Mobile navigation control function (global scope)
-function closeMobileNavigation() {
-  const aside = document.querySelector(".aside");
-  const navTogglerBtn = document.querySelector(".nav-toggler");
-  const allSection = document.querySelectorAll(".section");
-
-  aside.classList.remove("open");
-  navTogglerBtn.classList.remove("open");
-  for (let i = 0; i < allSection.length; i++) {
-    allSection[i].classList.remove("open");
-  }
-}
+// Navigation is now handled by spa-navigation.js for better performance
+// This section is kept for backward compatibility
 
 function initializeNavigation() {
-  const nav = document.querySelector(".nav");
-  const navList = nav.querySelectorAll("li");
-  const totalNavList = navList.length;
-  const allSection = document.querySelectorAll(".section");
-  const totalSection = allSection.length;
+  // Navigation is handled by SPA system
+  // Just ensure initial section is set
+  const initialSection = 'home';
 
-  // Add click listeners to navigation links
-  for (let i = 0; i < totalNavList; i++) {
-    const a = navList[i].querySelector("a");
-    a.addEventListener("click", function (e) {
-      e.preventDefault();
-      const targetSection = this.getAttribute("href").split("#")[1];
-      navigateToSection(targetSection);
-    });
-  }
-
-  // Mobile navigation toggle
-  const navTogglerBtn = document.querySelector(".nav-toggler");
-  const aside = document.querySelector(".aside");
-
-  navTogglerBtn.addEventListener("click", (e) => {
-    e.stopPropagation(); // Prevent event bubbling
-    asideSectionTogglerBtn();
-  });
-
-  // Close mobile navigation when clicking outside
-  document.addEventListener("click", (e) => {
-    // Check if mobile navigation is open
-    if (aside.classList.contains("open")) {
-      // Check if click is outside the aside navigation
-      if (!aside.contains(e.target) && !navTogglerBtn.contains(e.target)) {
-        closeMobileNavigation();
-      }
-    }
-  });
-
-  // Prevent closing when clicking inside the navigation
-  aside.addEventListener("click", (e) => {
-    e.stopPropagation();
-  });
-
-  // Close mobile navigation when pressing Escape key
-  document.addEventListener("keydown", (e) => {
-    if (e.key === "Escape" && aside.classList.contains("open")) {
-      closeMobileNavigation();
-    }
-  });
-
-  function asideSectionTogglerBtn() {
-    aside.classList.toggle("open");
-    navTogglerBtn.classList.toggle("open");
-    for (let i = 0; i < totalSection; i++) {
-      allSection[i].classList.toggle("open");
-    }
-  }
-}
-
-function navigateToSection(sectionId) {
-  if (sectionId === currentSection) return; // Don't navigate to same section
-
-  const targetSection = document.querySelector(`#${sectionId}`);
-  if (!targetSection) return;
-
-  // Show loading overlay for smooth transition
-  showLoadingOverlay();
-
-  // Update navigation immediately for visual feedback
-  updateNavigation(sectionId);
-
-  // Delay the section transition to allow loading overlay to appear
-  setTimeout(() => {
-    showSection(sectionId);
-    currentSection = sectionId;
-
-    // Update browser history
-    const newUrl = `${window.location.pathname}${window.location.search}#${sectionId}`;
-    history.pushState({ section: sectionId }, '', newUrl);
-
-    // Hide loading overlay after section is shown
-    setTimeout(() => {
-      hideLoadingOverlay();
-    }, 300);
-  }, 150);
-
-  // Close mobile menu if open
-  if (window.innerWidth < 1200) {
-    closeMobileNavigation();
-  }
-}
-
-function showSection(sectionId) {
-  const allSection = document.querySelectorAll(".section");
-  const targetSection = document.querySelector(`#${sectionId}`);
-
-  if (!targetSection) return;
-
-  // Find current active section before removing classes
-  const currentActiveSection = document.querySelector(".section.active");
-
-  // If it's the same section, don't do anything
-  if (currentActiveSection === targetSection) return;
-
-  // Remove active and back-section classes from all sections
-  allSection.forEach(section => {
-    section.classList.remove("active", "back-section");
-  });
-
-  // Add back-section to previous active section (for smooth transition)
-  if (currentActiveSection) {
-    currentActiveSection.classList.add("back-section");
-  }
-
-  // Use requestAnimationFrame to ensure smooth transition
-  requestAnimationFrame(() => {
-    // Activate target section
-    targetSection.classList.add("active");
-  });
-}
-
-function updateNavigation(sectionId) {
+  // Set initial active navigation
   const navLinks = document.querySelectorAll(".nav a");
-
   navLinks.forEach(link => {
     link.classList.remove("active");
-    const linkSection = link.getAttribute("href").split("#")[1];
-    if (linkSection === sectionId) {
+    const linkSection = link.getAttribute("href").replace("#", "");
+    if (linkSection === initialSection) {
       link.classList.add("active");
     }
   });
@@ -232,38 +106,12 @@ function updateNavigation(sectionId) {
 
 /* ============================== History Management ============================ */
 function initializeHistoryManagement() {
-  // Handle initial page load
-  const initialHash = window.location.hash.slice(1) || 'home';
-  currentSection = initialHash;
-
-  // Handle browser back/forward buttons
-  window.addEventListener('popstate', function(event) {
-    const sectionId = event.state ? event.state.section : (window.location.hash.slice(1) || 'home');
-
-    // Use loading overlay for back/forward navigation too
-    showLoadingOverlay();
-    updateNavigation(sectionId);
-
-    setTimeout(() => {
-      showSection(sectionId);
-      currentSection = sectionId;
-
-      setTimeout(() => {
-        hideLoadingOverlay();
-      }, 300);
-    }, 150);
-  });
-
-  // Set initial history state
-  if (!history.state) {
-    history.replaceState({ section: currentSection }, '', `${window.location.pathname}${window.location.search}#${currentSection}`);
-  }
+  // History management disabled for true SPA behavior
+  // No URL changes for better performance
 }
 
 /* ============================== Page Loading Management ============================ */
 function initializePageLoading() {
-  const loadingOverlay = document.getElementById('loadingOverlay');
-
   // Show loading overlay immediately
   showLoadingOverlay();
 
@@ -274,10 +122,11 @@ function initializePageLoading() {
       // Remove page-loading class and show initial section
       document.body.classList.remove('page-loading');
 
-      const initialHash = window.location.hash.slice(1) || 'home';
-      showSection(initialHash);
-      updateNavigation(initialHash);
-      currentSection = initialHash;
+      // Always start with home section (no URL dependency)
+      const homeSection = document.querySelector('#home');
+      if (homeSection) {
+        homeSection.classList.add('active');
+      }
 
       // Hide loading overlay
       setTimeout(() => {
@@ -1059,15 +908,165 @@ function initializePerformanceMonitoring() {
     window.addEventListener('load', () => {
       setTimeout(() => {
         const perfData = performance.getEntriesByType('navigation')[0];
-        console.log('Page Load Performance:', {
+        const metrics = {
           'DNS Lookup': perfData.domainLookupEnd - perfData.domainLookupStart,
           'TCP Connection': perfData.connectEnd - perfData.connectStart,
           'Request': perfData.responseStart - perfData.requestStart,
           'Response': perfData.responseEnd - perfData.responseStart,
           'DOM Processing': perfData.domContentLoadedEventStart - perfData.responseEnd,
           'Total Load Time': perfData.loadEventEnd - perfData.navigationStart
-        });
+        };
+
+        console.log('Page Load Performance:', metrics);
+
+        // Send to analytics if available
+        if (window.AnalyticsTracker) {
+          window.AnalyticsTracker.ga4.trackCustomEvent('performance_metrics', metrics);
+        }
       }, 0);
     });
   }
+}
+
+// Lazy loading integration
+function initializeLazyLoadingIntegration() {
+  // Convert existing images to lazy loading format
+  const images = document.querySelectorAll('img:not([data-src]):not(.no-lazy)');
+
+  images.forEach(img => {
+    // Skip if already processed or is a critical image
+    if (img.dataset.processed || img.dataset.critical === 'true') {
+      return;
+    }
+
+    // Convert to lazy loading
+    if (img.src && !img.src.startsWith('data:')) {
+      img.dataset.src = img.src;
+      img.dataset.processed = 'true';
+
+      // Create placeholder
+      const canvas = document.createElement('canvas');
+      const ctx = canvas.getContext('2d');
+      canvas.width = img.width || img.naturalWidth || 300;
+      canvas.height = img.height || img.naturalHeight || 200;
+
+      // Simple gradient placeholder
+      const gradient = ctx.createLinearGradient(0, 0, canvas.width, canvas.height);
+      gradient.addColorStop(0, '#f0f0f0');
+      gradient.addColorStop(1, '#e0e0e0');
+      ctx.fillStyle = gradient;
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+      img.src = canvas.toDataURL();
+      img.classList.add('lazy-placeholder');
+    }
+  });
+
+  // Listen for lazy loading events
+  document.addEventListener('lazyloaded', (event) => {
+    const img = event.detail.element;
+    console.log('Image lazy loaded:', img.src, 'Format:', event.detail.format);
+
+    // Track lazy loading in analytics
+    if (window.AnalyticsTracker) {
+      window.AnalyticsTracker.ga4.trackCustomEvent('image_lazy_loaded', {
+        image_url: img.src,
+        format: event.detail.format,
+        loading_time: Date.now() - window.pageLoadTime
+      });
+    }
+  });
+
+  console.log('Lazy loading integration initialized');
+}
+
+// Analytics integration - optimized for performance
+function initializeAnalyticsIntegration() {
+  // Debounced tracking to reduce excessive events
+  const debounce = (func, wait) => {
+    let timeout;
+    return function executedFunction(...args) {
+      const later = () => {
+        clearTimeout(timeout);
+        func(...args);
+      };
+      clearTimeout(timeout);
+      timeout = setTimeout(later, wait);
+    };
+  };
+
+  // Track section visibility with debouncing (no console logging)
+  const sections = document.querySelectorAll('section[id]');
+  const debouncedSectionTracker = debounce((sectionName) => {
+    if (window.AnalyticsTracker) {
+      window.AnalyticsTracker.ga4.trackSectionView(sectionName);
+    }
+  }, 1000);
+
+  const sectionObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting && entry.intersectionRatio > 0.5) {
+        debouncedSectionTracker(entry.target.id);
+      }
+    });
+  }, {
+    threshold: 0.5,
+    rootMargin: '0px 0px -10% 0px'
+  });
+  
+  sections.forEach(section => {
+    sectionObserver.observe(section);
+  });
+  
+  // Debounced click tracking
+  const debouncedClickTracker = debounce((eventData) => {
+    if (window.AnalyticsTracker) {
+      window.AnalyticsTracker.ga4.trackCustomEvent('interaction', eventData);
+    }
+  }, 500);
+
+  // Single optimized click handler for all interactions
+  document.addEventListener('click', (e) => {
+    // Certificate interactions
+    const certificateCard = e.target.closest('.certificate-item, .cert-card, [data-certificate]');
+    if (certificateCard) {
+      const certificateName = certificateCard.dataset.certificate || 
+                             certificateCard.querySelector('h3, .cert-title')?.textContent?.trim() || 
+                             'Certificate';
+      debouncedClickTracker({
+        type: 'certificate_view',
+        name: certificateName
+      });
+      return;
+    }
+
+    // Project interactions
+    const projectCard = e.target.closest('.portfolio-item, .project-card, [data-project]');
+    if (projectCard) {
+      const projectName = projectCard.dataset.project || 
+                         projectCard.querySelector('h3, .project-title')?.textContent?.trim() || 
+                         'Project';
+      debouncedClickTracker({
+        type: 'project_view',
+        name: projectName
+      });
+      return;
+    }
+
+    // External links (no console warnings)
+    const link = e.target.closest('a[href]');
+    if (link && link.href) {
+      try {
+        const url = new URL(link.href);
+        if (url.hostname !== window.location.hostname) {
+          debouncedClickTracker({
+            type: 'external_link',
+            domain: url.hostname
+          });
+        }
+      } catch (error) {
+        // Silently handle URL parsing errors for better performance
+      }
+    }
+  });
 }
