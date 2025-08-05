@@ -267,10 +267,10 @@
         <div class="cached-content">
             <h3>Available Offline:</h3>
             <ul style="list-style: none; padding: 0; margin-top: 1rem;">
-                <li><a href="/website/#home" class="offline-link">✓ Portfolio Overview</a></li>
-                <li><a href="/website/#about" class="offline-link">✓ About Information</a></li>
-                <li><a href="/website/#certificates" class="offline-link">✓ Certificates</a></li>
-                <li><a href="/website/#portfolio" class="offline-link">✓ Project Gallery</a></li>
+                <li><a href="#" onclick="goToSection('home')" class="offline-link">✓ Portfolio Overview</a></li>
+                <li><a href="#" onclick="goToSection('about')" class="offline-link">✓ About Information</a></li>
+                <li><a href="#" onclick="goToSection('certificates')" class="offline-link">✓ Certificates</a></li>
+                <li><a href="#" onclick="goToSection('portfolio')" class="offline-link">✓ Project Gallery</a></li>
             </ul>
         </div>
 
@@ -282,8 +282,28 @@
     <script>
         const statusElement = document.getElementById('statusText');
         const statusContainer = document.getElementById('connectionStatus');
-        const redirectUrl = 'https://tusharbasak97.github.io/website/';
         let isRedirecting = false;
+
+        // Smart URL detection for different environments
+        function getBaseUrl() {
+            const currentPath = window.location.pathname;
+            const currentOrigin = window.location.origin;
+
+            // Local development
+            if (currentOrigin.includes('localhost') || currentOrigin.includes('127.0.0.1')) {
+                return currentOrigin + (currentPath.includes('/website/') ? '/website/' : '/');
+            }
+
+            // GitHub Pages
+            if (currentPath.startsWith('/website/')) {
+                return currentOrigin + '/website/';
+            }
+
+            // Default fallback
+            return currentOrigin + '/';
+        }
+
+        const redirectUrl = getBaseUrl();
 
         // Update connection status display
         function updateConnectionStatus(status, message) {
@@ -301,7 +321,10 @@
             const controller = new AbortController();
             const timeoutId = setTimeout(() => controller.abort(), 5000);
 
-            fetch('https://tusharbasak97.github.io/website/favicon.ico?' + Date.now(), {
+            // Use dynamic URL based on current environment
+            const testUrl = redirectUrl + 'favicon.ico?' + Date.now();
+
+            fetch(testUrl, {
                 method: 'HEAD',
                 cache: 'no-cache',
                 signal: controller.signal,
@@ -330,10 +353,39 @@
 
             console.log('Connection restored, redirecting to main site');
 
+            // Preserve user's last visited section when redirecting
+            const savedSection = localStorage.getItem('spaCurrentSection');
+            let finalRedirectUrl = redirectUrl;
+
+            if (savedSection && savedSection !== 'home') {
+                // Add a parameter to indicate we should load the saved section
+                finalRedirectUrl += '?restore=' + savedSection;
+            }
+
             // Redirect after a short delay to show the message
             setTimeout(() => {
-                window.location.href = redirectUrl;
+                window.location.href = finalRedirectUrl;
             }, 2000);
+        }
+
+        // Function to handle offline navigation to sections
+        function goToSection(section) {
+            // Save the section preference
+            localStorage.setItem('spaCurrentSection', section);
+
+            // Try to navigate to the main site with the section
+            const sectionUrl = redirectUrl + '?restore=' + section;
+
+            // Check if we're online first
+            if (navigator.onLine) {
+                window.location.href = sectionUrl;
+            } else {
+                // Show message that we're still offline
+                updateConnectionStatus('checking', `📌 Section "${section}" saved. Will load when connection is restored.`);
+                setTimeout(() => {
+                    statusContainer.style.display = 'none';
+                }, 3000);
+            }
         }
 
         // Listen for browser online event

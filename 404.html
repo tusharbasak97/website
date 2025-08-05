@@ -252,15 +252,46 @@
         <p class="countdown-text">
             Redirecting automatically in <span class="countdown" id="countdown">5</span> seconds...
         </p>
-        <a href="https://tusharbasak97.github.io/website/" class="btn" id="returnBtn">Return Home</a>
+        <a href="#" class="btn" id="returnBtn">Return Home</a>
     </div>
 
     <script>
+        // Smart URL detection for different environments
+        function getBaseUrl() {
+            const currentPath = window.location.pathname;
+            const currentOrigin = window.location.origin;
+
+            // Local development
+            if (currentOrigin.includes('localhost') || currentOrigin.includes('127.0.0.1')) {
+                return currentOrigin + (currentPath.includes('/website/') ? '/website/' : '/');
+            }
+
+            // GitHub Pages
+            if (currentPath.startsWith('/website/')) {
+                return currentOrigin + '/website/';
+            }
+
+            // Default fallback
+            return currentOrigin + '/';
+        }
+
         // Countdown and auto-redirect functionality
         let countdownTime = 5;
         const countdownElement = document.getElementById('countdown');
         const returnBtn = document.getElementById('returnBtn');
-        const redirectUrl = 'https://tusharbasak97.github.io/website/';
+        const baseUrl = getBaseUrl();
+
+        // Preserve user's last visited section when redirecting
+        const savedSection = localStorage.getItem('spaCurrentSection');
+        let redirectUrl = baseUrl;
+
+        if (savedSection && savedSection !== 'home') {
+            // Add a parameter to indicate we should load the saved section
+            redirectUrl += '?restore=' + savedSection;
+        }
+
+        // Update the button href
+        returnBtn.href = redirectUrl;
 
         // Update countdown display
         function updateCountdown() {

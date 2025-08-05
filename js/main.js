@@ -4,8 +4,13 @@
 document.addEventListener('DOMContentLoaded', function() {
   try {
     initialize404Handling();
-    initializeApp();
-    initializePageLoading();
+
+    // Wait a bit for SPA navigation to initialize first
+    setTimeout(() => {
+      initializeApp();
+      initializePageLoading();
+    }, 50);
+
     registerServiceWorker();
     initializeOfflineDetection();
   } catch (error) {
@@ -90,18 +95,23 @@ function initializeTyping() {
 
 function initializeNavigation() {
   // Navigation is handled by SPA system
-  // Just ensure initial section is set
-  const initialSection = 'home';
+  // This function is kept for backward compatibility but does minimal work
+  // The actual navigation is handled by spa-navigation.js
 
-  // Set initial active navigation
-  const navLinks = document.querySelectorAll(".nav a");
-  navLinks.forEach(link => {
-    link.classList.remove("active");
-    const linkSection = link.getAttribute("href").replace("#", "");
-    if (linkSection === initialSection) {
-      link.classList.add("active");
+  // Wait for SPA system to initialize, then sync navigation state
+  setTimeout(() => {
+    if (window.SPANavigation) {
+      const currentSection = window.SPANavigation.getCurrentSection();
+      const navLinks = document.querySelectorAll(".nav a");
+      navLinks.forEach(link => {
+        link.classList.remove("active");
+        const linkSection = link.getAttribute("href").replace("#", "");
+        if (linkSection === currentSection) {
+          link.classList.add("active");
+        }
+      });
     }
-  });
+  }, 100);
 }
 
 /* ============================== History Management ============================ */
@@ -119,14 +129,11 @@ function initializePageLoading() {
   window.addEventListener('load', function() {
     // Additional delay to ensure smooth experience
     setTimeout(() => {
-      // Remove page-loading class and show initial section
+      // Remove page-loading class
       document.body.classList.remove('page-loading');
 
-      // Always start with home section (no URL dependency)
-      const homeSection = document.querySelector('#home');
-      if (homeSection) {
-        homeSection.classList.add('active');
-      }
+      // Don't force home section - let SPA navigation handle initial section
+      // The SPA navigation system will load the correct section based on saved state
 
       // Hide loading overlay
       setTimeout(() => {
@@ -777,9 +784,32 @@ function handleOnline() {
   updateOnlineStatus();
 
   // Redirect to main site if we're on the offline page
-  if (window.location.pathname === '/offline.html' || window.location.pathname === '/website/offline.html') {
+  const currentPath = window.location.pathname;
+  const isOnOfflinePage = currentPath === '/offline.html' || currentPath === '/website/offline.html';
+
+  if (isOnOfflinePage) {
+    // Get the appropriate base URL
+    const currentOrigin = window.location.origin;
+    let baseUrl;
+
+    if (currentOrigin.includes('localhost') || currentOrigin.includes('127.0.0.1')) {
+      baseUrl = currentOrigin + (currentPath.includes('/website/') ? '/website/' : '/');
+    } else if (currentPath.startsWith('/website/')) {
+      baseUrl = currentOrigin + '/website/';
+    } else {
+      baseUrl = currentOrigin + '/';
+    }
+
+    // Preserve user's last visited section
+    const savedSection = localStorage.getItem('spaCurrentSection');
+    let redirectUrl = baseUrl;
+
+    if (savedSection && savedSection !== 'home') {
+      redirectUrl += '?restore=' + savedSection;
+    }
+
     setTimeout(() => {
-      window.location.href = 'https://tusharbasak97.github.io/website/';
+      window.location.href = redirectUrl;
     }, 1000);
   }
 }
@@ -797,8 +827,19 @@ function handleOffline() {
 
     if (!navigator.onLine && !isOnOfflinePage) {
       console.log('Redirecting to offline page');
-      // Use the correct offline page path
-      const offlineUrl = currentPath.startsWith('/website/') ? '/website/offline.html' : '/offline.html';
+
+      // Determine the correct offline page path based on current environment
+      let offlineUrl;
+      const currentOrigin = window.location.origin;
+
+      if (currentOrigin.includes('localhost') || currentOrigin.includes('127.0.0.1')) {
+        offlineUrl = currentPath.includes('/website/') ? '/website/offline.html' : '/offline.html';
+      } else if (currentPath.startsWith('/website/')) {
+        offlineUrl = '/website/offline.html';
+      } else {
+        offlineUrl = '/offline.html';
+      }
+
       window.location.href = offlineUrl;
     }
   }, 2000);
@@ -809,8 +850,18 @@ function checkConnectivity() {
   const controller = new AbortController();
   const timeoutId = setTimeout(() => controller.abort(), 3000); // 3 second timeout
 
-  // Use the correct path based on whether we're on GitHub Pages or local
-  const testUrl = window.location.pathname.startsWith('/website/') ? '/website/favicon.ico' : '/favicon.ico';
+  // Use the correct path based on current environment
+  const currentPath = window.location.pathname;
+  const currentOrigin = window.location.origin;
+  let testUrl;
+
+  if (currentOrigin.includes('localhost') || currentOrigin.includes('127.0.0.1')) {
+    testUrl = currentPath.includes('/website/') ? '/website/favicon.ico' : '/favicon.ico';
+  } else if (currentPath.startsWith('/website/')) {
+    testUrl = '/website/favicon.ico';
+  } else {
+    testUrl = '/favicon.ico';
+  }
 
   fetch(testUrl + '?' + Date.now(), {
     method: 'HEAD',
@@ -872,12 +923,20 @@ function initialize404Handling() {
   // If it's not a valid route and not an asset file, redirect to 404
   if (!validRoutes.includes(currentPath) && !isAssetFile && !isGitHubPagesAsset && currentPath !== '/404.html' && currentPath !== '/website/404.html') {
     console.log('Invalid route detected:', currentPath);
-    // Redirect to the appropriate 404 page based on current path
-    if (currentPath.startsWith('/website/')) {
-      window.location.replace('/website/404.html');
+
+    // Determine the correct 404 page path based on current environment
+    let notFoundUrl;
+    const currentOrigin = window.location.origin;
+
+    if (currentOrigin.includes('localhost') || currentOrigin.includes('127.0.0.1')) {
+      notFoundUrl = currentPath.includes('/website/') ? '/website/404.html' : '/404.html';
+    } else if (currentPath.startsWith('/website/')) {
+      notFoundUrl = '/website/404.html';
     } else {
-      window.location.replace('/404.html');
+      notFoundUrl = '/404.html';
     }
+
+    window.location.replace(notFoundUrl);
   }
 }
 
@@ -1013,11 +1072,11 @@ function initializeAnalyticsIntegration() {
     threshold: 0.5,
     rootMargin: '0px 0px -10% 0px'
   });
-  
+
   sections.forEach(section => {
     sectionObserver.observe(section);
   });
-  
+
   // Debounced click tracking
   const debouncedClickTracker = debounce((eventData) => {
     if (window.AnalyticsTracker) {
@@ -1030,8 +1089,8 @@ function initializeAnalyticsIntegration() {
     // Certificate interactions
     const certificateCard = e.target.closest('.certificate-item, .cert-card, [data-certificate]');
     if (certificateCard) {
-      const certificateName = certificateCard.dataset.certificate || 
-                             certificateCard.querySelector('h3, .cert-title')?.textContent?.trim() || 
+      const certificateName = certificateCard.dataset.certificate ||
+                             certificateCard.querySelector('h3, .cert-title')?.textContent?.trim() ||
                              'Certificate';
       debouncedClickTracker({
         type: 'certificate_view',
@@ -1043,8 +1102,8 @@ function initializeAnalyticsIntegration() {
     // Project interactions
     const projectCard = e.target.closest('.portfolio-item, .project-card, [data-project]');
     if (projectCard) {
-      const projectName = projectCard.dataset.project || 
-                         projectCard.querySelector('h3, .project-title')?.textContent?.trim() || 
+      const projectName = projectCard.dataset.project ||
+                         projectCard.querySelector('h3, .project-title')?.textContent?.trim() ||
                          'Project';
       debouncedClickTracker({
         type: 'project_view',
