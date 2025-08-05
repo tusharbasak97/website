@@ -1036,6 +1036,18 @@ h2.my-profession {
   margin-bottom: 15px;
 }
 
+/* Mobile responsive hire-me button spacing */
+@media screen and (max-width: 64rem) {
+  .hire-me {
+    margin-bottom: 40px;
+  }
+}
+
+@media screen and (max-width: 48rem) {
+  .hire-me {
+    margin-bottom: 60px;
+  }
+}
 
 .home .home-img {
   flex: 0 0 40%;
@@ -1919,7 +1931,7 @@ body.offline::before {
   transform: translateY(-3px) scale(1.05);
   box-shadow: 0 12px 30px rgba(0, 0, 0, 0.25);
   letter-spacing: 1px;
-}@media screen and (max-width: 64rem) {.section .container {padding-top: 70px;padding-bottom: 50%;}.aside {left: -270px;}.aside.open {left: 0;}.aside .nav-toggler {display: flex;left: 30px;}.aside .nav-toggler.open {left: 300px;}.section {left: 0;}.section.open {left: 270px;}.home .home-img {display: none;}.home .home-info {flex: 0 0 100%;max-width: 100%;padding-right: 0;text-align: center;}.about .about-content .personal-info .info-item p span {display: block;margin-left: 0;}}@media screen and (max-width: 48rem) {
+}@media screen and (max-width: 64rem) {.section .container {padding-top: 70px;padding-bottom: 120px;}.aside {left: -270px;}.aside.open {left: 0;}.aside .nav-toggler {display: flex;left: 30px;}.aside .nav-toggler.open {left: 300px;}.section {left: 0;}.section.open {left: 270px;}.home .home-img {display: none;}.home .home-info {flex: 0 0 100%;max-width: 100%;padding-right: 0;text-align: center;}.about .about-content .personal-info .info-item p span {display: block;margin-left: 0;}}@media screen and (max-width: 48rem) {
   body {cursor: auto;}
   .cursor-1, .cursor-2 {display: none;}
 
