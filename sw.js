@@ -1,5 +1,5 @@
 // Service Worker for Tushar Basak Portfolio - Enhanced Caching Strategy
-const CACHE_NAME = 'tushar-basak-portfolio-v1.0.0';
+const CACHE_NAME = 'tushar-basak-portfolio-v1.0.9';
 const RUNTIME_CACHE = 'runtime-cache-v1.0.0';
 const IMAGE_CACHE = 'image-cache-v1.0.0';
 const FONT_CACHE = 'font-cache-v1.0.0';
@@ -61,6 +61,7 @@ const STATIC_CACHE_URLS = [
   // Configuration files
   basePath + '/assets/site.webmanifest',
   basePath + '/favicon.ico',
+  '/favicon.ico', // Root favicon for different path scenarios
   basePath + '/robots.txt',
   basePath + '/sitemap.xml'
 ];
@@ -267,6 +268,9 @@ self.addEventListener('fetch', (event) => {
   if (requestUrl.origin !== self.location.origin) {
     // External resources (fonts, CDN, analytics)
     event.respondWith(handleExternalRequest(event.request));
+  } else if (pathname.endsWith('/favicon.ico') || pathname === '/favicon.ico') {
+    // Favicon - cache first with aggressive caching
+    event.respondWith(handleFaviconRequest(event.request));
   } else if (isImageRequest(pathname)) {
     // Images - stale while revalidate
     event.respondWith(CacheStrategies.staleWhileRevalidate(event.request, IMAGE_CACHE));
@@ -334,6 +338,49 @@ const handleNavigationRequest = async (request) => {
     // Valid route but offline
     swLog('Service Worker: Valid route but offline, serving offline page');
     return caches.match(OFFLINE_URL);
+  }
+};
+
+// Handle favicon requests with aggressive caching
+const handleFaviconRequest = async (request) => {
+  try {
+    // Try cache first for favicon
+    const cache = await caches.open(CACHE_NAME);
+    const cachedResponse = await cache.match(request);
+
+    if (cachedResponse) {
+      swLog('Service Worker: Serving favicon from cache');
+      return cachedResponse;
+    }
+
+    // Try network if not in cache
+    const networkResponse = await fetch(request);
+    if (networkResponse.ok) {
+      // Cache the favicon with long expiration
+      cache.put(request, networkResponse.clone());
+      swLog('Service Worker: Cached favicon from network');
+      return networkResponse;
+    }
+
+    throw new Error('Favicon network request failed');
+  } catch (error) {
+    swLog('Service Worker: Favicon request failed:', error);
+
+    // Try to serve a fallback favicon from assets
+    const fallbackFavicon = basePath + '/assets/images/favicon-32x32.png';
+    const cache = await caches.open(CACHE_NAME);
+    const fallbackResponse = await cache.match(fallbackFavicon);
+
+    if (fallbackResponse) {
+      swLog('Service Worker: Serving fallback favicon');
+      return fallbackResponse;
+    }
+
+    // Return empty response if all fails
+    return new Response('', {
+      status: 204,
+      statusText: 'No Content'
+    });
   }
 };
 

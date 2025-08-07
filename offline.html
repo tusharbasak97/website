@@ -261,18 +261,15 @@
         </div>
         <h1 class="offline-title">You're Offline</h1>
         <p class="offline-message">
-            It looks like you're not connected to the internet.
-            Some content may not be available, but you can still browse cached pages.
+            You've been redirected to the cached version of the site.
+            The full portfolio is available offline with all content preserved.
         </p>
-        <div class="cached-content">
-            <h3>Available Offline:</h3>
-            <ul style="list-style: none; padding: 0; margin-top: 1rem;">
-                <li><a href="#" onclick="goToSection('home')" class="offline-link">✓ Portfolio Overview</a></li>
-                <li><a href="#" onclick="goToSection('about')" class="offline-link">✓ About Information</a></li>
-                <li><a href="#" onclick="goToSection('certificates')" class="offline-link">✓ Certificates</a></li>
-                <li><a href="#" onclick="goToSection('portfolio')" class="offline-link">✓ Project Gallery</a></li>
-            </ul>
-        </div>
+        <p class="redirect-message" style="margin-top: 1.5rem; font-size: 1rem; color: var(--text-black-700); font-weight: 500;">
+            Redirecting to portfolio in <span id="countdown" style="color: var(--skin-color); font-weight: 600;">5</span> seconds...
+        </p>
+        <button onclick="redirectToMainSite()" class="retry-btn" style="margin-top: 1rem;">
+            <i class="fas fa-forward"></i> Skip Wait
+        </button>
 
         <div id="connectionStatus" class="connection-status">
             <span id="statusText">Checking connection...</span>
@@ -311,37 +308,18 @@
             statusElement.textContent = message;
         }
 
-        // Enhanced connectivity check with actual network request
+        // Simple connectivity check using navigator.onLine
         function checkConnectivity() {
             if (isRedirecting) return;
 
-            updateConnectionStatus('checking', 'Checking connection...');
-
-            // Try to fetch a small resource to verify actual connectivity
-            const controller = new AbortController();
-            const timeoutId = setTimeout(() => controller.abort(), 5000);
-
-            // Use dynamic URL based on current environment
-            const testUrl = redirectUrl + 'favicon.ico?' + Date.now();
-
-            fetch(testUrl, {
-                method: 'HEAD',
-                cache: 'no-cache',
-                signal: controller.signal,
-                mode: 'no-cors'
-            })
-            .then(() => {
-                clearTimeout(timeoutId);
+            // Use browser's built-in connectivity detection
+            if (navigator.onLine) {
+                console.log('Browser reports online status');
                 handleOnlineDetected();
-            })
-            .catch((error) => {
-                clearTimeout(timeoutId);
-                if (error.name !== 'AbortError') {
-                    console.log('Still offline:', error.message);
-                }
-                // Don't show status if still offline, keep it hidden
+            } else {
+                console.log('Browser reports offline status');
                 statusContainer.style.display = 'none';
-            });
+            }
         }
 
         // Handle when connection is restored
@@ -368,24 +346,19 @@
             }, 2000);
         }
 
-        // Function to handle offline navigation to sections
-        function goToSection(section) {
-            // Save the section preference
-            localStorage.setItem('spaCurrentSection', section);
+        // Function to redirect to main site
+        function redirectToMainSite() {
+            // Preserve user's last visited section when redirecting
+            const savedSection = localStorage.getItem('spaCurrentSection');
+            let finalRedirectUrl = redirectUrl;
 
-            // Try to navigate to the main site with the section
-            const sectionUrl = redirectUrl + '?restore=' + section;
-
-            // Check if we're online first
-            if (navigator.onLine) {
-                window.location.href = sectionUrl;
-            } else {
-                // Show message that we're still offline
-                updateConnectionStatus('checking', `📌 Section "${section}" saved. Will load when connection is restored.`);
-                setTimeout(() => {
-                    statusContainer.style.display = 'none';
-                }, 3000);
+            if (savedSection && savedSection !== 'home') {
+                // Add a parameter to indicate we should load the saved section
+                finalRedirectUrl += '?restore=' + savedSection;
             }
+
+            // Try to navigate to the main site
+            window.location.href = finalRedirectUrl;
         }
 
         // Listen for browser online event
@@ -401,17 +374,17 @@
             isRedirecting = false;
         });
 
-        // Enhanced periodic connectivity check
+        // Lightweight periodic connectivity check
         function startConnectivityMonitoring() {
             // Check immediately
-            setTimeout(checkConnectivity, 1000);
+            setTimeout(checkConnectivity, 2000);
 
-            // Then check every 3 seconds
+            // Then check every 10 seconds (less frequent)
             setInterval(() => {
                 if (!isRedirecting) {
                     checkConnectivity();
                 }
-            }, 3000);
+            }, 10000);
         }
 
         // Handle page visibility change (when user returns to tab)
@@ -421,17 +394,27 @@
             }
         });
 
+        // Auto-redirect countdown
+        let countdownSeconds = 5;
+        const countdownElement = document.getElementById('countdown');
+
+        function startCountdown() {
+            const countdownInterval = setInterval(() => {
+                countdownSeconds--;
+                countdownElement.textContent = countdownSeconds;
+
+                if (countdownSeconds <= 0) {
+                    clearInterval(countdownInterval);
+                    redirectToMainSite();
+                }
+            }, 1000);
+        }
+
         // Initialize when page loads
         document.addEventListener('DOMContentLoaded', () => {
-            console.log('Offline page loaded, starting connectivity monitoring');
+            console.log('Offline page loaded, starting countdown and connectivity monitoring');
+            startCountdown();
             startConnectivityMonitoring();
-        });
-
-        // Fallback: Also check when user interacts with the page
-        document.addEventListener('click', () => {
-            if (!isRedirecting) {
-                setTimeout(checkConnectivity, 100);
-            }
         });
     </script>
 </body>

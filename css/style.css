@@ -17,7 +17,7 @@ body.dark {--bg-black-900: #151515;--bg-black-100: #222222;--bg-black-50: #39393
     --text-black-900: #ffffff;
     --text-black-700: #e9e9e9;
   }
-}body {line-height: 1.5;font-size: 16px;font-family: "Poppins" sans-serif;cursor: none;}
+}body {line-height: 1.5;font-size: 16px;font-family: "Poppins", sans-serif;cursor: none;}
 
 * {margin: 0;padding: 0;outline: none;text-decoration: none;box-sizing: border-box;}
 
@@ -994,17 +994,18 @@ body.dark .aside .secured-badge:hover {
   padding-right: 60px;
 }
 
-h1.hello,
-h2.hello {
+h1.hello{
+  font-family: "Poppins", sans-serif;
   font-size: 28px;
-  margin: 15px 0;
+  font-weight: 600;
+  margin: 20px 0;
+  color: var(--text-black-900);
+  line-height: 1.3;
 }
 
-h1.hello span,
-h1.hello .name,
-h2.hello span {
+h1.hello span{
   font-family: "Kaushan Script", cursive;
-  font-size: 30px;
+  font-size: 38px;
   font-weight: 700;
   background: linear-gradient(135deg, var(--skin-color), rgba(var(--skin-color-rgb, 255, 107, 107), 0.8));
   -webkit-background-clip: text;
@@ -1013,11 +1014,17 @@ h2.hello span {
 }
 
 h2.my-profession {
-  font-size: 25px;
-  margin: 15px 0;
+  font-family: "Poppins", sans-serif;
+  font-size: 28px;
+  font-weight: 500;
+  margin: 20px 0;
+  color: var(--text-black-900);
+  line-height: 1.4;
 }
 
 .typing {
+  font-family: "Poppins", sans-serif;
+  font-weight: 600;
   background: linear-gradient(135deg, var(--skin-color), rgba(var(--skin-color-rgb, 255, 107, 107), 0.8));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -1025,15 +1032,18 @@ h2.my-profession {
 }
 
 .home-info p {
-  margin: 15px 0;
-  font-size: 14px;
-  line-height: 25px;
+  font-family: "Poppins", sans-serif;
+  margin: 20px 0 15px 0;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.6;
   text-align: justify;
   color: var(--text-black-700);
+  max-width: 90%;
 }
 
 .hire-me {
-  margin-top: 30px;
+  margin-top: 20px;
   margin-bottom: 15px;
 }
 
@@ -2073,8 +2083,8 @@ body.offline::before {
   .home .container {padding: 20px;}
   .home .home-info {padding: 0 15px;}
   .home .home-info h1.hello,
-  .home .home-info h3.hello {font-size: 24px;}
-  .home .home-info h3.my-profession {font-size: 26px;}
+  .home .home-info h2.hello {font-size: 26px;}
+  .home .home-info h2.my-profession {font-size: 22px;}
 
   .about .contact-form-inner .col-6 {
     flex: 0 0 100%;
