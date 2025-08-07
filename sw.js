@@ -1,9 +1,9 @@
 // Service Worker for Tushar Basak Portfolio - Enhanced Caching Strategy
-const CACHE_NAME = 'tushar-basak-portfolio-v2.1.0';
-const RUNTIME_CACHE = 'runtime-cache-v2.1.0';
-const IMAGE_CACHE = 'image-cache-v2.1.0';
-const FONT_CACHE = 'font-cache-v2.1.0';
-const API_CACHE = 'api-cache-v2.1.0';
+const CACHE_NAME = 'tushar-basak-portfolio-v1.0.0';
+const RUNTIME_CACHE = 'runtime-cache-v1.0.0';
+const IMAGE_CACHE = 'image-cache-v1.0.0';
+const FONT_CACHE = 'font-cache-v1.0.0';
+const API_CACHE = 'api-cache-v1.0.0';
 
 // Performance configuration
 const SW_CONFIG = {
