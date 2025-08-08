@@ -945,7 +945,7 @@ body.dark .aside .secured-badge:hover {
 
 .aside .footer p {
   text-align: center;
-  font-size: 16px;
+  font-size: 12px;
   letter-spacing: 0.6px;
   padding: 10px;
   bottom: 0;
@@ -961,7 +961,7 @@ body.dark .aside .secured-badge:hover {
 
 .aside .footer p span {
   font-family: "Kaushan Script", cursive;
-  font-size: 19px;
+  font-size: 14px;
   background: linear-gradient(135deg, var(--skin-color), rgba(var(--skin-color-rgb, 255, 107, 107), 0.8));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
