@@ -977,7 +977,7 @@ body.dark .aside .secured-badge:hover {
   display: flex;
   align-items: center;
   min-height: 80vh;
-  padding-bottom: 70px;
+  padding-bottom: 20px;
 }
 
 .home .row {
@@ -996,7 +996,8 @@ body.dark .aside .secured-badge:hover {
 
 h3.hello {
   font-size: 28px;
-  margin: 15px 0;
+  margin: 8px 0;
+  padding-bottom: 5px;
 }
 
 h3.hello span {
@@ -1013,7 +1014,8 @@ h3.hello span {
 
 h3.my-profession {
   font-size: 30px;
-  margin: 15px 0;
+  margin: 8px 0;
+  padding-bottom: 15px;
 }
 
 .typing {
@@ -1026,10 +1028,11 @@ h3.my-profession {
 }
 
 .home-info p {
-  margin-bottom: 70px;
+  margin-bottom: 30px;
   font-size: 20px;
   color: var(--text-black-700);
   text-align: justify;
+  line-height: 25px !important;
 }
 
 .home .home-img {
@@ -2005,9 +2008,9 @@ body.offline::before {
     max-width: 100%;
   }
 
-  .home .home-info h3.hello {font-size: 24px;}
-  .home .home-info h3.my-profession {font-size: 20px;}
-  .home .home-info p {font-size: 16px; margin-bottom: 40px; text-align: center;}
+  .home .home-info h3.hello {font-size: 19px; margin: 8px 0; padding-bottom: 5px;}
+  .home .home-info h3.my-profession {font-size: 17px; margin: 8px 0; padding-bottom: 15px;}
+  .home .home-info p {font-size: 14px; margin-bottom: 20px; text-align: center; line-height: 21px !important;}
 
   .portfolio .portfolio-item-inner {
     height: 300px;
