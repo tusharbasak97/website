@@ -1,5 +1,6 @@
-# Robots.txt for Tushar Basak Portfolio
+# Robots.txt for Tushar Basak - Cybersecurity Analyst Portfolio
 # https://tusharbasak97.github.io/website/
+# Last updated: January 2025
 
 User-agent: *
 Allow: /
@@ -10,10 +11,10 @@ Sitemap: https://tusharbasak97.github.io/website/sitemap.xml
 # Crawl-delay for respectful crawling
 Crawl-delay: 1
 
-# Allow all major search engines
+# Allow all major search engines with optimized crawl delays
 User-agent: Googlebot
 Allow: /
-Crawl-delay: 1
+Crawl-delay: 0.5
 
 User-agent: Bingbot
 Allow: /
@@ -35,7 +36,16 @@ User-agent: YandexBot
 Allow: /
 Crawl-delay: 2
 
-# Block malicious bots
+User-agent: facebookexternalhit
+Allow: /
+
+User-agent: Twitterbot
+Allow: /
+
+User-agent: LinkedInBot
+Allow: /
+
+# Block SEO and scraping bots
 User-agent: AhrefsBot
 Disallow: /
 
@@ -48,18 +58,32 @@ Disallow: /
 User-agent: SemrushBot
 Disallow: /
 
-# Disallow certain file types that shouldn't be indexed
-Disallow: /*.json$
+User-agent: MajesticSEO
+Disallow: /
+
+User-agent: BLEXBot
+Disallow: /
+
+User-agent: DataForSeoBot
+Disallow: /
+
+# Disallow technical files and directories
 Disallow: /js/
 Disallow: /css/
 Disallow: /.well-known/
 Disallow: /sw.js
 Disallow: /offline.html
 Disallow: /404.html
+Disallow: /*.json$
+Disallow: /*.min.js$
+Disallow: /*.min.css$
 
-# Allow important assets
+# Allow important assets and files
 Allow: /assets/
 Allow: /favicon.ico
 Allow: /sitemap.xml
 Allow: /robots.txt
 Allow: /.well-known/security.txt
+
+# Host directive for better SEO
+Host: https://tusharbasak97.github.io

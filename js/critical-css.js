@@ -306,7 +306,7 @@
             const style = document.createElement('style');
             style.id = 'critical-css';
             style.textContent = CRITICAL_CSS;
-            
+
             // Insert at the beginning of head for highest priority
             const firstLink = document.head.querySelector('link[rel="stylesheet"]');
             if (firstLink) {
@@ -333,12 +333,12 @@
                     this.media = 'all';
                     console.log('[CriticalCSS] Non-critical CSS loaded:', href);
                 };
-                
+
                 // Fallback for browsers that don't support onload on link elements
                 link.onerror = function() {
                     this.media = 'all';
                 };
-                
+
                 document.head.appendChild(link);
             });
         },
@@ -358,9 +358,9 @@
                     this.onload = null;
                     this.rel = 'stylesheet';
                 };
-                
+
                 document.head.appendChild(link);
-                
+
                 // Fallback
                 const noscript = document.createElement('noscript');
                 const fallbackLink = document.createElement('link');
@@ -375,7 +375,7 @@
         optimizeResourceLoading: () => {
             // Find all stylesheets and make them non-render-blocking
             const stylesheets = document.querySelectorAll('link[rel="stylesheet"]:not(#critical-css)');
-            
+
             stylesheets.forEach(link => {
                 if (!link.media || link.media === 'all') {
                     link.media = 'print';
@@ -398,13 +398,8 @@
                             firstPaint: performance.getEntriesByType('paint').find(entry => entry.name === 'first-paint')?.startTime,
                             firstContentfulPaint: performance.getEntriesByType('paint').find(entry => entry.name === 'first-contentful-paint')?.startTime
                         };
-                        
+
                         console.log('[CriticalCSS] Performance metrics:', metrics);
-                        
-                        // Send to analytics if available
-                        if (window.AnalyticsTracker) {
-                            window.AnalyticsTracker.ga4.trackCustomEvent('performance_metrics', metrics);
-                        }
                     }, 0);
                 });
             }
@@ -414,22 +409,22 @@
     // Initialize critical CSS system
     const initCriticalCSS = () => {
         console.log('[CriticalCSS] Initializing critical CSS system');
-        
+
         // Inject critical CSS immediately
         utils.injectCriticalCSS();
-        
+
         // Preload fonts
         utils.preloadFonts();
-        
+
         // Load non-critical CSS asynchronously
         utils.loadNonCriticalCSS();
-        
+
         // Optimize resource loading
         utils.optimizeResourceLoading();
-        
+
         // Monitor performance
         utils.measurePerformance();
-        
+
         console.log('[CriticalCSS] Critical CSS system initialized');
     };
 

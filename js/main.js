@@ -978,10 +978,7 @@ function initializePerformanceMonitoring() {
 
         console.log('Page Load Performance:', metrics);
 
-        // Send to analytics if available
-        if (window.AnalyticsTracker) {
-          window.AnalyticsTracker.ga4.trackCustomEvent('performance_metrics', metrics);
-        }
+        // Performance metrics logged to console only
       }, 0);
     });
   }
@@ -1026,14 +1023,7 @@ function initializeLazyLoadingIntegration() {
     const img = event.detail.element;
     console.log('Image lazy loaded:', img.src, 'Format:', event.detail.format);
 
-    // Track lazy loading in analytics
-    if (window.AnalyticsTracker) {
-      window.AnalyticsTracker.ga4.trackCustomEvent('image_lazy_loaded', {
-        image_url: img.src,
-        format: event.detail.format,
-        loading_time: Date.now() - window.pageLoadTime
-      });
-    }
+    // Image lazy loading completed (no tracking needed for individual portfolio)
   });
 
   console.log('Lazy loading integration initialized');
@@ -1056,16 +1046,12 @@ function initializeAnalyticsIntegration() {
 
   // Track section visibility with debouncing (no console logging)
   const sections = document.querySelectorAll('section[id]');
-  const debouncedSectionTracker = debounce((sectionName) => {
-    if (window.AnalyticsTracker) {
-      window.AnalyticsTracker.ga4.trackSectionView(sectionName);
-    }
-  }, 1000);
+  // Section tracking removed - not needed for individual portfolio
 
   const sectionObserver = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
       if (entry.isIntersecting && entry.intersectionRatio > 0.5) {
-        debouncedSectionTracker(entry.target.id);
+        // Section tracking removed - not needed for individual portfolio
       }
     });
   }, {
@@ -1078,11 +1064,7 @@ function initializeAnalyticsIntegration() {
   });
 
   // Debounced click tracking
-  const debouncedClickTracker = debounce((eventData) => {
-    if (window.AnalyticsTracker) {
-      window.AnalyticsTracker.ga4.trackCustomEvent('interaction', eventData);
-    }
-  }, 500);
+  // Click tracking removed - not needed for individual portfolio
 
   // Single optimized click handler for all interactions
   document.addEventListener('click', (e) => {
@@ -1092,10 +1074,7 @@ function initializeAnalyticsIntegration() {
       const certificateName = certificateCard.dataset.certificate ||
                              certificateCard.querySelector('h3, .cert-title')?.textContent?.trim() ||
                              'Certificate';
-      debouncedClickTracker({
-        type: 'certificate_view',
-        name: certificateName
-      });
+      // Certificate click tracking removed - not needed for individual portfolio
       return;
     }
 
@@ -1105,10 +1084,7 @@ function initializeAnalyticsIntegration() {
       const projectName = projectCard.dataset.project ||
                          projectCard.querySelector('h3, .project-title')?.textContent?.trim() ||
                          'Project';
-      debouncedClickTracker({
-        type: 'project_view',
-        name: projectName
-      });
+      // Project click tracking removed - not needed for individual portfolio
       return;
     }
 
@@ -1118,10 +1094,7 @@ function initializeAnalyticsIntegration() {
       try {
         const url = new URL(link.href);
         if (url.hostname !== window.location.hostname) {
-          debouncedClickTracker({
-            type: 'external_link',
-            domain: url.hostname
-          });
+          // External link tracking removed - not needed for individual portfolio
         }
       } catch (error) {
         // Silently handle URL parsing errors for better performance

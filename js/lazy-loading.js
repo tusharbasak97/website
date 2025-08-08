@@ -13,7 +13,7 @@
         retryAttempts: 3,
         placeholderColor: '#f0f0f0',
         fadeInDuration: 300,
-        enableConsoleLogging: false // Disabled for production performance
+        enableConsoleLogging: false // Production - logging disabled
     };
 
     // WebP support detection

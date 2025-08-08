@@ -1,14 +1,13 @@
 // Service Worker for Tushar Basak Portfolio - Enhanced Caching Strategy
-const CACHE_NAME = 'tushar-basak-portfolio-v1.0.0';
-const RUNTIME_CACHE = 'runtime-cache-v1.0.0';
-const IMAGE_CACHE = 'image-cache-v1.0.0';
-const FONT_CACHE = 'font-cache-v1.0.0';
-const API_CACHE = 'api-cache-v1.0.0';
+const CACHE_NAME = 'tushar-basak-portfolio-v2.0.0';
+const RUNTIME_CACHE = 'runtime-cache-v2.0.0';
+const IMAGE_CACHE = 'image-cache-v2.0.0';
+const FONT_CACHE = 'font-cache-v2.0.0';
 
 // Performance configuration
 const SW_CONFIG = {
-  ENABLE_CONSOLE_LOGGING: false, // Disabled for production performance
-  ENABLE_PERFORMANCE_LOGGING: false
+  ENABLE_CONSOLE_LOGGING: false, // Production - logging disabled
+  ENABLE_PERFORMANCE_LOGGING: false // Production - performance logging disabled
 };
 
 // Determine if we're on GitHub Pages or local development
@@ -36,10 +35,11 @@ const STATIC_CACHE_URLS = [
   // Critical JavaScript Files
   basePath + '/js/critical-css.js',
   basePath + '/js/lazy-loading.js',
+  basePath + '/js/spa-navigation.js',
+  basePath + '/js/contact-form-limiter.js',
   basePath + '/js/main.js',
   basePath + '/js/preloader.min.js',
   basePath + '/js/style-switcher.js',
-  basePath + '/js/analytics.js',
 
   // Critical CSS Files
   basePath + '/css/style.css',
@@ -219,7 +219,7 @@ self.addEventListener('install', (event) => {
 self.addEventListener('activate', (event) => {
   swLog('Service Worker: Activating with enhanced cache management...');
 
-  const currentCaches = [CACHE_NAME, RUNTIME_CACHE, IMAGE_CACHE, FONT_CACHE, API_CACHE];
+  const currentCaches = [CACHE_NAME, RUNTIME_CACHE, IMAGE_CACHE, FONT_CACHE];
 
   event.waitUntil(
     caches.keys()
@@ -286,17 +286,12 @@ self.addEventListener('fetch', (event) => {
   }
 });
 
-// Handle external requests (fonts, CDN, analytics)
+// Handle external requests (fonts, CDN)
 const handleExternalRequest = async (request) => {
   const requestUrl = new URL(request.url);
 
-  // Determine cache based on resource type
+  // Use font cache for all external resources
   let cacheName = FONT_CACHE;
-  if (requestUrl.hostname.includes('google-analytics') ||
-      requestUrl.hostname.includes('googletagmanager') ||
-      requestUrl.hostname.includes('linkedin')) {
-    cacheName = API_CACHE;
-  }
 
   try {
     return await CacheStrategies.staleWhileRevalidate(request, cacheName);
@@ -505,39 +500,14 @@ self.addEventListener('message', (event) => {
   }
 });
 
-// Enhanced background sync for analytics and form submissions
+// Enhanced background sync for form submissions
 self.addEventListener('sync', (event) => {
   swLog('Service Worker: Background sync triggered', event.tag);
 
-  if (event.tag === 'analytics-sync') {
-    event.waitUntil(syncAnalyticsData());
-  } else if (event.tag === 'form-sync') {
+  if (event.tag === 'form-sync') {
     event.waitUntil(syncFormSubmissions());
   }
 });
-
-// Sync analytics data when back online
-const syncAnalyticsData = async () => {
-  try {
-    const cache = await caches.open(API_CACHE);
-    const requests = await cache.keys();
-
-    // Process any queued analytics requests
-    for (const request of requests) {
-      if (request.url.includes('google-analytics') || request.url.includes('linkedin')) {
-        try {
-          await fetch(request);
-          await cache.delete(request);
-          swLog('Service Worker: Synced analytics data', request.url);
-        } catch (error) {
-          swLog('Service Worker: Failed to sync analytics', error);
-        }
-      }
-    }
-  } catch (error) {
-    swLog('Service Worker: Analytics sync failed', error);
-  }
-};
 
 // Sync form submissions when back online
 const syncFormSubmissions = async () => {
@@ -632,8 +602,7 @@ self.addEventListener('message', (event) => {
           static: CACHE_NAME,
           runtime: RUNTIME_CACHE,
           images: IMAGE_CACHE,
-          fonts: FONT_CACHE,
-          api: API_CACHE
+          fonts: FONT_CACHE
         }
       };
 
@@ -700,6 +669,5 @@ swLog('Service Worker: Cache strategies initialized:', {
   static: CACHE_NAME,
   runtime: RUNTIME_CACHE,
   images: IMAGE_CACHE,
-  fonts: FONT_CACHE,
-  api: API_CACHE
+  fonts: FONT_CACHE
 });

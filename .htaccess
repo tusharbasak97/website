@@ -1,67 +1,103 @@
-# Security Headers
+# Security Headers for Tushar Basak Portfolio
 <IfModule mod_headers.c>
-    # Content Security Policy
-    Header always set Content-Security-Policy "default-src 'self'; script-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com https://unpkg.com https://fonts.googleapis.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdnjs.cloudflare.com; font-src 'self' https://fonts.gstatic.com https://cdnjs.cloudflare.com; img-src 'self' data: https:; connect-src 'self'; frame-ancestors 'none'; base-uri 'self'; form-action 'self';"
-    
+    # Content Security Policy - Updated for individual portfolio
+    Header always set Content-Security-Policy "default-src 'self'; script-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com https://unpkg.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdnjs.cloudflare.com; font-src 'self' https://fonts.gstatic.com https://cdnjs.cloudflare.com; img-src 'self' data: https:; connect-src 'self' https://formspree.io; frame-ancestors 'none'; base-uri 'self'; form-action 'self' https://formspree.io; object-src 'none'; media-src 'self';"
+
     # X-Frame-Options
     Header always set X-Frame-Options "DENY"
-    
+
     # X-Content-Type-Options
     Header always set X-Content-Type-Options "nosniff"
-    
+
     # X-XSS-Protection
     Header always set X-XSS-Protection "1; mode=block"
-    
+
     # Referrer Policy
     Header always set Referrer-Policy "strict-origin-when-cross-origin"
-    
-    # Permissions Policy
-    Header always set Permissions-Policy "geolocation=(), microphone=(), camera=(), payment=(), usb=(), magnetometer=(), gyroscope=(), speaker=(), vibrate=(), fullscreen=(self), sync-xhr=()"
-    
+
+    # Permissions Policy - Updated for portfolio needs
+    Header always set Permissions-Policy "geolocation=(), microphone=(), camera=(), payment=(), usb=(), magnetometer=(), gyroscope=(), speaker=(), vibrate=(), fullscreen=(self), sync-xhr=(), accelerometer=(), ambient-light-sensor=(), autoplay=(), battery=(), display-capture=(), document-domain=(), encrypted-media=(), execution-while-not-rendered=(), execution-while-out-of-viewport=(), gamepad=(), midi=(), navigation-override=(), picture-in-picture=(), publickey-credentials-get=(), screen-wake-lock=(), web-share=(), xr-spatial-tracking=()"
+
     # Strict Transport Security (HSTS)
     Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains; preload"
-    
+
+    # Cross-Origin Embedder Policy
+    Header always set Cross-Origin-Embedder-Policy "require-corp"
+
+    # Cross-Origin Opener Policy
+    Header always set Cross-Origin-Opener-Policy "same-origin"
+
+    # Cross-Origin Resource Policy
+    Header always set Cross-Origin-Resource-Policy "same-origin"
+
     # Remove Server Information
     Header unset Server
     Header unset X-Powered-By
+    Header unset X-AspNet-Version
+    Header unset X-AspNetMvc-Version
 </IfModule>
 
-# Cache Control
+# Cache Control - Optimized for Performance
 <IfModule mod_expires.c>
     ExpiresActive On
-    
-    # Images
+
+    # Images - Long cache for static assets
     ExpiresByType image/jpg "access plus 1 year"
     ExpiresByType image/jpeg "access plus 1 year"
     ExpiresByType image/gif "access plus 1 year"
     ExpiresByType image/png "access plus 1 year"
     ExpiresByType image/webp "access plus 1 year"
     ExpiresByType image/svg+xml "access plus 1 year"
-    
-    # CSS and JavaScript
+    ExpiresByType image/x-icon "access plus 1 year"
+    ExpiresByType image/vnd.microsoft.icon "access plus 1 year"
+
+    # CSS and JavaScript - Medium cache
     ExpiresByType text/css "access plus 1 month"
     ExpiresByType application/javascript "access plus 1 month"
     ExpiresByType text/javascript "access plus 1 month"
-    
-    # Fonts
+    ExpiresByType application/x-javascript "access plus 1 month"
+
+    # Fonts - Long cache
     ExpiresByType font/woff "access plus 1 year"
     ExpiresByType font/woff2 "access plus 1 year"
+    ExpiresByType font/ttf "access plus 1 year"
+    ExpiresByType font/otf "access plus 1 year"
     ExpiresByType application/font-woff "access plus 1 year"
     ExpiresByType application/font-woff2 "access plus 1 year"
-    
-    # HTML
+    ExpiresByType application/x-font-woff "access plus 1 year"
+    ExpiresByType application/x-font-ttf "access plus 1 year"
+
+    # Documents - Medium cache
+    ExpiresByType application/pdf "access plus 1 month"
+    ExpiresByType application/msword "access plus 1 month"
+    ExpiresByType application/vnd.openxmlformats-officedocument.wordprocessingml.document "access plus 1 month"
+
+    # HTML - Short cache for dynamic content
     ExpiresByType text/html "access plus 1 hour"
-    
-    # Manifest
+
+    # Manifest and Service Worker - Short cache for updates
     ExpiresByType application/manifest+json "access plus 1 week"
+    ExpiresByType application/x-web-app-manifest+json "access plus 1 week"
+
+    # XML files
+    ExpiresByType application/xml "access plus 1 week"
+    ExpiresByType text/xml "access plus 1 week"
+
+    # JSON files
+    ExpiresByType application/json "access plus 1 week"
+
+    # Text files
+    ExpiresByType text/plain "access plus 1 week"
 </IfModule>
 
-# Compression
+# Compression - Enhanced for Better Performance
 <IfModule mod_deflate.c>
+    # Enable compression for text-based files
     AddOutputFilterByType DEFLATE text/plain
     AddOutputFilterByType DEFLATE text/html
     AddOutputFilterByType DEFLATE text/xml
     AddOutputFilterByType DEFLATE text/css
+    AddOutputFilterByType DEFLATE text/javascript
     AddOutputFilterByType DEFLATE application/xml
     AddOutputFilterByType DEFLATE application/xhtml+xml
     AddOutputFilterByType DEFLATE application/rss+xml
@@ -69,21 +105,146 @@
     AddOutputFilterByType DEFLATE application/x-javascript
     AddOutputFilterByType DEFLATE application/json
     AddOutputFilterByType DEFLATE application/manifest+json
+    AddOutputFilterByType DEFLATE application/x-web-app-manifest+json
+    AddOutputFilterByType DEFLATE application/ld+json
+    AddOutputFilterByType DEFLATE image/svg+xml
+    AddOutputFilterByType DEFLATE font/ttf
+    AddOutputFilterByType DEFLATE font/otf
+    AddOutputFilterByType DEFLATE font/eot
+
+    # Don't compress images, videos, or already compressed files
+    SetEnvIfNoCase Request_URI \
+        \.(?:gif|jpe?g|png|webp|zip|gz|rar|bz2|7z|mp3|mp4|avi|mov|wmv|flv)$ no-gzip dont-vary
 </IfModule>
 
-# Prevent access to sensitive files
+# Alternative compression method
+<IfModule mod_gzip.c>
+    mod_gzip_on Yes
+    mod_gzip_dechunk Yes
+    mod_gzip_item_include file \.(html?|txt|css|js|php|pl)$
+    mod_gzip_item_include mime ^application/x-javascript.*
+    mod_gzip_item_include mime ^text/.*
+    mod_gzip_item_exclude rspheader ^Content-Encoding:.*gzip.*
+    mod_gzip_item_exclude mime ^image/.*
+    mod_gzip_item_exclude mime ^video/.*
+    mod_gzip_item_exclude mime ^audio/.*
+</IfModule>
+
+# Security - Prevent access to sensitive files
 <Files ".htaccess">
-    Order allow,deny
-    Deny from all
+    Require all denied
 </Files>
 
 <Files "*.log">
-    Order allow,deny
-    Deny from all
+    Require all denied
 </Files>
+
+<Files "*.bak">
+    Require all denied
+</Files>
+
+<Files "*.config">
+    Require all denied
+</Files>
+
+<Files "*.sql">
+    Require all denied
+</Files>
+
+<Files "*.env">
+    Require all denied
+</Files>
+
+# Prevent access to version control directories
+<DirectoryMatch "\.git">
+    Require all denied
+</DirectoryMatch>
+
+<DirectoryMatch "\.svn">
+    Require all denied
+</DirectoryMatch>
 
 # Prevent directory browsing
 Options -Indexes
 
 # Custom Error Pages
-ErrorDocument 404 /404.html
+ErrorDocument 404 /website/404.html
+ErrorDocument 403 /website/404.html
+ErrorDocument 500 /website/offline.html
+
+# URL Rewriting for SPA
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+
+    # Handle service worker
+    RewriteRule ^sw\.js$ /website/sw.js [L]
+
+    # Handle manifest
+    RewriteRule ^manifest\.json$ /website/assets/site.webmanifest [L]
+
+    # Handle robots and sitemap
+    RewriteRule ^robots\.txt$ /website/robots.txt [L]
+    RewriteRule ^sitemap\.xml$ /website/sitemap.xml [L]
+
+    # Redirect old URLs to new structure if needed
+    RewriteRule ^index\.html$ /website/ [R=301,L]
+
+    # Force HTTPS (if available)
+    RewriteCond %{HTTPS} off
+    RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+    # Remove trailing slash for files
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteRule ^(.*)/$ /$1 [R=301,L]
+</IfModule>
+
+# MIME Types - Ensure proper content types
+<IfModule mod_mime.c>
+    # Web fonts
+    AddType font/woff .woff
+    AddType font/woff2 .woff2
+    AddType application/font-woff .woff
+    AddType application/font-woff2 .woff2
+
+    # Manifest
+    AddType application/manifest+json .webmanifest
+    AddType application/x-web-app-manifest+json .webapp
+
+    # Service Worker
+    AddType application/javascript .js
+
+    # Images
+    AddType image/webp .webp
+    AddType image/svg+xml .svg
+
+    # Other
+    AddType text/cache-manifest .appcache
+    AddType text/x-component .htc
+</IfModule>
+
+# Performance - ETags
+<IfModule mod_headers.c>
+    # Remove ETags for better caching
+    Header unset ETag
+    FileETag None
+
+    # Add Vary header for proper caching
+    Header append Vary Accept-Encoding
+
+    # Cache-Control headers for different file types
+    <FilesMatch "\.(css|js|png|jpg|jpeg|gif|webp|svg|ico|woff|woff2|ttf|otf)$">
+        Header set Cache-Control "public, max-age=31536000, immutable"
+    </FilesMatch>
+
+    <FilesMatch "\.(html|htm)$">
+        Header set Cache-Control "public, max-age=3600, must-revalidate"
+    </FilesMatch>
+
+    <FilesMatch "\.(pdf|doc|docx)$">
+        Header set Cache-Control "public, max-age=2592000"
+    </FilesMatch>
+
+    <FilesMatch "\.(webmanifest|json|xml)$">
+        Header set Cache-Control "public, max-age=604800"
+    </FilesMatch>
+</IfModule>

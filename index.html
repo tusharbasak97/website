@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
 
     <!-- Primary Meta Tags -->
     <title>Tushar Basak - Cybersecurity Analyst | SOC Analyst | Penetration Tester | Ethical Hacker</title>
@@ -49,11 +49,12 @@
     <meta name="format-detection" content="telephone=yes" />
     <meta name="format-detection" content="address=yes" />
     <meta name="format-detection" content="email=yes" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-touch-fullscreen" content="yes" />
 
     <!-- Security Headers -->
     <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com https://unpkg.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdnjs.cloudflare.com; font-src 'self' https://fonts.gstatic.com https://cdnjs.cloudflare.com; img-src 'self' data: https:; connect-src 'self' https://formspree.io; form-action 'self' https://formspree.io;">
     <meta http-equiv="X-Content-Type-Options" content="nosniff">
-    <meta http-equiv="X-Frame-Options" content="DENY">
     <meta http-equiv="X-XSS-Protection" content="1; mode=block">
     <meta name="referrer" content="strict-origin-when-cross-origin">
 
@@ -71,6 +72,8 @@
 
     <!-- Preload critical resources -->
     <link rel="preload" href="assets/images/hero.webp" as="image" />
+    <link rel="preload" href="css/style.css" as="style" />
+    <link rel="preload" href="css/preloader.min.css" as="style" />
     <link rel="preload" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Kaushan+Script&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'" />
     <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Kaushan+Script&display=swap" /></noscript>
 
@@ -521,12 +524,18 @@
     <link rel="dns-prefetch" href="//linkedin.com" />
     <link rel="dns-prefetch" href="//leetcode.com" />
     <link rel="dns-prefetch" href="//medium.com" />
+    <link rel="dns-prefetch" href="//fonts.gstatic.com" />
+    <link rel="dns-prefetch" href="//formspree.io" />
 
     <!-- Google Search Console Verification -->
     <meta name="google-site-verification" content="google7316422f54e9d2d2" />
 
     <!-- Critical CSS Inlining System -->
     <script src="js/critical-css.js"></script>
+
+    <!-- Main stylesheet -->
+    <link rel="stylesheet" href="css/style.css" media="all" />
+    <link rel="stylesheet" href="css/preloader.min.css" />
 
     <!-- Non-critical CSS loaded asynchronously -->
     <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'" />
@@ -1586,11 +1595,11 @@
 
     <!-- Load non-critical JS asynchronously -->
     <script src="https://unpkg.com/typed.js@2.1.0/dist/typed.umd.js" defer></script>
-    <script src="js/lazy-loading.js"></script>
-    <script src="js/spa-navigation.js"></script>
-    <script src="js/contact-form-limiter.js"></script>
+    <script src="js/lazy-loading.js" defer></script>
+    <script src="js/spa-navigation.js" defer></script>
+    <script src="js/contact-form-limiter.js" defer></script>
     <script src="js/main.js" defer></script>
     <script src="js/preloader.min.js" defer></script>
-    <script src="js/analytics.js" defer></script>
+
   </body>
 </html>

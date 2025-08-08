@@ -6,10 +6,10 @@
 
     // Configuration
     const SPA_CONFIG = {
-        enableConsoleLogging: false, // Set to false for production
+        enableConsoleLogging: false, // Production - logging disabled
         enableURLChanges: false,     // Set to false for true SPA behavior
         transitionDuration: 300,
-        enableAnalytics: true,
+        enableAnalytics: false,
         enableLoadingOverlay: true,
         enableStatePersistence: true, // Remember last visited section
         stateStorageKey: 'spaCurrentSection'
@@ -247,10 +247,7 @@
                 // Save current state
                 utils.saveState(sectionId);
 
-                // Track analytics if enabled
-                if (SPA_CONFIG.enableAnalytics && window.AnalyticsTracker) {
-                    window.AnalyticsTracker.ga4.trackSectionView(sectionId);
-                }
+                // Analytics tracking disabled for individual portfolio
 
                 // Hide loading overlay
                 if (SPA_CONFIG.enableLoadingOverlay) {
@@ -354,48 +351,13 @@
         },
 
         setupSectionTracking: function() {
-            // Use debounced intersection observer for better performance
-            const debouncedTracker = utils.debounce((sectionName) => {
-                if (window.AnalyticsTracker) {
-                    window.AnalyticsTracker.ga4.trackSectionView(sectionName);
-                }
-            }, 1000);
+            // Section tracking disabled for individual portfolio
 
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting && entry.intersectionRatio > 0.5) {
-                        debouncedTracker(entry.target.id);
-                    }
-                });
-            }, {
-                threshold: 0.5,
-                rootMargin: '0px 0px -10% 0px'
-            });
-
-            document.querySelectorAll('section[id]').forEach(section => {
-                observer.observe(section);
-            });
+            // Intersection observer tracking removed for individual portfolio
         },
 
         setupInteractionTracking: function() {
-            // Debounced click tracking to avoid excessive events
-            const debouncedClickTracker = utils.debounce((eventData) => {
-                if (window.AnalyticsTracker) {
-                    window.AnalyticsTracker.ga4.trackCustomEvent('interaction', eventData);
-                }
-            }, 500);
-
-            document.addEventListener('click', (e) => {
-                const target = e.target.closest('[data-track]');
-                if (target) {
-                    const trackingData = {
-                        element: target.tagName.toLowerCase(),
-                        action: target.dataset.track,
-                        section: currentSection
-                    };
-                    debouncedClickTracker(trackingData);
-                }
-            });
+            // Click tracking removed for individual portfolio
         }
     };
 
@@ -425,14 +387,7 @@
                 }
             });
 
-            // Listen for lazy loading events (without excessive logging)
-            document.addEventListener('lazyloaded', (event) => {
-                if (SPA_CONFIG.enableAnalytics && window.AnalyticsTracker) {
-                    window.AnalyticsTracker.ga4.trackCustomEvent('image_loaded', {
-                        format: event.detail.format
-                    });
-                }
-            });
+            // Lazy loading event tracking removed for individual portfolio
         }
     };
 

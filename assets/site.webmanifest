@@ -1,16 +1,26 @@
 {
   "name": "Tushar Basak - Cybersecurity Analyst Portfolio",
   "short_name": "Tushar Basak",
-  "description": "Professional portfolio of Tushar Basak, Expert Cybersecurity Analyst specializing in penetration testing, ethical hacking, and SOC operations",
+  "description": "Professional portfolio of Tushar Basak, Expert Cybersecurity Analyst and SOC Analyst specializing in penetration testing, ethical hacking, threat hunting, vulnerability management, and security compliance",
   "start_url": "/website/",
   "scope": "/website/",
+  "id": "/website/",
   "display": "standalone",
+  "display_override": ["window-controls-overlay", "standalone", "minimal-ui"],
   "orientation": "portrait-primary",
-  "theme_color": "#ff6b6b",
+  "theme_color": "#ec1839",
   "background_color": "#f2f2fc",
   "lang": "en-US",
   "dir": "ltr",
-  "categories": ["business", "productivity", "security"],
+  "categories": ["business", "productivity", "security", "professional"],
+  "iarc_rating_id": "e84b072d-71b3-4d3e-86ae-31a8ce4e53b7",
+  "prefer_related_applications": false,
+  "edge_side_panel": {
+    "preferred_width": 400
+  },
+  "launch_handler": {
+    "client_mode": "navigate-existing"
+  },
   "icons": [
     {
       "src": "assets/images/android-chrome-192x192.png",
@@ -27,12 +37,20 @@
     {
       "src": "assets/images/favicon-32x32.png",
       "sizes": "32x32",
-      "type": "image/png"
+      "type": "image/png",
+      "purpose": "any"
     },
     {
       "src": "assets/images/favicon-16x16.png",
       "sizes": "16x16",
-      "type": "image/png"
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "assets/images/apple-touch-icon.png",
+      "sizes": "180x180",
+      "type": "image/png",
+      "purpose": "any"
     }
   ],
   "screenshots": [
@@ -40,7 +58,49 @@
       "src": "assets/images/hero.webp",
       "sizes": "400x480",
       "type": "image/webp",
-      "form_factor": "narrow"
+      "form_factor": "narrow",
+      "label": "Tushar Basak - Cybersecurity Professional"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "About Me",
+      "short_name": "About",
+      "description": "View professional background and skills",
+      "url": "/website/#about",
+      "icons": [
+        {
+          "src": "assets/images/favicon-32x32.png",
+          "sizes": "32x32",
+          "type": "image/png"
+        }
+      ]
+    },
+    {
+      "name": "Certificates",
+      "short_name": "Certs",
+      "description": "View cybersecurity certifications",
+      "url": "/website/#certificates",
+      "icons": [
+        {
+          "src": "assets/images/favicon-32x32.png",
+          "sizes": "32x32",
+          "type": "image/png"
+        }
+      ]
+    },
+    {
+      "name": "Projects",
+      "short_name": "Portfolio",
+      "description": "View cybersecurity projects",
+      "url": "/website/#portfolio",
+      "icons": [
+        {
+          "src": "assets/images/favicon-32x32.png",
+          "sizes": "32x32",
+          "type": "image/png"
+        }
+      ]
     }
   ]
 }
