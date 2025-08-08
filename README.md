@@ -1,5 +1,3 @@
-# Tushar Basak - Cybersecurity Portfolio Website
-
 <!-- Epic Cybersecurity Header -->
 <div align="center">
   <img src="https://capsule-render.vercel.app/api?type=waving&height=180&color=gradient&customColorList=12&text=TUSHAR%20BASAK&fontColor=fff&fontSize=35&animation=fadeIn&fontAlignY=35&desc=CyberSecurity%20Analyst%20|%20Network%20Engineer&descAlignY=55&descSize=15" alt="Header"/>
@@ -82,7 +80,7 @@ The website includes 5 pre-built color themes:
 - **Theme 4**: Blue (#0099ff)
 - **Theme 5**: Purple (#b23fff)
 
-Themes can be switched using the style switcher in the bottom-right corner.
+Themes can be switched using the style switcher in the top-right corner.
 
 ### Content Updates
 
