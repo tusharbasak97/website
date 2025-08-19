@@ -852,6 +852,47 @@ body.dark .aside .secured-badge:hover {
   box-shadow: 0 4px 12px rgba(0, 255, 136, 0.3);
 }
 
+/* Dark mode - remove all shadow effects for clean flat design */
+body.dark .shadow-dark {
+  box-shadow: none;
+}
+
+body.dark .btn:hover {
+  box-shadow: none;
+}
+
+body.dark .about .about-content .timeline {
+  box-shadow: none;
+}
+
+body.dark .about .about-content .timeline:hover {
+  box-shadow: none;
+}
+
+body.dark .about .contact-form-inner {
+  box-shadow: none;
+}
+
+body.dark .about .contact-form-inner:hover {
+  box-shadow: none;
+}
+
+body.dark .portfolio .portfolio-item-inner:hover {
+  box-shadow: none;
+}
+
+body.dark .service .service-item .service-item-inner {
+  box-shadow: none;
+}
+
+body.dark .service .service-item .service-item-inner:hover {
+  box-shadow: none;
+}
+
+body.dark .aside .footer .social-icons a:hover {
+  box-shadow: none;
+}
+
 /* Mobile responsive secured badge */
 @media screen and (max-width: 64rem) {
   .aside .secured-badge {
@@ -2130,4 +2171,50 @@ body.offline::before {
   .certificates .certificates-filter {
     margin-bottom: 25px;
   }
+}
+
+/* Smart Compose Styles */
+.smart-compose-suggestion {
+  font-family: 'Poppins', sans-serif;
+  transition: all 0.2s ease;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+.smart-compose-suggestion:hover {
+  opacity: 0.9 !important;
+}
+
+/* Dark mode adjustments for Smart Compose */
+body.dark .smart-compose-suggestion {
+  background: var(--bg-black-50);
+  border-color: var(--bg-black-100);
+  box-shadow: none;
+}
+
+/* Animation for suggestion appearance */
+@keyframes suggestionFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-5px);
+  }
+  to {
+    opacity: 0.7;
+    transform: translateY(0);
+  }
+}
+
+.smart-compose-suggestion {
+  animation: suggestionFadeIn 0.2s ease-out;
+}
+
+/* Form field focus enhancement for Smart Compose */
+.form-control:focus {
+  position: relative;
+  z-index: 999;
+}
+
+/* Ensure suggestion container is properly positioned */
+.form-group {
+  position: relative;
 }
