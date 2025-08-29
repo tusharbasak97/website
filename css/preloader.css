@@ -1,0 +1,310 @@
+/* ============================== 
+   Professional Preloader Styles
+   ============================== */
+
+.preloader {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 999999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  opacity: 1;
+  visibility: visible;
+}
+
+/* Light mode background */
+.preloader {
+  background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+}
+
+/* Dark mode background */
+body.dark .preloader {
+  background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+}
+
+/* Preloader fade out animation */
+.preloader.fade-out {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+/* Main spinner container */
+.preloader-spinner {
+  position: relative;
+  width: 80px;
+  height: 80px;
+  margin-bottom: 30px;
+}
+
+/* Outer ring */
+.spinner-ring {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border: 3px solid transparent;
+  border-radius: 50%;
+  animation: spin 1.5s linear infinite;
+}
+
+/* Primary ring with gradient */
+.spinner-ring.primary {
+  border-top: 3px solid var(--skin-color);
+  border-right: 3px solid rgba(var(--skin-color-rgb, 255, 107, 107), 0.3);
+  animation-duration: 1.5s;
+}
+
+/* Secondary ring with different timing */
+.spinner-ring.secondary {
+  border-top: 3px solid rgba(var(--skin-color-rgb, 255, 107, 107), 0.6);
+  border-left: 3px solid rgba(var(--skin-color-rgb, 255, 107, 107), 0.2);
+  animation-duration: 2s;
+  animation-direction: reverse;
+  transform: scale(0.8);
+}
+
+/* Inner dot */
+.spinner-dot {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 12px;
+  height: 12px;
+  background: linear-gradient(135deg, var(--skin-color), rgba(var(--skin-color-rgb, 255, 107, 107), 0.8));
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  animation: pulse 2s ease-in-out infinite;
+}
+
+/* Loading text */
+.preloader-text {
+  font-family: "Poppins", sans-serif;
+  font-size: 16px;
+  font-weight: 600;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin-bottom: 15px;
+  animation: textFade 2s ease-in-out infinite;
+}
+
+/* Light mode text */
+.preloader-text {
+  color: #495057;
+}
+
+/* Dark mode text */
+body.dark .preloader-text {
+  color: #e9ecef;
+}
+
+/* Progress bar container */
+.preloader-progress {
+  width: 200px;
+  height: 4px;
+  background: rgba(0, 0, 0, 0.1);
+  border-radius: 2px;
+  overflow: hidden;
+  position: relative;
+}
+
+/* Dark mode progress background */
+body.dark .preloader-progress {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+/* Progress bar fill */
+.preloader-progress-bar {
+  height: 100%;
+  background: linear-gradient(90deg, var(--skin-color), rgba(var(--skin-color-rgb, 255, 107, 107), 0.8));
+  border-radius: 2px;
+  width: 0%;
+  animation: progressFill 3s ease-out infinite;
+  position: relative;
+}
+
+/* Progress bar shine effect */
+.preloader-progress-bar::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+  animation: shine 2s ease-in-out infinite;
+}
+
+/* Cybersecurity themed elements */
+.security-elements {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  opacity: 0.1;
+}
+
+.security-icon {
+  position: absolute;
+  font-size: 24px;
+  color: var(--skin-color);
+  animation: float 6s ease-in-out infinite;
+}
+
+.security-icon:nth-child(1) {
+  top: 20%;
+  left: 15%;
+  animation-delay: 0s;
+}
+
+.security-icon:nth-child(2) {
+  top: 30%;
+  right: 20%;
+  animation-delay: 1s;
+}
+
+.security-icon:nth-child(3) {
+  bottom: 25%;
+  left: 25%;
+  animation-delay: 2s;
+}
+
+.security-icon:nth-child(4) {
+  bottom: 35%;
+  right: 15%;
+  animation-delay: 3s;
+}
+
+/* Animations */
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes pulse {
+  0%, 100% {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: translate(-50%, -50%) scale(1.2);
+    opacity: 0.7;
+  }
+}
+
+@keyframes textFade {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.6;
+  }
+}
+
+@keyframes progressFill {
+  0% {
+    width: 0%;
+  }
+  70% {
+    width: 85%;
+  }
+  100% {
+    width: 100%;
+  }
+}
+
+@keyframes shine {
+  0% {
+    left: -100%;
+  }
+  100% {
+    left: 100%;
+  }
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0px) rotate(0deg);
+    opacity: 0.1;
+  }
+  25% {
+    transform: translateY(-10px) rotate(90deg);
+    opacity: 0.2;
+  }
+  50% {
+    transform: translateY(-5px) rotate(180deg);
+    opacity: 0.15;
+  }
+  75% {
+    transform: translateY(-15px) rotate(270deg);
+    opacity: 0.25;
+  }
+}
+
+/* Mobile optimizations */
+@media screen and (max-width: 768px) {
+  .preloader-spinner {
+    width: 60px;
+    height: 60px;
+    margin-bottom: 20px;
+  }
+  
+  .preloader-text {
+    font-size: 14px;
+    letter-spacing: 1px;
+  }
+  
+  .preloader-progress {
+    width: 150px;
+    height: 3px;
+  }
+  
+  .security-elements {
+    display: none; /* Hide floating elements on mobile for better performance */
+  }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  .preloader-spinner,
+  .spinner-ring,
+  .spinner-dot,
+  .preloader-text,
+  .preloader-progress-bar,
+  .security-icon {
+    animation: none;
+  }
+  
+  .preloader-progress-bar {
+    width: 100%;
+  }
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  .preloader {
+    background: var(--bg-black-900);
+  }
+  
+  .preloader-text {
+    color: var(--text-black-900);
+    font-weight: 700;
+  }
+  
+  .spinner-ring.primary {
+    border-top-color: var(--text-black-900);
+  }
+}

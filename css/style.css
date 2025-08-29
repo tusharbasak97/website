@@ -152,27 +152,28 @@ a:not(.btn):not(.btn-certificate):not(.nav a):hover {
   border-bottom: 1px solid transparent;
 }
 
-/* Animated Underline Effect */
+/* Animated Underline Effect - Center Expand */
 .aside .nav li a::after {
   content: '';
   position: absolute;
   bottom: 0;
-  left: 0;
+  left: 50%;
   width: 0;
   height: 3px;
   background: linear-gradient(135deg, var(--skin-color), rgba(var(--skin-color-rgb, 255, 107, 107), 0.8));
-  transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
   border-radius: 2px 2px 0 0;
+  transform: translateX(-50%);
 }
 
-/* Hover Effect - Underline Animation */
+/* Hover Effect - Center Expand Animation */
 .aside .nav li a:hover::after {
-  width: 100%;
+  width: 80%;
 }
 
-/* Active State - Permanent Underline */
+/* Active State - Permanent Center Underline */
 .aside .nav li a.active::after {
-  width: 100%;
+  width: 80%;
 }
 
 /* Text Color Transitions */
@@ -912,45 +913,7 @@ body.dark .aside .footer .social-icons a:hover {
   display: block;
 }
 
-/* Remove default border on hover and active states */
-.aside .nav li a:hover,
-.aside .nav li a.active {
-  border-bottom: 1px solid transparent;
-}
-
-/* Animated Underline Effect */
-.aside .nav li a::after {
-  content: '';
-  position: absolute;
-  bottom: 0;
-  left: 50%;
-  width: 0;
-  height: 3px;
-  background: linear-gradient(135deg, var(--skin-color), rgba(var(--skin-color-rgb, 255, 107, 107), 0.8));
-  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-  border-radius: 2px 2px 0 0;
-  transform: translateX(-50%);
-}
-
-/* Hover Effect - Underline Animation */
-.aside .nav li a:hover::after {
-  width: 80%;
-}
-
-/* Active State - Permanent Underline */
-.aside .nav li a.active::after {
-  width: 80%;
-}
-
-/* Text Color Transitions */
-.aside .nav li a:hover {
-  color: var(--skin-color);
-  letter-spacing: 0.2px;
-}
-
-/* Duplicate styles removed - using the cleaner version above */
-
-/* Clean navigation link styling - removed conflicting rules */
+/* Clean navigation link styling - removed duplicate conflicting rules */
 
 .aside .footer {
   position: absolute;
@@ -1037,8 +1000,7 @@ body.dark .aside .footer .social-icons a:hover {
 
 h3.hello {
   font-size: 28px;
-  margin: 8px 0;
-  padding-bottom: 5px;
+  margin: 15px 0;
 }
 
 h3.hello span {
@@ -1055,8 +1017,7 @@ h3.hello span {
 
 h3.my-profession {
   font-size: 30px;
-  margin: 8px 0;
-  padding-bottom: 15px;
+  margin: 15px 0;
 }
 
 .typing {
@@ -1069,11 +1030,10 @@ h3.my-profession {
 }
 
 .home-info p {
-  margin-bottom: 30px;
+  margin-bottom: 70px;
   font-size: 20px;
   color: var(--text-black-700);
   text-align: justify;
-  line-height: 25px !important;
 }
 
 .home .home-img {

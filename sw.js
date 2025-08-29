@@ -1,8 +1,8 @@
 // Service Worker for Tushar Basak Portfolio - Enhanced Caching Strategy
-const CACHE_NAME = 'tushar-basak-portfolio-v2.0.0';
-const RUNTIME_CACHE = 'runtime-cache-v2.0.0';
-const IMAGE_CACHE = 'image-cache-v2.0.0';
-const FONT_CACHE = 'font-cache-v2.0.0';
+const CACHE_NAME = 'tushar-basak-portfolio-v1.0.0';
+const RUNTIME_CACHE = 'runtime-cache-v1.0.0';
+const IMAGE_CACHE = 'image-cache-v1.0.0';
+const FONT_CACHE = 'font-cache-v1.0.0';
 
 // Performance configuration
 const SW_CONFIG = {
@@ -21,7 +21,7 @@ const NOT_FOUND_URL = basePath + '/404.html';
 // External resources to cache (CDN files)
 const EXTERNAL_CACHE_URLS = [
   'https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Kaushan+Script&display=swap',
-  'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css',
+  'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css',
   'https://unpkg.com/typed.js@2.1.0/dist/typed.umd.js'
 ];
 
@@ -38,12 +38,12 @@ const STATIC_CACHE_URLS = [
   basePath + '/js/spa-navigation.js',
   basePath + '/js/contact-form-limiter.js',
   basePath + '/js/main.js',
-  basePath + '/js/preloader.min.js',
+  basePath + '/js/preloader.js',
   basePath + '/js/style-switcher.js',
 
   // Critical CSS Files
   basePath + '/css/style.css',
-  basePath + '/css/preloader.min.css',
+  basePath + '/css/preloader.css',
   basePath + '/css/style-switcher.css',
   basePath + '/css/skins/color-1.css',
   basePath + '/css/skins/color-2.css',
