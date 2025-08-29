@@ -1031,9 +1031,10 @@ h3.my-profession {
 
 .home-info p {
   margin-bottom: 70px;
-  font-size: 20px;
+  font-size: 16px !important;
   color: var(--text-black-700);
   text-align: justify;
+  line-height: 25px !important;
 }
 
 .home .home-img {
@@ -1087,6 +1088,7 @@ h3.my-profession {
   background-clip: text;
   font-family: "Kaushan Script", cursive;
   font-weight: 600;
+  font-size: 28px;
 }.about .about-content .about-text p {font-size: 16px;line-height: 25px;text-align: justify;color: var(--text-black-700);}.about .about-content .personal-info {flex: 0 0 60%;max-width: 60%;margin-top: 40px;}.about .about-content .personal-info .info-item {flex: 0 0 50%;max-width: 50%;}.about .about-content .personal-info .info-item p {font-weight: 600;padding: 10px 0;font-size: 16px;color: var(--text-black-900);border-bottom: 1px solid var(--bg-black-50);}.about .about-content .personal-info .info-item p i {
   background: linear-gradient(135deg, var(--skin-color), rgba(var(--skin-color-rgb, 255, 107, 107), 0.8));
   -webkit-background-clip: text;
