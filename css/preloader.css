@@ -78,7 +78,11 @@ body.dark .preloader {
   left: 50%;
   width: 12px;
   height: 12px;
-  background: linear-gradient(135deg, var(--skin-color), rgba(var(--skin-color-rgb, 255, 107, 107), 0.8));
+  background: linear-gradient(
+    135deg,
+    var(--skin-color),
+    rgba(var(--skin-color-rgb, 255, 107, 107), 0.8)
+  );
   border-radius: 50%;
   transform: translate(-50%, -50%);
   animation: pulse 2s ease-in-out infinite;
@@ -123,7 +127,11 @@ body.dark .preloader-progress {
 /* Progress bar fill */
 .preloader-progress-bar {
   height: 100%;
-  background: linear-gradient(90deg, var(--skin-color), rgba(var(--skin-color-rgb, 255, 107, 107), 0.8));
+  background: linear-gradient(
+    90deg,
+    var(--skin-color),
+    rgba(var(--skin-color-rgb, 255, 107, 107), 0.8)
+  );
   border-radius: 2px;
   width: 0%;
   animation: progressFill 3s ease-out infinite;
@@ -132,13 +140,18 @@ body.dark .preloader-progress {
 
 /* Progress bar shine effect */
 .preloader-progress-bar::after {
-  content: '';
+  content: "";
   position: absolute;
   top: 0;
   left: -100%;
   width: 100%;
   height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.4),
+    transparent
+  );
   animation: shine 2s ease-in-out infinite;
 }
 
@@ -195,7 +208,8 @@ body.dark .preloader-progress {
 }
 
 @keyframes pulse {
-  0%, 100% {
+  0%,
+  100% {
     transform: translate(-50%, -50%) scale(1);
     opacity: 1;
   }
@@ -206,7 +220,8 @@ body.dark .preloader-progress {
 }
 
 @keyframes textFade {
-  0%, 100% {
+  0%,
+  100% {
     opacity: 1;
   }
   50% {
@@ -236,7 +251,8 @@ body.dark .preloader-progress {
 }
 
 @keyframes float {
-  0%, 100% {
+  0%,
+  100% {
     transform: translateY(0px) rotate(0deg);
     opacity: 0.1;
   }
@@ -261,17 +277,17 @@ body.dark .preloader-progress {
     height: 60px;
     margin-bottom: 20px;
   }
-  
+
   .preloader-text {
     font-size: 14px;
     letter-spacing: 1px;
   }
-  
+
   .preloader-progress {
     width: 150px;
     height: 3px;
   }
-  
+
   .security-elements {
     display: none; /* Hide floating elements on mobile for better performance */
   }
@@ -287,7 +303,7 @@ body.dark .preloader-progress {
   .security-icon {
     animation: none;
   }
-  
+
   .preloader-progress-bar {
     width: 100%;
   }
@@ -298,12 +314,12 @@ body.dark .preloader-progress {
   .preloader {
     background: var(--bg-black-900);
   }
-  
+
   .preloader-text {
     color: var(--text-black-900);
     font-weight: 700;
   }
-  
+
   .spinner-ring.primary {
     border-top-color: var(--text-black-900);
   }

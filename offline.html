@@ -1,421 +1,482 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Offline - Tushar Basak Portfolio</title>
-    <meta name="description" content="You're currently offline. Some content may not be available.">
-    <link rel="icon" type="image/png" sizes="32x32" href="assets/images/favicon-32x32.png">
+    <meta
+      name="description"
+      content="You're currently offline. Some content may not be available."
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="assets/images/favicon-32x32.png"
+    />
 
     <!-- Font Awesome for icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css">
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css"
+    />
 
     <style>
+      :root {
+        --skin-color: #ff9900;
+        --bg-black-900: #f2f2fc;
+        --bg-black-100: #fdf9ff;
+        --bg-black-50: #e8dfec;
+        --text-black-900: #1a1a1a;
+        --text-black-700: #333333;
+      }
+
+      /* Dark mode styles */
+      @media (prefers-color-scheme: dark) {
         :root {
-            --skin-color: #ff9900;
-            --bg-black-900: #f2f2fc;
-            --bg-black-100: #fdf9ff;
-            --bg-black-50: #e8dfec;
-            --text-black-900: #1a1a1a;
-            --text-black-700: #333333;
+          --bg-black-900: #151515;
+          --bg-black-100: #222222;
+          --bg-black-50: #393939;
+          --text-black-900: #ffffff;
+          --text-black-700: #e9e9e9;
         }
+      }
 
-        /* Dark mode styles */
-        @media (prefers-color-scheme: dark) {
-            :root {
-                --bg-black-900: #151515;
-                --bg-black-100: #222222;
-                --bg-black-50: #393939;
-                --text-black-900: #ffffff;
-                --text-black-700: #e9e9e9;
-            }
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Poppins", sans-serif;
+        background: var(--bg-black-900);
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--text-black-900);
+        line-height: 1.5;
+      }
+
+      .offline-container {
+        text-align: center;
+        max-width: 600px;
+        padding: 3rem 2rem;
+        background: var(--bg-black-100);
+        border-radius: 20px;
+        box-shadow: 0 0 30px rgba(0, 0, 0, 0.1);
+        border: 1px solid var(--bg-black-50);
+        position: relative;
+        overflow: hidden;
+      }
+
+      .offline-container::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 4px;
+        background: linear-gradient(
+          135deg,
+          var(--skin-color),
+          rgba(255, 153, 0, 0.8)
+        );
+      }
+
+      .offline-icon {
+        font-size: 4rem;
+        margin-bottom: 1rem;
+        background: linear-gradient(
+          135deg,
+          var(--skin-color),
+          rgba(255, 153, 0, 0.8)
+        );
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+
+      .offline-title {
+        font-size: 2rem;
+        margin-bottom: 1rem;
+        font-weight: 700;
+        color: var(--text-black-900);
+      }
+
+      .offline-message {
+        font-size: 1.1rem;
+        margin-bottom: 2rem;
+        color: var(--text-black-700);
+        line-height: 1.6;
+      }
+
+      .retry-btn {
+        display: inline-block;
+        padding: 12px 35px;
+        background: linear-gradient(
+          135deg,
+          var(--skin-color),
+          rgba(255, 153, 0, 0.8)
+        );
+        color: var(--bg-black-900);
+        text-decoration: none;
+        border-radius: 40px;
+        font-weight: 500;
+        font-family: "Kaushan Script", cursive;
+        font-size: 18px;
+        transition: all 0.3s ease;
+        border: none;
+        cursor: pointer;
+      }
+
+      .retry-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+        filter: brightness(0.9);
+      }
+
+      .cached-content {
+        margin-top: 2rem;
+        padding: 1.5rem;
+        background: var(--bg-black-50);
+        border-radius: 15px;
+        border: 1px solid var(--bg-black-50);
+      }
+
+      .cached-content h3 {
+        color: var(--text-black-900);
+        margin-bottom: 1rem;
+        font-weight: 600;
+      }
+
+      .offline-link {
+        color: var(--text-black-700);
+        text-decoration: none;
+        display: block;
+        padding: 8px 12px;
+        margin: 4px 0;
+        border-radius: 8px;
+        transition: all 0.3s ease;
+        border: 1px solid transparent;
+      }
+
+      .offline-link:hover {
+        background: linear-gradient(
+          135deg,
+          var(--skin-color),
+          rgba(255, 153, 0, 0.1)
+        );
+        color: var(--skin-color);
+        border-color: rgba(255, 153, 0, 0.3);
+        transform: translateX(5px);
+      }
+
+      .connection-status {
+        margin-top: 1.5rem;
+        padding: 12px;
+        border-radius: 8px;
+        font-weight: 500;
+        text-align: center;
+        display: none;
+      }
+
+      .connection-status.online {
+        background: rgba(16, 185, 129, 0.1);
+        color: #10b981;
+        border: 1px solid rgba(16, 185, 129, 0.3);
+        display: block;
+      }
+
+      .connection-status.checking {
+        background: rgba(245, 158, 11, 0.1);
+        color: #f59e0b;
+        border: 1px solid rgba(245, 158, 11, 0.3);
+        display: block;
+      }
+
+      .secured-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        background: var(--bg-black-100);
+        padding: 8px 14px;
+        border-radius: 12px;
+        font-size: 10px;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.8px;
+        color: #00d06fff;
+        border: 1.5px solid #00ff88;
+        margin: 15px auto 0 auto;
+        transition: all 0.3s ease;
+        box-shadow: 0 2px 8px rgba(0, 255, 136, 0.15);
+        width: fit-content;
+        animation: securedBlink 2s ease-in-out infinite;
+        position: relative;
+      }
+
+      .secured-badge::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: linear-gradient(
+          135deg,
+          rgba(0, 255, 136, 0.1),
+          rgba(0, 255, 136, 0.05)
+        );
+        border-radius: 10px;
+        z-index: -1;
+      }
+
+      .secured-badge i {
+        font-size: 10px;
+        color: #00d06fff;
+        filter: drop-shadow(0 0 2px rgba(0, 255, 136, 0.3));
+      }
+
+      .secured-badge:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 4px 12px rgba(0, 255, 136, 0.25);
+        border-color: #00ff88;
+        animation-play-state: paused;
+      }
+
+      @keyframes securedBlink {
+        0%,
+        50%,
+        100% {
+          opacity: 1;
+          box-shadow: 0 2px 8px rgba(0, 255, 136, 0.15);
         }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
+        25%,
+        75% {
+          opacity: 0.7;
+          box-shadow: 0 2px 8px rgba(0, 255, 136, 0.3);
         }
+      }
 
-        body {
-            font-family: 'Poppins', sans-serif;
-            background: var(--bg-black-900);
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--text-black-900);
-            line-height: 1.5;
+      @media (max-width: 768px) {
+        .offline-title {
+          font-size: 1.5rem;
         }
 
         .offline-container {
-            text-align: center;
-            max-width: 600px;
-            padding: 3rem 2rem;
-            background: var(--bg-black-100);
-            border-radius: 20px;
-            box-shadow: 0 0 30px rgba(0, 0, 0, 0.1);
-            border: 1px solid var(--bg-black-50);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .offline-container::before {
-            content: "";
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 4px;
-            background: linear-gradient(135deg, var(--skin-color), rgba(255, 153, 0, 0.8));
-        }
-
-        .offline-icon {
-            font-size: 4rem;
-            margin-bottom: 1rem;
-            background: linear-gradient(135deg, var(--skin-color), rgba(255, 153, 0, 0.8));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .offline-title {
-            font-size: 2rem;
-            margin-bottom: 1rem;
-            font-weight: 700;
-            color: var(--text-black-900);
-        }
-
-        .offline-message {
-            font-size: 1.1rem;
-            margin-bottom: 2rem;
-            color: var(--text-black-700);
-            line-height: 1.6;
-        }
-
-        .retry-btn {
-            display: inline-block;
-            padding: 12px 35px;
-            background: linear-gradient(135deg, var(--skin-color), rgba(255, 153, 0, 0.8));
-            color: var(--bg-black-900);
-            text-decoration: none;
-            border-radius: 40px;
-            font-weight: 500;
-            font-family: "Kaushan Script", cursive;
-            font-size: 18px;
-            transition: all 0.3s ease;
-            border: none;
-            cursor: pointer;
-        }
-
-        .retry-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
-            filter: brightness(0.9);
-        }
-
-        .cached-content {
-            margin-top: 2rem;
-            padding: 1.5rem;
-            background: var(--bg-black-50);
-            border-radius: 15px;
-            border: 1px solid var(--bg-black-50);
-        }
-
-        .cached-content h3 {
-            color: var(--text-black-900);
-            margin-bottom: 1rem;
-            font-weight: 600;
+          padding: 1rem;
         }
 
         .offline-link {
-            color: var(--text-black-700);
-            text-decoration: none;
-            display: block;
-            padding: 8px 12px;
-            margin: 4px 0;
-            border-radius: 8px;
-            transition: all 0.3s ease;
-            border: 1px solid transparent;
-        }
-
-        .offline-link:hover {
-            background: linear-gradient(135deg, var(--skin-color), rgba(255, 153, 0, 0.1));
-            color: var(--skin-color);
-            border-color: rgba(255, 153, 0, 0.3);
-            transform: translateX(5px);
-        }
-
-        .connection-status {
-            margin-top: 1.5rem;
-            padding: 12px;
-            border-radius: 8px;
-            font-weight: 500;
-            text-align: center;
-            display: none;
-        }
-
-        .connection-status.online {
-            background: rgba(16, 185, 129, 0.1);
-            color: #10b981;
-            border: 1px solid rgba(16, 185, 129, 0.3);
-            display: block;
-        }
-
-        .connection-status.checking {
-            background: rgba(245, 158, 11, 0.1);
-            color: #f59e0b;
-            border: 1px solid rgba(245, 158, 11, 0.3);
-            display: block;
+          padding: 10px;
+          font-size: 14px;
         }
 
         .secured-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            background: var(--bg-black-100);
-            padding: 8px 14px;
-            border-radius: 12px;
-            font-size: 10px;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 0.8px;
-            color: #00d06fff;
-            border: 1.5px solid #00ff88;
-            margin: 15px auto 0 auto;
-            transition: all 0.3s ease;
-            box-shadow: 0 2px 8px rgba(0, 255, 136, 0.15);
-            width: fit-content;
-            animation: securedBlink 2s ease-in-out infinite;
-            position: relative;
-        }
-
-        .secured-badge::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: linear-gradient(135deg, rgba(0, 255, 136, 0.1), rgba(0, 255, 136, 0.05));
-            border-radius: 10px;
-            z-index: -1;
+          padding: 6px 12px;
+          font-size: 9px;
+          border-radius: 10px;
         }
 
         .secured-badge i {
-            font-size: 10px;
-            color: #00d06fff;
-            filter: drop-shadow(0 0 2px rgba(0, 255, 136, 0.3));
+          font-size: 9px;
         }
-
-        .secured-badge:hover {
-            transform: translateY(-1px);
-            box-shadow: 0 4px 12px rgba(0, 255, 136, 0.25);
-            border-color: #00ff88;
-            animation-play-state: paused;
-        }
-
-        @keyframes securedBlink {
-            0%, 50%, 100% {
-                opacity: 1;
-                box-shadow: 0 2px 8px rgba(0, 255, 136, 0.15);
-            }
-            25%, 75% {
-                opacity: 0.7;
-                box-shadow: 0 2px 8px rgba(0, 255, 136, 0.3);
-            }
-        }
-
-        @media (max-width: 768px) {
-            .offline-title {
-                font-size: 1.5rem;
-            }
-
-            .offline-container {
-                padding: 1rem;
-            }
-
-            .offline-link {
-                padding: 10px;
-                font-size: 14px;
-            }
-
-            .secured-badge {
-                padding: 6px 12px;
-                font-size: 9px;
-                border-radius: 10px;
-            }
-
-            .secured-badge i {
-                font-size: 9px;
-            }
-        }
+      }
     </style>
-</head>
-<body>
+  </head>
+  <body>
     <div class="offline-container">
-        <div class="offline-icon">📡</div>
-        <div class="secured-badge">
-            <i class="fas fa-shield-alt"></i>
-            <span>secured</span>
-        </div>
-        <h1 class="offline-title">You're Offline</h1>
-        <p class="offline-message">
-            You've been redirected to the cached version of the site.
-            The full portfolio is available offline with all content preserved.
-        </p>
-        <p class="redirect-message" style="margin-top: 1.5rem; font-size: 1rem; color: var(--text-black-700); font-weight: 500;">
-            Redirecting to portfolio in <span id="countdown" style="color: var(--skin-color); font-weight: 600;">5</span> seconds...
-        </p>
-        <button onclick="redirectToMainSite()" class="retry-btn" style="margin-top: 1rem;">
-            <i class="fas fa-forward"></i> Skip Wait
-        </button>
+      <div class="offline-icon">📡</div>
+      <div class="secured-badge">
+        <i class="fas fa-shield-alt"></i>
+        <span>secured</span>
+      </div>
+      <h1 class="offline-title">You're Offline</h1>
+      <p class="offline-message">
+        You've been redirected to the cached version of the site. The full
+        portfolio is available offline with all content preserved.
+      </p>
+      <p
+        class="redirect-message"
+        style="
+          margin-top: 1.5rem;
+          font-size: 1rem;
+          color: var(--text-black-700);
+          font-weight: 500;
+        "
+      >
+        Redirecting to portfolio in
+        <span id="countdown" style="color: var(--skin-color); font-weight: 600"
+          >5</span
+        >
+        seconds...
+      </p>
+      <button
+        onclick="redirectToMainSite()"
+        class="retry-btn"
+        style="margin-top: 1rem"
+      >
+        <i class="fas fa-forward"></i> Skip Wait
+      </button>
 
-        <div id="connectionStatus" class="connection-status">
-            <span id="statusText">Checking connection...</span>
-        </div>
+      <div id="connectionStatus" class="connection-status">
+        <span id="statusText">Checking connection...</span>
+      </div>
     </div>
 
     <script>
-        const statusElement = document.getElementById('statusText');
-        const statusContainer = document.getElementById('connectionStatus');
-        let isRedirecting = false;
+      const statusElement = document.getElementById("statusText");
+      const statusContainer = document.getElementById("connectionStatus");
+      let isRedirecting = false;
 
-        // Smart URL detection for different environments
-        function getBaseUrl() {
-            const currentPath = window.location.pathname;
-            const currentOrigin = window.location.origin;
+      // Smart URL detection for different environments
+      function getBaseUrl() {
+        const currentPath = window.location.pathname;
+        const currentOrigin = window.location.origin;
 
-            // Local development
-            if (currentOrigin.includes('localhost') || currentOrigin.includes('127.0.0.1')) {
-                return currentOrigin + (currentPath.includes('/website/') ? '/website/' : '/');
-            }
-
-            // GitHub Pages
-            if (currentPath.startsWith('/website/')) {
-                return currentOrigin + '/website/';
-            }
-
-            // Default fallback
-            return currentOrigin + '/';
+        // Local development
+        if (
+          currentOrigin.includes("localhost") ||
+          currentOrigin.includes("127.0.0.1")
+        ) {
+          return (
+            currentOrigin +
+            (currentPath.includes("/website/") ? "/website/" : "/")
+          );
         }
 
-        const redirectUrl = getBaseUrl();
-
-        // Update connection status display
-        function updateConnectionStatus(status, message) {
-            statusContainer.className = `connection-status ${status}`;
-            statusElement.textContent = message;
+        // GitHub Pages
+        if (currentPath.startsWith("/website/")) {
+          return currentOrigin + "/website/";
         }
 
-        // Simple connectivity check using navigator.onLine
-        function checkConnectivity() {
-            if (isRedirecting) return;
+        // Default fallback
+        return currentOrigin + "/";
+      }
 
-            // Use browser's built-in connectivity detection
-            if (navigator.onLine) {
-                console.log('Browser reports online status');
-                handleOnlineDetected();
-            } else {
-                console.log('Browser reports offline status');
-                statusContainer.style.display = 'none';
-            }
+      const redirectUrl = getBaseUrl();
+
+      // Update connection status display
+      function updateConnectionStatus(status, message) {
+        statusContainer.className = `connection-status ${status}`;
+        statusElement.textContent = message;
+      }
+
+      // Simple connectivity check using navigator.onLine
+      function checkConnectivity() {
+        if (isRedirecting) return;
+
+        // Use browser's built-in connectivity detection
+        if (navigator.onLine) {
+          console.log("Browser reports online status");
+          handleOnlineDetected();
+        } else {
+          console.log("Browser reports offline status");
+          statusContainer.style.display = "none";
+        }
+      }
+
+      // Handle when connection is restored
+      function handleOnlineDetected() {
+        if (isRedirecting) return;
+
+        isRedirecting = true;
+        updateConnectionStatus(
+          "online",
+          "🎉 Connection restored! Redirecting to main site..."
+        );
+
+        console.log("Connection restored, redirecting to main site");
+
+        // Preserve user's last visited section when redirecting
+        const savedSection = localStorage.getItem("spaCurrentSection");
+        let finalRedirectUrl = redirectUrl;
+
+        if (savedSection && savedSection !== "home") {
+          // Add a parameter to indicate we should load the saved section
+          finalRedirectUrl += "?restore=" + savedSection;
         }
 
-        // Handle when connection is restored
-        function handleOnlineDetected() {
-            if (isRedirecting) return;
+        // Redirect after a short delay to show the message
+        setTimeout(() => {
+          window.location.href = finalRedirectUrl;
+        }, 2000);
+      }
 
-            isRedirecting = true;
-            updateConnectionStatus('online', '🎉 Connection restored! Redirecting to main site...');
+      // Function to redirect to main site
+      function redirectToMainSite() {
+        // Preserve user's last visited section when redirecting
+        const savedSection = localStorage.getItem("spaCurrentSection");
+        let finalRedirectUrl = redirectUrl;
 
-            console.log('Connection restored, redirecting to main site');
-
-            // Preserve user's last visited section when redirecting
-            const savedSection = localStorage.getItem('spaCurrentSection');
-            let finalRedirectUrl = redirectUrl;
-
-            if (savedSection && savedSection !== 'home') {
-                // Add a parameter to indicate we should load the saved section
-                finalRedirectUrl += '?restore=' + savedSection;
-            }
-
-            // Redirect after a short delay to show the message
-            setTimeout(() => {
-                window.location.href = finalRedirectUrl;
-            }, 2000);
+        if (savedSection && savedSection !== "home") {
+          // Add a parameter to indicate we should load the saved section
+          finalRedirectUrl += "?restore=" + savedSection;
         }
 
-        // Function to redirect to main site
-        function redirectToMainSite() {
-            // Preserve user's last visited section when redirecting
-            const savedSection = localStorage.getItem('spaCurrentSection');
-            let finalRedirectUrl = redirectUrl;
+        // Try to navigate to the main site
+        window.location.href = finalRedirectUrl;
+      }
 
-            if (savedSection && savedSection !== 'home') {
-                // Add a parameter to indicate we should load the saved section
-                finalRedirectUrl += '?restore=' + savedSection;
-            }
+      // Listen for browser online event
+      window.addEventListener("online", () => {
+        console.log("Browser online event detected");
+        setTimeout(checkConnectivity, 500);
+      });
 
-            // Try to navigate to the main site
-            window.location.href = finalRedirectUrl;
+      // Listen for browser offline event
+      window.addEventListener("offline", () => {
+        console.log("Browser offline event detected");
+        statusContainer.style.display = "none";
+        isRedirecting = false;
+      });
+
+      // Lightweight periodic connectivity check
+      function startConnectivityMonitoring() {
+        // Check immediately
+        setTimeout(checkConnectivity, 2000);
+
+        // Then check every 10 seconds (less frequent)
+        setInterval(() => {
+          if (!isRedirecting) {
+            checkConnectivity();
+          }
+        }, 10000);
+      }
+
+      // Handle page visibility change (when user returns to tab)
+      document.addEventListener("visibilitychange", () => {
+        if (!document.hidden && !isRedirecting) {
+          setTimeout(checkConnectivity, 500);
         }
+      });
 
-        // Listen for browser online event
-        window.addEventListener('online', () => {
-            console.log('Browser online event detected');
-            setTimeout(checkConnectivity, 500);
-        });
+      // Auto-redirect countdown
+      let countdownSeconds = 5;
+      const countdownElement = document.getElementById("countdown");
 
-        // Listen for browser offline event
-        window.addEventListener('offline', () => {
-            console.log('Browser offline event detected');
-            statusContainer.style.display = 'none';
-            isRedirecting = false;
-        });
+      function startCountdown() {
+        const countdownInterval = setInterval(() => {
+          countdownSeconds--;
+          countdownElement.textContent = countdownSeconds;
 
-        // Lightweight periodic connectivity check
-        function startConnectivityMonitoring() {
-            // Check immediately
-            setTimeout(checkConnectivity, 2000);
+          if (countdownSeconds <= 0) {
+            clearInterval(countdownInterval);
+            redirectToMainSite();
+          }
+        }, 1000);
+      }
 
-            // Then check every 10 seconds (less frequent)
-            setInterval(() => {
-                if (!isRedirecting) {
-                    checkConnectivity();
-                }
-            }, 10000);
-        }
-
-        // Handle page visibility change (when user returns to tab)
-        document.addEventListener('visibilitychange', () => {
-            if (!document.hidden && !isRedirecting) {
-                setTimeout(checkConnectivity, 500);
-            }
-        });
-
-        // Auto-redirect countdown
-        let countdownSeconds = 5;
-        const countdownElement = document.getElementById('countdown');
-
-        function startCountdown() {
-            const countdownInterval = setInterval(() => {
-                countdownSeconds--;
-                countdownElement.textContent = countdownSeconds;
-
-                if (countdownSeconds <= 0) {
-                    clearInterval(countdownInterval);
-                    redirectToMainSite();
-                }
-            }, 1000);
-        }
-
-        // Initialize when page loads
-        document.addEventListener('DOMContentLoaded', () => {
-            console.log('Offline page loaded, starting countdown and connectivity monitoring');
-            startCountdown();
-            startConnectivityMonitoring();
-        });
+      // Initialize when page loads
+      document.addEventListener("DOMContentLoaded", () => {
+        console.log(
+          "Offline page loaded, starting countdown and connectivity monitoring"
+        );
+        startCountdown();
+        startConnectivityMonitoring();
+      });
     </script>
-</body>
+  </body>
 </html>
