@@ -139,27 +139,132 @@ function closeMobileNavigation() {
   }
 }
 
-/* ============================== Cursor Animation ============================ */
+/* ============================== Touch Screen Detection ============================== */
+function isTouchDevice() {
+  return (('ontouchstart' in window) ||
+          (navigator.maxTouchPoints > 0) ||
+          (navigator.msMaxTouchPoints > 0));
+}
+
+/* ============================== Cursor Animation (Desktop Only) ============================ */
 const cursor1 = document.querySelector(".cursor-1");
 const cursor2 = document.querySelector(".cursor-2");
-function setCursorCoordinates(e) {
-  cursor1.style.top = e.pageY + "px";
-  cursor1.style.left = e.pageX + "px";
-  cursor2.style.top = e.pageY + "px";
-  cursor2.style.left = e.pageX + "px";
+
+// Only initialize cursor animation on non-touch devices
+if (!isTouchDevice()) {
+  function setCursorCoordinates(e) {
+    cursor1.style.top = e.pageY + "px";
+    cursor1.style.left = e.pageX + "px";
+    cursor2.style.top = e.pageY + "px";
+    cursor2.style.left = e.pageX + "px";
+  }
+
+  window.onmousemove = setCursorCoordinates;
+
+  function toggleCursorActivity() {
+    cursor1.classList.toggle("active");
+    cursor2.classList.toggle("active");
+  }
+
+  document.querySelectorAll("a").forEach((links) => {
+    links.onmouseenter = toggleCursorActivity;
+    links.onmouseleave = toggleCursorActivity;
+  });
+} else {
+  // Hide cursors on touch devices
+  if (cursor1) cursor1.style.display = 'none';
+  if (cursor2) cursor2.style.display = 'none';
 }
 
-window.onmousemove = setCursorCoordinates;
+/* ============================== Touch-Friendly Navigation ============================== */
+// Enhanced touch support for navigation
+if (isTouchDevice()) {
+  // Add touch feedback for navigation items
+  document.querySelectorAll('.aside .nav li a').forEach(link => {
+    link.addEventListener('touchstart', function(e) {
+      this.style.backgroundColor = 'var(--bg-black-50)';
+    }, { passive: true });
+    
+    link.addEventListener('touchend', function(e) {
+      setTimeout(() => {
+        this.style.backgroundColor = '';
+      }, 150);
+    }, { passive: true });
+  });
 
-function toggleCursorActivity() {
-  cursor1.classList.toggle("active");
-  cursor2.classList.toggle("active");
+  // Add touch feedback for buttons
+  document.querySelectorAll('.btn, .btn-certificate').forEach(button => {
+    button.addEventListener('touchstart', function(e) {
+      this.style.transform = 'scale(0.98)';
+    }, { passive: true });
+    
+    button.addEventListener('touchend', function(e) {
+      setTimeout(() => {
+        this.style.transform = '';
+      }, 150);
+    }, { passive: true });
+  });
+
+  // Add touch feedback for social icons
+  document.querySelectorAll('.aside .footer .social-icons a').forEach(icon => {
+    icon.addEventListener('touchstart', function(e) {
+      this.style.transform = 'scale(0.95)';
+    }, { passive: true });
+    
+    icon.addEventListener('touchend', function(e) {
+      setTimeout(() => {
+        this.style.transform = '';
+      }, 150);
+    }, { passive: true });
+  });
 }
 
-document.querySelectorAll("a").forEach((links) => {
-  links.onmouseenter = toggleCursorActivity;
-  links.onmouseleave = toggleCursorActivity;
-});
+/* ============================== Touch-Friendly Swipe Navigation ============================== */
+if (isTouchDevice()) {
+  let touchStartX = 0;
+  let touchStartY = 0;
+  let touchEndX = 0;
+  let touchEndY = 0;
+
+  document.addEventListener('touchstart', function(e) {
+    touchStartX = e.changedTouches[0].screenX;
+    touchStartY = e.changedTouches[0].screenY;
+  }, { passive: true });
+
+  document.addEventListener('touchend', function(e) {
+    touchEndX = e.changedTouches[0].screenX;
+    touchEndY = e.changedTouches[0].screenY;
+    handleSwipe();
+  }, { passive: true });
+
+  function handleSwipe() {
+    const swipeThreshold = 50;
+    const deltaX = touchEndX - touchStartX;
+    const deltaY = touchEndY - touchStartY;
+
+    // Only handle horizontal swipes that are longer than vertical swipes
+    if (Math.abs(deltaX) > Math.abs(deltaY) && Math.abs(deltaX) > swipeThreshold) {
+      if (window.innerWidth < 1200) {
+        if (deltaX > 0 && !aside.classList.contains("open")) {
+          // Swipe right - open navigation
+          asideSectionTogglerBtn();
+        } else if (deltaX < 0 && aside.classList.contains("open")) {
+          // Swipe left - close navigation
+          closeMobileNavigation();
+        }
+      }
+    }
+  }
+}
+
+/* ============================== Improved Touch Scrolling ============================== */
+if (isTouchDevice()) {
+  // Smooth scrolling for touch devices
+  document.querySelectorAll('.section').forEach(section => {
+    section.style.webkitOverflowScrolling = 'touch';
+    section.style.scrollBehavior = 'smooth';
+  });
+}
 
 /* ====================== Progress animation ====================== */
 
