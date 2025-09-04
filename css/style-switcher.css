@@ -42,6 +42,20 @@
   position: relative;
 }
 
+/* Gear spinning animation */
+.style-switcher .style-switcher-toggler i {
+  animation: spin 2s linear infinite;
+}
+
+.style-switcher .style-switcher-toggler:hover i {
+  animation-play-state: paused;
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
 .style-switcher .day-night:hover i,
 .style-switcher .style-switcher-toggler:hover i {
   transform: scale(1.15) rotate(10deg);
