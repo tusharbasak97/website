@@ -767,23 +767,25 @@ body.dark .loading-overlay {
 .aside .nav-toggler span {
   height: 2px;
   width: 18px;
-  background: var(--skin-color);
+  background: var(--gradient-primary);
   display: inline-block;
   position: relative;
+  border-radius: 1px;
 }
 
 .aside .nav-toggler.open span {
-  background-color: transparent;
+  background: transparent;
 }
 
 .aside .nav-toggler span::before {
   content: "";
   height: 2px;
   width: 18px;
-  background: var(--skin-color);
+  background: var(--gradient-primary);
   position: absolute;
   top: -6px;
   left: 0;
+  border-radius: 1px;
 }
 
 .aside .nav-toggler.open span::before {
@@ -795,10 +797,11 @@ body.dark .loading-overlay {
   content: "";
   height: 2px;
   width: 18px;
-  background: var(--skin-color);
+  background: var(--gradient-primary);
   position: absolute;
   top: 6px;
   left: 0;
+  border-radius: 1px;
 }
 
 .aside .nav-toggler.open span::after {

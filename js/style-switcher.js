@@ -3,7 +3,19 @@ const styleSwitcher = document.querySelector(".style-switcher");
 
 styleSwitcherToggle.addEventListener("click", (event) => {
   event.stopPropagation();
-  styleSwitcher.classList.toggle("open");
+  
+  // Add switching animation class
+  styleSwitcherToggle.classList.add("switching");
+  
+  // Toggle the panel after a short delay
+  setTimeout(() => {
+    styleSwitcher.classList.toggle("open");
+  }, 400);
+
+  // Remove switching class after animation completes
+  setTimeout(() => {
+    styleSwitcherToggle.classList.remove("switching");
+  }, 800);
 });
 
 document.addEventListener("click", () => {

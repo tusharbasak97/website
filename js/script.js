@@ -85,7 +85,19 @@ const navTogglerBtn = document.querySelector(".nav-toggler"),
 
 navTogglerBtn.addEventListener("click", (e) => {
   e.stopPropagation(); // Prevent event bubbling
-  asideSectionTogglerBtn();
+  
+  // Add switching animation class
+  navTogglerBtn.classList.add("switching");
+  
+  // Toggle the navigation after a short delay
+  setTimeout(() => {
+    asideSectionTogglerBtn();
+  }, 400);
+
+  // Remove switching class after animation completes
+  setTimeout(() => {
+    navTogglerBtn.classList.remove("switching");
+  }, 800);
 });
 
 // Close mobile navigation when clicking outside
