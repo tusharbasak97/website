@@ -30,7 +30,7 @@ This is a professional cybersecurity portfolio website showcasing the expertise,
 
 - **Frontend**: HTML5, CSS3, JavaScript (ES6+)
 - **Styling**: Custom CSS with CSS Grid and Flexbox
-- **Icons**: Font Awesome 6.5.2
+- **Icons**: Font Awesome 7.0.0
 - **Fonts**: Google Fonts (Poppins, Kaushan Script)
 - **PWA**: Service Worker for offline functionality
 - **SEO**: JSON-LD structured data, Open Graph

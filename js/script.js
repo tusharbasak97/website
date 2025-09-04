@@ -29,7 +29,25 @@ const nav = document.querySelector(".nav"),
   totalSection = allSection.length;
 for (let i = 0; i < totalNavList; i++) {
   const a = navList[i].querySelector("a");
-  a.addEventListener("click", function () {
+
+  // Hide URL from status bar for SPA navigation links
+  const originalHref = a.href;
+  a.addEventListener('mouseenter', function() {
+    this.setAttribute('data-href', originalHref);
+    this.removeAttribute('href');
+  });
+
+  a.addEventListener('mouseleave', function() {
+    this.href = this.getAttribute('data-href');
+    this.removeAttribute('data-href');
+  });
+
+  a.addEventListener("click", function (e) {
+    // Restore href if needed for SPA navigation
+    if (!this.href && this.getAttribute('data-href')) {
+      this.href = this.getAttribute('data-href');
+    }
+
     removeBackSection();
     for (let j = 0; j < totalNavList; j++) {
       if (navList[j].querySelector("a").classList.contains("active")) {
@@ -42,6 +60,13 @@ for (let i = 0; i < totalNavList; i++) {
     showSection(this);
     if (window.innerWidth < 1200) {
       asideSectionTogglerBtn();
+    }
+  });
+
+  // Handle keyboard navigation for SPA links
+  a.addEventListener('keydown', function(e) {
+    if (e.key === 'Enter' && !this.href && this.getAttribute('data-href')) {
+      this.href = this.getAttribute('data-href');
     }
   });
 }
@@ -159,6 +184,37 @@ function toggleCursorActivity() {
 document.querySelectorAll("a").forEach((links) => {
   links.onmouseenter = toggleCursorActivity;
   links.onmouseleave = toggleCursorActivity;
+
+  // Skip URL hiding for SPA navigation links as they're handled separately
+  const isSpaNavLink = links.closest('.nav');
+  if (!isSpaNavLink) {
+    // Hide link URLs from status bar for non-SPA links
+    const originalHref = links.href;
+    links.addEventListener('mouseenter', function() {
+      this.setAttribute('data-href', originalHref);
+      this.removeAttribute('href');
+    });
+
+    links.addEventListener('mouseleave', function() {
+      this.href = this.getAttribute('data-href');
+      this.removeAttribute('data-href');
+    });
+
+    // Handle clicks properly
+    links.addEventListener('click', function(e) {
+      if (!this.href && this.getAttribute('data-href')) {
+        this.href = this.getAttribute('data-href');
+      }
+    });
+
+    // Handle keyboard navigation (Enter key)
+    links.addEventListener('keydown', function(e) {
+      if (e.key === 'Enter' && !this.href && this.getAttribute('data-href')) {
+        this.href = this.getAttribute('data-href');
+        this.click();
+      }
+    });
+  }
 });
 
 /* ====================== Progress animation ====================== */

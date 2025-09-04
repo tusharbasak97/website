@@ -342,7 +342,7 @@ a:not(.btn):not(.btn-certificate):not(.nav a):hover {
   left: 0;
   height: 0.5rem;
   width: 0.5rem;
-  background: var(--skin-color);
+  background: var(--gradient-primary);
   border-radius: 50%;
   transform: translate(-50%, -50%);
   z-index: 10000;
@@ -351,7 +351,7 @@ a:not(.btn):not(.btn-certificate):not(.nav a):hover {
 .cursor-1.active {
   height: 5rem;
   width: 5rem;
-  color: var(--skin-color);
+  background: var(--gradient-primary);
   opacity: 0.3;
 }
 
@@ -2444,46 +2444,11 @@ body.offline::before {
   }
 }
 
-/* Smart Compose Styles */
-.smart-compose-suggestion {
-  font-family: var(--font-primary);
-  transition: all 0.2s ease;
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-}
 
-.smart-compose-suggestion:hover {
-  opacity: 0.9 !important;
-}
 
-/* Dark mode adjustments for Smart Compose */
-body.dark .smart-compose-suggestion {
-  background: var(--bg-black-50);
-  border-color: var(--bg-black-100);
-  box-shadow: none;
-}
 
-/* Animation for suggestion appearance */
-@keyframes suggestionFadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(-5px);
-  }
-  to {
-    opacity: 0.7;
-    transform: translateY(0);
-  }
-}
 
-.smart-compose-suggestion {
-  animation: suggestionFadeIn 0.2s ease-out;
-}
 
-/* Form field focus enhancement for Smart Compose */
-.form-control:focus {
-  position: relative;
-  z-index: 999;
-}
 
 /* Ensure suggestion container is properly positioned */
 .form-group {
