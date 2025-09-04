@@ -48,8 +48,6 @@ const STATIC_CACHE_URLS = [
   basePath + '/css/skins/color-1.css',
   basePath + '/css/skins/color-2.css',
   basePath + '/css/skins/color-3.css',
-  basePath + '/css/skins/color-4.css',
-  basePath + '/css/skins/color-5.css',
 
   // Critical Images (icons and favicons)
   basePath + '/assets/images/favicon-32x32.png',

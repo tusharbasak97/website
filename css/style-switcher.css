@@ -3,13 +3,14 @@
   right: 0;
   top: 60px;
   padding: 15px;
-  width: 200px;
+  width: 150px;
   border: 1px solid var(--bg-black-50);
   background: var(--bg-black-100);
   z-index: 101;
   border-radius: 5px;
   transition: all 0.3s ease;
   transform: translateX(100%);
+  box-shadow: var(--shadow-medium);
 }
 .style-switcher.open {
   transform: translateX(-25px);
@@ -28,15 +29,62 @@
   cursor: pointer;
   transition: all 0.3s ease;
   border-radius: 50%;
+  box-shadow: var(--shadow-medium);
 }
 .style-switcher .s-icon i {
   line-height: 40px;
+  transition: all 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  transform-origin: center;
+}
+
+.style-switcher .day-night i,
+.style-switcher .style-switcher-toggler i {
+  position: relative;
+}
+
+.style-switcher .day-night:hover i,
+.style-switcher .style-switcher-toggler:hover i {
+  transform: scale(1.15) rotate(10deg);
+  filter: drop-shadow(0 0 8px rgba(var(--skin-color-rgb, 255, 107, 107), 0.6));
+}
+
+.style-switcher .day-night:active i,
+.style-switcher .style-switcher-toggler:active i {
+  transform: scale(0.85) rotate(360deg);
+}
+
+/* Advanced keyframe animation for icon switching */
+@keyframes iconSwitch {
+  0% {
+    transform: scale(1) rotate(0deg);
+    opacity: 1;
+  }
+  25% {
+    transform: scale(0.3) rotate(90deg);
+    opacity: 0.3;
+  }
+  50% {
+    transform: scale(0) rotate(180deg);
+    opacity: 0;
+  }
+  75% {
+    transform: scale(0.3) rotate(270deg);
+    opacity: 0.3;
+  }
+  100% {
+    transform: scale(1) rotate(360deg);
+    opacity: 1;
+  }
+}
+
+.style-switcher .day-night.switching i {
+  animation: iconSwitch 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55);
 }
 .style-switcher .style-switcher-toggler {
   top: 0;
 }
 .style-switcher .day-night {
-  top: 55px;
+  top: 50px;
 }
 .style-switcher h4 {
   margin: 0 0 10px;
@@ -52,9 +100,24 @@
 }
 .style-switcher .colors span {
   display: inline-block;
-  height: 30px;
-  width: 30px;
-  border-radius: 50%;
+  height: 25px;
+  width: 35px;
+  border-radius: 4px;
+  cursor: pointer;
+  border: 2px solid transparent;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.style-switcher .colors span:hover {
+  transform: scale(1.1);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  border: 2px solid rgba(255, 255, 255, 0.3);
+}
+
+.style-switcher .colors span:active {
+  transform: scale(0.95);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
 }
 .style-switcher .color-1 {
   background: #ff9900;
@@ -63,11 +126,5 @@
   background: #ff0099;
 }
 .style-switcher .color-3 {
-  background: #66cc00;
-}
-.style-switcher .color-4 {
-  background: #0099ff;
-}
-.style-switcher .color-5 {
   background: #b23fff;
 }
