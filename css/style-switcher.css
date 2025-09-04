@@ -143,11 +143,11 @@
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
 }
 .style-switcher .color-1 {
-  background: linear-gradient(135deg, #ff9900 0%, rgba(255, 153, 0, 0.6) 100%);
+  background: linear-gradient(135deg, #ff9900, rgba(var(--skin-color-rgb, 255, 107, 107), 0.8));
 }
 .style-switcher .color-2 {
-  background: linear-gradient(135deg, #ff0099 0%, rgba(255, 0, 153, 0.6) 100%);
+  background: linear-gradient(135deg, #ff0099, rgba(var(--skin-color-rgb, 255, 107, 107), 0.8));
 }
 .style-switcher .color-3 {
-  background: linear-gradient(135deg, #b23fff 0%, rgba(178, 63, 255, 0.6) 100%);
+  background: linear-gradient(135deg, #b23fff, rgba(var(--skin-color-rgb, 255, 107, 107), 0.8));
 }
