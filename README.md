@@ -45,7 +45,7 @@ website/
 │   └── browserconfig.xml # Browser configuration
 ├── css/
 │   ├── style.css         # Main stylesheet
-│   ├── preloader.min.css # Loading animation styles
+│   ├── preloader.css # Loading animation styles
 │   ├── style-switcher.css # Theme switcher
 │   └── skins/            # Color theme variations
 ├── js/
@@ -76,9 +76,7 @@ website/
 The website includes 5 pre-built color themes:
 - **Theme 1**: Orange (#ff9900)
 - **Theme 2**: Pink (#ff0099)
-- **Theme 3**: Green (#66cc00)  
-- **Theme 4**: Blue (#0099ff)
-- **Theme 5**: Purple (#b23fff)
+- **Theme 3**: Purple (#b23fff)
 
 Themes can be switched using the style switcher in the top-right corner.
 
@@ -165,9 +163,9 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## 🌟 Acknowledgments
 
-- 🙏 **Special thanks to [Cryptical Coder](https://www.youtube.com/c/CrypticalCoder)**  
+- 🙏 **Special thanks to [Cryptical Coder](https://www.youtube.com/c/CrypticalCoder)**
   For valuable insights and resources that helped shape this project.
-- 🎨 **Portfolio inspiration and template from [this video](https://youtu.be/zJE-ze4TfXc?si=FnL75fyZLR0Nbmut)**  
+- 🎨 **Portfolio inspiration and template from [this video](https://youtu.be/zJE-ze4TfXc?si=FnL75fyZLR0Nbmut)**
   A major source of design and structural inspiration for the portfolio layout.
 - Font Awesome for the amazing icons
 - Google Fonts for beautiful typography

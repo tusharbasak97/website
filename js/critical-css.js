@@ -320,7 +320,7 @@
         loadNonCriticalCSS: () => {
             const stylesheets = [
                 'css/style.css',
-                'css/preloader.min.css',
+                'css/preloader.css',
                 'css/style-switcher.css'
             ];
 
