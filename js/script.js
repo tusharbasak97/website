@@ -85,10 +85,10 @@ const navTogglerBtn = document.querySelector(".nav-toggler"),
 
 navTogglerBtn.addEventListener("click", (e) => {
   e.stopPropagation(); // Prevent event bubbling
-  
+
   // Add switching animation class
   navTogglerBtn.classList.add("switching");
-  
+
   // Toggle the navigation after a short delay
   setTimeout(() => {
     asideSectionTogglerBtn();
@@ -196,3 +196,49 @@ document.addEventListener("DOMContentLoaded", (event) => {
   const currentYear = new Date().getFullYear();
   yearElement.textContent = currentYear;
 });
+
+/* ============================== Touch Swipe Navigation ============================== */
+// Touch device detection
+function isTouchDevice() {
+  return (('ontouchstart' in window) ||
+          (navigator.maxTouchPoints > 0) ||
+          (navigator.msMaxTouchPoints > 0));
+}
+
+// Add swipe navigation for touch devices
+if (isTouchDevice()) {
+  let touchStartX = 0;
+  let touchStartY = 0;
+  let touchEndX = 0;
+  let touchEndY = 0;
+
+  document.addEventListener('touchstart', function(e) {
+    touchStartX = e.changedTouches[0].screenX;
+    touchStartY = e.changedTouches[0].screenY;
+  }, { passive: true });
+
+  document.addEventListener('touchend', function(e) {
+    touchEndX = e.changedTouches[0].screenX;
+    touchEndY = e.changedTouches[0].screenY;
+    handleSwipe();
+  }, { passive: true });
+
+  function handleSwipe() {
+    const swipeThreshold = 50;
+    const deltaX = touchEndX - touchStartX;
+    const deltaY = touchEndY - touchStartY;
+
+    // Only handle horizontal swipes that are longer than vertical swipes
+    if (Math.abs(deltaX) > Math.abs(deltaY) && Math.abs(deltaX) > swipeThreshold) {
+      if (window.innerWidth < 1200) {
+        if (deltaX > 0 && !aside.classList.contains("open")) {
+          // Swipe right - open navigation
+          asideSectionTogglerBtn();
+        } else if (deltaX < 0 && aside.classList.contains("open")) {
+          // Swipe left - close navigation
+          closeMobileNavigation();
+        }
+      }
+    }
+  }
+}
