@@ -206,39 +206,55 @@ function isTouchDevice() {
 }
 
 // Add swipe navigation for touch devices
-if (isTouchDevice()) {
-  let touchStartX = 0;
-  let touchStartY = 0;
-  let touchEndX = 0;
-  let touchEndY = 0;
+document.addEventListener("DOMContentLoaded", function() {
+  if (isTouchDevice()) {
+    console.log("Touch device detected - enabling swipe navigation");
 
-  document.addEventListener('touchstart', function(e) {
-    touchStartX = e.changedTouches[0].screenX;
-    touchStartY = e.changedTouches[0].screenY;
-  }, { passive: true });
+    let touchStartX = 0;
+    let touchStartY = 0;
+    let touchEndX = 0;
+    let touchEndY = 0;
 
-  document.addEventListener('touchend', function(e) {
-    touchEndX = e.changedTouches[0].screenX;
-    touchEndY = e.changedTouches[0].screenY;
-    handleSwipe();
-  }, { passive: true });
+    // Get references to the navigation elements
+    const asideElement = document.querySelector(".aside");
+    const navTogglerElement = document.querySelector(".nav-toggler");
 
-  function handleSwipe() {
-    const swipeThreshold = 50;
-    const deltaX = touchEndX - touchStartX;
-    const deltaY = touchEndY - touchStartY;
+    document.addEventListener('touchstart', function(e) {
+      touchStartX = e.changedTouches[0].clientX;
+      touchStartY = e.changedTouches[0].clientY;
+      console.log(`Touch start: X=${touchStartX}, Y=${touchStartY}`);
+    }, { passive: true });
 
-    // Only handle horizontal swipes that are longer than vertical swipes
-    if (Math.abs(deltaX) > Math.abs(deltaY) && Math.abs(deltaX) > swipeThreshold) {
-      if (window.innerWidth < 1200) {
-        if (deltaX > 0 && !aside.classList.contains("open")) {
-          // Swipe right - open navigation
-          asideSectionTogglerBtn();
-        } else if (deltaX < 0 && aside.classList.contains("open")) {
-          // Swipe left - close navigation
-          closeMobileNavigation();
+    document.addEventListener('touchend', function(e) {
+      touchEndX = e.changedTouches[0].clientX;
+      touchEndY = e.changedTouches[0].clientY;
+      console.log(`Touch end: X=${touchEndX}, Y=${touchEndY}`);
+      handleSwipe();
+    }, { passive: true });
+
+    function handleSwipe() {
+      const swipeThreshold = 50;
+      const deltaX = touchEndX - touchStartX;
+      const deltaY = touchEndY - touchStartY;
+
+      console.log(`Swipe detected: deltaX=${deltaX}, deltaY=${deltaY}, screenWidth=${window.innerWidth}`);
+
+      // Only handle horizontal swipes that are longer than vertical swipes
+      if (Math.abs(deltaX) > Math.abs(deltaY) && Math.abs(deltaX) > swipeThreshold) {
+        if (window.innerWidth < 1200) {
+          if (deltaX > 0 && !asideElement.classList.contains("open")) {
+            // Swipe right - open navigation
+            console.log("Opening navigation via swipe right");
+            asideSectionTogglerBtn();
+          } else if (deltaX < 0 && asideElement.classList.contains("open")) {
+            // Swipe left - close navigation
+            console.log("Closing navigation via swipe left");
+            closeMobileNavigation();
+          }
         }
       }
     }
+  } else {
+    console.log("Non-touch device detected - swipe navigation disabled");
   }
-}
+});
