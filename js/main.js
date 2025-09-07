@@ -1133,3 +1133,245 @@ function initializeAnalyticsIntegration() {
     }
   });
 }
+
+/* ============================== Error Pages Functionality ============================ */
+// Centralized JavaScript for 404 and offline pages
+
+class ErrorPageManager {
+  constructor() {
+    this.init();
+  }
+
+  init() {
+    // Check if we're on an error page
+    const isErrorPage = document.body.classList.contains('error-page-body');
+    const isOfflinePage = document.body.classList.contains('offline-page-body');
+
+    if (isErrorPage) {
+      this.init404Page();
+    } else if (isOfflinePage) {
+      this.initOfflinePage();
+    }
+  }
+
+  // Smart URL detection for different environments
+  getBaseUrl() {
+    const currentPath = window.location.pathname;
+    const currentOrigin = window.location.origin;
+
+    // Local development
+    if (currentOrigin.includes("localhost") || currentOrigin.includes("127.0.0.1")) {
+      return currentOrigin + (currentPath.includes("/website/") ? "/website/" : "/");
+    }
+
+    // GitHub Pages
+    if (currentPath.startsWith("/website/")) {
+      return currentOrigin + "/website/";
+    }
+
+    // Default fallback
+    return currentOrigin + "/";
+  }
+
+  // Initialize 404 page functionality
+  init404Page() {
+    let countdownTime = 5;
+    const countdownElement = document.getElementById("countdown");
+    const returnBtn = document.getElementById("returnBtn");
+    const baseUrl = this.getBaseUrl();
+
+    // Preserve user's last visited section when redirecting
+    const savedSection = localStorage.getItem("spaCurrentSection");
+    let redirectUrl = baseUrl;
+
+    if (savedSection && savedSection !== "home") {
+      redirectUrl += "?restore=" + savedSection;
+    }
+
+    // Update the button href
+    if (returnBtn) {
+      returnBtn.href = redirectUrl;
+    }
+
+    // Update countdown display
+    const updateCountdown = () => {
+      if (countdownElement) {
+        countdownElement.textContent = countdownTime;
+      }
+
+      if (countdownTime <= 0) {
+        window.location.href = redirectUrl;
+        return;
+      }
+
+      countdownTime--;
+    };
+
+    // Start countdown
+    const countdownInterval = setInterval(updateCountdown, 1000);
+
+    // Clear countdown if user clicks the button
+    if (returnBtn) {
+      returnBtn.addEventListener("click", function (e) {
+        clearInterval(countdownInterval);
+      });
+    }
+
+    // Clear countdown if user interacts with the page
+    document.addEventListener("click", function () {
+      clearInterval(countdownInterval);
+    });
+
+    document.addEventListener("keydown", function () {
+      clearInterval(countdownInterval);
+    });
+
+    // Accessibility: Allow Enter key on button
+    if (returnBtn) {
+      returnBtn.addEventListener("keydown", function (e) {
+        if (e.key === "Enter") {
+          clearInterval(countdownInterval);
+          window.location.href = redirectUrl;
+        }
+      });
+    }
+
+    // Handle page visibility change (user switches tabs)
+    document.addEventListener("visibilitychange", function () {
+      if (document.hidden) {
+        clearInterval(countdownInterval);
+      }
+    });
+  }
+
+  // Initialize offline page functionality
+  initOfflinePage() {
+    const statusElement = document.getElementById("statusText");
+    const statusContainer = document.getElementById("connectionStatus");
+    let isRedirecting = false;
+    const redirectUrl = this.getBaseUrl();
+
+    // Update connection status display
+    const updateConnectionStatus = (status, message) => {
+      if (statusContainer && statusElement) {
+        statusContainer.className = `connection-status ${status}`;
+        statusElement.textContent = message;
+      }
+    };
+
+    // Simple connectivity check using navigator.onLine
+    const checkConnectivity = () => {
+      if (isRedirecting) return;
+
+      if (navigator.onLine) {
+        console.log("Browser reports online status");
+        handleOnlineDetected();
+      } else {
+        console.log("Browser reports offline status");
+        if (statusContainer) {
+          statusContainer.style.display = "none";
+        }
+      }
+    };
+
+    // Handle when connection is restored
+    const handleOnlineDetected = () => {
+      if (isRedirecting) return;
+
+      isRedirecting = true;
+      updateConnectionStatus("online", "🎉 Connection restored! Redirecting to main site...");
+
+      console.log("Connection restored, redirecting to main site");
+
+      // Preserve user's last visited section when redirecting
+      const savedSection = localStorage.getItem("spaCurrentSection");
+      let finalRedirectUrl = redirectUrl;
+
+      if (savedSection && savedSection !== "home") {
+        finalRedirectUrl += "?restore=" + savedSection;
+      }
+
+      // Redirect after a short delay to show the message
+      setTimeout(() => {
+        window.location.href = finalRedirectUrl;
+      }, 2000);
+    };
+
+    // Function to redirect to main site
+    window.redirectToMainSite = () => {
+      const savedSection = localStorage.getItem("spaCurrentSection");
+      let finalRedirectUrl = redirectUrl;
+
+      if (savedSection && savedSection !== "home") {
+        finalRedirectUrl += "?restore=" + savedSection;
+      }
+
+      window.location.href = finalRedirectUrl;
+    };
+
+    // Listen for browser online event
+    window.addEventListener("online", () => {
+      console.log("Browser online event detected");
+      setTimeout(checkConnectivity, 500);
+    });
+
+    // Listen for browser offline event
+    window.addEventListener("offline", () => {
+      console.log("Browser offline event detected");
+      if (statusContainer) {
+        statusContainer.style.display = "none";
+      }
+      isRedirecting = false;
+    });
+
+    // Lightweight periodic connectivity check
+    const startConnectivityMonitoring = () => {
+      setTimeout(checkConnectivity, 2000);
+
+      setInterval(() => {
+        if (!isRedirecting) {
+          checkConnectivity();
+        }
+      }, 10000);
+    };
+
+    // Handle page visibility change (when user returns to tab)
+    document.addEventListener("visibilitychange", () => {
+      if (!document.hidden && !isRedirecting) {
+        setTimeout(checkConnectivity, 500);
+      }
+    });
+
+    // Auto-redirect countdown
+    let countdownSeconds = 5;
+    const countdownElement = document.getElementById("countdown");
+
+    const startCountdown = () => {
+      const countdownInterval = setInterval(() => {
+        countdownSeconds--;
+        if (countdownElement) {
+          countdownElement.textContent = countdownSeconds;
+        }
+
+        if (countdownSeconds <= 0) {
+          clearInterval(countdownInterval);
+          window.redirectToMainSite();
+        }
+      }, 1000);
+    };
+
+    // Initialize when page loads
+    console.log("Offline page loaded, starting countdown and connectivity monitoring");
+    startCountdown();
+    startConnectivityMonitoring();
+  }
+}
+
+// Initialize error page manager when DOM is ready
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', () => {
+    new ErrorPageManager();
+  });
+} else {
+  new ErrorPageManager();
+}

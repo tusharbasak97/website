@@ -2454,3 +2454,226 @@ body.offline::before {
 .form-group {
   position: relative;
 }
+
+/* ============================== Error Pages (404 & Offline) ============================ */
+/* Centralized styles for 404 and offline pages */
+
+.error-page-body,
+.offline-page-body {
+  font-family: var(--font-primary);
+  background: var(--bg-black-900);
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-black-900);
+  line-height: 1.5;
+  margin: 0;
+  padding: 0;
+}
+
+.error-container,
+.offline-container {
+  text-align: center;
+  max-width: 600px;
+  padding: 3rem 2rem;
+  background: var(--bg-black-100);
+  border-radius: 20px;
+  box-shadow: var(--shadow-medium);
+  border: 1px solid var(--bg-black-50);
+  position: relative;
+  overflow: hidden;
+}
+
+.error-container::before,
+.offline-container::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: var(--gradient-primary);
+}
+
+.error-code {
+  font-size: 8rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+  background: var(--gradient-primary);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-shadow: none;
+}
+
+.offline-icon {
+  font-size: 4rem;
+  margin-bottom: 1rem;
+  background: var(--gradient-primary);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.error-message,
+.offline-title {
+  font-size: 2rem;
+  margin-bottom: 1.5rem;
+  color: var(--text-black-900);
+  font-weight: 600;
+}
+
+.offline-title {
+  font-weight: 700;
+  margin-bottom: 1rem;
+}
+
+.error-description,
+.offline-message {
+  font-size: 1.1rem;
+  margin-bottom: 2rem;
+  color: var(--text-black-700);
+  line-height: 1.6;
+}
+
+.countdown-text,
+.redirect-message {
+  font-size: 0.9rem;
+  color: var(--text-black-700);
+  margin-bottom: 2rem;
+  opacity: 0.8;
+}
+
+.redirect-message {
+  margin-top: 1.5rem;
+  font-size: 1rem;
+  font-weight: 500;
+  opacity: 1;
+}
+
+.countdown {
+  font-weight: 600;
+  color: var(--skin-color);
+}
+
+.retry-btn {
+  display: inline-block;
+  padding: 12px 35px;
+  background: var(--gradient-primary);
+  color: var(--bg-black-900);
+  text-decoration: none;
+  border-radius: 40px;
+  font-weight: 500;
+  font-family: var(--font-decorative);
+  font-size: 18px;
+  transition: all 0.3s ease;
+  border: none;
+  cursor: pointer;
+  margin-top: 1rem;
+}
+
+.retry-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-heavy);
+  filter: brightness(0.9);
+}
+
+.cached-content {
+  margin-top: 2rem;
+  padding: 1.5rem;
+  background: var(--bg-black-50);
+  border-radius: 15px;
+  border: 1px solid var(--bg-black-50);
+}
+
+.cached-content h3 {
+  color: var(--text-black-900);
+  margin-bottom: 1rem;
+  font-weight: 600;
+}
+
+.offline-link {
+  color: var(--text-black-700);
+  text-decoration: none;
+  display: block;
+  padding: 8px 12px;
+  margin: 4px 0;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+  border: 1px solid transparent;
+}
+
+.offline-link:hover {
+  background: linear-gradient(135deg, var(--skin-color), rgba(var(--skin-color-rgb, 255, 153, 0), 0.1));
+  color: var(--skin-color);
+  border-color: rgba(var(--skin-color-rgb, 255, 153, 0), 0.3);
+  transform: translateX(5px);
+}
+
+.connection-status {
+  margin-top: 1.5rem;
+  padding: 12px;
+  border-radius: 8px;
+  font-weight: 500;
+  text-align: center;
+  display: none;
+}
+
+.connection-status.online {
+  background: rgba(16, 185, 129, 0.1);
+  color: #10b981;
+  border: 1px solid rgba(16, 185, 129, 0.3);
+  display: block;
+}
+
+.connection-status.checking {
+  background: rgba(245, 158, 11, 0.1);
+  color: #f59e0b;
+  border: 1px solid rgba(245, 158, 11, 0.3);
+  display: block;
+}
+
+/* Error page responsive design */
+@media (max-width: 768px) {
+  .error-code {
+    font-size: 6rem;
+  }
+
+  .error-message,
+  .offline-title {
+    font-size: 1.5rem;
+  }
+
+  .error-container,
+  .offline-container {
+    padding: 2rem 1rem;
+    margin: 1rem;
+  }
+
+  .retry-btn {
+    padding: 10px 25px;
+    font-size: 16px;
+  }
+
+  .offline-link {
+    padding: 10px;
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 480px) {
+  .error-code {
+    font-size: 4rem;
+  }
+
+  .error-message,
+  .offline-title {
+    font-size: 1.2rem;
+  }
+
+  .error-description,
+  .offline-message {
+    font-size: 1rem;
+  }
+}
