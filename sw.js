@@ -163,10 +163,43 @@ self.addEventListener('install', (event) => {
   swLog('Installing with enhanced caching strategies...');
   event.waitUntil(
     Promise.all([
-      // Cache static resources
-      caches.open(CACHE_NAME).then((cache) => {
+      // Cache static resources with error handling
+      caches.open(CACHE_NAME).then(async (cache) => {
         swLog('Service Worker: Caching static assets');
-        return cache.addAll(STATIC_CACHE_URLS);
+
+        // Cache critical pages first (offline.html and 404.html)
+        const criticalPages = [
+          basePath + '/offline.html',
+          basePath + '/404.html',
+          basePath + '/index.html',
+          basePath + '/'
+        ];
+
+        for (const url of criticalPages) {
+          try {
+            const response = await fetch(url);
+            if (response.ok) {
+              await cache.put(url, response);
+              swLog('Service Worker: Successfully cached critical page:', url);
+            }
+          } catch (error) {
+            swLog('Service Worker: Failed to cache critical page:', url, error);
+          }
+        }
+
+        // Then cache other static resources
+        const remainingUrls = STATIC_CACHE_URLS.filter(url => !criticalPages.includes(url));
+        return Promise.allSettled(
+          remainingUrls.map(url =>
+            fetch(url).then(response => {
+              if (response.ok) {
+                return cache.put(url, response);
+              }
+            }).catch(error => {
+              swLog('Failed to cache static resource:', url, error);
+            })
+          )
+        );
       }),
 
       // Pre-cache images with error handling
@@ -306,6 +339,8 @@ const handleExternalRequest = async (request) => {
 
 // Handle navigation requests with enhanced fallbacks
 const handleNavigationRequest = async (request) => {
+  const requestUrl = new URL(request.url);
+
   try {
     // Try network first for fresh content
     const networkResponse = await CacheStrategies.networkFirst(request, RUNTIME_CACHE, 2000);
@@ -313,24 +348,68 @@ const handleNavigationRequest = async (request) => {
   } catch (error) {
     swLog('Navigation request failed, checking cache and fallbacks:', request.url);
 
-    // Try cache
+    // Try cache first - check for exact match
     const cache = await caches.open(CACHE_NAME);
-    const cachedResponse = await cache.match(request);
+    let cachedResponse = await cache.match(request);
+
+    // If no exact match, try index.html for SPA routes
+    if (!cachedResponse && isValidRoute(request.url)) {
+      const indexUrl = basePath + '/index.html';
+      cachedResponse = await cache.match(indexUrl);
+
+      if (!cachedResponse) {
+        // Try root index as fallback
+        cachedResponse = await cache.match(basePath + '/');
+      }
+    }
 
     if (cachedResponse) {
+      swLog('Service Worker: Serving cached content for:', request.url);
       return cachedResponse;
     }
 
-    // Determine appropriate fallback
-    const requestUrl = new URL(request.url);
+    // Determine appropriate fallback based on route validity
     if (!isValidRoute(request.url)) {
       swLog('Service Worker: Invalid route, serving 404 page');
-      return caches.match(NOT_FOUND_URL);
+      const notFoundResponse = await caches.match(NOT_FOUND_URL);
+      if (notFoundResponse) {
+        return notFoundResponse;
+      }
     }
 
-    // Valid route but offline
+    // Valid route but offline - serve offline page
     swLog('Service Worker: Valid route but offline, serving offline page');
-    return caches.match(OFFLINE_URL);
+    const offlineResponse = await caches.match(OFFLINE_URL);
+    if (offlineResponse) {
+      return offlineResponse;
+    }
+
+    // Ultimate fallback - return a basic offline response
+    return new Response(`
+      <!DOCTYPE html>
+      <html>
+        <head>
+          <title>Offline - Tushar Basak Portfolio</title>
+          <meta charset="UTF-8">
+          <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        </head>
+        <body>
+          <h1>You're Offline</h1>
+          <p>Please check your internet connection and try again.</p>
+          <script>
+            setTimeout(() => {
+              window.location.reload();
+            }, 5000);
+          </script>
+        </body>
+      </html>
+    `, {
+      status: 200,
+      statusText: 'OK',
+      headers: {
+        'Content-Type': 'text/html; charset=utf-8',
+      },
+    });
   }
 };
 
@@ -421,8 +500,9 @@ const isValidRoute = (url) => {
     return true;
   }
 
-  // SPA routes (no extension, no query params)
-  if (!pathname.includes('.') && !pathname.includes('?')) {
+  // For SPA - any path without extension should be treated as valid route
+  // This allows the main app to handle routing and show 404 if needed
+  if (!pathname.includes('.')) {
     return true;
   }
 
@@ -620,6 +700,25 @@ self.addEventListener('message', (event) => {
   if (event.data && event.data.type === 'PREFETCH_RESOURCES') {
     const resources = event.data.resources || [];
     event.waitUntil(prefetchResources(resources));
+  }
+
+  if (event.data && event.data.type === 'SAVE_CURRENT_SECTION') {
+    // Store current section for offline/online transitions
+    const section = event.data.section;
+    swLog('Service Worker: Saving current section:', section);
+    // This could be stored in IndexedDB for persistence across sessions
+  }
+
+  if (event.data && event.data.type === 'CHECK_OFFLINE_CACHE') {
+    // Check if offline page is properly cached
+    caches.open(CACHE_NAME).then(cache => {
+      return cache.match(OFFLINE_URL);
+    }).then(response => {
+      event.ports[0].postMessage({
+        offlineCached: !!response,
+        url: OFFLINE_URL
+      });
+    });
   }
 });
 

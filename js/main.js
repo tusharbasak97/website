@@ -739,6 +739,25 @@ function checkCacheStatus() {
       { type: 'GET_CACHE_STATUS' },
       [messageChannel.port2]
     );
+
+    // Also check if offline page is cached
+    const offlineCheckChannel = new MessageChannel();
+    offlineCheckChannel.port1.onmessage = (event) => {
+      const { offlineCached, url } = event.data;
+      console.log('Offline Cache Status:', {
+        cached: offlineCached,
+        url: url
+      });
+
+      if (!offlineCached) {
+        console.warn('Offline page not cached! This may cause issues when going offline.');
+      }
+    };
+
+    navigator.serviceWorker.controller.postMessage(
+      { type: 'CHECK_OFFLINE_CACHE' },
+      [offlineCheckChannel.port2]
+    );
   }
 }
 
@@ -785,7 +804,7 @@ function handleOnline() {
 
   // Redirect to main site if we're on the offline page
   const currentPath = window.location.pathname;
-  const isOnOfflinePage = currentPath === '/offline.html' || currentPath === '/website/offline.html';
+  const isOnOfflinePage = currentPath.endsWith('/offline.html');
 
   if (isOnOfflinePage) {
     // Get the appropriate base URL
@@ -808,6 +827,7 @@ function handleOnline() {
       redirectUrl += '?restore=' + savedSection;
     }
 
+    console.log('Redirecting from offline page to:', redirectUrl);
     setTimeout(() => {
       window.location.href = redirectUrl;
     }, 1000);
@@ -818,14 +838,20 @@ function handleOffline() {
   console.log('Connection lost');
   updateOnlineStatus();
 
-  // Notification removed to eliminate banner popups
+  // Save current section before going offline
+  if (window.SPANavigation) {
+    const currentSection = window.SPANavigation.getCurrentSection();
+    localStorage.setItem('spaCurrentSection', currentSection);
+    console.log('Saved current section before going offline:', currentSection);
+  }
 
   // Redirect to offline page after a short delay if not already there
   setTimeout(() => {
     const currentPath = window.location.pathname;
-    const isOnOfflinePage = currentPath === '/offline.html' || currentPath === '/website/offline.html';
+    const isOnOfflinePage = currentPath.endsWith('/offline.html');
+    const isOn404Page = currentPath.endsWith('/404.html');
 
-    if (!navigator.onLine && !isOnOfflinePage) {
+    if (!navigator.onLine && !isOnOfflinePage && !isOn404Page) {
       console.log('Redirecting to offline page');
 
       // Determine the correct offline page path based on current environment
@@ -840,6 +866,7 @@ function handleOffline() {
         offlineUrl = '/offline.html';
       }
 
+      console.log('Navigating to offline page:', offlineUrl);
       window.location.href = offlineUrl;
     }
   }, 2000);
@@ -900,17 +927,11 @@ function initialize404Handling() {
     '/index.html',
     '/offline.html',
     '/404.html',
-    '/test-offline.html',
-    '/test-404.html',
-    '/test-complete-offline.html',
     // GitHub Pages paths
     '/website/',
     '/website/index.html',
     '/website/offline.html',
-    '/website/404.html',
-    '/website/test-offline.html',
-    '/website/test-404.html',
-    '/website/test-complete-offline.html'
+    '/website/404.html'
   ];
 
   // Check if it's a valid file extension (assets)
@@ -920,9 +941,18 @@ function initialize404Handling() {
   // Check if it's a valid GitHub Pages asset path
   const isGitHubPagesAsset = currentPath.startsWith('/website/') && isAssetFile;
 
-  // If it's not a valid route and not an asset file, redirect to 404
-  if (!validRoutes.includes(currentPath) && !isAssetFile && !isGitHubPagesAsset && currentPath !== '/404.html' && currentPath !== '/website/404.html') {
+  // For SPA - allow any path without extension (let the app handle routing)
+  const isSPARoute = !currentPath.includes('.') && !currentPath.includes('?');
+
+  // If it's not a valid route, not an asset file, and not a potential SPA route, redirect to 404
+  if (!validRoutes.includes(currentPath) && !isAssetFile && !isGitHubPagesAsset && !isSPARoute && !currentPath.endsWith('/404.html')) {
     console.log('Invalid route detected:', currentPath);
+
+    // Save current section before redirecting
+    if (window.SPANavigation) {
+      const currentSection = window.SPANavigation.getCurrentSection();
+      localStorage.setItem('spaCurrentSection', currentSection);
+    }
 
     // Determine the correct 404 page path based on current environment
     let notFoundUrl;
@@ -936,6 +966,7 @@ function initialize404Handling() {
       notFoundUrl = '/404.html';
     }
 
+    console.log('Redirecting to 404 page:', notFoundUrl);
     window.location.replace(notFoundUrl);
   }
 }

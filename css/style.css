@@ -2123,8 +2123,8 @@ body.offline::before {
     font-size: 9px;
   }
 }
-/* Consolidated 48rem media query */
-@media screen and (max-width: 48rem) {
+/* Consolidated 64rem media query - Custom cursor disabled for tablet and mobile */
+@media screen and (max-width: 64rem) {
   body {
     cursor: auto;
   }

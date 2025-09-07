@@ -167,23 +167,58 @@ function closeMobileNavigation() {
 /* ============================== Cursor Animation ============================ */
 const cursor1 = document.querySelector(".cursor-1");
 const cursor2 = document.querySelector(".cursor-2");
+
+// Check if device supports custom cursor (desktop only)
+function isDesktopDevice() {
+  return window.innerWidth > 1024 && !('ontouchstart' in window || navigator.maxTouchPoints > 0);
+}
+
 function setCursorCoordinates(e) {
+  if (!isDesktopDevice()) return;
   cursor1.style.top = e.pageY + "px";
   cursor1.style.left = e.pageX + "px";
   cursor2.style.top = e.pageY + "px";
   cursor2.style.left = e.pageX + "px";
 }
 
-window.onmousemove = setCursorCoordinates;
-
 function toggleCursorActivity() {
+  if (!isDesktopDevice()) return;
   cursor1.classList.toggle("active");
   cursor2.classList.toggle("active");
 }
 
+// Only enable cursor functionality on desktop
+if (isDesktopDevice()) {
+  window.onmousemove = setCursorCoordinates;
+}
+
+// Handle window resize to enable/disable cursor functionality
+window.addEventListener('resize', function() {
+  if (isDesktopDevice()) {
+    window.onmousemove = setCursorCoordinates;
+    // Re-enable cursor hover effects for links
+    document.querySelectorAll("a").forEach((links) => {
+      if (!links.onmouseenter) {
+        links.onmouseenter = toggleCursorActivity;
+        links.onmouseleave = toggleCursorActivity;
+      }
+    });
+  } else {
+    window.onmousemove = null;
+    // Remove cursor hover effects for links
+    document.querySelectorAll("a").forEach((links) => {
+      links.onmouseenter = null;
+      links.onmouseleave = null;
+    });
+  }
+});
+
 document.querySelectorAll("a").forEach((links) => {
-  links.onmouseenter = toggleCursorActivity;
-  links.onmouseleave = toggleCursorActivity;
+  // Only add cursor hover effects on desktop
+  if (isDesktopDevice()) {
+    links.onmouseenter = toggleCursorActivity;
+    links.onmouseleave = toggleCursorActivity;
+  }
 
   // Skip URL hiding for SPA navigation links as they're handled separately
   const isSpaNavLink = links.closest('.nav');
