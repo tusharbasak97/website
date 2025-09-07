@@ -49,9 +49,15 @@ website/
 │   ├── style-switcher.css # Theme switcher
 │   └── skins/            # Color theme variations
 ├── js/
-│   ├── script.js         # Main JavaScript functionality
-│   ├── style-switcher.js # Theme switching logic
-│   └── critical-css.js   # Critical CSS loading
+│   ├── script.js              # Main JavaScript functionality
+│   ├── style-switcher.js      # Theme switching logic
+│   ├── critical-css.js        # Critical CSS loading
+│   ├── main.js               # Additional main functionality
+│   ├── preloader.js          # Page loading animations
+│   ├── preloader.min.js      # Minified preloader
+│   ├── spa-navigation.js     # Single Page Application navigation
+│   ├── lazy-loading.js       # Image lazy loading functionality
+│   └── contact-form-limiter.js # Contact form rate limiting
 ├── .well-known/          # Security and verification files
 ├── index.html            # Main HTML file
 ├── offline.html          # Offline fallback page
@@ -73,7 +79,7 @@ website/
 
 ### Color Themes
 
-The website includes 5 pre-built color themes:
+The website includes 3 pre-built color themes:
 - **Theme 1**: Orange (#ff9900)
 - **Theme 2**: Pink (#ff0099)
 - **Theme 3**: Purple (#b23fff)
@@ -138,7 +144,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 ## 📞 Contact
 
 **Tushar Basak**
-- 📧 Email: tushar.basak9936@gmail.com
+- 📧 Email: tusharbasak97@gmail.com
 - 💼 LinkedIn: [linkedin.com/in/tusharbasak97](https://www.linkedin.com/in/tusharbasak97/)
 - 🐙 GitHub: [github.com/tusharbasak97](https://github.com/tusharbasak97/)
 - 🔗 Portfolio: [tusharbasak97.github.io/website](https://tusharbasak97.github.io/website/)
