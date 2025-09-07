@@ -344,6 +344,21 @@ const handleNavigationRequest = async (request) => {
   try {
     // Try network first for fresh content
     const networkResponse = await CacheStrategies.networkFirst(request, RUNTIME_CACHE, 2000);
+
+    // If network response is 404, serve our custom 404 page
+    if (networkResponse.status === 404) {
+      swLog('Service Worker: Network returned 404, serving custom 404 page');
+      const cache = await caches.open(CACHE_NAME);
+      const notFoundResponse = await cache.match(NOT_FOUND_URL);
+      if (notFoundResponse) {
+        return new Response(notFoundResponse.body, {
+          status: 404,
+          statusText: 'Not Found',
+          headers: notFoundResponse.headers
+        });
+      }
+    }
+
     return networkResponse;
   } catch (error) {
     swLog('Navigation request failed, checking cache and fallbacks:', request.url);
@@ -368,18 +383,22 @@ const handleNavigationRequest = async (request) => {
       return cachedResponse;
     }
 
-    // Determine appropriate fallback based on route validity
+    // For invalid routes, always serve custom 404 page
     if (!isValidRoute(request.url)) {
-      swLog('Service Worker: Invalid route, serving 404 page');
-      const notFoundResponse = await caches.match(NOT_FOUND_URL);
+      swLog('Service Worker: Invalid route, serving custom 404 page');
+      const notFoundResponse = await cache.match(NOT_FOUND_URL);
       if (notFoundResponse) {
-        return notFoundResponse;
+        return new Response(notFoundResponse.body, {
+          status: 404,
+          statusText: 'Not Found',
+          headers: notFoundResponse.headers
+        });
       }
     }
 
     // Valid route but offline - serve offline page
     swLog('Service Worker: Valid route but offline, serving offline page');
-    const offlineResponse = await caches.match(OFFLINE_URL);
+    const offlineResponse = await cache.match(OFFLINE_URL);
     if (offlineResponse) {
       return offlineResponse;
     }
@@ -484,7 +503,7 @@ const isValidRoute = (url) => {
     '/404.html'
   ];
 
-  // Check exact matches
+  // Check exact matches for valid routes
   if (validRoutes.includes(relativePath) || validRoutes.includes(pathname)) {
     return true;
   }
@@ -494,18 +513,20 @@ const isValidRoute = (url) => {
     return true;
   }
 
-  // Valid file extensions
+  // Valid file extensions (assets, resources)
   const validExtensions = ['.css', '.js', '.png', '.jpg', '.jpeg', '.webp', '.ico', '.pdf', '.svg', '.woff', '.woff2', '.ttf', '.webmanifest', '.xml', '.txt'];
   if (validExtensions.some(ext => pathname.endsWith(ext))) {
     return true;
   }
 
-  // For SPA - any path without extension should be treated as valid route
-  // This allows the main app to handle routing and show 404 if needed
-  if (!pathname.includes('.')) {
+  // Valid asset directories
+  const validDirectories = ['/assets/', '/css/', '/js/', '/images/'];
+  if (validDirectories.some(dir => pathname.includes(dir))) {
     return true;
   }
 
+  // Everything else is invalid - this will trigger 404 page
+  // This includes random paths like /dfsaf, /random-page, etc.
   return false;
 };
 

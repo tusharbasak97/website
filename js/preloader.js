@@ -6,6 +6,11 @@
 
 class ProfessionalPreloader {
   constructor() {
+    // Check if preloader should be shown immediately before creating elements
+    if (this.shouldSkipPreloader()) {
+      return;
+    }
+
     this.preloader = null;
     this.progressBar = null;
     this.loadingText = null;
@@ -21,22 +26,38 @@ class ProfessionalPreloader {
       'Almost Ready...'
     ];
     this.currentMessageIndex = 0;
-    this.isMobile = this.detectMobile();
-    
-    // Don't show preloader on mobile for better performance
-    if (this.isMobile) {
-      return;
-    }
-    
+
     this.init();
   }
 
+  shouldSkipPreloader() {
+    // More reliable check for preloader state
+    const preloaderShown = sessionStorage.getItem('preloaderShown');
+    const isMobile = this.detectMobile();
+    const isError = document.body.classList.contains('error-page-body') ||
+                    document.body.classList.contains('offline-page-body');
+
+    // Log for debugging
+    console.debug('Preloader check:', { preloaderShown, isMobile, isError });
+
+    return preloaderShown === 'true' || isMobile || isError;
+  }
+
   detectMobile() {
-    return window.innerWidth <= 768 || 
+    return window.innerWidth <= 768 ||
            /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
   }
 
+  isErrorPage() {
+    return document.body.classList.contains('error-page-body') ||
+           document.body.classList.contains('offline-page-body');
+  }
+
   init() {
+    // Set sessionStorage as early as possible to prevent race conditions
+    // Mark that we've started showing the preloader for this session
+    sessionStorage.setItem('preloaderStarted', 'true');
+
     this.createPreloader();
     this.startLoading();
     this.bindEvents();
@@ -101,7 +122,7 @@ class ProfessionalPreloader {
     container.className = 'security-elements';
 
     const icons = ['🔒', '🛡️', '🔐', '⚡'];
-    
+
     icons.forEach((icon, index) => {
       const element = document.createElement('div');
       element.className = 'security-icon';
@@ -128,7 +149,7 @@ class ProfessionalPreloader {
     const executeStep = () => {
       if (currentStep < loadingSteps.length) {
         const step = loadingSteps[currentStep];
-        
+
         setTimeout(() => {
           this.updateProgress(step.progress);
           this.updateMessage(step.message);
@@ -153,7 +174,7 @@ class ProfessionalPreloader {
     const animate = () => {
       if (this.currentProgress < this.targetProgress) {
         this.currentProgress += (this.targetProgress - this.currentProgress) * 0.1;
-        
+
         if (this.progressBar) {
           this.progressBar.style.width = `${this.currentProgress}%`;
         }
@@ -167,7 +188,7 @@ class ProfessionalPreloader {
     if (this.animationFrame) {
       cancelAnimationFrame(this.animationFrame);
     }
-    
+
     animate();
   }
 
@@ -175,7 +196,7 @@ class ProfessionalPreloader {
     if (this.loadingText && messageIndex < this.loadingMessages.length) {
       // Fade out current message
       this.loadingText.style.opacity = '0';
-      
+
       setTimeout(() => {
         this.loadingText.textContent = this.loadingMessages[messageIndex];
         this.loadingText.style.opacity = '1';
@@ -206,6 +227,12 @@ class ProfessionalPreloader {
 
   hidePreloader() {
     if (this.preloader) {
+      // Set preloader as shown - this is key for persistence
+      sessionStorage.setItem('preloaderShown', 'true');
+
+      // Log for debugging
+      console.debug('Preloader hidden, sessionStorage set');
+
       // Final progress update
       this.updateProgress(100);
       this.updateMessage(5);
@@ -213,13 +240,13 @@ class ProfessionalPreloader {
       // Add fade out class
       setTimeout(() => {
         this.preloader.classList.add('fade-out');
-        
+
         // Remove from DOM after animation
         setTimeout(() => {
           if (this.preloader && this.preloader.parentNode) {
             this.preloader.parentNode.removeChild(this.preloader);
           }
-          
+
           // Trigger custom event for other scripts
           document.dispatchEvent(new CustomEvent('preloaderComplete'));
         }, 600);
@@ -283,13 +310,18 @@ class ProfessionalPreloader {
 }
 
 // Initialize preloader when DOM is ready
-if (document.readyState === 'loading') {
-  document.addEventListener('DOMContentLoaded', () => {
+if (!sessionStorage.getItem('preloaderShown')) {
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', () => {
+      new ProfessionalPreloader();
+    });
+  } else {
     new ProfessionalPreloader();
-  });
+  }
 } else {
-  new ProfessionalPreloader();
+  console.debug('Preloader already shown this session, skipping');
 }
 
 // Export for potential external use
 window.ProfessionalPreloader = ProfessionalPreloader;
+
