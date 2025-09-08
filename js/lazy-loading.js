@@ -333,6 +333,12 @@
         // Observe for new images
         observeNewImages();
 
+        // Observe section visibility changes
+        observeSectionChanges();
+
+        // Load images in currently active section
+        loadImagesInActiveSection();
+
         // Add CSS for lazy loading effects
         addLazyLoadingCSS();
 
@@ -385,11 +391,62 @@
         document.head.appendChild(style);
     };
 
+    // Load images in active sections
+    const loadImagesInActiveSection = () => {
+        const activeSection = document.querySelector('.section.active');
+        if (activeSection) {
+            const lazyImages = activeSection.querySelectorAll('img[data-src]');
+            lazyImages.forEach(img => {
+                if (lazyImageObserver) {
+                    lazyImageObserver.unobserve(img);
+                }
+                processLazyImage(img);
+            });
+        }
+    };
+
+    // Observe section visibility changes
+    const observeSectionChanges = () => {
+        const sections = document.querySelectorAll('.section');
+
+        if ('MutationObserver' in window) {
+            const sectionObserver = new MutationObserver((mutations) => {
+                mutations.forEach(mutation => {
+                    if (mutation.type === 'attributes' && mutation.attributeName === 'class') {
+                        const target = mutation.target;
+                        if (target.classList.contains('section') && target.classList.contains('active')) {
+                            // Section became active, load its images
+                            setTimeout(() => {
+                                const lazyImages = target.querySelectorAll('img[data-src]');
+                                lazyImages.forEach(img => {
+                                    if (lazyImageObserver) {
+                                        lazyImageObserver.unobserve(img);
+                                    }
+                                    processLazyImage(img);
+                                });
+                            }, 100); // Small delay to ensure section is fully visible
+                        }
+                    }
+                });
+            });
+
+            sections.forEach(section => {
+                sectionObserver.observe(section, {
+                    attributes: true,
+                    attributeFilter: ['class']
+                });
+            });
+
+            utils.log('Section visibility observer set up');
+        }
+    };
+
     // Public API
     window.LazyLoading = {
         init: initLazyLoading,
         processImage: processLazyImage,
         checkWebPSupport: checkWebPSupport,
+        loadImagesInActiveSection: loadImagesInActiveSection,
         config: LAZY_CONFIG,
         utils: utils
     };
