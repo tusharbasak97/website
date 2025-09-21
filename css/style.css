@@ -893,6 +893,92 @@ body.dark .aside .secured-badge:hover {
 
 /* Dark mode shadow overrides handled by CSS custom properties */
 
+/* ============================== Error Pages Cursor Styling ============================== */
+/* Ensure cursor works on error pages */
+.error-page-body,
+.offline-page-body {
+  cursor: none;
+}
+
+/* Make cursor more visible on error pages for debugging */
+.error-page-body .cursor-1,
+.offline-page-body .cursor-1 {
+  background: var(--gradient-primary);
+  z-index: 10001;
+}
+
+.error-page-body .cursor-2,
+.offline-page-body .cursor-2 {
+  border: 0.1rem solid var(--skin-color);
+  z-index: 10001;
+}
+
+/* ============================== Error Pages Secured Badge Styling ============================== */
+/* Secured badge for 404 and offline pages - exact copy of aside version */
+.error-container .secured-badge,
+.offline-container .secured-badge {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  background: var(--bg-black-100);
+  padding: 8px 14px;
+  border-radius: 12px;
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  color: #00d06fff;
+  border: 1.5px solid #00ff88;
+  margin: 15px auto 0 auto;
+  transition: all 0.3s ease;
+  position: relative;
+  box-shadow: var(--shadow-green);
+  width: fit-content;
+  animation: securedBlink 2s ease-in-out infinite;
+  z-index: 100;
+}
+
+.error-container .secured-badge::before,
+.offline-container .secured-badge::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: var(--gradient-green);
+  border-radius: 10px;
+  z-index: -1;
+}
+
+.error-container .secured-badge i,
+.offline-container .secured-badge i {
+  font-size: 10px;
+  color: #00d06fff;
+  filter: drop-shadow(0 0 2px rgba(0, 255, 136, 0.3));
+}
+
+.error-container .secured-badge:hover,
+.offline-container .secured-badge:hover {
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-green-hover);
+  border-color: #00ff88;
+  animation-play-state: paused;
+}
+
+/* Dark mode adjustments for error pages secured badge */
+body.dark .error-container .secured-badge,
+body.dark .offline-container .secured-badge {
+  background: var(--bg-black-50);
+  box-shadow: var(--shadow-green);
+}
+
+body.dark .error-container .secured-badge:hover,
+body.dark .offline-container .secured-badge:hover {
+  box-shadow: var(--shadow-green-hover);
+}
+
 /* Mobile responsive secured badge - consolidated below */
 
 .aside .nav li {
@@ -2120,6 +2206,18 @@ body.offline::before {
     top: 100px;
   }
   .aside .secured-badge i {
+    font-size: 9px;
+  }
+
+  /* Error pages secured badge responsive */
+  .error-container .secured-badge,
+  .offline-container .secured-badge {
+    padding: 6px 12px;
+    font-size: 9px;
+    border-radius: 10px;
+  }
+  .error-container .secured-badge i,
+  .offline-container .secured-badge i {
     font-size: 9px;
   }
 }
