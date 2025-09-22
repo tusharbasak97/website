@@ -10,7 +10,9 @@
   --shadow-light: 0 2px 8px rgba(0, 0, 0, 0.08);
   --shadow-medium: 0 4px 15px rgba(0, 0, 0, 0.1);
   --shadow-heavy: 0 8px 25px rgba(0, 0, 0, 0.15);
-  --shadow-layered: 0 2px 2px rgba(0, 0, 0, 0.12), 0 4px 4px rgba(0, 0, 0, 0.12), 0 8px 8px rgba(0, 0, 0, 0.12), 0 16px 16px rgba(0, 0, 0, 0.12), 0 32px 32px rgba(0, 0, 0, 0.12);
+  --shadow-layered: 0 2px 2px rgba(0, 0, 0, 0.12), 0 4px 4px rgba(0, 0, 0, 0.12),
+    0 8px 8px rgba(0, 0, 0, 0.12), 0 16px 16px rgba(0, 0, 0, 0.12),
+    0 32px 32px rgba(0, 0, 0, 0.12);
   --shadow-subtle: 0 4px 8px rgba(0, 0, 0, 0.08), 0 2px 4px rgba(0, 0, 0, 0.06);
   --shadow-focus: 0 0 0 2px rgba(var(--skin-color-rgb, 255, 107, 107), 0.1);
   --shadow-green: 0 2px 8px rgba(0, 255, 136, 0.15);
@@ -43,14 +45,43 @@
   --font-decorative: "Kaushan Script", cursive;
 
   /* Common gradient definitions */
-  --gradient-primary: linear-gradient(135deg, var(--skin-color), rgba(var(--skin-color-rgb, 255, 107, 107), 0.8));
-  --gradient-vertical: linear-gradient(180deg, var(--skin-color), rgba(var(--skin-color-rgb, 255, 107, 107), 0.8));
-  --gradient-horizontal: linear-gradient(90deg, var(--skin-color), rgba(var(--skin-color-rgb, 255, 107, 107), 0.8));
-  --gradient-card: linear-gradient(135deg, var(--skin-color) 0%, rgba(var(--skin-color-rgb, 255, 107, 107), 0.95) 100%);
-  --gradient-overlay: linear-gradient(135deg, rgba(255, 255, 255, 0.15) 0%, rgba(255, 255, 255, 0.08) 100%);
+  --gradient-primary: linear-gradient(
+    135deg,
+    var(--skin-color),
+    rgba(var(--skin-color-rgb, 255, 107, 107), 0.8)
+  );
+  --gradient-vertical: linear-gradient(
+    180deg,
+    var(--skin-color),
+    rgba(var(--skin-color-rgb, 255, 107, 107), 0.8)
+  );
+  --gradient-horizontal: linear-gradient(
+    90deg,
+    var(--skin-color),
+    rgba(var(--skin-color-rgb, 255, 107, 107), 0.8)
+  );
+  --gradient-card: linear-gradient(
+    135deg,
+    var(--skin-color) 0%,
+    rgba(var(--skin-color-rgb, 255, 107, 107), 0.95) 100%
+  );
+  --gradient-overlay: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.15) 0%,
+    rgba(255, 255, 255, 0.08) 100%
+  );
   --gradient-shadow: linear-gradient(transparent, rgba(0, 0, 0, 0.1));
-  --gradient-shimmer: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-  --gradient-green: linear-gradient(135deg, rgba(0, 255, 136, 0.1), rgba(0, 255, 136, 0.05));
+  --gradient-shimmer: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.2),
+    transparent
+  );
+  --gradient-green: linear-gradient(
+    135deg,
+    rgba(0, 255, 136, 0.1),
+    rgba(0, 255, 136, 0.05)
+  );
 }
 ::-moz-selection {
   color: #ffffff;
@@ -106,9 +137,21 @@ body {
 }
 
 /* Ensure all elements inherit Poppins font */
-input, textarea, select, button,
-h1, h2, h3, h4, h5, h6,
-p, span, div, a, li {
+input,
+textarea,
+select,
+button,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+span,
+div,
+a,
+li {
   font-family: inherit;
 }
 
@@ -879,104 +922,6 @@ body.dark .loading-overlay {
     opacity: 0.7;
     box-shadow: 0 2px 8px rgba(0, 255, 136, 0.3);
   }
-}
-
-/* Dark mode adjustments for secured badge */
-body.dark .aside .secured-badge {
-  background: var(--bg-black-50);
-  box-shadow: var(--shadow-green);
-}
-
-body.dark .aside .secured-badge:hover {
-  box-shadow: var(--shadow-green-hover);
-}
-
-/* Dark mode shadow overrides handled by CSS custom properties */
-
-/* ============================== Error Pages Cursor Styling ============================== */
-/* Ensure cursor works on error pages */
-.error-page-body,
-.offline-page-body {
-  cursor: none;
-}
-
-/* Make cursor more visible on error pages for debugging */
-.error-page-body .cursor-1,
-.offline-page-body .cursor-1 {
-  background: var(--gradient-primary);
-  z-index: 10001;
-}
-
-.error-page-body .cursor-2,
-.offline-page-body .cursor-2 {
-  border: 0.1rem solid var(--skin-color);
-  z-index: 10001;
-}
-
-/* ============================== Error Pages Secured Badge Styling ============================== */
-/* Secured badge for 404 and offline pages - exact copy of aside version */
-.error-container .secured-badge,
-.offline-container .secured-badge {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 6px;
-  background: var(--bg-black-100);
-  padding: 8px 14px;
-  border-radius: 12px;
-  font-size: 10px;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.8px;
-  color: #00d06fff;
-  border: 1.5px solid #00ff88;
-  margin: 15px auto 0 auto;
-  transition: all 0.3s ease;
-  position: relative;
-  box-shadow: var(--shadow-green);
-  width: fit-content;
-  animation: securedBlink 2s ease-in-out infinite;
-  z-index: 100;
-}
-
-.error-container .secured-badge::before,
-.offline-container .secured-badge::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: var(--gradient-green);
-  border-radius: 10px;
-  z-index: -1;
-}
-
-.error-container .secured-badge i,
-.offline-container .secured-badge i {
-  font-size: 10px;
-  color: #00d06fff;
-  filter: drop-shadow(0 0 2px rgba(0, 255, 136, 0.3));
-}
-
-.error-container .secured-badge:hover,
-.offline-container .secured-badge:hover {
-  transform: translateY(-1px);
-  box-shadow: var(--shadow-green-hover);
-  border-color: #00ff88;
-  animation-play-state: paused;
-}
-
-/* Dark mode adjustments for error pages secured badge */
-body.dark .error-container .secured-badge,
-body.dark .offline-container .secured-badge {
-  background: var(--bg-black-50);
-  box-shadow: var(--shadow-green);
-}
-
-body.dark .error-container .secured-badge:hover,
-body.dark .offline-container .secured-badge:hover {
-  box-shadow: var(--shadow-green-hover);
 }
 
 /* Mobile responsive secured badge - consolidated below */
@@ -2078,7 +2023,9 @@ body.offline::before {
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
-  color: var(--skin-color); /* Fallback for browsers that don't support background-clip: text */
+  color: var(
+    --skin-color
+  ); /* Fallback for browsers that don't support background-clip: text */
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 1px;
@@ -2542,12 +2489,6 @@ body.offline::before {
   }
 }
 
-
-
-
-
-
-
 /* Ensure suggestion container is properly positioned */
 .form-group {
   position: relative;
@@ -2703,7 +2644,11 @@ body.offline::before {
 }
 
 .offline-link:hover {
-  background: linear-gradient(135deg, var(--skin-color), rgba(var(--skin-color-rgb, 255, 153, 0), 0.1));
+  background: linear-gradient(
+    135deg,
+    var(--skin-color),
+    rgba(var(--skin-color-rgb, 255, 153, 0), 0.1)
+  );
   color: var(--skin-color);
   border-color: rgba(var(--skin-color-rgb, 255, 153, 0), 0.3);
   transform: translateX(5px);
