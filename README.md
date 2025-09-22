@@ -42,26 +42,29 @@ website/
 ├── assets/
 │   ├── images/           # Profile images and icons
 │   ├── site.webmanifest  # PWA manifest
-│   └── browserconfig.xml # Browser configuration
+│   ├── browserconfig.xml # Browser configuration
+│   ├── pgp-key.txt       # PGP key for security.txt
+│   └── resume.pdf        # Professional resume
 ├── css/
 │   ├── style.css         # Main stylesheet
-│   ├── preloader.css # Loading animation styles
+│   ├── preloader.css     # Loading animation styles
 │   ├── style-switcher.css # Theme switcher
 │   └── skins/            # Color theme variations
 ├── js/
-│   ├── script.js              # Main JavaScript functionality
-│   ├── style-switcher.js      # Theme switching logic
-│   ├── critical-css.js        # Critical CSS loading
-│   ├── main.js               # Additional main functionality
-│   ├── preloader.js          # Page loading animations
-│   ├── preloader.min.js      # Minified preloader
-│   ├── spa-navigation.js     # Single Page Application navigation
-│   ├── lazy-loading.js       # Image lazy loading functionality
+│   ├── main.js           # Main JavaScript functionality
+│   ├── style-switcher.js # Theme switching logic
+│   ├── sw.js             # Service Worker
+│   ├── spa-navigation.js # Single Page Application navigation
+│   ├── lazy-loading.js   # Image lazy loading functionality
+│   ├── preloader.js      # Page loading animations
 │   └── contact-form-limiter.js # Contact form rate limiting
-├── .well-known/          # Security and verification files
+├── .well-known/
+│   └── security.txt      # Security contact information
 ├── index.html            # Main HTML file
 ├── offline.html          # Offline fallback page
-├── sw.js                 # Service Worker
+├── 404.html              # Not found page
+├── security-policy.html  # Security policy page
+├── security-acknowledgments.html # Security hall of fame
 ├── sitemap.xml           # SEO sitemap
 ├── robots.txt            # Search engine directives
 └── .htaccess             # Apache server configuration
@@ -80,6 +83,7 @@ website/
 ### Color Themes
 
 The website includes 3 pre-built color themes:
+
 - **Theme 1**: Orange (#ff9900)
 - **Theme 2**: Pink (#ff0099)
 - **Theme 3**: Purple (#b23fff)
@@ -101,6 +105,8 @@ Themes can be switched using the style switcher in the top-right corner.
 - **Referrer Policy**: Controls referrer information
 - **HTTPS Enforcement**: Secure connections only
 - **Input Validation**: Form validation and sanitization
+- **Security.txt**: RFC-compliant security contact information
+- **PGP Key**: Secure communication for security researchers
 
 ## 📱 PWA Features
 
@@ -144,6 +150,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 ## 📞 Contact
 
 **Tushar Basak**
+
 - 📧 Email: tusharbasak97@gmail.com
 - 💼 LinkedIn: [linkedin.com/in/tusharbasak97](https://www.linkedin.com/in/tusharbasak97/)
 - 🐙 GitHub: [github.com/tusharbasak97](https://github.com/tusharbasak97/)
@@ -152,6 +159,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 ## 🏆 Certifications & Skills
 
 ### 🎓 Certifications
+
 - Cybersecurity Fundamentals - Tata Strive | SAP India
 - Python for Cybersecurity - Coursera
 - AWS Cloud Security - Amazon Web Services
@@ -160,6 +168,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 - SOC Analyst Level 1 - SANS Institute
 
 ### 💻 Technical Skills
+
 - **Security Tools**: Wireshark, Nmap, Metasploit, Burp Suite, Nessus
 - **SIEM Platforms**: Splunk, QRadar, ELK Stack
 - **Cloud Security**: AWS, Azure, Google Cloud Platform

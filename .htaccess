@@ -177,7 +177,7 @@ ErrorDocument 500 /website/offline.html
     RewriteEngine On
 
     # Handle service worker
-    RewriteRule ^sw\.js$ /website/sw.js [L]
+    RewriteRule ^sw\.js$ /website/js/sw.js [L]
 
     # Handle manifest
     RewriteRule ^manifest\.json$ /website/assets/site.webmanifest [L]

@@ -1,15 +1,29 @@
 # Robots.txt for Tushar Basak - Cybersecurity Analyst Portfolio
 # https://tusharbasak97.github.io/website/
-# Last updated: January 2025
+# Last updated: September 2025
 
 User-agent: *
 Allow: /
 
-# Sitemap location
+# Don't index error pages
+Disallow: /404.html
+Disallow: /offline.html
+
+# Don't index service worker
+Disallow: /js/sw.js
+
+# Don't index raw CSS and JS files
+Disallow: /css/
+Disallow: /js/
+
+# Allow important images
+Allow: /assets/images/
+
+# Point to sitemap
 Sitemap: https://tusharbasak97.github.io/website/sitemap.xml
 
-# Crawl-delay for respectful crawling
-Crawl-delay: 1
+# Crawl-delay for all bots
+Crawl-delay: 10
 
 # Allow all major search engines with optimized crawl delays
 User-agent: Googlebot

@@ -42,18 +42,25 @@
 
     <!-- Critical Theme Detection - Must run before CSS -->
     <script>
-      (function() {
-        const savedTheme = localStorage.getItem('theme');
-        const savedColor = localStorage.getItem('colorScheme') || 'color-1';
-        const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      (function () {
+        const savedTheme = localStorage.getItem("theme");
+        const savedColor = localStorage.getItem("colorScheme") || "color-1";
+        const systemPrefersDark = window.matchMedia(
+          "(prefers-color-scheme: dark)"
+        ).matches;
 
-        let shouldUseDarkMode = savedTheme ? savedTheme === 'dark' : systemPrefersDark;
+        let shouldUseDarkMode = savedTheme
+          ? savedTheme === "dark"
+          : systemPrefersDark;
 
         if (shouldUseDarkMode) {
-          document.documentElement.classList.add('dark');
+          document.documentElement.classList.add("dark");
         }
 
-        window.errorPageTheme = { darkMode: shouldUseDarkMode, colorScheme: savedColor };
+        window.errorPageTheme = {
+          darkMode: shouldUseDarkMode,
+          colorScheme: savedColor,
+        };
       })();
     </script>
 
@@ -61,19 +68,43 @@
     <link rel="stylesheet" href="css/style.css" />
     <!-- Dynamic color scheme loading -->
     <script>
-      document.write('<link rel="stylesheet" href="css/skins/' + (window.errorPageTheme ? window.errorPageTheme.colorScheme : 'color-1') + '.css" />');
+      document.write(
+        '<link rel="stylesheet" href="css/skins/' +
+          (window.errorPageTheme
+            ? window.errorPageTheme.colorScheme
+            : "color-1") +
+          '.css" />'
+      );
     </script>
-    <link rel="stylesheet" href="css/skins/color-1.css" class="alternative-style" title="color-1" disabled />
-    <link rel="stylesheet" href="css/skins/color-2.css" class="alternative-style" title="color-2" disabled />
-    <link rel="stylesheet" href="css/skins/color-3.css" class="alternative-style" title="color-3" disabled />
+    <link
+      rel="stylesheet"
+      href="css/skins/color-1.css"
+      class="alternative-style"
+      title="color-1"
+      disabled
+    />
+    <link
+      rel="stylesheet"
+      href="css/skins/color-2.css"
+      class="alternative-style"
+      title="color-2"
+      disabled
+    />
+    <link
+      rel="stylesheet"
+      href="css/skins/color-3.css"
+      class="alternative-style"
+      title="color-3"
+      disabled
+    />
     <link rel="stylesheet" href="css/style-switcher.css" />
   </head>
   <body class="error-page-body">
     <script>
       if (window.errorPageTheme && window.errorPageTheme.darkMode) {
-        document.body.classList.add('dark', 'theme-override');
+        document.body.classList.add("dark", "theme-override");
       } else {
-        document.body.classList.add('theme-override');
+        document.body.classList.add("theme-override");
       }
     </script>
 
@@ -105,13 +136,13 @@
 
     <!-- Error Page Cursor Initialization -->
     <script>
-      document.addEventListener('DOMContentLoaded', function() {
+      document.addEventListener("DOMContentLoaded", function () {
         // Initialize cursor specifically for error pages
         const cursor1 = document.querySelector(".cursor-1");
         const cursor2 = document.querySelector(".cursor-2");
 
         if (cursor1 && cursor2) {
-          console.log('Initializing cursor on 404 page');
+          console.log("Initializing cursor on 404 page");
 
           function setCursorCoordinates(e) {
             cursor1.style.top = e.pageY + "px";
@@ -120,7 +151,7 @@
             cursor2.style.left = e.pageX + "px";
           }
 
-          window.addEventListener('mousemove', setCursorCoordinates);
+          window.addEventListener("mousemove", setCursorCoordinates);
 
           function toggleCursorActivity() {
             cursor1.classList.toggle("active");
@@ -129,13 +160,13 @@
 
           // Add hover effects to all links and buttons
           document.querySelectorAll("a, button, .btn").forEach((element) => {
-            element.addEventListener('mouseenter', toggleCursorActivity);
-            element.addEventListener('mouseleave', toggleCursorActivity);
+            element.addEventListener("mouseenter", toggleCursorActivity);
+            element.addEventListener("mouseleave", toggleCursorActivity);
           });
 
-          console.log('Cursor initialized successfully on 404 page');
+          console.log("Cursor initialized successfully on 404 page");
         } else {
-          console.log('Cursor elements not found on 404 page');
+          console.log("Cursor elements not found on 404 page");
         }
       });
     </script>

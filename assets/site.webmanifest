@@ -6,7 +6,7 @@
   "scope": "/website/",
   "id": "/website/",
   "display": "standalone",
-  "display_override": ["window-controls-overlay", "standalone", "minimal-ui"],
+  "display_override": ["standalone", "minimal-ui", "window-controls-overlay"],
   "orientation": "portrait-primary",
   "theme_color": "#ec1839",
   "background_color": "#f2f2fc",
@@ -78,6 +78,18 @@
       "type": "image/webp",
       "form_factor": "narrow",
       "label": "Tushar Basak - Cybersecurity Professional"
+    },
+    {
+      "src": "assets/images/portfolio/Python.webp",
+      "sizes": "300x300",
+      "type": "image/webp",
+      "label": "Python Security Projects"
+    },
+    {
+      "src": "assets/images/portfolio/Cybersecurity.webp",
+      "sizes": "300x300",
+      "type": "image/webp",
+      "label": "Cybersecurity Projects"
     }
   ],
   "shortcuts": [
@@ -112,6 +124,19 @@
       "short_name": "Portfolio",
       "description": "View cybersecurity projects",
       "url": "/website/#portfolio",
+      "icons": [
+        {
+          "src": "assets/images/favicon-32x32.png",
+          "sizes": "32x32",
+          "type": "image/png"
+        }
+      ]
+    },
+    {
+      "name": "Resume",
+      "short_name": "Resume",
+      "description": "Download professional resume",
+      "url": "/website/assets/resume.pdf",
       "icons": [
         {
           "src": "assets/images/favicon-32x32.png",
