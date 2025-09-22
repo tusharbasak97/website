@@ -1,23 +1,24 @@
 @import url("https://fonts.googleapis.com/css2?family=Kaushan+Script&family=Poppins:wght@200;300;400;500;600&display=swap");
 :root {
-  --bg-black-900: #f2f2fc;
-  --bg-black-100: #fdf9ff;
-  --bg-black-50: #e8dfec;
-  --text-black-900: #1a1a1a;
-  --text-black-700: #333333;
+  --bg-black-900: hsla(240, 63%, 97%, 1);
+  --bg-black-100: hsla(280, 100%, 99%, 1);
+  --bg-black-50: hsla(282, 26%, 90%, 1);
+  --text-black-900: hsla(0, 0%, 10%, 1);
+  --text-black-700: hsla(0, 0%, 20%, 1);
 
   /* Common box-shadow values */
-  --shadow-light: 0 2px 8px rgba(0, 0, 0, 0.08);
-  --shadow-medium: 0 4px 15px rgba(0, 0, 0, 0.1);
-  --shadow-heavy: 0 8px 25px rgba(0, 0, 0, 0.15);
-  --shadow-layered: 0 2px 2px rgba(0, 0, 0, 0.12), 0 4px 4px rgba(0, 0, 0, 0.12),
-    0 8px 8px rgba(0, 0, 0, 0.12), 0 16px 16px rgba(0, 0, 0, 0.12),
-    0 32px 32px rgba(0, 0, 0, 0.12);
-  --shadow-subtle: 0 4px 8px rgba(0, 0, 0, 0.08), 0 2px 4px rgba(0, 0, 0, 0.06);
+  --shadow-light: 0 2px 8px hsla(0, 0%, 0%, 0.08);
+  --shadow-medium: 0 4px 15px hsla(0, 0%, 0%, 0.1);
+  --shadow-heavy: 0 8px 25px hsla(0, 0%, 0%, 0.15);
+  --shadow-layered: 0 2px 2px hsla(0, 0%, 0%, 0.12),
+    0 4px 4px hsla(0, 0%, 0%, 0.12), 0 8px 8px hsla(0, 0%, 0%, 0.12),
+    0 16px 16px hsla(0, 0%, 0%, 0.12), 0 32px 32px hsla(0, 0%, 0%, 0.12);
+  --shadow-subtle: 0 4px 8px hsla(0, 0%, 0%, 0.08),
+    0 2px 4px hsla(0, 0%, 0%, 0.06);
   --shadow-focus: 0 0 0 2px rgba(var(--skin-color-rgb, 255, 107, 107), 0.1);
-  --shadow-green: 0 2px 8px rgba(0, 255, 136, 0.15);
-  --shadow-green-hover: 0 4px 12px rgba(0, 255, 136, 0.25);
-  --shadow-intense: 0 12px 30px rgba(0, 0, 0, 0.25);
+  --shadow-green: 0 2px 8px hsla(152, 100%, 50%, 0.15);
+  --shadow-green-hover: 0 4px 12px hsla(152, 100%, 50%, 0.25);
+  --shadow-intense: 0 12px 30px hsla(0, 0%, 0%, 0.25);
 
   /* Common focus styles */
   --focus-outline: 2px solid var(--skin-color);
@@ -67,36 +68,36 @@
   );
   --gradient-overlay: linear-gradient(
     135deg,
-    rgba(255, 255, 255, 0.15) 0%,
-    rgba(255, 255, 255, 0.08) 100%
+    hsla(0, 0%, 100%, 0.15) 0%,
+    hsla(0, 0%, 100%, 0.08) 100%
   );
-  --gradient-shadow: linear-gradient(transparent, rgba(0, 0, 0, 0.1));
+  --gradient-shadow: linear-gradient(transparent, hsla(0, 0%, 0%, 0.1));
   --gradient-shimmer: linear-gradient(
     90deg,
     transparent,
-    rgba(255, 255, 255, 0.2),
+    hsla(0, 0%, 100%, 0.2),
     transparent
   );
   --gradient-green: linear-gradient(
     135deg,
-    rgba(0, 255, 136, 0.1),
-    rgba(0, 255, 136, 0.05)
+    hsla(152, 100%, 50%, 0.1),
+    hsla(152, 100%, 50%, 0.05)
   );
 }
 ::-moz-selection {
-  color: #ffffff;
+  color: hsla(0, 0%, 100%, 1);
   background: var(--skin-color);
 }
 ::selection {
-  color: #ffffff;
+  color: hsla(0, 0%, 100%, 1);
   background: var(--skin-color);
 } /* Dark mode styles */
 body.dark {
-  --bg-black-900: #151515;
-  --bg-black-100: #222222;
-  --bg-black-50: #393939;
-  --text-black-900: #ffffff;
-  --text-black-700: #e9e9e9;
+  --bg-black-900: hsla(0, 0%, 8%, 1);
+  --bg-black-100: hsla(0, 0%, 13%, 1);
+  --bg-black-50: hsla(0, 0%, 22%, 1);
+  --text-black-900: hsla(0, 0%, 100%, 1);
+  --text-black-700: hsla(0, 0%, 91%, 1);
 
   /* Override shadows for dark mode */
   --shadow-light: none;
@@ -112,11 +113,11 @@ body.dark {
 /* System preference detection - applies dark mode if system prefers dark and no manual preference is set */
 @media (prefers-color-scheme: dark) {
   body:not(.theme-override) {
-    --bg-black-900: #151515;
-    --bg-black-100: #222222;
-    --bg-black-50: #393939;
-    --text-black-900: #ffffff;
-    --text-black-700: #e9e9e9;
+    --bg-black-900: hsla(0, 0%, 8%, 1);
+    --bg-black-100: hsla(0, 0%, 13%, 1);
+    --bg-black-50: hsla(0, 0%, 22%, 1);
+    --text-black-900: hsla(0, 0%, 100%, 1);
+    --text-black-700: hsla(0, 0%, 91%, 1);
 
     /* Override shadows for dark mode */
     --shadow-light: none;
@@ -124,8 +125,8 @@ body.dark {
     --shadow-heavy: none;
     --shadow-layered: none;
     --shadow-subtle: none;
-    --shadow-green: 0 2px 8px rgba(0, 255, 136, 0.2);
-    --shadow-green-hover: 0 4px 12px rgba(0, 255, 136, 0.3);
+    --shadow-green: 0 2px 8px hsla(152, 100%, 50%, 0.2);
+    --shadow-green-hover: 0 4px 12px hsla(152, 100%, 50%, 0.3);
     --shadow-intense: none;
   }
 }
@@ -1751,7 +1752,7 @@ h3.my-profession {
 
 .certificates .btn-certificate.coming-soon {
   background: #6c757d;
-  color: #ffffff;
+  color: hsla(0, 0%, 100%, 1);
   border: 1px solid #6c757d;
   cursor: not-allowed;
   opacity: 0.7;
@@ -1759,7 +1760,7 @@ h3.my-profession {
 
 .certificates .btn-certificate.coming-soon:hover {
   background: #6c757d;
-  color: #ffffff;
+  color: hsla(0, 0%, 100%, 1);
   border: 1px solid #6c757d;
   transform: none;
   box-shadow: none;
