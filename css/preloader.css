@@ -20,12 +20,20 @@
 
 /* Light mode background */
 .preloader {
-  background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+  background: linear-gradient(
+    135deg,
+    hsla(210, 17%, 98%, 1) 0%,
+    hsla(210, 16%, 93%, 1) 100%
+  );
 }
 
 /* Dark mode background */
 body.dark .preloader {
-  background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+  background: linear-gradient(
+    135deg,
+    hsla(0, 0%, 10%, 1) 0%,
+    hsla(0, 0%, 18%, 1) 100%
+  );
 }
 
 /* Preloader fade out animation */
@@ -101,19 +109,19 @@ body.dark .preloader {
 
 /* Light mode text */
 .preloader-text {
-  color: #495057;
+  color: hsla(210, 9%, 31%, 1);
 }
 
 /* Dark mode text */
 body.dark .preloader-text {
-  color: #e9ecef;
+  color: hsla(210, 16%, 93%, 1);
 }
 
 /* Progress bar container */
 .preloader-progress {
   width: 200px;
   height: 4px;
-  background: rgba(0, 0, 0, 0.1);
+  background: hsla(0, 0%, 0%, 0.1);
   border-radius: 2px;
   overflow: hidden;
   position: relative;
@@ -121,7 +129,7 @@ body.dark .preloader-text {
 
 /* Dark mode progress background */
 body.dark .preloader-progress {
-  background: rgba(255, 255, 255, 0.1);
+  background: hsla(0, 0%, 100%, 0.1);
 }
 
 /* Progress bar fill */
@@ -149,7 +157,7 @@ body.dark .preloader-progress {
   background: linear-gradient(
     90deg,
     transparent,
-    rgba(255, 255, 255, 0.4),
+    hsla(0, 0%, 100%, 0.4),
     transparent
   );
   animation: shine 2s ease-in-out infinite;

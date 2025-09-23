@@ -52,8 +52,12 @@
 }
 
 @keyframes spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 .style-switcher .day-night:hover i,
@@ -141,11 +145,23 @@
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
 }
 .style-switcher .color-1 {
-  background: linear-gradient(135deg, #ff9900, rgba(var(--skin-color-rgb, 255, 107, 107), 0.8));
+  background: linear-gradient(
+    135deg,
+    hsla(36, 100%, 50%, 1),
+    rgba(var(--skin-color-rgb, 255, 107, 107), 0.8)
+  );
 }
 .style-switcher .color-2 {
-  background: linear-gradient(135deg, #ff0099, rgba(var(--skin-color-rgb, 255, 107, 107), 0.8));
+  background: linear-gradient(
+    135deg,
+    hsla(324, 100%, 50%, 1),
+    rgba(var(--skin-color-rgb, 255, 107, 107), 0.8)
+  );
 }
 .style-switcher .color-3 {
-  background: linear-gradient(135deg, #b23fff, rgba(var(--skin-color-rgb, 255, 107, 107), 0.8));
+  background: linear-gradient(
+    135deg,
+    hsla(276, 100%, 62%, 1),
+    rgba(var(--skin-color-rgb, 255, 107, 107), 0.8)
+  );
 }

@@ -1,133 +1,148 @@
 /* ============================== Contact Form Submission Limiter ============================ */
 
-(function() {
-    'use strict';
+(function () {
+  "use strict";
 
-    // Configuration - Hidden from users for security
-    const FORM_CONFIG = {
-        cooldownPeriod: 24 * 60 * 60 * 1000, // 24 hours in milliseconds
-        maxSubmissionsPerWeek: 2, // 2 submissions per 7 days
-        weekPeriod: 7 * 24 * 60 * 60 * 1000, // 7 days in milliseconds
-        storageKey: 'contactFormSubmissions',
-        enableLogging: false // Disabled for security
-    };
+  // Configuration - Hidden from users for security
+  const FORM_CONFIG = {
+    cooldownPeriod: 24 * 60 * 60 * 1000, // 24 hours in milliseconds
+    maxSubmissionsPerWeek: 2, // 2 submissions per 7 days
+    weekPeriod: 7 * 24 * 60 * 60 * 1000, // 7 days in milliseconds
+    storageKey: "contactFormSubmissions",
+    enableLogging: false, // Disabled for security
+  };
 
-    // Utility functions
-    const utils = {
-        log: function(message, data = null) {
-            if (FORM_CONFIG.enableLogging) {
-                console.log('[ContactForm]', message, data);
-            }
-        },
+  // Utility functions
+  const utils = {
+    log: function (message, data = null) {
+      if (FORM_CONFIG.enableLogging) {
+        console.log("[ContactForm]", message, data);
+      }
+    },
 
-        getCurrentTime: function() {
-            return new Date().getTime();
-        },
+    getCurrentTime: function () {
+      return new Date().getTime();
+    },
 
-        getStoredSubmissions: function() {
-            try {
-                const stored = localStorage.getItem(FORM_CONFIG.storageKey);
-                return stored ? JSON.parse(stored) : [];
-            } catch (error) {
-                utils.log('Error reading stored submissions:', error);
-                return [];
-            }
-        },
+    getStoredSubmissions: function () {
+      try {
+        const stored = localStorage.getItem(FORM_CONFIG.storageKey);
+        return stored ? JSON.parse(stored) : [];
+      } catch (error) {
+        utils.log("Error reading stored submissions:", error);
+        return [];
+      }
+    },
 
-        storeSubmissions: function(submissions) {
-            try {
-                localStorage.setItem(FORM_CONFIG.storageKey, JSON.stringify(submissions));
-            } catch (error) {
-                utils.log('Error storing submissions:', error);
-            }
-        },
+    storeSubmissions: function (submissions) {
+      try {
+        localStorage.setItem(
+          FORM_CONFIG.storageKey,
+          JSON.stringify(submissions)
+        );
+      } catch (error) {
+        utils.log("Error storing submissions:", error);
+      }
+    },
 
-        cleanOldSubmissions: function(submissions) {
-            const oneWeekAgo = utils.getCurrentTime() - FORM_CONFIG.weekPeriod;
-            return submissions.filter(timestamp => timestamp > oneWeekAgo);
+    cleanOldSubmissions: function (submissions) {
+      const oneWeekAgo = utils.getCurrentTime() - FORM_CONFIG.weekPeriod;
+      return submissions.filter((timestamp) => timestamp > oneWeekAgo);
+    },
+  };
+
+  // Form limiter functionality - Silent protection
+  const FormLimiter = {
+    init: function () {
+      this.bindFormEvents();
+      utils.log("Contact form limiter initialized");
+    },
+
+    bindFormEvents: function () {
+      const contactForm = document.querySelector(".contact-form-inner");
+      if (!contactForm) {
+        utils.log("Contact form not found");
+        return;
+      }
+
+      // Add event listener for form submission
+      contactForm.addEventListener("submit", (e) => {
+        if (!this.canSubmitForm()) {
+          e.preventDefault();
+          this.showLimitMessage();
+          return false;
         }
-    };
 
-    // Form limiter functionality - Silent protection
-    const FormLimiter = {
-        init: function() {
-            this.bindFormEvents();
-            utils.log('Contact form limiter initialized');
-        },
+        // If submission is allowed, record it
+        this.recordSubmission();
+        this.showSuccessMessage();
+      });
+    },
 
-        bindFormEvents: function() {
-            const contactForm = document.querySelector('.contact-form-inner');
-            if (!contactForm) {
-                utils.log('Contact form not found');
-                return;
-            }
+    canSubmitForm: function () {
+      const submissions = utils.getStoredSubmissions();
+      const cleanSubmissions = utils.cleanOldSubmissions(submissions);
+      const currentTime = utils.getCurrentTime();
 
-            // Add event listener for form submission
-            contactForm.addEventListener('submit', (e) => {
-                if (!this.canSubmitForm()) {
-                    e.preventDefault();
-                    this.showLimitMessage();
-                    return false;
-                }
+      // Check if within cooldown period (24 hours)
+      if (cleanSubmissions.length > 0) {
+        const lastSubmission = Math.max(...cleanSubmissions);
+        const timeSinceLastSubmission = currentTime - lastSubmission;
 
-                // If submission is allowed, record it
-                this.recordSubmission();
-                this.showSuccessMessage();
-            });
-        },
+        if (timeSinceLastSubmission < FORM_CONFIG.cooldownPeriod) {
+          utils.log("Form submission blocked: within cooldown period");
+          return false;
+        }
+      }
 
-        canSubmitForm: function() {
-            const submissions = utils.getStoredSubmissions();
-            const cleanSubmissions = utils.cleanOldSubmissions(submissions);
-            const currentTime = utils.getCurrentTime();
+      // Check weekly limit (2 submissions per 7 days)
+      if (cleanSubmissions.length >= FORM_CONFIG.maxSubmissionsPerWeek) {
+        utils.log("Form submission blocked: weekly limit reached");
+        return false;
+      }
 
-            // Check if within cooldown period (24 hours)
-            if (cleanSubmissions.length > 0) {
-                const lastSubmission = Math.max(...cleanSubmissions);
-                const timeSinceLastSubmission = currentTime - lastSubmission;
+      return true;
+    },
 
-                if (timeSinceLastSubmission < FORM_CONFIG.cooldownPeriod) {
-                    utils.log('Form submission blocked: within cooldown period');
-                    return false;
-                }
-            }
+    recordSubmission: function () {
+      const submissions = utils.getStoredSubmissions();
+      const cleanSubmissions = utils.cleanOldSubmissions(submissions);
+      const currentTime = utils.getCurrentTime();
 
-            // Check weekly limit (2 submissions per 7 days)
-            if (cleanSubmissions.length >= FORM_CONFIG.maxSubmissionsPerWeek) {
-                utils.log('Form submission blocked: weekly limit reached');
-                return false;
-            }
+      cleanSubmissions.push(currentTime);
+      utils.storeSubmissions(cleanSubmissions);
 
-            return true;
-        },
+      utils.log("Form submission recorded");
+    },
 
-        recordSubmission: function() {
-            const submissions = utils.getStoredSubmissions();
-            const cleanSubmissions = utils.cleanOldSubmissions(submissions);
-            const currentTime = utils.getCurrentTime();
+    showLimitMessage: function () {
+      // Simple, non-revealing message
+      this.showNotification(
+        "Please wait before submitting another message. Thank you for your patience.",
+        "warning"
+      );
+    },
 
-            cleanSubmissions.push(currentTime);
-            utils.storeSubmissions(cleanSubmissions);
+    showSuccessMessage: function () {
+      this.showNotification(
+        "Message sent successfully! Thank you for contacting me.",
+        "success"
+      );
+    },
 
-            utils.log('Form submission recorded');
-        },
-
-        showLimitMessage: function() {
-            // Simple, non-revealing message
-            this.showNotification('Please wait before submitting another message. Thank you for your patience.', 'warning');
-        },
-
-        showSuccessMessage: function() {
-            this.showNotification('Message sent successfully! Thank you for contacting me.', 'success');
-        },
-
-        showNotification: function(message, type = 'info') {
-            // Create notification element
-            const notification = document.createElement('div');
-            notification.className = `form-notification ${type}`;
-            notification.innerHTML = `
+    showNotification: function (message, type = "info") {
+      // Create notification element
+      const notification = document.createElement("div");
+      notification.className = `form-notification ${type}`;
+      notification.innerHTML = `
                 <div class="notification-content">
-                    <i class="fas ${type === 'success' ? 'fa-check-circle' : type === 'warning' ? 'fa-exclamation-triangle' : 'fa-info-circle'}"></i>
+                    <i class="fas ${
+                      type === "success"
+                        ? "fa-check-circle"
+                        : type === "warning"
+                        ? "fa-exclamation-triangle"
+                        : "fa-info-circle"
+                    }"></i>
                     <span>${message}</span>
                     <button class="notification-close" onclick="this.parentElement.parentElement.remove()">
                         <i class="fas fa-times"></i>
@@ -135,11 +150,11 @@
                 </div>
             `;
 
-            // Add notification styles if not already added
-            if (!document.querySelector('#notification-styles')) {
-                const style = document.createElement('style');
-                style.id = 'notification-styles';
-                style.textContent = `
+      // Add notification styles if not already added
+      if (!document.querySelector("#notification-styles")) {
+        const style = document.createElement("style");
+        style.id = "notification-styles";
+        style.textContent = `
                     .form-notification {
                         position: fixed;
                         top: 20px;
@@ -153,21 +168,21 @@
                     }
 
                     .form-notification.success {
-                        background: #d4edda;
-                        border: 1px solid #c3e6cb;
-                        color: #155724;
+                        background: hsla(134, 41%, 88%, 1.00);
+                        border: 1px solid hsla(134, 41%, 83%, 1.00);
+                        color: hsla(134, 61%, 21%, 1.00);
                     }
 
                     .form-notification.warning {
-                        background: #fff3cd;
-                        border: 1px solid #ffeaa7;
-                        color: #856404;
+                        background: hsla(46, 100%, 90%, 1.00);
+                        border: 1px solid hsla(46, 100%, 83%, 1.00);
+                        color: hsla(45, 94%, 27%, 1.00);
                     }
 
                     .form-notification.info {
-                        background: #d1ecf1;
-                        border: 1px solid #bee5eb;
-                        color: #0c5460;
+                        background: hsla(189, 53%, 88%, 1.00);
+                        border: 1px solid hsla(188, 53%, 83%, 1.00);
+                        color: hsla(189, 78%, 21%, 1.00);
                     }
 
                     .notification-content {
@@ -201,47 +216,46 @@
                         }
                     }
                 `;
-                document.head.appendChild(style);
+        document.head.appendChild(style);
+      }
+
+      // Add to page
+      document.body.appendChild(notification);
+
+      // Auto-remove after 5 seconds
+      setTimeout(() => {
+        if (notification.parentNode) {
+          notification.style.animation = "slideInRight 0.3s ease-out reverse";
+          setTimeout(() => {
+            if (notification.parentNode) {
+              notification.remove();
             }
-
-            // Add to page
-            document.body.appendChild(notification);
-
-            // Auto-remove after 5 seconds
-            setTimeout(() => {
-                if (notification.parentNode) {
-                    notification.style.animation = 'slideInRight 0.3s ease-out reverse';
-                    setTimeout(() => {
-                        if (notification.parentNode) {
-                            notification.remove();
-                        }
-                    }, 300);
-                }
-            }, 5000);
-        },
-
-        // Minimal public methods for debugging (admin only)
-        resetSubmissions: function() {
-            localStorage.removeItem(FORM_CONFIG.storageKey);
-            utils.log('Form submissions reset');
+          }, 300);
         }
-    };
+      }, 5000);
+    },
 
-    // Initialize when DOM is ready
-    const initFormLimiter = () => {
-        FormLimiter.init();
-    };
+    // Minimal public methods for debugging (admin only)
+    resetSubmissions: function () {
+      localStorage.removeItem(FORM_CONFIG.storageKey);
+      utils.log("Form submissions reset");
+    },
+  };
 
-    // Minimal export for admin debugging only
-    window.ContactFormLimiter = {
-        reset: FormLimiter.resetSubmissions.bind(FormLimiter)
-    };
+  // Initialize when DOM is ready
+  const initFormLimiter = () => {
+    FormLimiter.init();
+  };
 
-    // Auto-initialize when DOM is ready
-    if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', initFormLimiter);
-    } else {
-        initFormLimiter();
-    }
+  // Minimal export for admin debugging only
+  window.ContactFormLimiter = {
+    reset: FormLimiter.resetSubmissions.bind(FormLimiter),
+  };
 
+  // Auto-initialize when DOM is ready
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", initFormLimiter);
+  } else {
+    initFormLimiter();
+  }
 })();

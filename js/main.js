@@ -1155,8 +1155,8 @@ function initializeLazyLoadingIntegration() {
         canvas.width,
         canvas.height
       );
-      gradient.addColorStop(0, "#f0f0f0");
-      gradient.addColorStop(1, "#e0e0e0");
+      gradient.addColorStop(0, "hsla(0, 0%, 94%, 1.00)");
+      gradient.addColorStop(1, "hsla(0, 0%, 88%, 1.00)");
       ctx.fillStyle = gradient;
       ctx.fillRect(0, 0, canvas.width, canvas.height);
 

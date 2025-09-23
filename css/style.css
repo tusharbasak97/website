@@ -649,9 +649,6 @@ body.dark .loading-overlay {
   padding-left: 15px;
   padding-right: 15px;
 }
-.padd-25 {
-  padding-left: 25px;
-}
 .container {
   max-width: 1100px;
   width: 100%;
@@ -877,7 +874,7 @@ body.dark .loading-overlay {
   margin: 15px auto 0 auto;
   transition: all 0.3s ease;
   position: absolute;
-  top: 110px;
+  top: 115px;
   left: 50%;
   transform: translateX(-50%);
   box-shadow: var(--shadow-green);
@@ -1013,7 +1010,7 @@ body.dark .loading-overlay {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  padding-right: 60px;
+  padding-right: 80px;
 }
 
 h3.hello {
@@ -1074,8 +1071,8 @@ h3.my-profession {
   border-bottom: 10px solid;
   border-right: 10px solid;
   border-image: var(--gradient-primary) 1;
-  right: 20px;
-  bottom: -40px;
+  right: -20px;
+  bottom: -50px;
 }
 
 .home-img::before {
@@ -1086,8 +1083,8 @@ h3.my-profession {
   border-top: 10px solid;
   border-left: 10px solid;
   border-image: var(--gradient-primary) 1;
-  left: 20px;
-  top: -60px;
+  left: 0px;
+  top: -30px;
 }
 
 .home .home-img img {
@@ -1095,9 +1092,9 @@ h3.my-profession {
   border-radius: 5px;
   width: 400px;
   height: 480px;
-  aspect-ratio: 400/480;
+  aspect-ratio: 3/4;
   object-fit: cover;
-  max-width: 100%;
+  max-width: auto;
 }
 .about .about-content {
   flex: 0 0 100%;
@@ -2720,4 +2717,65 @@ body.offline::before {
   .offline-message {
     font-size: 1rem;
   }
+}
+
+/* ============================== Error and Offline Page Secured Badge Styling ============================== */
+/* Make the secured badge in error and offline pages match the sidebar badge */
+.error-container .secured-badge,
+.offline-container .secured-badge {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  background: var(--bg-black-100);
+  padding: 8px 14px;
+  border-radius: 12px;
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  color: #00d06fff;
+  border: 1.5px solid #00ff88;
+  margin: 15px auto 25px auto;
+  transition: all 0.3s ease;
+  position: relative;
+  box-shadow: var(--shadow-green);
+  width: fit-content;
+  animation: securedBlink 2s ease-in-out infinite;
+  z-index: 100;
+}
+
+.error-container .secured-badge::before,
+.offline-container .secured-badge::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: var(--gradient-green);
+  border-radius: 10px;
+  z-index: -1;
+}
+
+.error-container .secured-badge i,
+.offline-container .secured-badge i {
+  font-size: 10px;
+  color: #00d06fff;
+  filter: drop-shadow(0 0 2px rgba(0, 255, 136, 0.3));
+}
+
+.error-container .secured-badge:hover,
+.offline-container .secured-badge:hover {
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-green-hover);
+  border-color: #00ff88;
+  animation-play-state: paused;
+}
+
+/* Dark mode adjustments for error and offline pages secured badge */
+body.dark .error-container .secured-badge,
+body.dark .offline-container .secured-badge {
+  background: var(--bg-black-50);
+  box-shadow: var(--shadow-green);
 }
