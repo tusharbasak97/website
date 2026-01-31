@@ -1,0 +1,7 @@
+:root {
+  --skin-hue: 324;
+  --skin-sat: 100%;
+  --skin-light: 50%;
+  --skin-color: hsla(324, 100%, 50%, 1);
+  --skin-color-end: hsla(304, 100%, 50%, 1);
+}

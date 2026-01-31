@@ -1,0 +1,167 @@
+.style-switcher {
+  position: fixed;
+  right: 0;
+  top: 60px;
+  padding: 15px;
+  width: 150px;
+  border: 1px solid var(--bg-black-50);
+  background: var(--bg-black-100);
+  z-index: 101;
+  border-radius: 5px;
+  transition: all 0.3s ease;
+  transform: translateX(100%);
+  box-shadow: var(--shadow-medium);
+}
+.style-switcher.open {
+  transform: translateX(-25px);
+}
+.style-switcher .s-icon {
+  position: absolute;
+  height: 40px;
+  width: 40px;
+  text-align: center;
+  font-size: 20px;
+  background: var(--bg-black-100);
+  color: var(--text-black-900);
+  right: 100%;
+  border: 1px solid var(--bg-black-50);
+  margin-right: 25px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border-radius: 50%;
+  box-shadow: var(--shadow-medium);
+}
+.style-switcher .s-icon i {
+  line-height: 40px;
+  transition: all 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  transform-origin: center;
+}
+
+.style-switcher .day-night i,
+.style-switcher .style-switcher-toggler i {
+  position: relative;
+}
+
+/* Gear spinning animation */
+.style-switcher .style-switcher-toggler i {
+  animation: spin 2s linear infinite;
+}
+
+.style-switcher .style-switcher-toggler:hover i {
+  animation-play-state: paused;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.style-switcher .day-night:hover i,
+.style-switcher .style-switcher-toggler:hover i {
+  transform: scale(1.15) rotate(10deg);
+  filter: drop-shadow(0 0 8px rgba(var(--skin-color-rgb, 255, 107, 107), 0.6));
+}
+
+.style-switcher .day-night:active i,
+.style-switcher .style-switcher-toggler:active i {
+  transform: scale(0.85) rotate(360deg);
+}
+
+/* Advanced keyframe animation for icon switching */
+@keyframes iconSwitch {
+  0% {
+    transform: scale(1) rotate(0deg);
+    opacity: 1;
+  }
+  25% {
+    transform: scale(0.3) rotate(90deg);
+    opacity: 0.3;
+  }
+  50% {
+    transform: scale(0) rotate(180deg);
+    opacity: 0;
+  }
+  75% {
+    transform: scale(0.3) rotate(270deg);
+    opacity: 0.3;
+  }
+  100% {
+    transform: scale(1) rotate(360deg);
+    opacity: 1;
+  }
+}
+
+.style-switcher .day-night.switching i {
+  animation: iconSwitch 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+.style-switcher .style-switcher-toggler.switching i {
+  animation: iconSwitch 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+/* Nav toggler switching animation */
+.aside .nav-toggler.switching span {
+  animation: iconSwitch 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+.style-switcher .style-switcher-toggler {
+  top: 0;
+}
+.style-switcher .day-night {
+  top: 50px;
+}
+.style-switcher h4 {
+  margin: 0 0 10px;
+  color: var(--text-black-700);
+  font-size: 16px;
+  font-weight: 600;
+  text-transform: capitalize;
+}
+.style-switcher .colors {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+.style-switcher .colors span {
+  display: inline-block;
+  height: 25px;
+  width: 35px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.style-switcher .colors span:hover {
+  transform: scale(1.1);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.style-switcher .colors span:active {
+  transform: scale(0.95);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+}
+.style-switcher .color-1 {
+  background: linear-gradient(
+    135deg,
+    hsla(36, 100%, 50%, 1),
+    rgba(var(--skin-color-rgb, 255, 107, 107), 0.8)
+  );
+}
+.style-switcher .color-2 {
+  background: linear-gradient(
+    135deg,
+    hsla(324, 100%, 50%, 1),
+    rgba(var(--skin-color-rgb, 255, 107, 107), 0.8)
+  );
+}
+.style-switcher .color-3 {
+  background: linear-gradient(
+    135deg,
+    hsla(276, 100%, 62%, 1),
+    rgba(var(--skin-color-rgb, 255, 107, 107), 0.8)
+  );
+}

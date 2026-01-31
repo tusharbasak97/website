@@ -1,0 +1,149 @@
+{
+  "name": "Tushar Basak - Cybersecurity Analyst & Web Developer",
+  "short_name": "Tushar Basak",
+  "description": "Professional portfolio of Tushar Basak, Expert Cybersecurity Analyst and Web Developer specializing in penetration testing, ethical hacking, secure web development, and threat hunting.",
+  "start_url": "/website/",
+  "scope": "/website/",
+  "id": "/website/",
+  "display": "standalone",
+  "display_override": ["standalone", "minimal-ui", "window-controls-overlay"],
+  "orientation": "portrait-primary",
+  "theme_color": "hsl(36, 100%, 50%)",
+  "background_color": "hsl(240, 63%, 97%)",
+  "lang": "en-US",
+  "dir": "ltr",
+  "categories": ["business", "productivity", "security", "professional", "technology", "development"],
+  "iarc_rating_id": "e84b072d-71b3-4d3e-86ae-31a8ce4e53b7",
+  "prefer_related_applications": false,
+  "edge_side_panel": {
+    "preferred_width": 400
+  },
+  "launch_handler": {
+    "client_mode": "navigate-existing"
+  },
+  "icons": [
+    {
+      "src": "assets/images/android-chrome-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "assets/images/android-chrome-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "assets/images/apple-touch-icon-180x180.png",
+      "sizes": "180x180",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "assets/images/favicon-32x32.png",
+      "sizes": "32x32",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "assets/images/favicon-16x16.png",
+      "sizes": "16x16",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "assets/images/favicon-48x48.png",
+      "sizes": "48x48",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "assets/images/favicon-64x64.png",
+      "sizes": "64x64",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "assets/images/favicon-96x96.png",
+      "sizes": "96x96",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "assets/images/hero.webp",
+      "sizes": "400x480",
+      "type": "image/webp",
+      "form_factor": "narrow",
+      "label": "Tushar Basak - Cybersecurity & Web Developer"
+    },
+    {
+      "src": "assets/images/portfolio/password-generator.webp",
+      "sizes": "800x600",
+      "type": "image/webp",
+      "label": "Password Generator Tool"
+    },
+    {
+      "src": "assets/images/portfolio/todopomo.webp",
+      "sizes": "800x600",
+      "type": "image/webp",
+      "label": "TodoPomo Productivity App"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "About Me",
+      "short_name": "About",
+      "description": "View professional background and skills",
+      "url": "/website/#about",
+      "icons": [
+        {
+          "src": "assets/images/favicon-32x32.png",
+          "sizes": "32x32",
+          "type": "image/png"
+        }
+      ]
+    },
+    {
+      "name": "Certificates",
+      "short_name": "Certs",
+      "description": "View cybersecurity certifications",
+      "url": "/website/#certificates",
+      "icons": [
+        {
+          "src": "assets/images/favicon-32x32.png",
+          "sizes": "32x32",
+          "type": "image/png"
+        }
+      ]
+    },
+    {
+      "name": "Projects",
+      "short_name": "Portfolio",
+      "description": "View cybersecurity & web projects",
+      "url": "/website/#portfolio",
+      "icons": [
+        {
+          "src": "assets/images/favicon-32x32.png",
+          "sizes": "32x32",
+          "type": "image/png"
+        }
+      ]
+    },
+    {
+      "name": "Resume",
+      "short_name": "Resume",
+      "description": "Download professional resume",
+      "url": "/website/assets/resume.pdf",
+      "icons": [
+        {
+          "src": "assets/images/favicon-32x32.png",
+          "sizes": "32x32",
+          "type": "image/png"
+        }
+      ]
+    }
+  ]
+}

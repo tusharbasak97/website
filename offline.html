@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Offline - Tushar Basak | Cybersecurity Analyst & Web Developer</title>
+    <meta
+      name="description"
+      content="You're currently offline. This portfolio page for Tushar Basak (Cybersecurity Analyst & Web Developer) is cached for limited viewing."
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="assets/images/favicon-32x32.png"
+    />
+
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <!-- Preconnect for performance -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="preload"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Kaushan+Script&display=swap"
+      as="style"
+      onload="this.onload=null;this.rel='stylesheet'"
+    />
+    <noscript
+      ><link
+        rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Kaushan+Script&display=swap"
+    /></noscript>
+
+    <!-- Critical Theme Detection - Must run before CSS -->
+    <script>
+      (function () {
+        const savedTheme = localStorage.getItem("theme");
+        const savedColor = localStorage.getItem("colorScheme") || "color-1";
+        const systemPrefersDark = window.matchMedia(
+          "(prefers-color-scheme: dark)"
+        ).matches;
+
+        let shouldUseDarkMode = savedTheme
+          ? savedTheme === "dark"
+          : systemPrefersDark;
+
+        if (shouldUseDarkMode) {
+          document.documentElement.classList.add("dark");
+        }
+
+        window.errorPageTheme = {
+          darkMode: shouldUseDarkMode,
+          colorScheme: savedColor,
+        };
+      })();
+    </script>
+
+    <!-- Centralized CSS -->
+    <link rel="stylesheet" href="css/style.css" />
+    <!-- Dynamic color scheme loading -->
+    <script>
+      document.write(
+        '<link rel="stylesheet" href="css/skins/' +
+          (window.errorPageTheme
+            ? window.errorPageTheme.colorScheme
+            : "color-1") +
+          '.css" />'
+      );
+    </script>
+    <link
+      rel="stylesheet"
+      href="css/skins/color-1.css"
+      class="alternative-style"
+      title="color-1"
+      disabled
+    />
+    <link
+      rel="stylesheet"
+      href="css/skins/color-2.css"
+      class="alternative-style"
+      title="color-2"
+      disabled
+    />
+    <link
+      rel="stylesheet"
+      href="css/skins/color-3.css"
+      class="alternative-style"
+      title="color-3"
+      disabled
+    />
+    <link rel="stylesheet" href="css/style-switcher.css" />
+  </head>
+  <body class="offline-page-body">
+    <script>
+      if (window.errorPageTheme && window.errorPageTheme.darkMode) {
+        document.body.classList.add("dark", "theme-override");
+      } else {
+        document.body.classList.add("theme-override");
+      }
+    </script>
+
+    <!-- Custom cursors -->
+    <div class="cursor-1" aria-hidden="true"></div>
+    <div class="cursor-2" aria-hidden="true"></div>
+
+    <div class="offline-container">
+      <div class="offline-icon">📡</div>
+      <div class="secured-badge">
+        <i class="fas fa-shield-halved"></i>
+        <span>secured</span>
+      </div>
+      <h1 class="offline-title">You're Offline</h1>
+      <p class="offline-message">
+        You've been redirected to the cached version of the site. The full
+        portfolio is available offline with all content preserved.
+      </p>
+      <p class="redirect-message">
+        Redirecting to portfolio in
+        <span id="countdown" class="countdown">5</span>
+        seconds...
+      </p>
+      <button onclick="redirectToMainSite()" class="retry-btn">
+        <i class="fas fa-forward"></i> Skip Wait
+      </button>
+
+      <div id="connectionStatus" class="connection-status">
+        <span id="statusText">Checking connection...</span>
+      </div>
+    </div>
+
+    <!-- Centralized JavaScript -->
+    <script src="js/main.js"></script>
+    <script src="js/style-switcher.js"></script>
+
+    <!-- Error Page Cursor Initialization -->
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        // Initialize cursor specifically for error pages
+        const cursor1 = document.querySelector(".cursor-1");
+        const cursor2 = document.querySelector(".cursor-2");
+
+        if (cursor1 && cursor2) {
+          console.log("Initializing cursor on offline page");
+
+          function setCursorCoordinates(e) {
+            cursor1.style.top = e.pageY + "px";
+            cursor1.style.left = e.pageX + "px";
+            cursor2.style.top = e.pageY + "px";
+            cursor2.style.left = e.pageX + "px";
+          }
+
+          window.addEventListener("mousemove", setCursorCoordinates);
+
+          function toggleCursorActivity() {
+            cursor1.classList.toggle("active");
+            cursor2.classList.toggle("active");
+          }
+
+          // Add hover effects to all links and buttons
+          document.querySelectorAll("a, button, .btn").forEach((element) => {
+            element.addEventListener("mouseenter", toggleCursorActivity);
+            element.addEventListener("mouseleave", toggleCursorActivity);
+          });
+
+          console.log("Cursor initialized successfully on offline page");
+        } else {
+          console.log("Cursor elements not found on offline page");
+        }
+      });
+    </script>
+  </body>
+</html>

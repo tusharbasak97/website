@@ -1,0 +1,103 @@
+# Robots.txt for Tushar Basak - Cybersecurity Analyst Portfolio
+# https://tusharbasak97.github.io/website/
+# Last updated: September 2025
+
+User-agent: *
+Allow: /
+
+# Don't index error pages
+Disallow: /404.html
+Disallow: /offline.html
+
+# Don't index service worker
+Disallow: /js/sw.js
+
+# Don't index raw CSS and JS files
+Disallow: /css/
+Disallow: /js/
+
+# Allow important images
+Allow: /assets/images/
+
+# Point to sitemap
+Sitemap: https://tusharbasak97.github.io/website/sitemap.xml
+
+# Crawl-delay for all bots
+Crawl-delay: 10
+
+# Allow all major search engines with optimized crawl delays
+User-agent: Googlebot
+Allow: /
+Crawl-delay: 0.5
+
+User-agent: Bingbot
+Allow: /
+Crawl-delay: 1
+
+User-agent: Slurp
+Allow: /
+Crawl-delay: 1
+
+User-agent: DuckDuckBot
+Allow: /
+Crawl-delay: 1
+
+User-agent: Baiduspider
+Allow: /
+Crawl-delay: 2
+
+User-agent: YandexBot
+Allow: /
+Crawl-delay: 2
+
+User-agent: facebookexternalhit
+Allow: /
+
+User-agent: Twitterbot
+Allow: /
+
+User-agent: LinkedInBot
+Allow: /
+
+# Block SEO and scraping bots
+User-agent: AhrefsBot
+Disallow: /
+
+User-agent: MJ12bot
+Disallow: /
+
+User-agent: DotBot
+Disallow: /
+
+User-agent: SemrushBot
+Disallow: /
+
+User-agent: MajesticSEO
+Disallow: /
+
+User-agent: BLEXBot
+Disallow: /
+
+User-agent: DataForSeoBot
+Disallow: /
+
+# Disallow technical files and directories
+Disallow: /js/
+Disallow: /css/
+Disallow: /.well-known/
+Disallow: /sw.js
+Disallow: /offline.html
+Disallow: /404.html
+Disallow: /*.json$
+Disallow: /*.min.js$
+Disallow: /*.min.css$
+
+# Allow important assets and files
+Allow: /assets/
+Allow: /favicon.ico
+Allow: /sitemap.xml
+Allow: /robots.txt
+Allow: /.well-known/security.txt
+
+# Host directive for better SEO
+Host: https://tusharbasak97.github.io
