@@ -1,15 +1,227 @@
 "use client";
 
-import React from "react";
+import React, { useEffect, useRef, useState } from "react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faExternalLinkAlt,
+  faRotate,
+  faShieldHalved,
+} from "@fortawesome/free-solid-svg-icons";
+import { faGithub } from "@fortawesome/free-brands-svg-icons";
+import { projects } from "@/lib/data";
+
+if (typeof window !== "undefined") {
+  gsap.registerPlugin(ScrollTrigger);
+}
 
 export function ProjectsSection() {
+  const sectionRef = useRef<HTMLElement>(null);
+  const gridRef = useRef<HTMLDivElement>(null);
+  const [flippedCards, setFlippedCards] = useState<Record<string, boolean>>({});
+
+  const toggleFlip = (id: string) => {
+    setFlippedCards((prev) => ({
+      ...prev,
+      [id]: !prev[id],
+    }));
+  };
+
+  useEffect(() => {
+    const ctx = gsap.context(() => {
+      if (gridRef.current) {
+        const cards = gridRef.current.querySelectorAll(".project-item");
+        gsap.fromTo(
+          cards,
+          {
+            opacity: 0,
+            y: 40,
+            scale: 0.95,
+          },
+          {
+            opacity: 1,
+            y: 0,
+            scale: 1,
+            duration: 0.7,
+            stagger: 0.12,
+            ease: "power2.out",
+            scrollTrigger: {
+              trigger: gridRef.current,
+              start: "top 80%",
+              toggleActions: "play none none none",
+            },
+          }
+        );
+      }
+    }, sectionRef);
+
+    return () => ctx.revert();
+  }, []);
+
   return (
-    <section id="portfolio" className="w-full py-16 px-6">
-      <div className="w-full">
-        <h2 className="text-3xl font-bold">My Projects</h2>
+    <section
+      ref={sectionRef}
+      id="portfolio"
+      role="region"
+      aria-label="My Projects Portfolio"
+      className="w-full py-20 px-4 sm:px-8 md:px-12 lg:px-20 xl:px-28"
+    >
+      {/* Anchor for #projects compatibility */}
+      <span id="projects" className="sr-only" />
+
+      {/* Section Title - NO DOT */}
+      <div className="mb-14 text-left">
+        <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight text-foreground flex items-center gap-4">
+          <span>My Projects</span>
+          <span className="h-1 flex-1 max-w-[100px] bg-[var(--skin-color)] rounded-full" />
+        </h2>
+        <p className="mt-2 text-muted-foreground text-base sm:text-lg">
+          A showcase of cybersecurity utilities, web development platforms, and technical innovations
+        </p>
+      </div>
+
+      {/* 3 cols desktop, 2 cols tablet, 1 col mobile */}
+      <div
+        ref={gridRef}
+        className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
+      >
+        {projects.map((project) => {
+          const isFlipped = Boolean(flippedCards[project.id]);
+
+          return (
+            <article
+              key={project.id}
+              className="project-item h-[420px] rounded-3xl"
+              style={{ perspective: "1200px" }}
+            >
+              <div
+                className={`relative w-full h-full duration-700 transition-transform ${
+                  isFlipped ? "rotate-y-180" : ""
+                } group-hover:rotate-y-180`}
+                style={{
+                  transformStyle: "preserve-3d",
+                  transform: isFlipped ? "rotateY(180deg)" : undefined,
+                }}
+              >
+                {/* ================= FRONT OF CARD ================= */}
+                <div
+                  className="absolute inset-0 w-full h-full rounded-3xl overflow-hidden bg-card border border-border shadow-md flex flex-col justify-between p-6 transition-all duration-300"
+                  style={{
+                    backfaceVisibility: "hidden",
+                    WebkitBackfaceVisibility: "hidden",
+                  }}
+                >
+                  {/* Top Image Container */}
+                  <div className="relative w-full h-52 rounded-2xl overflow-hidden bg-muted/50 border border-border/40">
+                    <img
+                      src={project.imageUrl}
+                      alt={project.title}
+                      className="w-full h-full object-cover object-top transition-transform duration-500 hover:scale-105"
+                      loading="lazy"
+                    />
+                    <div className="absolute top-3 right-3">
+                      <span className="px-3 py-1 rounded-full text-xs font-semibold bg-background/90 dark:bg-card/90 backdrop-blur-md text-[var(--skin-color)] border border-border/60 shadow-sm">
+                        {project.category}
+                      </span>
+                    </div>
+                  </div>
+
+                  {/* Bottom Info */}
+                  <div className="pt-4 flex items-end justify-between">
+                    <div>
+                      <h3 className="text-xl font-bold text-foreground group-hover:text-[var(--skin-color)] transition-colors">
+                        {project.title}
+                      </h3>
+                      <p className="text-xs text-muted-foreground mt-1 flex items-center gap-1.5">
+                        <FontAwesomeIcon icon={faShieldHalved} className="h-3 w-3 text-[var(--skin-color)]" />
+                        <span>Interactive Card</span>
+                      </p>
+                    </div>
+
+                    <button
+                      type="button"
+                      onClick={() => toggleFlip(project.id)}
+                      className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-medium text-muted-foreground bg-muted hover:text-foreground transition-colors cursor-pointer"
+                      title="Flip card for details"
+                      aria-label="Flip card for details"
+                    >
+                      <FontAwesomeIcon icon={faRotate} className="h-3 w-3" />
+                      <span className="hidden sm:inline">Flip</span>
+                    </button>
+                  </div>
+                </div>
+
+                {/* ================= BACK OF CARD ================= */}
+                <div
+                  className="absolute inset-0 w-full h-full rounded-3xl overflow-hidden bg-gradient-to-br from-card via-card to-card/95 border-2 border-[var(--skin-color)]/40 shadow-2xl p-7 flex flex-col justify-between"
+                  style={{
+                    backfaceVisibility: "hidden",
+                    WebkitBackfaceVisibility: "hidden",
+                    transform: "rotateY(180deg)",
+                  }}
+                >
+                  <div>
+                    {/* Header */}
+                    <div className="flex items-center justify-between pb-3 border-b border-border/60">
+                      <span className="text-xs font-mono font-bold uppercase tracking-wider text-[var(--skin-color)]">
+                        {project.category}
+                      </span>
+                      <button
+                        type="button"
+                        onClick={() => toggleFlip(project.id)}
+                        className="text-xs text-muted-foreground hover:text-foreground p-1 rounded cursor-pointer"
+                        title="Flip back"
+                        aria-label="Flip back"
+                      >
+                        <FontAwesomeIcon icon={faRotate} className="h-3.5 w-3.5" />
+                      </button>
+                    </div>
+
+                    <h3 className="text-2xl font-extrabold text-foreground mt-4 mb-3">
+                      {project.title}
+                    </h3>
+                    <p className="text-sm text-muted-foreground leading-relaxed">
+                      {project.description}
+                    </p>
+                  </div>
+
+                  {/* Actions */}
+                  <div className="space-y-3 pt-4 border-t border-border/60">
+                    <div className="flex flex-wrap items-center gap-3">
+                      {project.liveUrl && (
+                        <a
+                          href={project.liveUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="flex-1 inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl text-xs sm:text-sm font-semibold text-white bg-[var(--gradient-primary)] hover:opacity-95 shadow-md transition-all"
+                        >
+                          <span>Live Demo</span>
+                          <FontAwesomeIcon icon={faExternalLinkAlt} className="h-3 w-3" />
+                        </a>
+                      )}
+
+                      {project.githubUrl && (
+                        <a
+                          href={project.githubUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="flex-1 inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl text-xs sm:text-sm font-semibold text-foreground bg-accent hover:bg-accent/80 border border-border transition-all"
+                        >
+                          <FontAwesomeIcon icon={faGithub} className="h-3.5 w-3.5" />
+                          <span>View Code</span>
+                        </a>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </article>
+          );
+        })}
       </div>
     </section>
   );
 }
-export default ProjectsSection;
 
+export default ProjectsSection;

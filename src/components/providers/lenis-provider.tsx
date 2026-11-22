@@ -1,6 +1,6 @@
 "use client";
 
-import React, { createContext, useContext, useEffect, useRef } from "react";
+import React, { createContext, useContext, useEffect, useState } from "react";
 import Lenis from "lenis";
 
 const LenisContext = createContext<Lenis | null>(null);
@@ -8,7 +8,7 @@ const LenisContext = createContext<Lenis | null>(null);
 export const useLenis = () => useContext(LenisContext);
 
 export function LenisProvider({ children }: { children: React.ReactNode }) {
-  const lenisRef = useRef<Lenis | null>(null);
+  const [lenisInstance, setLenisInstance] = useState<Lenis | null>(null);
 
   useEffect(() => {
     const lenis = new Lenis({
@@ -20,7 +20,10 @@ export function LenisProvider({ children }: { children: React.ReactNode }) {
       wheelMultiplier: 1,
       touchMultiplier: 2,
     });
-    lenisRef.current = lenis;
+
+    const timer = setTimeout(() => {
+      setLenisInstance(lenis);
+    }, 0);
 
     if (typeof window !== "undefined") {
       (window as unknown as { lenis?: Lenis }).lenis = lenis;
@@ -34,6 +37,7 @@ export function LenisProvider({ children }: { children: React.ReactNode }) {
     animationFrameId = requestAnimationFrame(raf);
 
     return () => {
+      clearTimeout(timer);
       cancelAnimationFrame(animationFrameId);
       lenis.destroy();
       if (typeof window !== "undefined") {
@@ -43,9 +47,8 @@ export function LenisProvider({ children }: { children: React.ReactNode }) {
   }, []);
 
   return (
-    <LenisContext.Provider value={lenisRef.current}>
+    <LenisContext.Provider value={lenisInstance}>
       {children}
     </LenisContext.Provider>
   );
 }
-
