@@ -1,56 +1,33 @@
-# Robots.txt for Tushar Basak - Cybersecurity Analyst Portfolio
+# Robots.txt for Tushar Basak - Cybersecurity Analyst & Web Developer Portfolio
 # https://tusharbasak97.github.io/website/
-# Last updated: September 2025
+# Last updated: November 2026
 
 User-agent: *
 Allow: /
+Allow: /assets/
+Allow: /favicon.ico
+Allow: /sitemap.xml
+Allow: /.well-known/
 
-# Don't index error pages
+# Do not index error or internal pages
 Disallow: /404.html
 Disallow: /offline.html
 
-# Don't index service worker
-Disallow: /js/sw.js
-
-# Don't index raw CSS and JS files
-Disallow: /css/
-Disallow: /js/
-
-# Allow important images
-Allow: /assets/images/
-
-# Point to sitemap
-Sitemap: https://tusharbasak97.github.io/website/sitemap.xml
-
-# Crawl-delay for all bots
-Crawl-delay: 10
-
-# Allow all major search engines with optimized crawl delays
+# Allow major search engines and discovery crawlers
 User-agent: Googlebot
 Allow: /
-Crawl-delay: 0.5
+
+User-agent: Googlebot-Image
+Allow: /assets/images/
+Allow: /
 
 User-agent: Bingbot
 Allow: /
-Crawl-delay: 1
 
-User-agent: Slurp
+User-agent: Applebot
 Allow: /
-Crawl-delay: 1
 
 User-agent: DuckDuckBot
-Allow: /
-Crawl-delay: 1
-
-User-agent: Baiduspider
-Allow: /
-Crawl-delay: 2
-
-User-agent: YandexBot
-Allow: /
-Crawl-delay: 2
-
-User-agent: facebookexternalhit
 Allow: /
 
 User-agent: Twitterbot
@@ -59,45 +36,40 @@ Allow: /
 User-agent: LinkedInBot
 Allow: /
 
-# Block SEO and scraping bots
+User-agent: facebookexternalhit
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: GPTBot
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+# Block aggressive scrapers and spambots
 User-agent: AhrefsBot
-Disallow: /
-
-User-agent: MJ12bot
-Disallow: /
-
-User-agent: DotBot
 Disallow: /
 
 User-agent: SemrushBot
 Disallow: /
 
-User-agent: MajesticSEO
+User-agent: DotBot
 Disallow: /
 
-User-agent: BLEXBot
+User-agent: MJ12bot
 Disallow: /
 
 User-agent: DataForSeoBot
 Disallow: /
 
-# Disallow technical files and directories
-Disallow: /js/
-Disallow: /css/
-Disallow: /.well-known/
-Disallow: /sw.js
-Disallow: /offline.html
-Disallow: /404.html
-Disallow: /*.json$
-Disallow: /*.min.js$
-Disallow: /*.min.css$
+User-agent: BLEXBot
+Disallow: /
 
-# Allow important assets and files
-Allow: /assets/
-Allow: /favicon.ico
-Allow: /sitemap.xml
-Allow: /robots.txt
-Allow: /.well-known/security.txt
-
-# Host directive for better SEO
+# Canonical Sitemap and Host
+Sitemap: https://tusharbasak97.github.io/website/sitemap.xml
 Host: https://tusharbasak97.github.io

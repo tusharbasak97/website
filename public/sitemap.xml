@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
+
+  <!-- Main Canonical Landing Page -->
+  <url>
+    <loc>https://tusharbasak97.github.io/website/</loc>
+    <lastmod>2026-11-23</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+    <image:image>
+      <image:loc>https://tusharbasak97.github.io/website/assets/images/hero.webp</image:loc>
+      <image:title>Tushar Basak - Cybersecurity Analyst &amp; Web Developer</image:title>
+      <image:caption>Professional portfolio of Tushar Basak specializing in penetration testing, SOC operations, network defense, and secure full-stack web development</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://tusharbasak97.github.io/website/assets/images/portfolio/password-generator.webp</image:loc>
+      <image:title>Password Generator (PassG) - Cybersecurity Tool</image:title>
+      <image:caption>Advanced cryptographically secure password generator featuring entropy calculation, XKCD passwords, and sanitization modes</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://tusharbasak97.github.io/website/assets/images/portfolio/todopomo.webp</image:loc>
+      <image:title>TodoPomo - Productivity Application</image:title>
+      <image:caption>A productivity application combining task management with a Pomodoro focus timer</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://tusharbasak97.github.io/website/assets/images/portfolio/st-plum.webp</image:loc>
+      <image:title>St Plum - Healthcare &amp; Wellness Platform</image:title>
+      <image:caption>A modern health-tech landing page with responsive components and interactive design</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://tusharbasak97.github.io/website/assets/images/portfolio/vayu-azure.webp</image:loc>
+      <image:title>Vayu Azure - Realtime Weather App</image:title>
+      <image:caption>Interactive weather dashboard providing live environmental analytics and forecasts</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://tusharbasak97.github.io/website/assets/images/portfolio/bvdb.webp</image:loc>
+      <image:title>BVDB - Bollywood Movie Database</image:title>
+      <image:caption>Dynamic cinema database with comprehensive movie catalogues and media analytics</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://tusharbasak97.github.io/website/assets/images/portfolio/tic-tac-toe.webp</image:loc>
+      <image:title>Tic-Tac-Toe Game</image:title>
+      <image:caption>Interactive web game with smooth UI mechanics and responsive gameplay</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://tusharbasak97.github.io/website/assets/images/portfolio/new-year.webp</image:loc>
+      <image:title>New Year Celebration Web App</image:title>
+      <image:caption>Interactive celebratory greeting card web application with particle physics</image:caption>
+    </image:image>
+  </url>
+
+  <!-- Professional Resume Document -->
+  <url>
+    <loc>https://tusharbasak97.github.io/website/assets/resume.pdf</loc>
+    <lastmod>2026-11-23</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- Tata Strive | SAP India Cybersecurity Trainee Certificate -->
+  <url>
+    <loc>https://tusharbasak97.github.io/website/assets/Strive.pdf</loc>
+    <lastmod>2026-11-23</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+</urlset>

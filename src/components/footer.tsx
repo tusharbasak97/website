@@ -1,6 +1,8 @@
 "use client";
 
-import React, { useSyncExternalStore } from "react";
+import React, { useSyncExternalStore, useRef, useEffect } from "react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUserSecret, faShieldHalved } from "@fortawesome/free-solid-svg-icons";
 import {
@@ -9,6 +11,10 @@ import {
   faMedium,
 } from "@fortawesome/free-brands-svg-icons";
 import { socialLinks } from "@/lib/data";
+
+if (typeof window !== "undefined") {
+  gsap.registerPlugin(ScrollTrigger);
+}
 
 const iconMap: Record<string, typeof faGithub | typeof faUserSecret> = {
   github: faGithub,
@@ -22,16 +28,41 @@ function subscribe() {
 }
 
 export function Footer() {
+  const footerRef = useRef<HTMLElement>(null);
+
   // Safe client-side dynamic year using useSyncExternalStore
   const year = useSyncExternalStore(
     subscribe,
     () => new Date().getFullYear(),
-    () => 2026
+    () => 2027
   );
 
+  useEffect(() => {
+    if (footerRef.current) {
+      gsap.fromTo(
+        footerRef.current,
+        { opacity: 0, y: 25 },
+        {
+          opacity: 1,
+          y: 0,
+          duration: 0.8,
+          ease: "power2.out",
+          scrollTrigger: {
+            trigger: footerRef.current,
+            start: "top 95%",
+            toggleActions: "play none none none",
+          },
+        }
+      );
+    }
+  }, []);
+
   return (
-    <footer className="w-full border-t border-border bg-card/50 backdrop-blur-sm py-12 px-4 sm:px-8 md:px-12 lg:px-20 xl:px-28">
-      <div className="w-full flex flex-col md:flex-row items-center justify-between gap-6">
+    <footer
+      ref={footerRef}
+      className="w-full border-t border-border bg-card/50 backdrop-blur-sm py-12 px-4 sm:px-8 md:px-12 lg:px-20 xl:px-28"
+    >
+      <div className="w-full max-w-7xl 2xl:max-w-[1400px] mx-auto flex flex-col md:flex-row items-center justify-between gap-6 pb-16 md:pb-0">
         {/* Brand & secured indicator */}
         <div className="flex items-center gap-3">
           <span className="font-kaushan text-2xl font-bold text-foreground">

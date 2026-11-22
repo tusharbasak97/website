@@ -6,6 +6,8 @@ import { ProjectsSection } from "@/components/sections/projects";
 import { ContactSection } from "@/components/sections/contact";
 import { Footer } from "@/components/footer";
 import { ScrollToTop } from "@/components/scroll-to-top";
+import { MobileBottomNav } from "@/components/mobile-nav";
+import { TabletFloatingNav } from "@/components/tablet-nav";
 import { CustomCursor } from "@/components/custom-cursor";
 import { StyleSwitcher } from "@/components/style-switcher";
 import { SectionReveal } from "@/components/section-reveal";
@@ -32,6 +34,8 @@ export default function Home() {
       </main>
       <Footer />
       <ScrollToTop />
+      <MobileBottomNav />
+      <TabletFloatingNav />
       <StyleSwitcher />
     </div>
   );

@@ -1,0 +1,75 @@
+# Robots.txt for Tushar Basak - Cybersecurity Analyst & Web Developer Portfolio
+# https://tusharbasak97.github.io/website/
+# Last updated: November 2026
+
+User-agent: *
+Allow: /
+Allow: /assets/
+Allow: /favicon.ico
+Allow: /sitemap.xml
+Allow: /.well-known/
+
+# Do not index error or internal pages
+Disallow: /404.html
+Disallow: /offline.html
+
+# Allow major search engines and discovery crawlers
+User-agent: Googlebot
+Allow: /
+
+User-agent: Googlebot-Image
+Allow: /assets/images/
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+User-agent: Applebot
+Allow: /
+
+User-agent: DuckDuckBot
+Allow: /
+
+User-agent: Twitterbot
+Allow: /
+
+User-agent: LinkedInBot
+Allow: /
+
+User-agent: facebookexternalhit
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: GPTBot
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+# Block aggressive scrapers and spambots
+User-agent: AhrefsBot
+Disallow: /
+
+User-agent: SemrushBot
+Disallow: /
+
+User-agent: DotBot
+Disallow: /
+
+User-agent: MJ12bot
+Disallow: /
+
+User-agent: DataForSeoBot
+Disallow: /
+
+User-agent: BLEXBot
+Disallow: /
+
+# Canonical Sitemap and Host
+Sitemap: https://tusharbasak97.github.io/website/sitemap.xml
+Host: https://tusharbasak97.github.io

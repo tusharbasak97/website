@@ -8,58 +8,37 @@ import gsap from "gsap";
 export function Preloader() {
   const containerRef = useRef<HTMLDivElement | null>(null);
   const logoRef = useRef<HTMLDivElement | null>(null);
-  const textRef = useRef<HTMLDivElement | null>(null);
-  const progressRef = useRef<HTMLDivElement | null>(null);
+  const textRef = useRef<HTMLSpanElement | null>(null);
+  const barFillRef = useRef<HTMLDivElement | null>(null);
+  const counterRef = useRef<HTMLSpanElement | null>(null);
 
-  const [progress, setProgress] = useState(0);
-  const [statusText, setStatusText] = useState("INITIALIZING SECURITY KERNEL...");
   const [isDone, setIsDone] = useState(false);
 
   useEffect(() => {
-    // Check if session has already seen preloader in this browser session
-    const hasSeen = sessionStorage.getItem("tushar_preloader_seen");
-    if (hasSeen) {
-      setIsDone(true);
-      return;
-    }
-
     // Lock body scroll during preloader
     document.body.style.overflow = "hidden";
 
-    // Progress counter animation
+    // Progress counter object animated by GSAP
     const progressObj = { value: 0 };
 
     const statusSteps = [
+      { at: 0, text: "INITIALIZING SECURITY KERNEL..." },
       { at: 20, text: "ENCRYPTING COMMUNICATIONS..." },
       { at: 50, text: "LOADING SOC MONITORING MODULES..." },
-      { at: 80, text: "VERIFYING ZERO TRUST POLICY..." },
-      { at: 95, text: "SECURITY CLEARANCE: GRANTED" },
+      { at: 75, text: "VERIFYING ZERO TRUST POLICY..." },
+      { at: 92, text: "SECURITY CLEARANCE: GRANTED" },
     ];
 
-    const tl = gsap.timeline({
-      onComplete: () => {
-        // Slide up preloader curtain
-        gsap.to(containerRef.current, {
-          yPercent: -100,
-          duration: 0.75,
-          ease: "power4.inOut",
-          onComplete: () => {
-            document.body.style.overflow = "";
-            sessionStorage.setItem("tushar_preloader_seen", "true");
-            setIsDone(true);
-          },
-        });
-      },
-    });
+    const tl = gsap.timeline();
 
-    // Animate logo pulse
+    // 1. Animate logo entrance with a punchy bounce
     tl.fromTo(
       logoRef.current,
-      { scale: 0.8, opacity: 0 },
-      { scale: 1, opacity: 1, duration: 0.5, ease: "back.out(1.8)" }
+      { scale: 0.7, opacity: 0 },
+      { scale: 1, opacity: 1, duration: 0.45, ease: "back.out(2)" }
     );
 
-    // Animate progress to 100%
+    // 2. Animate progress bar & counter directly on DOM for 60/120 FPS buttery updates
     tl.to(
       progressObj,
       {
@@ -68,16 +47,45 @@ export function Preloader() {
         ease: "power1.inOut",
         onUpdate: () => {
           const current = Math.floor(progressObj.value);
-          setProgress(current);
+          if (barFillRef.current) {
+            barFillRef.current.style.width = `${current}%`;
+          }
+          if (counterRef.current) {
+            counterRef.current.textContent = `${current}%`;
+          }
           const found = statusSteps.filter((s) => current >= s.at).pop();
-          if (found) setStatusText(found.text);
+          if (found && textRef.current && textRef.current.textContent !== found.text) {
+            textRef.current.textContent = found.text;
+          }
         },
       },
-      "-=0.2"
+      "-=0.1" // Overlap slightly with logo entrance
     );
+
+    // 3. Smooth curtain slide away
+    tl.to(containerRef.current, {
+      yPercent: -100,
+      duration: 0.7,
+      ease: "power4.inOut",
+      delay: 0.15,
+      onStart: () => {
+        if (typeof window !== "undefined") {
+          (window as unknown as { __preloaderDismissed?: boolean }).__preloaderDismissed = true;
+          window.dispatchEvent(new CustomEvent("preloaderDismiss"));
+        }
+      },
+      onComplete: () => {
+        document.body.style.overflow = "";
+        if (typeof window !== "undefined") {
+          window.dispatchEvent(new CustomEvent("preloaderDone"));
+        }
+        setIsDone(true);
+      },
+    });
 
     return () => {
       document.body.style.overflow = "";
+      tl.kill();
     };
   }, []);
 
@@ -86,53 +94,64 @@ export function Preloader() {
   return (
     <div
       ref={containerRef}
-      className="fixed inset-0 z-[999999] bg-[#07090e] text-[#f0f0f0] flex flex-col items-center justify-center p-4 font-mono select-none"
+      id="preloader"
+      className="fixed inset-0 z-[999999] bg-[var(--bg-black-900)] text-[var(--text-black-900)] flex flex-col items-center justify-center p-4 font-sans select-none transition-colors duration-300"
     >
-      {/* Background Matrix/Grid Overlay */}
-      <div className="scanlines-overlay fixed inset-0 pointer-events-none" />
+      {/* Background Ambient Glow matching website */}
+      <div className="absolute top-1/3 -left-24 w-80 h-80 bg-[var(--skin-color)]/10 rounded-full blur-3xl pointer-events-none" />
+      <div className="absolute bottom-1/3 -right-24 w-80 h-80 bg-[var(--skin-color-end)]/10 rounded-full blur-3xl pointer-events-none" />
 
       {/* Center Preloader Content */}
       <div className="relative z-10 flex flex-col items-center max-w-sm w-full text-center">
-        {/* Animated Cyber Shield Logo */}
-        <div
-          ref={logoRef}
-          className="pulse-glow relative flex items-center justify-center w-20 h-20 rounded-2xl bg-[#0e131d] border-2 border-[var(--skin-color,#ff7b00)] mb-6 shadow-[0_0_30px_rgba(255,123,0,0.4)]"
-        >
-          <FontAwesomeIcon
-            icon={faShieldHalved}
-            className="w-10 h-10 text-[var(--skin-color,#ff7b00)]"
-          />
-          <div className="absolute -bottom-1 -right-1 w-4 h-4 rounded-full bg-emerald-500 border-2 border-[#07090e] animate-ping" />
+        {/* Animated Cyber Shield with Dual Orbital Rings */}
+        <div className="relative mb-6 flex items-center justify-center">
+          {/* Outer dashed spinning ring */}
+          <div className="absolute -inset-3.5 rounded-full border border-dashed border-[var(--skin-color)]/35 animate-spin [animation-duration:5s] pointer-events-none" />
+
+          {/* Inner counter-rotating ring */}
+          <div className="absolute -inset-1.5 rounded-full border border-[var(--skin-color)]/25 animate-spin [animation-duration:3.5s] [animation-direction:reverse] pointer-events-none" />
+
+          {/* Center Cyber Shield Logo */}
+          <div
+            ref={logoRef}
+            className="pulse-glow relative flex items-center justify-center w-20 h-20 rounded-2xl bg-card border-2 border-[var(--skin-color)] shadow-xl shadow-[var(--skin-color)]/20 dark:shadow-[0_0_30px_color-mix(in_oklch,var(--skin-color)_40%,transparent)]"
+          >
+            <FontAwesomeIcon
+              icon={faShieldHalved}
+              className="w-10 h-10 text-[var(--skin-color)]"
+            />
+            <div className="absolute -bottom-1 -right-1 w-4 h-4 rounded-full bg-emerald-500 border-2 border-background animate-ping" />
+          </div>
         </div>
 
-        {/* Name / Brand Title */}
-        <h2 className="text-xl sm:text-2xl font-black tracking-widest text-white uppercase mb-1">
-          Tushar Basak
+        {/* Name / Brand Title adhering to website typography */}
+        <h2 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-foreground uppercase mb-1">
+          Tushar <span className="text-[var(--skin-color)]">Basak</span>
         </h2>
-        <p className="text-xs text-[var(--skin-color,#ff7b00)] tracking-wider mb-6 font-semibold">
+        <p className="text-xs text-[var(--skin-color)] tracking-wider mb-6 font-semibold uppercase">
           CYBERSECURITY ANALYST &bull; PORTFOLIO
         </p>
 
-        {/* Progress Bar Container */}
-        <div className="w-full bg-[#111722] border border-gray-800 rounded-full h-2 p-0.5 mb-3 overflow-hidden">
+        {/* Progress Bar Container adapting to theme */}
+        <div className="w-full bg-black/10 dark:bg-white/10 border border-border/80 rounded-full h-2.5 p-0.5 mb-3 overflow-hidden shadow-inner">
           <div
-            ref={progressRef}
-            className="h-full bg-gradient-to-r from-[var(--skin-color,#ff7b00)] to-[#ff4500] rounded-full transition-all duration-75 ease-out shadow-[0_0_12px_rgba(255,123,0,0.8)]"
-            style={{ width: `${progress}%` }}
-          />
+            ref={barFillRef}
+            className="h-full bg-gradient-to-r from-[var(--skin-color)] to-[var(--skin-color-end)] rounded-full shadow-[0_0_12px_color-mix(in_oklch,var(--skin-color)_70%,transparent)] relative overflow-hidden"
+            style={{ width: "0%" }}
+          >
+            {/* Shimmer sweep animation across the progress bar */}
+            <div className="animate-shimmer-sweep absolute inset-0 w-full h-full bg-gradient-to-r from-transparent via-white/40 to-transparent pointer-events-none" />
+          </div>
         </div>
 
-        {/* Status Line & Percentage */}
-        <div className="flex items-center justify-between w-full text-[11px] text-gray-400">
-          <div
-            ref={textRef}
-            className="flex items-center gap-1.5 truncate max-w-[220px]"
-          >
-            <FontAwesomeIcon icon={faTerminal} className="w-2.5 h-2.5 text-emerald-400" />
-            <span className="truncate">{statusText}</span>
+        {/* Status Line & Percentage (font-mono strictly for cyber telemetry) */}
+        <div className="flex items-center justify-between w-full text-xs font-mono text-foreground/85 dark:text-muted-foreground">
+          <div className="flex items-center gap-2 truncate max-w-[250px]">
+            <FontAwesomeIcon icon={faTerminal} className="w-3 h-3 text-emerald-600 dark:text-emerald-400 shrink-0" />
+            <span ref={textRef} className="truncate font-medium">INITIALIZING SECURITY KERNEL...</span>
           </div>
-          <span className="font-bold text-[var(--skin-color,#ff7b00)] font-mono">
-            {progress}%
+          <span ref={counterRef} className="font-bold text-[var(--skin-color)] ml-2">
+            0%
           </span>
         </div>
       </div>

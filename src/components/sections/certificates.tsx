@@ -2,7 +2,12 @@
 
 import React, { useMemo, useState, useRef, useEffect } from "react";
 import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+
+if (typeof window !== "undefined") {
+  gsap.registerPlugin(ScrollTrigger);
+}
 import {
   faShieldHalved,
   faUserShield,
@@ -43,7 +48,72 @@ export function CertificatesSection() {
       effectiveStatus: cert.status,
     }))
   );
+  const sectionRef = useRef<HTMLElement>(null);
   const gridRef = useRef<HTMLDivElement>(null);
+
+  // GSAP ScrollTrigger for Certificates entrance
+  useEffect(() => {
+    const ctx = gsap.context(() => {
+      // 1. Title & Line Reveal
+      const title = sectionRef.current?.querySelector(".cert-title-text");
+      const line = sectionRef.current?.querySelector(".cert-title-line");
+      if (title && line) {
+        gsap.fromTo(
+          title,
+          { y: 30, opacity: 0 },
+          {
+            y: 0,
+            opacity: 1,
+            duration: 0.8,
+            ease: "power3.out",
+            scrollTrigger: {
+              trigger: title,
+              start: "top 90%",
+              toggleActions: "play none none none",
+            },
+          }
+        );
+        gsap.fromTo(
+          line,
+          { scaleX: 0, transformOrigin: "left center" },
+          {
+            scaleX: 1,
+            duration: 0.8,
+            delay: 0.2,
+            ease: "power2.out",
+            scrollTrigger: {
+              trigger: line,
+              start: "top 90%",
+              toggleActions: "play none none none",
+            },
+          }
+        );
+      }
+
+      // 2. Filter buttons entrance
+      const filterBtns = sectionRef.current?.querySelectorAll(".cert-filter-btn");
+      if (filterBtns && filterBtns.length > 0) {
+        gsap.fromTo(
+          filterBtns,
+          { y: 20, opacity: 0 },
+          {
+            y: 0,
+            opacity: 1,
+            duration: 0.6,
+            stagger: 0.08,
+            ease: "power2.out",
+            scrollTrigger: {
+              trigger: ".cert-filters-group",
+              start: "top 90%",
+              toggleActions: "play none none none",
+            },
+          }
+        );
+      }
+    }, sectionRef);
+
+    return () => ctx.revert();
+  }, []);
 
   // Compute real-time status and expiry details after mount to prevent SSR hydration mismatch
   useEffect(() => {
@@ -142,16 +212,18 @@ export function CertificatesSection() {
 
   return (
     <section
+      ref={sectionRef}
       id="certificates"
       role="region"
       aria-label="Professional Certifications"
       className="w-full py-20 px-4 sm:px-8 md:px-12 lg:px-20 xl:px-28"
     >
-      {/* Section Title - NO DOT */}
-      <div className="mb-12 text-left">
+      <div className="w-full max-w-7xl 2xl:max-w-[1400px] mx-auto">
+        {/* Section Title - NO DOT */}
+        <div className="mb-12 text-left">
         <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight text-foreground flex items-center gap-4">
-          <span>Professional Certifications</span>
-          <span className="h-1 flex-1 max-w-[100px] bg-[var(--skin-color)] rounded-full" />
+          <span className="cert-title-text">Professional Certifications</span>
+          <span className="cert-title-line h-1 flex-1 max-w-[100px] bg-[var(--skin-color)] rounded-full" />
         </h2>
         <p className="mt-2 text-muted-foreground text-base sm:text-lg">
           Industry-accredited qualifications validating advanced competencies in information security
@@ -159,7 +231,7 @@ export function CertificatesSection() {
       </div>
 
       {/* Filter Tabs with Dynamic Counts */}
-      <div className="flex flex-wrap items-center gap-3 mb-10" role="group" aria-label="Certificate filters">
+      <div className="cert-filters-group flex flex-wrap items-center gap-3 mb-10" role="group" aria-label="Certificate filters">
         {filterButtons.map(({ key, label, icon }) => {
           const isActive = activeFilter === key;
           const count = counts[key];
@@ -169,10 +241,10 @@ export function CertificatesSection() {
               key={key}
               type="button"
               onClick={() => setActiveFilter(key)}
-              className={`inline-flex items-center gap-2.5 px-4 sm:px-5 py-2.5 rounded-xl text-sm font-semibold transition-all duration-200 cursor-pointer ${
+              className={`cert-filter-btn inline-flex items-center gap-2.5 px-4 sm:px-5 py-2.5 rounded-xl text-sm font-semibold transition-all duration-200 cursor-pointer ${
                 isActive
-                  ? "bg-[var(--skin-color)] text-white shadow-md shadow-[var(--skin-color)]/25 scale-[1.02]"
-                  : "bg-card border border-border text-muted-foreground hover:text-foreground hover:bg-accent/50"
+                  ? "bg-gradient-to-r from-[var(--skin-color)] to-[var(--skin-color-end)] !text-white shadow-md shadow-[var(--skin-color)]/30 scale-[1.02]"
+                  : "bg-card border-2 border-border/80 text-foreground/80 hover:text-foreground hover:bg-accent/70 hover:border-[var(--skin-color)]/50 shadow-xs"
               }`}
               aria-pressed={isActive}
             >
@@ -181,8 +253,8 @@ export function CertificatesSection() {
               <span
                 className={`px-2 py-0.5 rounded-full text-xs font-mono font-bold ${
                   isActive
-                    ? "bg-white/20 text-white"
-                    : "bg-muted text-muted-foreground"
+                    ? "bg-white/25 !text-white"
+                    : "bg-muted text-foreground/80"
                 }`}
               >
                 {count}
@@ -274,7 +346,7 @@ export function CertificatesSection() {
                     href={cert.verifyUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs font-semibold text-white bg-[var(--gradient-primary)] hover:opacity-90 shadow-sm transition-all"
+                    className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs font-semibold bg-gradient-to-r from-[var(--skin-color)] to-[var(--skin-color-end)] !text-white shadow-sm hover:shadow-md hover:shadow-[var(--skin-color)]/30 transition-all cursor-pointer"
                   >
                     <span>Verify</span>
                     <FontAwesomeIcon icon={faExternalLinkAlt} className="h-2.5 w-2.5" />
@@ -289,6 +361,7 @@ export function CertificatesSection() {
             </article>
           );
         })}
+      </div>
       </div>
     </section>
   );

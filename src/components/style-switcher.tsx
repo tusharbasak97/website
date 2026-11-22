@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState, useSyncExternalStore } from "react";
+import React, { useEffect, useRef, useState, useSyncExternalStore } from "react";
 import { useTheme } from "next-themes";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -19,9 +19,9 @@ interface ColorOption {
 }
 
 const colorOptions: ColorOption[] = [
-  { id: "color-1", name: "Cyber Orange", hex: "hsla(36, 100%, 50%, 1)" },
-  { id: "color-2", name: "Neon Magenta", hex: "hsla(324, 100%, 50%, 1)" },
-  { id: "color-3", name: "Electric Violet", hex: "hsla(276, 100%, 62%, 1)" },
+  { id: "color-1", name: "Cyber Orange", hex: "oklch(0.70 0.19 55)" },
+  { id: "color-2", name: "Neon Magenta", hex: "oklch(0.66 0.27 350)" },
+  { id: "color-3", name: "Electric Violet", hex: "oklch(0.66 0.24 295)" },
 ];
 
 function subscribe() {
@@ -32,6 +32,7 @@ export function StyleSwitcher() {
   const { resolvedTheme, setTheme } = useTheme();
   const [isOpen, setIsOpen] = useState(false);
   const [activeColor, setActiveColor] = useState<ThemeColor>("color-1");
+  const switcherRef = useRef<HTMLElement>(null);
 
   const mounted = useSyncExternalStore(
     subscribe,
@@ -39,18 +40,41 @@ export function StyleSwitcher() {
     () => false
   );
 
+  // Initialize saved theme color
   useEffect(() => {
     const savedColor = localStorage.getItem("portfolio-color-theme") as ThemeColor | null;
     if (savedColor && ["color-1", "color-2", "color-3"].includes(savedColor)) {
-      const timer = setTimeout(() => {
-        setActiveColor(savedColor);
-        document.documentElement.setAttribute("data-theme-color", savedColor);
-      }, 0);
-      return () => clearTimeout(timer);
+      setActiveColor(savedColor);
+      document.documentElement.setAttribute("data-theme-color", savedColor);
     } else {
       document.documentElement.setAttribute("data-theme-color", "color-1");
     }
   }, []);
+
+  // Close on outside click or Escape key
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (switcherRef.current && !switcherRef.current.contains(event.target as Node)) {
+        setIsOpen(false);
+      }
+    };
+
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        setIsOpen(false);
+      }
+    };
+
+    if (isOpen) {
+      document.addEventListener("mousedown", handleClickOutside);
+      document.addEventListener("keydown", handleKeyDown);
+    }
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+      document.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [isOpen]);
 
   const handleColorChange = (color: ThemeColor) => {
     setActiveColor(color);
@@ -59,24 +83,28 @@ export function StyleSwitcher() {
   };
 
   const toggleDayNight = () => {
+    document.documentElement.classList.add("theme-transition");
     setTheme(resolvedTheme === "dark" ? "light" : "dark");
+    setTimeout(() => {
+      document.documentElement.classList.remove("theme-transition");
+    }, 400);
   };
 
   return (
     <aside
+      ref={switcherRef}
       aria-label="Style Switcher"
-      className="fixed top-24 sm:top-28 right-0 z-40 transition-transform duration-300 ease-in-out flex items-start"
-      style={{
-        transform: isOpen ? "translateX(0)" : "translateX(calc(100% - 46px))",
-      }}
+      className={`fixed top-24 sm:top-28 right-0 z-50 transition-transform duration-300 ease-out md:hidden lg:flex items-start ${
+        isOpen ? "translate-x-0" : "translate-x-full"
+      }`}
     >
-      {/* Action Buttons Column on Left Edge */}
-      <div className="flex flex-col space-y-2 select-none">
+      {/* Action Buttons Column anchored to left edge of panel, spaced apart from each other */}
+      <div className="absolute right-full top-3 flex flex-col space-y-3 select-none">
         {/* Gear Toggle Button */}
         <button
           type="button"
-          onClick={() => setIsOpen(!isOpen)}
-          className="w-11 h-11 rounded-l-xl bg-card border-y border-l border-border shadow-lg flex items-center justify-center text-foreground hover:text-[var(--skin-color)] focus:outline-none cursor-pointer group transition-colors"
+          onClick={() => setIsOpen((prev) => !prev)}
+          className="w-11 h-11 rounded-l-xl bg-card border-y border-l border-border shadow-lg flex items-center justify-center text-foreground hover:text-[var(--skin-color)] hover:bg-accent/60 focus:outline-none focus:ring-2 focus:ring-[var(--skin-color)]/30 cursor-pointer group transition-colors"
           aria-label={isOpen ? "Close style switcher" : "Open style switcher"}
           title="Toggle style switcher"
         >
@@ -92,16 +120,14 @@ export function StyleSwitcher() {
         <button
           type="button"
           onClick={toggleDayNight}
-          className="w-11 h-11 rounded-l-xl bg-card border-y border-l border-border shadow-lg flex items-center justify-center text-foreground hover:text-[var(--skin-color)] focus:outline-none cursor-pointer transition-colors"
+          className="w-11 h-11 rounded-l-xl bg-card border-y border-l border-border shadow-lg flex items-center justify-center text-foreground hover:text-[var(--skin-color)] hover:bg-accent/60 focus:outline-none focus:ring-2 focus:ring-[var(--skin-color)]/30 cursor-pointer group transition-colors"
           aria-label="Toggle dark/light theme"
-          title={`Switch to ${resolvedTheme === "dark" ? "light" : "dark"} mode`}
+          title={mounted ? `Switch to ${resolvedTheme === "dark" ? "light" : "dark"} mode` : "Toggle dark/light theme"}
         >
           {mounted ? (
             <FontAwesomeIcon
               icon={resolvedTheme === "dark" ? faSun : faMoon}
-              className={`h-4 w-4 ${
-                resolvedTheme === "dark" ? "text-amber-400" : "text-slate-700"
-              }`}
+              className="h-4 w-4 transition-colors group-hover:text-[var(--skin-color)]"
             />
           ) : (
             <FontAwesomeIcon icon={faMoon} className="h-4 w-4" />
@@ -110,14 +136,14 @@ export function StyleSwitcher() {
       </div>
 
       {/* Main Panel Content */}
-      <div className="w-56 p-5 bg-card/95 backdrop-blur-xl border-y border-l border-border rounded-l-2xl shadow-2xl">
+      <div className="w-60 p-5 bg-card/95 backdrop-blur-xl border-y border-l border-border rounded-l-2xl shadow-2xl">
         <h4 className="text-sm font-bold text-foreground mb-3 pb-2 border-b border-border flex items-center justify-between">
           <span>Theme Colors</span>
-          <span className="text-[10px] font-mono uppercase text-muted-foreground">Skin</span>
+          <span className="text-[10px] font-mono uppercase text-muted-foreground font-semibold">SKIN</span>
         </h4>
 
         {/* Color Swatches */}
-        <div className="flex items-center justify-between py-1">
+        <div className="flex items-center justify-between py-2 px-1">
           {colorOptions.map((color) => {
             const isSelected = activeColor === color.id;
 
@@ -126,17 +152,17 @@ export function StyleSwitcher() {
                 key={color.id}
                 type="button"
                 onClick={() => handleColorChange(color.id)}
-                className={`relative w-9 h-9 rounded-full shadow-md transition-all duration-200 cursor-pointer flex items-center justify-center focus:outline-none ${
+                className={`relative w-10 h-10 rounded-full shadow-md transition-all duration-200 cursor-pointer flex items-center justify-center focus:outline-none ${
                   isSelected
-                    ? "ring-2 ring-foreground ring-offset-2 ring-offset-card scale-110"
-                    : "hover:scale-105 opacity-85 hover:opacity-100"
+                    ? "ring-3 ring-foreground ring-offset-2 ring-offset-card scale-110 shadow-lg"
+                    : "hover:scale-105 opacity-85 hover:opacity-100 border border-white/20"
                 }`}
                 style={{ backgroundColor: color.hex }}
                 title={color.name}
                 aria-label={color.name}
               >
                 {isSelected && (
-                  <FontAwesomeIcon icon={faCheck} className="h-3 w-3 text-white drop-shadow-sm" />
+                  <FontAwesomeIcon icon={faCheck} className="h-3.5 w-3.5 text-[oklch(1_0_0)] drop-shadow-md" />
                 )}
               </button>
             );
@@ -145,9 +171,9 @@ export function StyleSwitcher() {
 
         {/* Quick Mode Indicator */}
         <div className="mt-4 pt-3 border-t border-border flex items-center justify-between text-xs text-muted-foreground">
-          <span>Mode</span>
-          <span className="font-semibold text-foreground capitalize">
-            {mounted ? resolvedTheme : "system"}
+          <span>Current Mode</span>
+          <span className="font-semibold text-foreground capitalize px-2 py-0.5 rounded bg-muted">
+            {mounted ? resolvedTheme : "dark"}
           </span>
         </div>
       </div>

@@ -90,11 +90,11 @@ export function ScrollToTop() {
       onClick={handleClick}
       aria-label="Scroll back to top"
       title="Back to top"
-      className="fixed bottom-6 right-6 sm:bottom-8 sm:right-8 z-50 flex items-center justify-center w-12 h-12 rounded-full bg-gradient-to-r from-[var(--skin-color,#ff7b00)] to-[var(--skin-color-end,#ff4500)] text-white shadow-[0_0_20px_rgba(255,123,0,0.5)] hover:shadow-[0_0_35px_rgba(255,123,0,0.85)] hover:scale-110 active:scale-95 transition-transform duration-200 cursor-pointer border border-white/20 group focus:outline-none focus:ring-2 focus:ring-[var(--skin-color)]"
+      className="fixed bottom-20 right-4 sm:bottom-8 sm:right-8 z-50 flex items-center justify-center w-12 h-12 rounded-full bg-gradient-to-r from-[var(--skin-color)] to-[var(--skin-color-end)] text-[oklch(1_0_0)] hover:scale-110 active:scale-95 transition-all duration-200 cursor-pointer border border-white/20 group focus:outline-none focus:ring-2 focus:ring-[var(--skin-color)] [box-shadow:0_0_20px_color-mix(in_oklch,var(--skin-color)_45%,transparent)] hover:[box-shadow:0_0_32px_color-mix(in_oklch,var(--skin-color)_75%,transparent)]"
       style={{ opacity: 0, pointerEvents: "none", transform: "translateY(20px) scale(0.8)" }}
     >
       {/* Pulse ring animation */}
-      <span className="absolute inset-0 rounded-full bg-[var(--skin-color,#ff7b00)] opacity-40 animate-ping pointer-events-none group-hover:opacity-75" />
+      <span className="absolute inset-0 rounded-full bg-[var(--skin-color)] opacity-40 animate-ping pointer-events-none group-hover:opacity-75" />
 
       {/* Primary Arrow Icon */}
       <FontAwesomeIcon

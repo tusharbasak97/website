@@ -1,111 +1,69 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
-        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1"
-        xmlns:news="http://www.google.com/schemas/sitemap-news/0.9">
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
 
-  <!-- Main Page - Cybersecurity Analyst Portfolio -->
+  <!-- Main Canonical Landing Page -->
   <url>
     <loc>https://tusharbasak97.github.io/website/</loc>
-    <lastmod>2026-01-13</lastmod>
+    <lastmod>2026-11-23</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
     <image:image>
       <image:loc>https://tusharbasak97.github.io/website/assets/images/hero.webp</image:loc>
-      <image:title>Tushar Basak - Expert Cybersecurity Analyst</image:title>
-      <image:caption>Professional Cybersecurity Analyst and Web Developer specializing in penetration testing, ethical hacking, secure web application development, and threat hunting</image:caption>
+      <image:title>Tushar Basak - Cybersecurity Analyst &amp; Web Developer</image:title>
+      <image:caption>Professional portfolio of Tushar Basak specializing in penetration testing, SOC operations, network defense, and secure full-stack web development</image:caption>
     </image:image>
-  </url>
-
-  <!-- Home Section - Professional Introduction -->
-  <url>
-    <loc>https://tusharbasak97.github.io/website/#home</loc>
-    <lastmod>2026-01-13</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.9</priority>
-  </url>
-
-  <!-- About Section - Skills and Experience -->
-  <url>
-    <loc>https://tusharbasak97.github.io/website/#about</loc>
-    <lastmod>2026-01-13</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-
-  <!-- Certificates Section - Professional Certifications -->
-  <url>
-    <loc>https://tusharbasak97.github.io/website/#certificates</loc>
-    <lastmod>2026-01-13</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-
-  <!-- Projects Section - Cybersecurity Portfolio -->
-  <url>
-    <loc>https://tusharbasak97.github.io/website/#portfolio</loc>
-    <lastmod>2026-01-13</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
     <image:image>
       <image:loc>https://tusharbasak97.github.io/website/assets/images/portfolio/password-generator.webp</image:loc>
-      <image:title>Password Generator</image:title>
-      <image:caption>Advanced password generator featuring entropy calculation, XKCD passwords, and sanitization modes</image:caption>
+      <image:title>Password Generator (PassG) - Cybersecurity Tool</image:title>
+      <image:caption>Advanced cryptographically secure password generator featuring entropy calculation, XKCD passwords, and sanitization modes</image:caption>
     </image:image>
     <image:image>
       <image:loc>https://tusharbasak97.github.io/website/assets/images/portfolio/todopomo.webp</image:loc>
-      <image:title>TodoPomo</image:title>
-      <image:caption>A productivity application combining a Todo list with a Pomodoro timer for maximum efficiency</image:caption>
+      <image:title>TodoPomo - Productivity Application</image:title>
+      <image:caption>A productivity application combining task management with a Pomodoro focus timer</image:caption>
     </image:image>
     <image:image>
-      <image:loc>https://tusharbasak97.github.io/website/assets/images/portfolio/new-year.webp</image:loc>
-      <image:title>New Year Wish</image:title>
-      <image:caption>An interactive New Year celebration website with dynamic greeting cards and animations</image:caption>
+      <image:loc>https://tusharbasak97.github.io/website/assets/images/portfolio/st-plum.webp</image:loc>
+      <image:title>St Plum - Healthcare &amp; Wellness Platform</image:title>
+      <image:caption>A modern health-tech landing page with responsive components and interactive design</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://tusharbasak97.github.io/website/assets/images/portfolio/vayu-azure.webp</image:loc>
+      <image:title>Vayu Azure - Realtime Weather App</image:title>
+      <image:caption>Interactive weather dashboard providing live environmental analytics and forecasts</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://tusharbasak97.github.io/website/assets/images/portfolio/bvdb.webp</image:loc>
+      <image:title>BVDB - Bollywood Movie Database</image:title>
+      <image:caption>Dynamic cinema database with comprehensive movie catalogues and media analytics</image:caption>
     </image:image>
     <image:image>
       <image:loc>https://tusharbasak97.github.io/website/assets/images/portfolio/tic-tac-toe.webp</image:loc>
-      <image:title>Tic-Tac-Toe</image:title>
-      <image:caption>A responsive Tic-Tac-Toe game featuring a clean UI and smooth gameplay mechanics</image:caption>
+      <image:title>Tic-Tac-Toe Game</image:title>
+      <image:caption>Interactive web game with smooth UI mechanics and responsive gameplay</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://tusharbasak97.github.io/website/assets/images/portfolio/new-year.webp</image:loc>
+      <image:title>New Year Celebration Web App</image:title>
+      <image:caption>Interactive celebratory greeting card web application with particle physics</image:caption>
     </image:image>
   </url>
 
-  <!-- Resume PDF -->
+  <!-- Professional Resume Document -->
   <url>
     <loc>https://tusharbasak97.github.io/website/assets/resume.pdf</loc>
-    <lastmod>2026-01-13</lastmod>
+    <lastmod>2026-11-23</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
+    <priority>0.8</priority>
   </url>
 
-  <!-- Strive Certificate -->
+  <!-- Tata Strive | SAP India Cybersecurity Trainee Certificate -->
   <url>
     <loc>https://tusharbasak97.github.io/website/assets/Strive.pdf</loc>
-    <lastmod>2025-09-22</lastmod>
-    <changefreq>yearly</changefreq>
-    <priority>0.6</priority>
-  </url>
-
-  <!-- 404 Error Page -->
-  <url>
-    <loc>https://tusharbasak97.github.io/website/404.html</loc>
-    <lastmod>2026-01-13</lastmod>
-    <changefreq>yearly</changefreq>
-    <priority>0.1</priority>
-  </url>
-
-  <!-- Offline Page -->
-  <url>
-    <loc>https://tusharbasak97.github.io/website/offline.html</loc>
-    <lastmod>2026-01-13</lastmod>
-    <changefreq>yearly</changefreq>
-    <priority>0.1</priority>
-  </url>
-
-  <!-- Service Worker - PWA Support -->
-  <url>
-    <loc>https://tusharbasak97.github.io/website/js/sw.js</loc>
-    <lastmod>2026-01-13</lastmod>
+    <lastmod>2026-11-23</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.3</priority>
+    <priority>0.7</priority>
   </url>
 
 </urlset>

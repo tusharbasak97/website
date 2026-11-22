@@ -50,6 +50,8 @@ export interface Project {
   category: string;
   description: string;
   imageUrl: string;
+  videoUrl?: string;
+  posterUrl?: string;
   liveUrl?: string;
   githubUrl?: string;
 }
@@ -87,7 +89,7 @@ export const personalInfo: PersonalInfo = {
     "On the web development side, I am a Web Developer with hands-on experience in creating responsive, interactive, and secure web applications. I specialize in building dynamic, user-friendly interfaces and ensuring the security of the applications I create.",
   birthday: "1997-10-02",
   birthdayDisplay: "02 Oct 1997",
-  email: "tushar.basak9936@gmail.com",
+  email: "tusharbasak97@gmail.com",
   whatsapp: "https://wa.link/pwvy3u",
   degree: "MCA [PG]",
   location: "India",
@@ -124,11 +126,11 @@ export const educationTimeline: TimelineEntry[] = [
     title: "Master of Computer Applications (MCA)",
     organization: "Manipal University Jaipur",
     description:
-      "Specialized in both Open Source DB Systems and Cloud DB Systems with a Seminar on In-Memory Data Management. Achieved 8.92 CGPA without any backlogs.",
+      "Specialized in Open Source DB Systems, Cloud DB Systems, and In-Memory Data Management. Graduated with an 8.92 CGPA without any backlogs.",
     cgpaOrDistinction: "8.92 CGPA",
   },
   {
-    period: "2017 - 2020",
+    period: "2016 - 2019",
     title: "Bachelor of Science (B.Sc)",
     organization: "Swami Vivekananda Subharti University, Meerut",
     description:
@@ -139,11 +141,18 @@ export const educationTimeline: TimelineEntry[] = [
 
 export const experienceTimeline: TimelineEntry[] = [
   {
-    period: "Jan'23 - Jan'26",
-    title: "IT Support Engineer",
-    organization: "Secure Life HR Service",
+    period: "Oct'24 - Aug'26",
+    title: "IT Support Engineer (Project-Based, Off-Role)",
+    organization: "Secure Life HR Service Private Ltd.",
     description:
-      "Provided technical support for Windows systems, hardware, and networks. Troubleshooted issues, implemented security measures, and ensured smooth operations.",
+      "Managed core networking and IT security operations including LAN/WAN troubleshooting, VLAN segmentation, VPN access, and firewall configuration. Hardened Windows 10/11 endpoints, enforced access controls, delivered Tier-1/Tier-2 desk support across client locations, and maintained IT asset inventory and security SOPs.",
+  },
+  {
+    period: "Jan'23 - May'24",
+    title: "Technical Consultant",
+    organization: "Secure Life HR Service Private Ltd.",
+    description:
+      "Operated and supported enterprise workflows using SAP tools, assisting with daily data management, system transactions, and functional troubleshooting. Collaborated with teams to resolve application issues, streamline desk operations, assist with software deployment, system configuration, and user onboarding.",
   },
 ];
 
@@ -163,7 +172,7 @@ export const certificates: Certificate[] = [
     title: "CompTIA Security+",
     issuer: "CompTIA",
     status: "coming-soon",
-    expectedDate: "2026",
+    expectedDate: "2027",
     icon: "shield-halved",
   },
   {
@@ -171,7 +180,7 @@ export const certificates: Certificate[] = [
     title: "CISSP",
     issuer: "(ISC)² - International Information System Security Certification Consortium",
     status: "coming-soon",
-    expectedDate: "2026",
+    expectedDate: "2027",
     icon: "user-shield",
   },
   {
@@ -179,7 +188,7 @@ export const certificates: Certificate[] = [
     title: "GSEC",
     issuer: "SANS Institute",
     status: "coming-soon",
-    expectedDate: "2026",
+    expectedDate: "2027",
     icon: "graduation-cap",
   },
   {
@@ -187,7 +196,7 @@ export const certificates: Certificate[] = [
     title: "eJPT",
     issuer: "eLearnSecurity",
     status: "coming-soon",
-    expectedDate: "2026",
+    expectedDate: "2027",
     icon: "bug",
   },
   {
@@ -195,7 +204,7 @@ export const certificates: Certificate[] = [
     title: "OSCP",
     issuer: "Offensive Security",
     status: "coming-soon",
-    expectedDate: "2026",
+    expectedDate: "2027",
     icon: "terminal",
   },
 ];
@@ -208,6 +217,8 @@ export const projects: Project[] = [
     description:
       "Advanced password generator featuring entropy calculation, XKCD passwords, and sanitization modes.",
     imageUrl: "/assets/images/portfolio/password-generator.webp",
+    videoUrl: "/assets/images/portfolio/password-generator.webm",
+    posterUrl: "/assets/images/portfolio/password-generator-poster.webp",
     liveUrl: "https://pass-g-kohl.vercel.app",
     githubUrl: "https://github.com/tusharbasak97/passG",
   },
@@ -218,6 +229,8 @@ export const projects: Project[] = [
     description:
       "A productivity application combining a Todo list with a Pomodoro timer for maximum efficiency.",
     imageUrl: "/assets/images/portfolio/todopomo.webp",
+    videoUrl: "/assets/images/portfolio/todopomo.webm",
+    posterUrl: "/assets/images/portfolio/todopomo-poster.webp",
     liveUrl: "https://tusharbasak97.github.io/todopomo/",
     githubUrl: "https://github.com/tusharbasak97/todopomo",
   },
@@ -228,6 +241,8 @@ export const projects: Project[] = [
     description:
       "A responsive Tic-Tac-Toe game featuring a clean UI and smooth gameplay mechanics.",
     imageUrl: "/assets/images/portfolio/tic-tac-toe.webp",
+    videoUrl: "/assets/images/portfolio/tic-tac-toe.webm",
+    posterUrl: "/assets/images/portfolio/tic-tac-toe-poster.webp",
     liveUrl: "https://tusharbasak97.github.io/tic-tac-toe/",
     githubUrl: "https://github.com/tusharbasak97/tic-tac-toe",
   },
@@ -238,6 +253,8 @@ export const projects: Project[] = [
     description:
       "A high-end spiritual commerce platform dedicated to authentic Vedic beads with a dark premium aesthetic.",
     imageUrl: "/assets/images/portfolio/bvdb.webp",
+    videoUrl: "/assets/images/portfolio/bvdb.webm",
+    posterUrl: "/assets/images/portfolio/bvdb-poster.webp",
     liveUrl: "https://bvdb.vercel.app/",
   },
   {
@@ -247,6 +264,8 @@ export const projects: Project[] = [
     description:
       "A sleek, high-conversion landing page for a health-tech brand featuring interactive UI components.",
     imageUrl: "/assets/images/portfolio/vayu-azure.webp",
+    videoUrl: "/assets/images/portfolio/vayu-azure.webm",
+    posterUrl: "/assets/images/portfolio/vayu-azure-poster.webp",
     liveUrl: "https://vayu-azure.vercel.app/",
   },
   {
@@ -256,6 +275,8 @@ export const projects: Project[] = [
     description:
       "A comprehensive industrial trading website featuring specialized product categories for B2B clients.",
     imageUrl: "/assets/images/portfolio/st-plum.webp",
+    videoUrl: "/assets/images/portfolio/st-plum.webm",
+    posterUrl: "/assets/images/portfolio/st-plum-poster.webp",
     liveUrl: "https://st-plum.vercel.app/",
   },
 ];
@@ -292,5 +313,6 @@ export const navItems = [
   { label: "About", href: "#about", icon: "user" },
   { label: "Certificates", href: "#certificates", icon: "certificate" },
   { label: "Projects", href: "#portfolio", icon: "code-fork" },
+  { label: "Contact", href: "#contact", icon: "envelope" },
 ];
 

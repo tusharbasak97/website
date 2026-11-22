@@ -72,7 +72,7 @@ export function SkillBar({
   name,
   percent,
   className = "",
-  barColor = "bg-[var(--skin-color,#ff7b00)]",
+  barColor = "bg-[var(--skin-color,oklch(0.70_0.19_55))]",
 }: SkillBarProps) {
   const barRef = useRef<HTMLDivElement | null>(null);
   const [currentPercent, setCurrentPercent] = useState(0);
@@ -121,7 +121,7 @@ export function SkillBar({
     <div className={`w-full ${className}`}>
       <div className="flex justify-between items-center mb-1 text-sm font-medium">
         <span className="text-[var(--text-black-900)]">{name}</span>
-        <span className="font-mono text-[var(--skin-color,#ff7b00)] font-semibold">
+        <span className="font-mono text-[var(--skin-color,oklch(0.70_0.19_55))] font-semibold">
           {currentPercent}%
         </span>
       </div>

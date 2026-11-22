@@ -16,6 +16,25 @@ export function HeroSection() {
   const heroRef = useRef<HTMLElement>(null);
   const textColRef = useRef<HTMLDivElement>(null);
   const imageColRef = useRef<HTMLDivElement>(null);
+  const tiltCardRef = useRef<HTMLDivElement>(null);
+
+  // Interactive 3D mouse parallax tilt for hero image
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    const card = tiltCardRef.current;
+    if (!card) return;
+    const rect = card.getBoundingClientRect();
+    const x = e.clientX - rect.left - rect.width / 2;
+    const y = e.clientY - rect.top - rect.height / 2;
+    const rotateX = -(y / (rect.height / 2)) * 8;
+    const rotateY = (x / (rect.width / 2)) * 8;
+    card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.025, 1.025, 1.025)`;
+  };
+
+  const handleMouseLeave = () => {
+    const card = tiltCardRef.current;
+    if (!card) return;
+    card.style.transform = "perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)";
+  };
 
   // Pure JS Typing Animation State
   const [displayText, setDisplayText] = useState("");
@@ -56,48 +75,72 @@ export function HeroSection() {
     return () => clearTimeout(timer);
   }, [displayText, isDeleting, stringIndex]);
 
-  // GSAP Entrance Animations
+  // GSAP Entrance Animations triggered seamlessly on preloader dismiss (or immediately if already cleared)
   useEffect(() => {
-    const ctx = gsap.context(() => {
-      if (textColRef.current && imageColRef.current) {
-        const textElements = textColRef.current.children;
+    const playEntrance = () => {
+      const ctx = gsap.context(() => {
+        if (textColRef.current && imageColRef.current) {
+          const textElements = textColRef.current.children;
 
-        gsap.fromTo(
-          textElements,
-          {
-            x: -60,
-            opacity: 0,
-          },
-          {
-            x: 0,
-            opacity: 1,
-            duration: 0.9,
-            stagger: 0.16,
-            ease: "power3.out",
-            delay: 0.2,
-          }
-        );
+          gsap.fromTo(
+            textElements,
+            {
+              x: -50,
+              opacity: 0,
+            },
+            {
+              x: 0,
+              opacity: 1,
+              duration: 0.85,
+              stagger: 0.12,
+              ease: "power3.out",
+            }
+          );
 
-        gsap.fromTo(
-          imageColRef.current,
-          {
-            x: 60,
-            opacity: 0,
-            scale: 0.92,
-          },
-          {
-            x: 0,
-            opacity: 1,
-            scale: 1,
-            duration: 1.1,
-            ease: "power3.out",
-            delay: 0.35,
-          }
-        );
-      }
-    }, heroRef);
+          gsap.fromTo(
+            imageColRef.current,
+            {
+              x: 50,
+              opacity: 0,
+              scale: 0.94,
+            },
+            {
+              x: 0,
+              opacity: 1,
+              scale: 1,
+              duration: 1.0,
+              ease: "power3.out",
+              delay: 0.1,
+            }
+          );
+        }
+      }, heroRef);
 
-    return () => ctx.revert();
+      return ctx;
+    };
+
+    let ctx: gsap.Context | null = null;
+    const isDismissed = typeof window !== "undefined" && (window as unknown as { __preloaderDismissed?: boolean }).__preloaderDismissed;
+    const hasPreloader = typeof document !== "undefined" && !!document.getElementById("preloader");
+
+    if (isDismissed || !hasPreloader) {
+      const timer = setTimeout(() => {
+        ctx = playEntrance();
+      }, 150);
+      return () => {
+        clearTimeout(timer);
+        ctx?.revert();
+      };
+    } else {
+      const handleDismiss = () => {
+        ctx = playEntrance();
+      };
+      window.addEventListener("preloaderDismiss", handleDismiss, { once: true });
+      return () => {
+        window.removeEventListener("preloaderDismiss", handleDismiss);
+        ctx?.revert();
+      };
+    }
   }, []);
 
   const scrollToSection = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
@@ -124,7 +167,7 @@ export function HeroSection() {
       <div className="absolute top-1/4 -left-32 w-96 h-96 bg-[var(--skin-color)]/10 rounded-full blur-3xl pointer-events-none -z-10" />
       <div className="absolute bottom-1/4 -right-32 w-96 h-96 bg-[var(--skin-color-end)]/10 rounded-full blur-3xl pointer-events-none -z-10" />
 
-      <div className="w-full grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center">
+      <div className="w-full max-w-7xl 2xl:max-w-[1400px] mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center">
         {/* Left Text Column (Col 7) */}
         <div
           ref={textColRef}
@@ -139,15 +182,15 @@ export function HeroSection() {
           {/* Heading */}
           <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight text-foreground leading-[1.15]">
             Hello, my name is{" "}
-            <span className="font-kaushan text-[var(--skin-color)] inline-block drop-shadow-sm">
+            <span className="text-[var(--skin-color)] font-extrabold tracking-tight inline-block drop-shadow-sm">
               {personalInfo.name}
             </span>
           </h1>
 
           {/* Dynamic Typing Title */}
           <div className="text-xl sm:text-2xl md:text-3xl font-semibold text-muted-foreground flex items-center flex-wrap min-h-[2.5rem]">
-            <span className="mr-2 text-foreground">I&apos;m a</span>
-            <span className="text-[var(--skin-color)] border-b-2 border-[var(--skin-color)] font-mono font-bold tracking-wide">
+            <span className="mr-2 text-foreground font-medium">I&apos;m a</span>
+            <span className="font-mono text-[var(--skin-color)] border-b-2 border-[var(--skin-color)] text-xl sm:text-2xl md:text-3xl font-bold tracking-tight">
               {displayText}
             </span>
             <span className="inline-block w-0.5 h-6 sm:h-7 bg-[var(--skin-color)] ml-1 animate-pulse" />
@@ -165,7 +208,7 @@ export function HeroSection() {
               target="_blank"
               rel="noopener noreferrer"
               aria-label="Hire Tushar Basak on LinkedIn"
-              className="inline-flex items-center gap-2.5 px-7 py-3.5 rounded-xl font-semibold text-white bg-[var(--gradient-primary)] hover:opacity-95 shadow-lg shadow-[var(--skin-color)]/25 hover:shadow-[var(--skin-color)]/40 hover:-translate-y-0.5 active:translate-y-0 transition-all duration-200"
+              className="inline-flex items-center gap-2.5 px-7 py-3.5 rounded-xl font-semibold text-sm sm:text-base bg-gradient-to-r from-[var(--skin-color)] to-[var(--skin-color-end)] !text-white shadow-lg shadow-[var(--skin-color)]/30 hover:shadow-xl hover:shadow-[var(--skin-color)]/45 hover:-translate-y-0.5 active:translate-y-0 transition-all duration-200 cursor-pointer"
             >
               <FontAwesomeIcon icon={faLinkedin} className="h-4 w-4" />
               <span>Hire Me</span>
@@ -174,49 +217,48 @@ export function HeroSection() {
             <a
               href="#about"
               onClick={(e) => scrollToSection(e, "#about")}
-              className="inline-flex items-center gap-2 px-6 py-3.5 rounded-xl font-medium border border-border bg-card/60 hover:bg-accent hover:border-border text-foreground transition-all duration-200"
+              className="inline-flex items-center gap-2 px-6 py-3.5 rounded-xl font-semibold text-sm sm:text-base border-2 border-border/80 bg-card hover:bg-accent/80 hover:border-[var(--skin-color)]/60 text-foreground shadow-xs hover:shadow hover:-translate-y-0.5 active:translate-y-0 transition-all duration-200 cursor-pointer"
             >
               <span>Explore Profile</span>
-              <FontAwesomeIcon icon={faArrowDown} className="h-3.5 w-3.5" />
+              <FontAwesomeIcon icon={faArrowDown} className="h-3.5 w-3.5 text-[var(--skin-color)]" />
             </a>
           </div>
         </div>
 
-        {/* Right Hero Image Column with Organic Blob (Col 5) */}
+        {/* Right Hero Image Column with Water-like Animation & Avatar Brought Forward (Col 5) */}
         <div
           ref={imageColRef}
           className="lg:col-span-5 flex items-center justify-center lg:justify-end"
         >
-          <div className="relative w-72 h-84 sm:w-80 sm:h-96 md:w-96 md:h-[28rem] flex items-center justify-center">
-            {/* Animated glowing decorative backdrop */}
+          {/* 3D Tilt & Floating Container */}
+          <div
+            ref={tiltCardRef}
+            onMouseMove={handleMouseMove}
+            onMouseLeave={handleMouseLeave}
+            className="animate-hero-float relative w-72 h-84 sm:w-80 sm:h-96 md:w-96 md:h-[28rem] flex items-center justify-center transition-transform duration-300 ease-out select-none cursor-pointer"
+            style={{ transformStyle: "preserve-3d" }}
+          >
+            {/* Ambient Multi-layered Glowing Water Aura */}
+            <div className="animate-morph-blob absolute w-[98%] h-[98%] bg-gradient-to-tr from-[var(--skin-color)] to-[var(--skin-color-end)] opacity-35 blur-3xl pointer-events-none" />
+
+            {/* Orbiting Cyber Dashed Ring */}
+            <div className="absolute -inset-4 rounded-full border border-dashed border-[var(--skin-color)]/25 animate-spin [animation-duration:35s] pointer-events-none" />
+
+            {/* Circular Water-like Morphing Fluid Animation */}
             <div
-              className="absolute inset-0 bg-gradient-to-tr from-[var(--skin-color)] to-[var(--skin-color-end)] opacity-30 blur-2xl transform scale-105 animate-pulse"
-              style={{
-                borderRadius: "60% 40% 30% 70% / 60% 30% 70% 40%",
-              }}
+              className="animate-morph-blob absolute w-[86%] h-[86%] bg-gradient-to-tr from-[var(--skin-color)] via-[var(--skin-color)]/70 to-[var(--skin-color-end)] shadow-[0_15px_45px_color-mix(in_oklch,var(--skin-color)_45%,transparent)] transition-all duration-700 pointer-events-none"
+              style={{ zIndex: 1 }}
             />
 
-            {/* Blob Border Wrapper */}
-            <div
-              className="relative w-full h-full p-2 bg-gradient-to-br from-[var(--skin-color)]/80 via-transparent to-[var(--skin-color-end)]/80 shadow-2xl transition-all duration-700 hover:rotate-1"
-              style={{
-                borderRadius: "58% 42% 48% 52% / 48% 54% 46% 52%",
-              }}
-            >
-              <div
-                className="w-full h-full overflow-hidden bg-card/80 border-4 border-background/60 shadow-inner"
-                style={{
-                  borderRadius: "56% 44% 50% 50% / 50% 52% 48% 50%",
-                }}
-              >
-                <img
-                  src={personalInfo.avatarUrl}
-                  alt={`${personalInfo.name} - ${personalInfo.jobTitle}`}
-                  className="w-full h-full object-cover object-center transform scale-105 hover:scale-110 transition-transform duration-700 ease-out"
-                  loading="eager"
-                  fetchPriority="high"
-                />
-              </div>
+            {/* Hero Image Brought Forward Directly Over the Water-like Animation */}
+            <div className="relative z-10 w-full h-full flex items-end justify-center pointer-events-auto">
+              <img
+                src={personalInfo.avatarUrl}
+                alt={`${personalInfo.name} - ${personalInfo.jobTitle}`}
+                className="w-full h-full object-contain object-bottom drop-shadow-[0_20px_30px_oklch(0_0_0_/_0.5)] hover:scale-105 transition-transform duration-500 ease-out select-none"
+                loading="eager"
+                fetchPriority="high"
+              />
             </div>
           </div>
         </div>

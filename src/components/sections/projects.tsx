@@ -30,6 +30,43 @@ export function ProjectsSection() {
 
   useEffect(() => {
     const ctx = gsap.context(() => {
+      // 1. Title & Underline Bar Reveal
+      const title = sectionRef.current?.querySelector(".projects-title-text");
+      const line = sectionRef.current?.querySelector(".projects-title-line");
+      if (title && line) {
+        gsap.fromTo(
+          title,
+          { y: 30, opacity: 0 },
+          {
+            y: 0,
+            opacity: 1,
+            duration: 0.8,
+            ease: "power3.out",
+            scrollTrigger: {
+              trigger: title,
+              start: "top 90%",
+              toggleActions: "play none none none",
+            },
+          }
+        );
+        gsap.fromTo(
+          line,
+          { scaleX: 0, transformOrigin: "left center" },
+          {
+            scaleX: 1,
+            duration: 0.8,
+            delay: 0.2,
+            ease: "power2.out",
+            scrollTrigger: {
+              trigger: line,
+              start: "top 90%",
+              toggleActions: "play none none none",
+            },
+          }
+        );
+      }
+
+      // 2. Project Item Cards Staggered Entrance
       if (gridRef.current) {
         const cards = gridRef.current.querySelectorAll(".project-item");
         gsap.fromTo(
@@ -67,14 +104,15 @@ export function ProjectsSection() {
       aria-label="My Projects Portfolio"
       className="w-full py-20 px-4 sm:px-8 md:px-12 lg:px-20 xl:px-28"
     >
-      {/* Anchor for #projects compatibility */}
-      <span id="projects" className="sr-only" />
+      <div className="w-full max-w-7xl 2xl:max-w-[1400px] mx-auto">
+        {/* Anchor for #projects compatibility */}
+        <span id="projects" className="sr-only" />
 
       {/* Section Title - NO DOT */}
       <div className="mb-14 text-left">
         <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight text-foreground flex items-center gap-4">
-          <span>My Projects</span>
-          <span className="h-1 flex-1 max-w-[100px] bg-[var(--skin-color)] rounded-full" />
+          <span className="projects-title-text">My Projects</span>
+          <span className="projects-title-line h-1 flex-1 max-w-[100px] bg-[var(--skin-color)] rounded-full" />
         </h2>
         <p className="mt-2 text-muted-foreground text-base sm:text-lg">
           A showcase of cybersecurity utilities, web development platforms, and technical innovations
@@ -112,15 +150,35 @@ export function ProjectsSection() {
                     WebkitBackfaceVisibility: "hidden",
                   }}
                 >
-                  {/* Top Image Container */}
+                  {/* Top Image/Video Container */}
                   <div className="relative w-full h-52 rounded-2xl overflow-hidden bg-muted/50 border border-border/40">
-                    <img
-                      src={project.imageUrl}
-                      alt={project.title}
-                      className="w-full h-full object-cover object-top transition-transform duration-500 hover:scale-105"
-                      loading="lazy"
-                    />
-                    <div className="absolute top-3 right-3">
+                    {project.videoUrl ? (
+                      <video
+                        autoPlay
+                        loop
+                        muted
+                        playsInline
+                        poster={project.posterUrl || project.imageUrl}
+                        className="w-full h-full object-cover object-top transition-transform duration-500 hover:scale-105"
+                        aria-label={project.title}
+                      >
+                        <source src={project.videoUrl} type="video/webm" />
+                        <img
+                          src={project.imageUrl}
+                          alt={project.title}
+                          className="w-full h-full object-cover object-top"
+                          loading="lazy"
+                        />
+                      </video>
+                    ) : (
+                      <img
+                        src={project.imageUrl}
+                        alt={project.title}
+                        className="w-full h-full object-cover object-top transition-transform duration-500 hover:scale-105"
+                        loading="lazy"
+                      />
+                    )}
+                    <div className="absolute top-3 right-3 z-10">
                       <span className="px-3 py-1 rounded-full text-xs font-semibold bg-background/90 dark:bg-card/90 backdrop-blur-md text-[var(--skin-color)] border border-border/60 shadow-sm">
                         {project.category}
                       </span>
@@ -194,7 +252,7 @@ export function ProjectsSection() {
                           href={project.liveUrl}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="flex-1 inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl text-xs sm:text-sm font-semibold text-white bg-[var(--gradient-primary)] hover:opacity-95 shadow-md transition-all"
+                          className="flex-1 inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl text-xs sm:text-sm font-semibold bg-gradient-to-r from-[var(--skin-color)] to-[var(--skin-color-end)] !text-white shadow-md hover:shadow-lg hover:shadow-[var(--skin-color)]/35 transition-all cursor-pointer"
                         >
                           <span>Live Demo</span>
                           <FontAwesomeIcon icon={faExternalLinkAlt} className="h-3 w-3" />
@@ -206,7 +264,7 @@ export function ProjectsSection() {
                           href={project.githubUrl}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="flex-1 inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl text-xs sm:text-sm font-semibold text-foreground bg-accent hover:bg-accent/80 border border-border transition-all"
+                          className="flex-1 inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl text-xs sm:text-sm font-semibold text-foreground bg-card hover:bg-accent/80 border-2 border-border shadow-xs hover:border-foreground/40 transition-all cursor-pointer"
                         >
                           <FontAwesomeIcon icon={faGithub} className="h-3.5 w-3.5" />
                           <span>View Code</span>
@@ -219,6 +277,7 @@ export function ProjectsSection() {
             </article>
           );
         })}
+      </div>
       </div>
     </section>
   );

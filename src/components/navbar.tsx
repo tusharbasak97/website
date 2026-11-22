@@ -1,7 +1,8 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import Link from "next/link";
+import gsap from "gsap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faShieldHalved,
@@ -9,6 +10,7 @@ import {
   faUser,
   faCertificate,
   faCodeFork,
+  faEnvelope,
 } from "@fortawesome/free-solid-svg-icons";
 import { useLenis } from "@/components/providers/lenis-provider";
 import { navItems } from "@/lib/data";
@@ -18,13 +20,39 @@ const iconMap: Record<string, typeof faHome> = {
   user: faUser,
   certificate: faCertificate,
   "code-fork": faCodeFork,
+  envelope: faEnvelope,
 };
 
 export function Navbar() {
   const lenis = useLenis();
+  const headerRef = useRef<HTMLElement>(null);
   const [activeSection, setActiveSection] = useState<string>("home");
   const [mobileMenuOpen, setMobileMenuOpen] = useState<boolean>(false);
   const [scrolled, setScrolled] = useState<boolean>(false);
+
+  // Smooth entrance animation synchronized with preloader dismiss
+  useEffect(() => {
+    const playNavbarEntrance = () => {
+      if (headerRef.current) {
+        gsap.fromTo(
+          headerRef.current,
+          { y: -60, opacity: 0 },
+          { y: 0, opacity: 1, duration: 0.7, ease: "power3.out" }
+        );
+      }
+    };
+
+    const isDismissed = typeof window !== "undefined" && (window as unknown as { __preloaderDismissed?: boolean }).__preloaderDismissed;
+    const hasPreloader = typeof document !== "undefined" && !!document.getElementById("preloader");
+
+    if (isDismissed || !hasPreloader) {
+      const timer = setTimeout(playNavbarEntrance, 100);
+      return () => clearTimeout(timer);
+    } else {
+      window.addEventListener("preloaderDismiss", playNavbarEntrance, { once: true });
+      return () => window.removeEventListener("preloaderDismiss", playNavbarEntrance);
+    }
+  }, []);
 
   // Monitor scroll for shadow/backdrop intensity
   useEffect(() => {
@@ -35,39 +63,53 @@ export function Navbar() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // IntersectionObserver for active section highlighting
+  // Realtime scroll spy for active section highlighting
   useEffect(() => {
-    const sectionIds = ["home", "about", "certificates", "portfolio"];
-    const sectionElements = sectionIds
-      .map((id) => document.getElementById(id))
-      .filter((el): el is HTMLElement => el !== null);
+    const sectionIds = ["home", "about", "certificates", "portfolio", "contact"];
 
-    if (sectionElements.length === 0) return;
+    const updateActiveSection = () => {
+      const scrollY = window.scrollY || document.documentElement.scrollTop;
+      const windowHeight = window.innerHeight;
+      const docHeight = document.documentElement.scrollHeight;
 
-    const observer = new IntersectionObserver(
-      (entries) => {
-        // Find visible section with highest intersection ratio
-        const visibleEntries = entries.filter((entry) => entry.isIntersecting);
-        if (visibleEntries.length > 0) {
-          // Sort by intersection ratio or proximity to center
-          visibleEntries.sort(
-            (a, b) => b.intersectionRatio - a.intersectionRatio
-          );
-          setActiveSection(visibleEntries[0].target.id);
-        }
-      },
-      {
-        rootMargin: "-20% 0px -60% 0px",
-        threshold: [0, 0.2, 0.5, 0.8],
+      // 1. If at or near bottom of page, activate contact
+      if (scrollY + windowHeight >= docHeight - 80) {
+        setActiveSection("contact");
+        return;
       }
-    );
 
-    sectionElements.forEach((el) => observer.observe(el));
+      // 2. Measure section positions relative to viewport
+      const offset = 180;
+      let currentSection = sectionIds[0];
+
+      for (const id of sectionIds) {
+        const el = document.getElementById(id);
+        if (el) {
+          const rect = el.getBoundingClientRect();
+          if (rect.top <= offset) {
+            currentSection = id;
+          }
+        }
+      }
+
+      setActiveSection(currentSection);
+    };
+
+    window.addEventListener("scroll", updateActiveSection, { passive: true });
+    if (lenis) {
+      lenis.on("scroll", updateActiveSection);
+    }
+
+    // Initial check on mount
+    updateActiveSection();
 
     return () => {
-      observer.disconnect();
+      window.removeEventListener("scroll", updateActiveSection);
+      if (lenis) {
+        lenis.off("scroll", updateActiveSection);
+      }
     };
-  }, []);
+  }, [lenis]);
 
   const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
     e.preventDefault();
@@ -93,6 +135,7 @@ export function Navbar() {
 
   return (
     <header
+      ref={headerRef}
       className={`fixed top-0 left-0 right-0 z-50 w-full transition-all duration-300 ${
         scrolled
           ? "bg-background/85 dark:bg-[var(--bg-black-900)]/85 backdrop-blur-md shadow-md border-b border-border/50 py-3"
@@ -111,12 +154,11 @@ export function Navbar() {
             <span className="font-kaushan text-2xl sm:text-3xl font-bold tracking-wide text-foreground group-hover:text-[var(--skin-color)] transition-colors">
               Tushar
             </span>
-            <span className="h-2 w-2 rounded-full bg-[var(--skin-color)] animate-pulse" />
           </Link>
 
           {/* Secured Badge */}
           <div
-            className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-mono font-medium tracking-wider bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/30 shadow-[0_0_12px_rgba(16,185,129,0.15)] select-none"
+            className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-mono font-medium tracking-wider bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/30 shadow-[0_0_12px_oklch(0.72_0.19_155_/_0.15)] select-none"
             title="SSL/TLS Secured Application"
           >
             <FontAwesomeIcon icon={faShieldHalved} className="h-3 w-3" />
@@ -126,7 +168,7 @@ export function Navbar() {
 
         {/* Center / Right: Desktop Navigation */}
         <nav
-          className="hidden md:flex items-center space-x-1 lg:space-x-2"
+          className="hidden lg:flex items-center space-x-1 lg:space-x-2"
           role="navigation"
           aria-label="Main navigation"
         >

@@ -1,0 +1,149 @@
+{
+  "name": "Tushar Basak | Cybersecurity Analyst & Web Developer",
+  "short_name": "Tushar Basak",
+  "description": "Official portfolio of Tushar Basak — Cybersecurity Analyst, SOC Analyst, and Full-Stack Web Developer specializing in penetration testing, network defense, endpoint security, and secure web applications.",
+  "start_url": "/website/",
+  "scope": "/website/",
+  "id": "/website/",
+  "display": "standalone",
+  "display_override": ["standalone", "minimal-ui", "window-controls-overlay"],
+  "orientation": "portrait-primary",
+  "theme_color": "#ff7b00",
+  "background_color": "#0e131d",
+  "lang": "en-US",
+  "dir": "ltr",
+  "categories": ["business", "productivity", "security", "professional", "technology", "development"],
+  "iarc_rating_id": "e84b072d-71b3-4d3e-86ae-31a8ce4e53b7",
+  "prefer_related_applications": false,
+  "edge_side_panel": {
+    "preferred_width": 400
+  },
+  "launch_handler": {
+    "client_mode": "navigate-existing"
+  },
+  "icons": [
+    {
+      "src": "/assets/images/android-chrome-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/assets/images/android-chrome-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/assets/images/apple-touch-icon-180x180.png",
+      "sizes": "180x180",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/assets/images/favicon-32x32.png",
+      "sizes": "32x32",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/assets/images/favicon-16x16.png",
+      "sizes": "16x16",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/assets/images/favicon-48x48.png",
+      "sizes": "48x48",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/assets/images/favicon-64x64.png",
+      "sizes": "64x64",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/assets/images/favicon-96x96.png",
+      "sizes": "96x96",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "/assets/images/hero.webp",
+      "sizes": "400x480",
+      "type": "image/webp",
+      "form_factor": "narrow",
+      "label": "Tushar Basak - Cybersecurity Analyst & Web Developer"
+    },
+    {
+      "src": "/assets/images/portfolio/password-generator.webp",
+      "sizes": "800x600",
+      "type": "image/webp",
+      "label": "Password Generator Tool"
+    },
+    {
+      "src": "/assets/images/portfolio/todopomo.webp",
+      "sizes": "800x600",
+      "type": "image/webp",
+      "label": "TodoPomo Productivity App"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "About Me",
+      "short_name": "About",
+      "description": "View professional background, technical skills, and experience",
+      "url": "/website/#about",
+      "icons": [
+        {
+          "src": "/assets/images/favicon-32x32.png",
+          "sizes": "32x32",
+          "type": "image/png"
+        }
+      ]
+    },
+    {
+      "name": "Certifications",
+      "short_name": "Certs",
+      "description": "View verified cybersecurity and IT certifications",
+      "url": "/website/#certificates",
+      "icons": [
+        {
+          "src": "/assets/images/favicon-32x32.png",
+          "sizes": "32x32",
+          "type": "image/png"
+        }
+      ]
+    },
+    {
+      "name": "Portfolio Projects",
+      "short_name": "Projects",
+      "description": "Explore cybersecurity tools and web applications",
+      "url": "/website/#portfolio",
+      "icons": [
+        {
+          "src": "/assets/images/favicon-32x32.png",
+          "sizes": "32x32",
+          "type": "image/png"
+        }
+      ]
+    },
+    {
+      "name": "Resume",
+      "short_name": "Resume",
+      "description": "Download official professional resume",
+      "url": "/website/assets/resume.pdf",
+      "icons": [
+        {
+          "src": "/assets/images/favicon-32x32.png",
+          "sizes": "32x32",
+          "type": "image/png"
+        }
+      ]
+    }
+  ]
+}
