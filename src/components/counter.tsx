@@ -137,3 +137,4 @@ export function SkillBar({
 }
 
 export default Counter;
+
