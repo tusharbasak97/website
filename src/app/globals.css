@@ -270,3 +270,102 @@ html.lenis, html.lenis body {
 .lenis.lenis-scrolling iframe {
   pointer-events: none;
 }
+
+/* ==========================================================================
+   CYBERSECURITY & ADVANCED FEATURE ANIMATIONS
+   ========================================================================== */
+
+/* Glitch text effect using pseudo elements & clip-path */
+.glitch-text {
+  position: relative;
+  display: inline-block;
+  color: var(--skin-color, #ff5722);
+}
+
+.glitch-text::before,
+.glitch-text::after {
+  content: attr(data-text);
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+  user-select: none;
+  pointer-events: none;
+}
+
+.glitch-text::before {
+  left: 3px;
+  text-shadow: -2px 0 #00ff66, 0 0 10px rgba(0, 255, 102, 0.7);
+  animation: glitch-anim-1 2.2s infinite linear alternate-reverse;
+}
+
+.glitch-text::after {
+  left: -3px;
+  text-shadow: -2px 0 #00e5ff, 2px 2px #ff0055, 0 0 12px rgba(255, 0, 85, 0.7);
+  animation: glitch-anim-2 2.8s infinite linear alternate-reverse;
+}
+
+@keyframes glitch-anim-1 {
+  0% { clip-path: inset(40% 0 61% 0); transform: skew(0.6deg); }
+  15% { clip-path: inset(92% 0 1% 0); transform: skew(-1deg); }
+  30% { clip-path: inset(10% 0 78% 0); transform: skew(0.8deg); }
+  45% { clip-path: inset(67% 0 12% 0); transform: skew(-0.5deg); }
+  60% { clip-path: inset(25% 0 58% 0); transform: skew(1.2deg); }
+  75% { clip-path: inset(80% 0 5% 0); transform: skew(-0.8deg); }
+  90% { clip-path: inset(15% 0 65% 0); transform: skew(0.4deg); }
+  100% { clip-path: inset(45% 0 35% 0); transform: skew(-0.3deg); }
+}
+
+@keyframes glitch-anim-2 {
+  0% { clip-path: inset(24% 0 29% 0); transform: skew(-0.7deg); }
+  15% { clip-path: inset(54% 0 21% 0); transform: skew(1deg); }
+  30% { clip-path: inset(81% 0 6% 0); transform: skew(-0.5deg); }
+  45% { clip-path: inset(12% 0 74% 0); transform: skew(0.8deg); }
+  60% { clip-path: inset(72% 0 15% 0); transform: skew(-1.1deg); }
+  75% { clip-path: inset(36% 0 45% 0); transform: skew(0.6deg); }
+  90% { clip-path: inset(90% 0 3% 0); transform: skew(-0.4deg); }
+  100% { clip-path: inset(5% 0 85% 0); transform: skew(0.3deg); }
+}
+
+/* Hacker CRT Scanlines */
+.scanlines-overlay {
+  background: linear-gradient(
+    to bottom,
+    rgba(255, 255, 255, 0),
+    rgba(255, 255, 255, 0) 50%,
+    rgba(0, 0, 0, 0.3) 50%,
+    rgba(0, 0, 0, 0.3)
+  );
+  background-size: 100% 4px;
+  pointer-events: none;
+}
+
+/* Button & Element Pulse Glow */
+@keyframes cyber-pulse-glow {
+  0%, 100% {
+    box-shadow: 0 0 12px hsla(var(--skin-hue, 36), 100%, 50%, 0.4),
+                0 0 25px hsla(var(--skin-hue, 36), 100%, 50%, 0.2);
+  }
+  50% {
+    box-shadow: 0 0 20px hsla(var(--skin-hue, 36), 100%, 50%, 0.75),
+                0 0 40px hsla(var(--skin-hue, 36), 100%, 50%, 0.4);
+  }
+}
+
+.pulse-glow {
+  animation: cyber-pulse-glow 2.5s infinite ease-in-out;
+}
+
+/* Smooth dark/light transition */
+html.theme-transition,
+html.theme-transition *,
+html.theme-transition *::before,
+html.theme-transition *::after {
+  transition: background-color 0.35s ease,
+              border-color 0.35s ease,
+              color 0.35s ease,
+              box-shadow 0.35s ease !important;
+}
+

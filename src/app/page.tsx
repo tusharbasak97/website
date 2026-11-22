@@ -8,6 +8,7 @@ import { Footer } from "@/components/footer";
 import { ScrollToTop } from "@/components/scroll-to-top";
 import { CustomCursor } from "@/components/custom-cursor";
 import { StyleSwitcher } from "@/components/style-switcher";
+import { SectionReveal } from "@/components/section-reveal";
 
 export default function Home() {
   return (
@@ -16,10 +17,18 @@ export default function Home() {
       <Navbar />
       <main className="w-full">
         <HeroSection />
-        <AboutSection />
-        <CertificatesSection />
-        <ProjectsSection />
-        <ContactSection />
+        <SectionReveal delay={0.1}>
+          <AboutSection />
+        </SectionReveal>
+        <SectionReveal delay={0.1}>
+          <CertificatesSection />
+        </SectionReveal>
+        <SectionReveal delay={0.1}>
+          <ProjectsSection />
+        </SectionReveal>
+        <SectionReveal delay={0.1}>
+          <ContactSection />
+        </SectionReveal>
       </main>
       <Footer />
       <ScrollToTop />
