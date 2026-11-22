@@ -101,3 +101,4 @@ export function ParallaxImage({
 }
 
 export default ParallaxImage;
+
