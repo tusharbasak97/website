@@ -293,3 +293,4 @@ export const navItems = [
   { label: "Certificates", href: "#certificates", icon: "certificate" },
   { label: "Projects", href: "#portfolio", icon: "code-fork" },
 ];
+

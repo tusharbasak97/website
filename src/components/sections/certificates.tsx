@@ -12,3 +12,4 @@ export function CertificatesSection() {
   );
 }
 export default CertificatesSection;
+

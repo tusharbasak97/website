@@ -10,3 +10,4 @@ config.autoAddCss = false;
 export function FontAwesomeProvider({ children }: { children: React.ReactNode }) {
   return <>{children}</>;
 }
+
