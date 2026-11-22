@@ -4,6 +4,7 @@ import "./globals.css";
 import { ThemeProvider } from "@/components/providers/theme-provider";
 import { LenisProvider } from "@/components/providers/lenis-provider";
 import { FontAwesomeProvider } from "@/components/providers/fontawesome-provider";
+import { Preloader } from "@/components/preloader";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -168,6 +169,7 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange={false}
         >
+          <Preloader />
           <FontAwesomeProvider>
             <LenisProvider>
               <div className="w-full min-h-screen">
