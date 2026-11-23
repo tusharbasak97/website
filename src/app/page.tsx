@@ -18,18 +18,10 @@ export default function Home() {
       <Navbar />
       <main className="w-full overflow-x-hidden">
         <HeroSection />
-        <SectionReveal delay={0.1}>
-          <AboutSection />
-        </SectionReveal>
-        <SectionReveal delay={0.1}>
-          <CertificatesSection />
-        </SectionReveal>
-        <SectionReveal delay={0.1}>
-          <ProjectsSection />
-        </SectionReveal>
-        <SectionReveal delay={0.1}>
-          <ContactSection />
-        </SectionReveal>
+        <AboutSection />
+        <CertificatesSection />
+        <ProjectsSection />
+        <ContactSection />
       </main>
       <Footer />
       <ScrollToTop />

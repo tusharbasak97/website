@@ -78,6 +78,7 @@ export function HeroSection() {
   // GSAP Entrance Animations triggered seamlessly on preloader dismiss (or immediately if already cleared)
   useEffect(() => {
     const playEntrance = () => {
+      const isMobile = typeof window !== "undefined" && window.innerWidth < 768;
       const ctx = gsap.context(() => {
         if (textColRef.current && imageColRef.current) {
           const textElements = textColRef.current.children;
@@ -85,14 +86,16 @@ export function HeroSection() {
           gsap.fromTo(
             textElements,
             {
-              x: -50,
+              x: isMobile ? 0 : -50,
+              y: isMobile ? 18 : 0,
               opacity: 0,
             },
             {
               x: 0,
+              y: 0,
               opacity: 1,
-              duration: 0.85,
-              stagger: 0.12,
+              duration: isMobile ? 0.45 : 0.85,
+              stagger: isMobile ? 0.05 : 0.12,
               ease: "power3.out",
             }
           );
@@ -100,17 +103,19 @@ export function HeroSection() {
           gsap.fromTo(
             imageColRef.current,
             {
-              x: 50,
+              x: isMobile ? 0 : 50,
+              y: isMobile ? 18 : 0,
               opacity: 0,
-              scale: 0.94,
+              scale: isMobile ? 0.98 : 0.94,
             },
             {
               x: 0,
+              y: 0,
               opacity: 1,
               scale: 1,
-              duration: 1.0,
+              duration: isMobile ? 0.5 : 1.0,
               ease: "power3.out",
-              delay: 0.1,
+              delay: isMobile ? 0.05 : 0.1,
             }
           );
         }

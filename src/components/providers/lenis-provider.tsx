@@ -2,6 +2,12 @@
 
 import React, { createContext, useContext, useEffect, useState } from "react";
 import Lenis from "lenis";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+if (typeof window !== "undefined") {
+  gsap.registerPlugin(ScrollTrigger);
+}
 
 const LenisContext = createContext<Lenis | null>(null);
 
@@ -12,13 +18,13 @@ export function LenisProvider({ children }: { children: React.ReactNode }) {
 
   useEffect(() => {
     const lenis = new Lenis({
-      duration: 1.2,
+      duration: 1.0,
       easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
       orientation: "vertical",
       gestureOrientation: "vertical",
       smoothWheel: true,
       wheelMultiplier: 1,
-      touchMultiplier: 2,
+      touchMultiplier: 1,
     });
 
     const timer = setTimeout(() => {
@@ -29,16 +35,25 @@ export function LenisProvider({ children }: { children: React.ReactNode }) {
       (window as unknown as { lenis?: Lenis }).lenis = lenis;
     }
 
-    let animationFrameId: number;
-    function raf(time: number) {
-      lenis.raf(time);
-      animationFrameId = requestAnimationFrame(raf);
-    }
-    animationFrameId = requestAnimationFrame(raf);
+    // Synchronize Lenis scroll positions directly with GSAP ScrollTrigger
+    lenis.on("scroll", ScrollTrigger.update);
+
+    const updateTicker = (time: number) => {
+      lenis.raf(time * 1000);
+    };
+
+    gsap.ticker.add(updateTicker);
+    gsap.ticker.lagSmoothing(0);
+
+    const handlePreloaderDone = () => {
+      ScrollTrigger.refresh();
+    };
+    window.addEventListener("preloaderDone", handlePreloaderDone);
 
     return () => {
       clearTimeout(timer);
-      cancelAnimationFrame(animationFrameId);
+      window.removeEventListener("preloaderDone", handlePreloaderDone);
+      gsap.ticker.remove(updateTicker);
       lenis.destroy();
       if (typeof window !== "undefined") {
         delete (window as unknown as { lenis?: Lenis }).lenis;

@@ -39,18 +39,20 @@ export function Footer() {
 
   useEffect(() => {
     if (footerRef.current) {
+      const isMobile = typeof window !== "undefined" && window.innerWidth < 768;
       gsap.fromTo(
         footerRef.current,
-        { opacity: 0, y: 25 },
+        { opacity: 0, y: isMobile ? 12 : 25 },
         {
           opacity: 1,
           y: 0,
-          duration: 0.8,
+          duration: isMobile ? 0.35 : 0.8,
           ease: "power2.out",
           scrollTrigger: {
             trigger: footerRef.current,
-            start: "top 95%",
-            toggleActions: "play none none none",
+            start: "top 98%",
+            fastScrollEnd: true,
+            once: true,
           },
         }
       );

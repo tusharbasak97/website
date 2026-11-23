@@ -16,9 +16,9 @@ export function SectionReveal({
   children,
   className = "",
   delay = 0,
-  duration = 0.8,
-  yOffset = 45,
-  threshold = 0.12,
+  duration = 0.5,
+  yOffset = 20,
+  threshold = 0,
 }: SectionRevealProps) {
   const domRef = useRef<HTMLDivElement | null>(null);
   const animatedRef = useRef<boolean>(false);
@@ -26,6 +26,14 @@ export function SectionReveal({
   useEffect(() => {
     const el = domRef.current;
     if (!el || animatedRef.current) return;
+
+    const isMobile = typeof window !== "undefined" && window.innerWidth < 768;
+    // On mobile, show immediately so fast-scrolling users never see blank spaces
+    if (isMobile) {
+      gsap.set(el, { opacity: 1, y: 0 });
+      animatedRef.current = true;
+      return;
+    }
 
     gsap.set(el, { y: yOffset, opacity: 0 });
 
@@ -45,7 +53,7 @@ export function SectionReveal({
           }
         });
       },
-      { threshold }
+      { rootMargin: "250px 0px 100px 0px", threshold }
     );
 
     observer.observe(el);

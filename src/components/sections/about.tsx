@@ -68,6 +68,12 @@ export function AboutSection({ includeContact = false }: AboutSectionProps) {
 
   // GSAP ScrollTrigger for all About section components
   useEffect(() => {
+    const isMobile = typeof window !== "undefined" && window.innerWidth < 768;
+    const scrollStart = isMobile ? "top 96%" : "top 88%";
+    const animDuration = isMobile ? 0.35 : 0.7;
+    const cardStagger = isMobile ? 0.04 : 0.12;
+    const yShift = isMobile ? 18 : 35;
+
     const ctx = gsap.context(() => {
       // 1. Section Title & Underline Bar Reveal
       const title = sectionRef.current?.querySelector(".about-title-text");
@@ -75,16 +81,17 @@ export function AboutSection({ includeContact = false }: AboutSectionProps) {
       if (title && line) {
         gsap.fromTo(
           title,
-          { y: 30, opacity: 0 },
+          { y: isMobile ? 15 : 30, opacity: 0 },
           {
             y: 0,
             opacity: 1,
-            duration: 0.8,
+            duration: animDuration,
             ease: "power3.out",
             scrollTrigger: {
               trigger: title,
-              start: "top 90%",
-              toggleActions: "play none none none",
+              start: "top 96%",
+              fastScrollEnd: true,
+              once: true,
             },
           }
         );
@@ -93,13 +100,14 @@ export function AboutSection({ includeContact = false }: AboutSectionProps) {
           { scaleX: 0, transformOrigin: "left center" },
           {
             scaleX: 1,
-            duration: 0.8,
-            delay: 0.2,
+            duration: animDuration,
+            delay: isMobile ? 0.05 : 0.2,
             ease: "power2.out",
             scrollTrigger: {
               trigger: line,
-              start: "top 90%",
-              toggleActions: "play none none none",
+              start: "top 96%",
+              fastScrollEnd: true,
+              once: true,
             },
           }
         );
@@ -110,17 +118,18 @@ export function AboutSection({ includeContact = false }: AboutSectionProps) {
       if (bioElements && bioElements.length > 0) {
         gsap.fromTo(
           bioElements,
-          { y: 40, opacity: 0 },
+          { y: yShift, opacity: 0 },
           {
             y: 0,
             opacity: 1,
-            duration: 0.8,
-            stagger: 0.15,
+            duration: animDuration,
+            stagger: cardStagger,
             ease: "power3.out",
             scrollTrigger: {
               trigger: ".about-intro-grid",
-              start: "top 85%",
-              toggleActions: "play none none none",
+              start: scrollStart,
+              fastScrollEnd: true,
+              once: true,
             },
           }
         );
@@ -131,17 +140,18 @@ export function AboutSection({ includeContact = false }: AboutSectionProps) {
       if (skillCards && skillCards.length > 0) {
         gsap.fromTo(
           skillCards,
-          { y: 30, opacity: 0 },
+          { y: yShift, opacity: 0 },
           {
             y: 0,
             opacity: 1,
-            duration: 0.6,
-            stagger: 0.1,
+            duration: isMobile ? 0.35 : 0.6,
+            stagger: isMobile ? 0.04 : 0.1,
             ease: "power2.out",
             scrollTrigger: {
               trigger: skillsContainerRef.current,
-              start: "top 85%",
-              toggleActions: "play none none none",
+              start: scrollStart,
+              fastScrollEnd: true,
+              once: true,
             },
           }
         );
@@ -155,12 +165,14 @@ export function AboutSection({ includeContact = false }: AboutSectionProps) {
 
         const targetPercentage = parseInt(bar.getAttribute("data-percentage") || "0", 10);
         const counterObj = { val: 0 };
+        const barDuration = isMobile ? 0.7 : 1.3;
 
         const tl = gsap.timeline({
           scrollTrigger: {
             trigger: card,
-            start: "top 88%",
-            toggleActions: "play none none none",
+            start: isMobile ? "top 96%" : "top 88%",
+            fastScrollEnd: true,
+            once: true,
           },
         });
 
@@ -169,7 +181,7 @@ export function AboutSection({ includeContact = false }: AboutSectionProps) {
           bar,
           {
             width: `${targetPercentage}%`,
-            duration: 1.3,
+            duration: barDuration,
             ease: "power2.out",
           },
           0
@@ -177,7 +189,7 @@ export function AboutSection({ includeContact = false }: AboutSectionProps) {
           counterObj,
           {
             val: targetPercentage,
-            duration: 1.3,
+            duration: barDuration,
             ease: "power2.out",
             onUpdate: () => {
               counter.textContent = `${Math.round(counterObj.val)}%`;
@@ -192,18 +204,18 @@ export function AboutSection({ includeContact = false }: AboutSectionProps) {
             gsap.fromTo(
               shimmer,
               { x: "-100%" },
-              { x: "250%", duration: 0.9, ease: "power2.inOut" }
+              { x: "250%", duration: isMobile ? 0.5 : 0.9, ease: "power2.inOut" }
             );
           }
           gsap.fromTo(
             bar,
             { filter: "brightness(1.35) drop-shadow(0 0 8px var(--skin-color))" },
-            { filter: "brightness(1) drop-shadow(0 0 0px transparent)", duration: 0.8, ease: "power2.out" }
+            { filter: "brightness(1) drop-shadow(0 0 0px transparent)", duration: 0.6, ease: "power2.out" }
           );
           gsap.fromTo(
             counter,
-            { scale: 1.2, color: "var(--skin-color)" },
-            { scale: 1, duration: 0.45, ease: "back.out(2.2)" }
+            { scale: 1.15, color: "var(--skin-color)" },
+            { scale: 1, duration: 0.35, ease: "back.out(2.2)" }
           );
         });
       });
@@ -213,17 +225,18 @@ export function AboutSection({ includeContact = false }: AboutSectionProps) {
       if (timelineContainers && timelineContainers.length > 0) {
         gsap.fromTo(
           timelineContainers,
-          { y: 35, opacity: 0 },
+          { y: yShift, opacity: 0 },
           {
             y: 0,
             opacity: 1,
-            duration: 0.7,
-            stagger: 0.15,
+            duration: animDuration,
+            stagger: cardStagger,
             ease: "power2.out",
             scrollTrigger: {
               trigger: ".timelines-container",
-              start: "top 85%",
-              toggleActions: "play none none none",
+              start: scrollStart,
+              fastScrollEnd: true,
+              once: true,
             },
           }
         );
@@ -233,17 +246,19 @@ export function AboutSection({ includeContact = false }: AboutSectionProps) {
       if (timelineCards && timelineCards.length > 0) {
         gsap.fromTo(
           timelineCards,
-          { x: -30, opacity: 0 },
+          { x: isMobile ? 0 : -30, y: isMobile ? 12 : 0, opacity: 0 },
           {
             x: 0,
+            y: 0,
             opacity: 1,
-            duration: 0.7,
-            stagger: 0.12,
+            duration: animDuration,
+            stagger: cardStagger,
             ease: "power2.out",
             scrollTrigger: {
               trigger: ".timelines-container",
-              start: "top 82%",
-              toggleActions: "play none none none",
+              start: isMobile ? "top 95%" : "top 82%",
+              fastScrollEnd: true,
+              once: true,
             },
           }
         );

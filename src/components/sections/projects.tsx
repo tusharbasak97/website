@@ -29,6 +29,12 @@ export function ProjectsSection() {
   };
 
   useEffect(() => {
+    const isMobile = typeof window !== "undefined" && window.innerWidth < 768;
+    const scrollStart = isMobile ? "top 96%" : "top 80%";
+    const animDuration = isMobile ? 0.35 : 0.7;
+    const cardStagger = isMobile ? 0.04 : 0.12;
+    const yShift = isMobile ? 18 : 40;
+
     const ctx = gsap.context(() => {
       // 1. Title & Underline Bar Reveal
       const title = sectionRef.current?.querySelector(".projects-title-text");
@@ -36,16 +42,17 @@ export function ProjectsSection() {
       if (title && line) {
         gsap.fromTo(
           title,
-          { y: 30, opacity: 0 },
+          { y: isMobile ? 15 : 30, opacity: 0 },
           {
             y: 0,
             opacity: 1,
-            duration: 0.8,
+            duration: animDuration,
             ease: "power3.out",
             scrollTrigger: {
               trigger: title,
-              start: "top 90%",
-              toggleActions: "play none none none",
+              start: "top 96%",
+              fastScrollEnd: true,
+              once: true,
             },
           }
         );
@@ -54,13 +61,14 @@ export function ProjectsSection() {
           { scaleX: 0, transformOrigin: "left center" },
           {
             scaleX: 1,
-            duration: 0.8,
-            delay: 0.2,
+            duration: animDuration,
+            delay: isMobile ? 0.05 : 0.2,
             ease: "power2.out",
             scrollTrigger: {
               trigger: line,
-              start: "top 90%",
-              toggleActions: "play none none none",
+              start: "top 96%",
+              fastScrollEnd: true,
+              once: true,
             },
           }
         );
@@ -73,20 +81,21 @@ export function ProjectsSection() {
           cards,
           {
             opacity: 0,
-            y: 40,
-            scale: 0.95,
+            y: yShift,
+            scale: isMobile ? 0.98 : 0.95,
           },
           {
             opacity: 1,
             y: 0,
             scale: 1,
-            duration: 0.7,
-            stagger: 0.12,
+            duration: animDuration,
+            stagger: cardStagger,
             ease: "power2.out",
             scrollTrigger: {
               trigger: gridRef.current,
-              start: "top 80%",
-              toggleActions: "play none none none",
+              start: scrollStart,
+              fastScrollEnd: true,
+              once: true,
             },
           }
         );

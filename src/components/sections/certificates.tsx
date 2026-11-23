@@ -53,6 +53,12 @@ export function CertificatesSection() {
 
   // GSAP ScrollTrigger for Certificates entrance
   useEffect(() => {
+    const isMobile = typeof window !== "undefined" && window.innerWidth < 768;
+    const scrollStart = isMobile ? "top 96%" : "top 85%";
+    const animDuration = isMobile ? 0.35 : 0.65;
+    const cardStagger = isMobile ? 0.04 : 0.08;
+    const yShift = isMobile ? 18 : 35;
+
     const ctx = gsap.context(() => {
       // 1. Title & Line Reveal
       const title = sectionRef.current?.querySelector(".cert-title-text");
@@ -60,16 +66,17 @@ export function CertificatesSection() {
       if (title && line) {
         gsap.fromTo(
           title,
-          { y: 30, opacity: 0 },
+          { y: isMobile ? 15 : 30, opacity: 0 },
           {
             y: 0,
             opacity: 1,
-            duration: 0.8,
+            duration: animDuration,
             ease: "power3.out",
             scrollTrigger: {
               trigger: title,
-              start: "top 90%",
-              toggleActions: "play none none none",
+              start: "top 96%",
+              fastScrollEnd: true,
+              once: true,
             },
           }
         );
@@ -78,13 +85,14 @@ export function CertificatesSection() {
           { scaleX: 0, transformOrigin: "left center" },
           {
             scaleX: 1,
-            duration: 0.8,
-            delay: 0.2,
+            duration: animDuration,
+            delay: isMobile ? 0.05 : 0.2,
             ease: "power2.out",
             scrollTrigger: {
               trigger: line,
-              start: "top 90%",
-              toggleActions: "play none none none",
+              start: "top 96%",
+              fastScrollEnd: true,
+              once: true,
             },
           }
         );
@@ -95,17 +103,18 @@ export function CertificatesSection() {
       if (filterBtns && filterBtns.length > 0) {
         gsap.fromTo(
           filterBtns,
-          { y: 20, opacity: 0 },
+          { y: isMobile ? 12 : 20, opacity: 0 },
           {
             y: 0,
             opacity: 1,
-            duration: 0.6,
-            stagger: 0.08,
+            duration: animDuration,
+            stagger: cardStagger,
             ease: "power2.out",
             scrollTrigger: {
               trigger: ".cert-filters-group",
-              start: "top 90%",
-              toggleActions: "play none none none",
+              start: scrollStart,
+              fastScrollEnd: true,
+              once: true,
             },
           }
         );
@@ -116,18 +125,19 @@ export function CertificatesSection() {
       if (certCards && certCards.length > 0) {
         gsap.fromTo(
           certCards,
-          { y: 35, opacity: 0, scale: 0.96 },
+          { y: yShift, opacity: 0, scale: isMobile ? 0.98 : 0.96 },
           {
             y: 0,
             opacity: 1,
             scale: 1,
-            duration: 0.65,
-            stagger: 0.08,
+            duration: animDuration,
+            stagger: cardStagger,
             ease: "power2.out",
             scrollTrigger: {
               trigger: gridRef.current,
-              start: "top 85%",
-              toggleActions: "play none none none",
+              start: scrollStart,
+              fastScrollEnd: true,
+              once: true,
             },
           }
         );
