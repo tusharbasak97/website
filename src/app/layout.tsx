@@ -3,8 +3,12 @@ import { Plus_Jakarta_Sans, JetBrains_Mono, Kaushan_Script } from "next/font/goo
 import "./globals.css";
 import { ThemeProvider } from "@/components/providers/theme-provider";
 import { LenisProvider } from "@/components/providers/lenis-provider";
-import { FontAwesomeProvider } from "@/components/providers/fontawesome-provider";
 import { Preloader } from "@/components/preloader";
+import { config } from "@fortawesome/fontawesome-svg-core";
+import "@fortawesome/fontawesome-svg-core/styles.css";
+
+// Prevent FontAwesome from dynamically adding inline CSS since we import it above
+config.autoAddCss = false;
 
 const jakarta = Plus_Jakarta_Sans({
   subsets: ["latin"],
@@ -267,13 +271,11 @@ export default function RootLayout({
           disableTransitionOnChange={false}
         >
           <Preloader />
-          <FontAwesomeProvider>
-            <LenisProvider>
-              <div className="w-full min-h-screen">
-                {children}
-              </div>
-            </LenisProvider>
-          </FontAwesomeProvider>
+          <LenisProvider>
+            <div className="w-full min-h-screen">
+              {children}
+            </div>
+          </LenisProvider>
         </ThemeProvider>
       </body>
     </html>

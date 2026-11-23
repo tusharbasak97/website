@@ -9,7 +9,6 @@ import { ScrollToTop } from "@/components/scroll-to-top";
 import { TabletFloatingNav } from "@/components/tablet-nav";
 import { CustomCursor } from "@/components/custom-cursor";
 import { StyleSwitcher } from "@/components/style-switcher";
-import { SectionReveal } from "@/components/section-reveal";
 
 export default function Home() {
   return (

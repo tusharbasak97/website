@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useEffect, useRef, useState } from "react";
+import Image from "next/image";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -176,6 +177,7 @@ export function ProjectsSection() {
                         aria-label={project.title}
                       >
                         <source src={project.videoUrl} type="video/webm" />
+                        {/* eslint-disable-next-line @next/next/no-img-element */}
                         <img
                           src={project.imageUrl}
                           alt={project.title}
@@ -184,9 +186,11 @@ export function ProjectsSection() {
                         />
                       </video>
                     ) : (
-                      <img
+                      <Image
                         src={project.imageUrl}
                         alt={project.title}
+                        width={600}
+                        height={380}
                         className="w-full h-full object-cover object-top transition-transform duration-500 hover:scale-105"
                         loading="lazy"
                       />
