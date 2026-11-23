@@ -246,7 +246,7 @@ export function ContactSection({ standalone = true }: ContactSectionProps) {
   };
 
   const content = (
-    <div ref={sectionRef} className="w-full">
+    <div ref={sectionRef} className="w-full overflow-hidden">
       {/* Section Title - NO DOT */}
       <div className="mb-10 text-left">
         <h2 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-foreground flex items-center gap-3">
@@ -441,7 +441,7 @@ export function ContactSection({ standalone = true }: ContactSectionProps) {
   }
 
   return (
-    <section id="contact" className="w-full py-16 px-4 sm:px-8 md:px-12 lg:px-16 xl:px-20">
+    <section id="contact" className="w-full py-16 px-4 sm:px-8 md:px-12 lg:px-16 xl:px-20 overflow-hidden">
       <div className="w-full max-w-[1800px] 2xl:max-w-[1920px] mx-auto">
         {content}
       </div>

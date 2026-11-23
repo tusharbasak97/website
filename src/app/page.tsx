@@ -13,10 +13,10 @@ import { SectionReveal } from "@/components/section-reveal";
 
 export default function Home() {
   return (
-    <div className="relative w-full min-h-screen">
+    <div className="relative w-full min-h-screen overflow-x-hidden">
       <CustomCursor />
       <Navbar />
-      <main className="w-full">
+      <main className="w-full overflow-x-hidden">
         <HeroSection />
         <SectionReveal delay={0.1}>
           <AboutSection />

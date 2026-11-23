@@ -102,7 +102,7 @@ export function ProjectsSection() {
       id="portfolio"
       role="region"
       aria-label="My Projects Portfolio"
-      className="w-full py-20 px-4 sm:px-8 md:px-12 lg:px-16 xl:px-20"
+      className="w-full py-20 px-4 sm:px-8 md:px-12 lg:px-16 xl:px-20 overflow-hidden"
     >
       <div className="w-full max-w-[1800px] 2xl:max-w-[1920px] mx-auto">
         {/* Anchor for #projects compatibility */}

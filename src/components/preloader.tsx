@@ -95,7 +95,7 @@ export function Preloader() {
     <div
       ref={containerRef}
       id="preloader"
-      className="fixed inset-0 z-[999999] bg-[var(--bg-black-900)] text-[var(--text-black-900)] flex flex-col items-center justify-center p-4 font-sans select-none transition-colors duration-300"
+      className="fixed inset-0 z-[999999] overflow-hidden bg-[var(--bg-black-900)] text-[var(--text-black-900)] flex flex-col items-center justify-center p-4 font-sans select-none transition-colors duration-300"
     >
       {/* Background Ambient Glow matching website */}
       <div className="absolute top-1/3 -left-24 w-80 h-80 bg-[var(--skin-color)]/10 rounded-full blur-3xl pointer-events-none" />

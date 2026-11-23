@@ -235,14 +235,14 @@ export function HeroSection() {
             ref={tiltCardRef}
             onMouseMove={handleMouseMove}
             onMouseLeave={handleMouseLeave}
-            className="animate-hero-float relative w-72 h-84 sm:w-80 sm:h-96 md:w-96 md:h-[28rem] flex items-center justify-center transition-transform duration-300 ease-out select-none cursor-pointer"
+            className="animate-hero-float relative w-64 h-76 sm:w-80 sm:h-96 md:w-96 md:h-[28rem] flex items-center justify-center transition-transform duration-300 ease-out select-none cursor-pointer max-w-[calc(100vw-3rem)]"
             style={{ transformStyle: "preserve-3d" }}
           >
             {/* Ambient Multi-layered Glowing Water Aura */}
             <div className="animate-morph-blob absolute w-[98%] h-[98%] bg-gradient-to-tr from-[var(--skin-color)] to-[var(--skin-color-end)] opacity-35 blur-3xl pointer-events-none" />
 
             {/* Orbiting Cyber Dashed Ring */}
-            <div className="absolute -inset-4 rounded-full border border-dashed border-[var(--skin-color)]/25 animate-spin [animation-duration:35s] pointer-events-none" />
+            <div className="absolute -inset-3 sm:-inset-4 rounded-full border border-dashed border-[var(--skin-color)]/25 animate-spin [animation-duration:35s] pointer-events-none" />
 
             {/* Circular Water-like Morphing Fluid Animation */}
             <div

@@ -99,7 +99,7 @@ export function StyleSwitcher() {
     <aside
       ref={switcherRef}
       aria-label="Style Switcher"
-      className={`fixed top-24 sm:top-28 right-0 z-50 transition-transform duration-300 ease-out md:hidden lg:flex items-start ${
+      className={`fixed top-24 sm:top-28 right-0 z-50 transition-transform duration-300 ease-out hidden lg:flex items-start ${
         isOpen ? "translate-x-0" : "translate-x-full"
       }`}
     >

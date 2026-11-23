@@ -34,7 +34,6 @@ export const viewport: Viewport = {
   ],
   width: "device-width",
   initialScale: 1,
-  viewportFit: "cover",
 };
 
 export const metadata: Metadata = {
@@ -260,7 +259,7 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLdData).replace(/</g, "\\u003c") }}
         />
       </head>
-      <body className="w-full min-h-screen font-sans antialiased bg-[var(--bg-black-900)] text-[var(--text-black-900)] transition-colors duration-300">
+      <body className="w-full min-h-screen overflow-x-hidden font-sans antialiased bg-[var(--bg-black-900)] text-[var(--text-black-900)] transition-colors duration-300">
         <ThemeProvider
           attribute="class"
           defaultTheme="dark"
