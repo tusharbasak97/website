@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useRef, useState, useSyncExternalStore } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useTheme } from "next-themes";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -17,6 +17,14 @@ import {
 import { useLenis } from "@/components/providers/lenis-provider";
 import { navItems } from "@/lib/data";
 
+import {
+  type ThemeColor,
+  colorOptions,
+  useThemeColor,
+  useIsClient,
+  setThemeColor,
+} from "@/lib/theme-store";
+
 const iconMap: Record<string, typeof faHome> = {
   home: faHome,
   user: faUser,
@@ -25,53 +33,14 @@ const iconMap: Record<string, typeof faHome> = {
   envelope: faEnvelope,
 };
 
-type ThemeColor = "color-1" | "color-2" | "color-3";
-
-interface ColorOption {
-  id: ThemeColor;
-  name: string;
-  hex: string;
-}
-
-const colorOptions: ColorOption[] = [
-  { id: "color-1", name: "Cyber Orange", hex: "oklch(0.70 0.19 55)" },
-  { id: "color-2", name: "Neon Magenta", hex: "oklch(0.66 0.27 350)" },
-  { id: "color-3", name: "Electric Violet", hex: "oklch(0.66 0.24 295)" },
-];
-
-function subscribe() {
-  return () => {};
-}
-
-function getSavedThemeColor(): ThemeColor {
-  if (typeof window === "undefined") return "color-1";
-  try {
-    const saved = localStorage.getItem("portfolio-color-theme") as ThemeColor | null;
-    if (saved && ["color-1", "color-2", "color-3"].includes(saved)) {
-      return saved;
-    }
-  } catch {}
-  return "color-1";
-}
-
 export function TabletFloatingNav() {
   const lenis = useLenis();
   const { resolvedTheme, setTheme } = useTheme();
   const [activeSection, setActiveSection] = useState<string>("home");
-  const [activeColor, setActiveColor] = useState<ThemeColor>(getSavedThemeColor);
+  const activeColor = useThemeColor();
+  const isClient = useIsClient();
   const [colorPickerOpen, setColorPickerOpen] = useState(false);
   const colorPickerRef = useRef<HTMLDivElement>(null);
-
-  const mounted = useSyncExternalStore(
-    subscribe,
-    () => true,
-    () => false
-  );
-
-  // Sync document attribute on change
-  useEffect(() => {
-    document.documentElement.setAttribute("data-theme-color", activeColor);
-  }, [activeColor]);
 
   // Close color picker on outside click or Escape
   useEffect(() => {
@@ -172,9 +141,7 @@ export function TabletFloatingNav() {
   };
 
   const handleColorChange = (color: ThemeColor) => {
-    setActiveColor(color);
-    localStorage.setItem("portfolio-color-theme", color);
-    document.documentElement.setAttribute("data-theme-color", color);
+    setThemeColor(color);
     setColorPickerOpen(false);
   };
 
@@ -238,23 +205,25 @@ export function TabletFloatingNav() {
         <button
           type="button"
           onClick={toggleDayNight}
+          suppressHydrationWarning
           aria-label="Toggle dark/light theme"
           className="group relative flex items-center justify-center w-11 h-11 rounded-full text-muted-foreground hover:text-foreground hover:bg-accent/60 transition-all duration-300 active:scale-90 cursor-pointer"
         >
-          {mounted ? (
+          {isClient && resolvedTheme === "dark" ? (
             <FontAwesomeIcon
-              icon={resolvedTheme === "dark" ? faSun : faMoon}
-              className={`h-4 w-4 transition-colors group-hover:text-[var(--skin-color)] ${
-                resolvedTheme === "dark" ? "text-amber-400" : "text-sky-400"
-              }`}
+              icon={faSun}
+              className="h-4 w-4 transition-colors group-hover:text-[var(--skin-color)] text-amber-400"
             />
           ) : (
-            <FontAwesomeIcon icon={faMoon} className="h-4 w-4" />
+            <FontAwesomeIcon
+              icon={faMoon}
+              className="h-4 w-4 transition-colors group-hover:text-[var(--skin-color)] text-sky-400"
+            />
           )}
 
           {/* Tooltip Pill on the Left */}
           <div className="absolute right-full mr-3.5 px-3 py-1.5 rounded-full text-xs font-semibold tracking-wide whitespace-nowrap bg-card/95 dark:bg-[var(--bg-black-900)]/95 backdrop-blur-xl border border-border/80 shadow-lg pointer-events-none opacity-0 translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 text-muted-foreground transition-all duration-200">
-            <span>{mounted && resolvedTheme === "dark" ? "Light Mode" : "Dark Mode"}</span>
+            <span>{isClient && resolvedTheme === "dark" ? "Light Mode" : "Dark Mode"}</span>
           </div>
         </button>
 

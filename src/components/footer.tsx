@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useSyncExternalStore, useRef, useEffect } from "react";
+import React, { useRef, useEffect } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -23,19 +23,9 @@ const iconMap: Record<string, typeof faGithub | typeof faUserSecret> = {
   medium: faMedium,
 };
 
-function subscribe() {
-  return () => {};
-}
-
 export function Footer() {
   const footerRef = useRef<HTMLElement>(null);
-
-  // Safe client-side dynamic year using useSyncExternalStore
-  const year = useSyncExternalStore(
-    subscribe,
-    () => new Date().getFullYear(),
-    () => 2027
-  );
+  const year = 2026;
 
   useEffect(() => {
     const footer = footerRef.current;

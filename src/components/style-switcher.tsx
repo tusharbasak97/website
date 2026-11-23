@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useRef, useState, useSyncExternalStore } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useTheme } from "next-themes";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -10,51 +10,20 @@ import {
   faCheck,
 } from "@fortawesome/free-solid-svg-icons";
 
-type ThemeColor = "color-1" | "color-2" | "color-3";
-
-interface ColorOption {
-  id: ThemeColor;
-  name: string;
-  hex: string;
-}
-
-const colorOptions: ColorOption[] = [
-  { id: "color-1", name: "Cyber Orange", hex: "oklch(0.70 0.19 55)" },
-  { id: "color-2", name: "Neon Magenta", hex: "oklch(0.66 0.27 350)" },
-  { id: "color-3", name: "Electric Violet", hex: "oklch(0.66 0.24 295)" },
-];
-
-function subscribe() {
-  return () => {};
-}
-
-function getSavedThemeColor(): ThemeColor {
-  if (typeof window === "undefined") return "color-1";
-  try {
-    const saved = localStorage.getItem("portfolio-color-theme") as ThemeColor | null;
-    if (saved && ["color-1", "color-2", "color-3"].includes(saved)) {
-      return saved;
-    }
-  } catch {}
-  return "color-1";
-}
+import {
+  type ThemeColor,
+  colorOptions,
+  useThemeColor,
+  useIsClient,
+  setThemeColor,
+} from "@/lib/theme-store";
 
 export function StyleSwitcher() {
   const { resolvedTheme, setTheme } = useTheme();
   const [isOpen, setIsOpen] = useState(false);
-  const [activeColor, setActiveColor] = useState<ThemeColor>(getSavedThemeColor);
+  const activeColor = useThemeColor();
+  const isClient = useIsClient();
   const switcherRef = useRef<HTMLElement>(null);
-
-  const mounted = useSyncExternalStore(
-    subscribe,
-    () => true,
-    () => false
-  );
-
-  // Sync document attribute on change
-  useEffect(() => {
-    document.documentElement.setAttribute("data-theme-color", activeColor);
-  }, [activeColor]);
 
   // Close on outside click or Escape key
   useEffect(() => {
@@ -82,9 +51,7 @@ export function StyleSwitcher() {
   }, [isOpen]);
 
   const handleColorChange = (color: ThemeColor) => {
-    setActiveColor(color);
-    localStorage.setItem("portfolio-color-theme", color);
-    document.documentElement.setAttribute("data-theme-color", color);
+    setThemeColor(color);
   };
 
   const toggleDayNight = () => {
@@ -125,17 +92,21 @@ export function StyleSwitcher() {
         <button
           type="button"
           onClick={toggleDayNight}
+          suppressHydrationWarning
           className="w-11 h-11 rounded-l-xl bg-card border-y border-l border-border shadow-lg flex items-center justify-center text-foreground hover:text-[var(--skin-color)] hover:bg-accent/60 focus:outline-none focus:ring-2 focus:ring-[var(--skin-color)]/30 cursor-pointer group transition-colors"
           aria-label="Toggle dark/light theme"
-          title={mounted ? `Switch to ${resolvedTheme === "dark" ? "light" : "dark"} mode` : "Toggle dark/light theme"}
+          title={isClient ? `Switch to ${resolvedTheme === "dark" ? "light" : "dark"} mode` : "Toggle dark/light theme"}
         >
-          {mounted ? (
+          {isClient && resolvedTheme === "dark" ? (
             <FontAwesomeIcon
-              icon={resolvedTheme === "dark" ? faSun : faMoon}
+              icon={faSun}
               className="h-4 w-4 transition-colors group-hover:text-[var(--skin-color)]"
             />
           ) : (
-            <FontAwesomeIcon icon={faMoon} className="h-4 w-4" />
+            <FontAwesomeIcon
+              icon={faMoon}
+              className="h-4 w-4 transition-colors group-hover:text-[var(--skin-color)]"
+            />
           )}
         </button>
       </div>
@@ -148,9 +119,9 @@ export function StyleSwitcher() {
         </h4>
 
         {/* Color Swatches */}
-        <div className="flex items-center justify-between py-2 px-1">
+        <div className="flex items-center justify-between py-2 px-1" suppressHydrationWarning>
           {colorOptions.map((color) => {
-            const isSelected = activeColor === color.id;
+            const isSelected = isClient ? activeColor === color.id : color.id === "color-1";
 
             return (
               <button
@@ -178,7 +149,7 @@ export function StyleSwitcher() {
         <div className="mt-4 pt-3 border-t border-border flex items-center justify-between text-xs text-muted-foreground">
           <span>Current Mode</span>
           <span className="font-semibold text-foreground capitalize px-2 py-0.5 rounded bg-muted">
-            {mounted ? resolvedTheme : "dark"}
+            {isClient ? resolvedTheme : "dark"}
           </span>
         </div>
       </div>
