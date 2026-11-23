@@ -63,6 +63,53 @@ export function Navbar() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  // Automatically close mobile menu when scrolled or clicked/touched outside
+  useEffect(() => {
+    if (!mobileMenuOpen) return;
+
+    const initialScrollY = window.scrollY || document.documentElement.scrollTop;
+
+    const handleScroll = () => {
+      const currentScrollY = window.scrollY || document.documentElement.scrollTop;
+      if (Math.abs(currentScrollY - initialScrollY) > 8) {
+        setMobileMenuOpen(false);
+      }
+    };
+
+    const handleClickOutside = (e: MouseEvent | TouchEvent) => {
+      if (headerRef.current && !headerRef.current.contains(e.target as Node)) {
+        setMobileMenuOpen(false);
+      }
+    };
+
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        setMobileMenuOpen(false);
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    window.addEventListener("touchmove", handleClickOutside, { passive: true });
+    document.addEventListener("mousedown", handleClickOutside);
+    document.addEventListener("touchstart", handleClickOutside, { passive: true });
+    window.addEventListener("keydown", handleKeyDown);
+
+    if (lenis) {
+      lenis.on("scroll", handleScroll);
+    }
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+      window.removeEventListener("touchmove", handleClickOutside);
+      document.removeEventListener("mousedown", handleClickOutside);
+      document.removeEventListener("touchstart", handleClickOutside);
+      window.removeEventListener("keydown", handleKeyDown);
+      if (lenis) {
+        lenis.off("scroll", handleScroll);
+      }
+    };
+  }, [mobileMenuOpen, lenis]);
+
   // Realtime scroll spy for active section highlighting
   useEffect(() => {
     const sectionIds = ["home", "about", "certificates", "portfolio", "contact"];
@@ -134,8 +181,18 @@ export function Navbar() {
   };
 
   return (
-    <header
-      ref={headerRef}
+    <>
+      {/* Mobile Backdrop when menu is open */}
+      <div
+        onClick={() => setMobileMenuOpen(false)}
+        className={`fixed inset-0 z-40 bg-black/40 backdrop-blur-xs md:hidden transition-opacity duration-300 ${
+          mobileMenuOpen ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
+        }`}
+        aria-hidden="true"
+      />
+
+      <header
+        ref={headerRef}
       className={`fixed top-0 left-0 right-0 z-50 w-full transition-all duration-300 ease-in-out ${
         mobileMenuOpen
           ? "bg-card/85 dark:bg-[var(--bg-black-900)]/85 backdrop-blur-2xl shadow-[0_20px_50px_oklch(0_0_0_/_0.3)] border-b border-border/60 py-3.5"
@@ -300,6 +357,7 @@ export function Navbar() {
         </div>
       </div>
     </header>
+  </>
   );
 }
 
