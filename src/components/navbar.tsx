@@ -215,20 +215,26 @@ export function Navbar() {
             aria-label={mobileMenuOpen ? "Close menu" : "Open menu"}
             aria-expanded={mobileMenuOpen}
           >
-            <div className="w-6 h-5 flex flex-col justify-between relative">
+            <div className="relative w-6 h-6 flex items-center justify-center">
               <span
-                className={`w-full h-0.5 bg-current rounded-full transition-all duration-300 transform origin-left ${
-                  mobileMenuOpen ? "rotate-45 translate-x-1 -translate-y-0.5" : ""
+                className={`absolute h-0.5 w-5 bg-current rounded-full transition-all duration-300 ease-in-out ${
+                  mobileMenuOpen
+                    ? "rotate-45 translate-y-0"
+                    : "-translate-y-1.5"
                 }`}
               />
               <span
-                className={`w-full h-0.5 bg-current rounded-full transition-all duration-200 ${
-                  mobileMenuOpen ? "opacity-0" : "opacity-100"
+                className={`absolute h-0.5 w-5 bg-current rounded-full transition-all duration-200 ease-in-out ${
+                  mobileMenuOpen
+                    ? "opacity-0 scale-x-0"
+                    : "opacity-100"
                 }`}
               />
               <span
-                className={`w-full h-0.5 bg-current rounded-full transition-all duration-300 transform origin-left ${
-                  mobileMenuOpen ? "-rotate-45 translate-x-1 translate-y-0.5" : ""
+                className={`absolute h-0.5 w-5 bg-current rounded-full transition-all duration-300 ease-in-out ${
+                  mobileMenuOpen
+                    ? "-rotate-45 translate-y-0"
+                    : "translate-y-1.5"
                 }`}
               />
             </div>
