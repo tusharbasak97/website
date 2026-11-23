@@ -1,14 +1,13 @@
 Contact: mailto:tusharbasak97@gmail.com
 Contact: https://www.linkedin.com/in/tusharbasak97/
-Expires: 2026-12-31T23:59:59.000Z
+Expires: 2027-12-31T23:59:59.000Z
 Preferred-Languages: en
-Canonical: https://tusharbasak97.github.io/website/.well-known/security.txt
+Canonical: https://tusharbasak.vercel.app/.well-known/security.txt
+Policy: https://tusharbasak.vercel.app/#contact
 
 # Security Contact Information
-# This file contains contact information for security researchers
-# who discover vulnerabilities in this website.
+# This file contains RFC 9116 security contact information for researchers
+# who discover vulnerabilities in this website or related assets.
 #
 # Please report security vulnerabilities responsibly.
-# 
-# For more information about security.txt, see:
-# https://securitytxt.org/
+# For more information about security.txt, see: https://securitytxt.org/

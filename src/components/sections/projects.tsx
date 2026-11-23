@@ -102,9 +102,9 @@ export function ProjectsSection() {
       id="portfolio"
       role="region"
       aria-label="My Projects Portfolio"
-      className="w-full py-20 px-4 sm:px-8 md:px-12 lg:px-20 xl:px-28"
+      className="w-full py-20 px-4 sm:px-8 md:px-12 lg:px-16 xl:px-20"
     >
-      <div className="w-full max-w-7xl 2xl:max-w-[1400px] mx-auto">
+      <div className="w-full max-w-[1800px] 2xl:max-w-[1920px] mx-auto">
         {/* Anchor for #projects compatibility */}
         <span id="projects" className="sr-only" />
 
@@ -144,7 +144,7 @@ export function ProjectsSection() {
               >
                 {/* ================= FRONT OF CARD ================= */}
                 <div
-                  className="absolute inset-0 w-full h-full rounded-3xl overflow-hidden bg-card border border-border shadow-md flex flex-col justify-between p-6 transition-all duration-300"
+                  className="absolute inset-0 w-full h-full rounded-3xl overflow-hidden bg-card border border-border shadow-md hover:border-[var(--skin-color)]/50 hover:shadow-xl hover:-translate-y-1 flex flex-col justify-between p-6 transition-all duration-300 group"
                   style={{
                     backfaceVisibility: "hidden",
                     WebkitBackfaceVisibility: "hidden",

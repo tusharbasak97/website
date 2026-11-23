@@ -2,9 +2,9 @@
   "name": "Tushar Basak | Cybersecurity Analyst & Web Developer",
   "short_name": "Tushar Basak",
   "description": "Official portfolio of Tushar Basak — Cybersecurity Analyst, SOC Analyst, and Full-Stack Web Developer specializing in penetration testing, network defense, endpoint security, and secure web applications.",
-  "start_url": "/website/",
-  "scope": "/website/",
-  "id": "/website/",
+  "start_url": "/",
+  "scope": "/",
+  "id": "/",
   "display": "standalone",
   "display_override": ["standalone", "minimal-ui", "window-controls-overlay"],
   "orientation": "portrait-primary",
@@ -97,7 +97,7 @@
       "name": "About Me",
       "short_name": "About",
       "description": "View professional background, technical skills, and experience",
-      "url": "/website/#about",
+      "url": "/#about",
       "icons": [
         {
           "src": "/assets/images/favicon-32x32.png",
@@ -110,7 +110,7 @@
       "name": "Certifications",
       "short_name": "Certs",
       "description": "View verified cybersecurity and IT certifications",
-      "url": "/website/#certificates",
+      "url": "/#certificates",
       "icons": [
         {
           "src": "/assets/images/favicon-32x32.png",
@@ -123,7 +123,7 @@
       "name": "Portfolio Projects",
       "short_name": "Projects",
       "description": "Explore cybersecurity tools and web applications",
-      "url": "/website/#portfolio",
+      "url": "/#portfolio",
       "icons": [
         {
           "src": "/assets/images/favicon-32x32.png",
@@ -136,7 +136,7 @@
       "name": "Resume",
       "short_name": "Resume",
       "description": "Download official professional resume",
-      "url": "/website/assets/resume.pdf",
+      "url": "/assets/resume.pdf",
       "icons": [
         {
           "src": "/assets/images/favicon-32x32.png",

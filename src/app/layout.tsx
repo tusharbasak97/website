@@ -9,21 +9,21 @@ import { Preloader } from "@/components/preloader";
 const jakarta = Plus_Jakarta_Sans({
   subsets: ["latin"],
   weight: ["400", "500", "600", "700", "800"],
-  variable: "--font-sans",
+  variable: "--font-plus-jakarta",
   display: "swap",
 });
 
 const jetbrainsMono = JetBrains_Mono({
   subsets: ["latin"],
   weight: ["400", "500", "600", "700"],
-  variable: "--font-mono",
+  variable: "--font-jetbrains-mono",
   display: "swap",
 });
 
 const kaushanScript = Kaushan_Script({
   weight: "400",
   subsets: ["latin"],
-  variable: "--font-kaushan",
+  variable: "--font-kaushan-script",
   display: "swap",
 });
 
@@ -38,7 +38,7 @@ export const viewport: Viewport = {
 };
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://tusharbasak97.github.io/website/"),
+  metadataBase: new URL("https://tusharbasak.vercel.app/"),
   title: {
     default: "Tushar Basak - Cybersecurity Analyst & Web Developer",
     template: "%s | Tushar Basak",
@@ -60,7 +60,7 @@ export const metadata: Metadata = {
     "React",
     "JavaScript",
   ],
-  authors: [{ name: "Tushar Basak", url: "https://tusharbasak97.github.io/website/" }],
+  authors: [{ name: "Tushar Basak", url: "https://tusharbasak.vercel.app/" }],
   creator: "Tushar Basak",
   publisher: "Tushar Basak",
   robots: {
@@ -77,14 +77,14 @@ export const metadata: Metadata = {
   openGraph: {
     type: "profile",
     locale: "en_US",
-    url: "https://tusharbasak97.github.io/website/",
+    url: "https://tusharbasak.vercel.app/",
     siteName: "Tushar Basak Cybersecurity Portfolio",
     title: "Tushar Basak - Expert Cybersecurity Analyst | SOC Analyst | Penetration Tester | Ethical Hacker",
     description:
       "Expert Cybersecurity Analyst & SOC Analyst specializing in penetration testing, ethical hacking, threat hunting, vulnerability management, SIEM, incident response, cloud security (AWS, Azure, GCP), and security compliance. Certified in CEH, OSCP, CISSP, CompTIA Security+.",
     images: [
       {
-        url: "https://tusharbasak97.github.io/website/assets/images/hero.webp",
+        url: "https://tusharbasak.vercel.app/assets/images/hero.webp",
         width: 1200,
         height: 630,
         alt: "Tushar Basak - Cybersecurity Analyst Profile Picture",
@@ -97,7 +97,7 @@ export const metadata: Metadata = {
     description:
       "Expert Cybersecurity Analyst & SOC Analyst specializing in penetration testing, ethical hacking, threat hunting, vulnerability management, SIEM, incident response, cloud security (AWS, Azure, GCP), and security compliance.",
     creator: "@tusharbasak97",
-    images: ["https://tusharbasak97.github.io/website/assets/images/hero.webp"],
+    images: ["https://tusharbasak.vercel.app/assets/images/hero.webp"],
   },
   icons: {
     icon: [
@@ -109,12 +109,12 @@ export const metadata: Metadata = {
       { url: "/assets/images/apple-touch-icon-180x180.png", sizes: "180x180", type: "image/png" },
     ],
   },
-  manifest: "/assets/site.webmanifest",
+  manifest: "/site.webmanifest",
   verification: {
     google: "96vruK8SQFp_p8aIZS2Cd0PoBn6Tsb-FA3s1y_-TiNs",
   },
   alternates: {
-    canonical: "https://tusharbasak97.github.io/website/",
+    canonical: "https://tusharbasak.vercel.app/",
   },
 };
 
@@ -127,8 +127,8 @@ const jsonLdData = [
     "jobTitle": "Cybersecurity Analyst | SOC Analyst | Penetration Tester | Ethical Hacker",
     "description":
       "Expert Cybersecurity Analyst and SOC Analyst specializing in penetration testing, ethical hacking, threat hunting, vulnerability management, SIEM operations, incident response, malware analysis, digital forensics, cloud security (AWS, Azure, GCP), network security, application security, and security compliance (HIPAA, GDPR, ISO 27001, PCI-DSS, NIST)",
-    "url": "https://tusharbasak97.github.io/website/",
-    "image": "https://tusharbasak97.github.io/website/assets/images/hero.webp",
+    "url": "https://tusharbasak.vercel.app/",
+    "image": "https://tusharbasak.vercel.app/assets/images/hero.webp",
     "birthDate": "1997-10-02",
     "nationality": "Indian",
     "address": {
@@ -136,7 +136,7 @@ const jsonLdData = [
       "addressCountry": "IN",
       "addressRegion": "India",
     },
-    "email": "tushar.basak97@gmail.com",
+    "email": "tusharbasak97@gmail.com",
     "telephone": "+91-8299312126",
     "knowsAbout": [
       "Cybersecurity Analyst",
@@ -200,7 +200,7 @@ const jsonLdData = [
       "https://github.com/tusharbasak97/",
       "https://tryhackme.com/p/tusharbasak97",
       "https://medium.com/@tusharbasak97/",
-      "https://bit.ly/m/DataBasak",
+      "https://tusharbasak97.github.io/link-in-bio-website-dark/",
     ],
   },
   {
@@ -208,7 +208,7 @@ const jsonLdData = [
     "@type": "WebSite",
     "name": "Tushar Basak Portfolio",
     "alternateName": "Tushar Basak Cybersecurity Portfolio",
-    "url": "https://tusharbasak97.github.io/website/",
+    "url": "https://tusharbasak.vercel.app/",
     "description":
       "Professional portfolio of Tushar Basak, Cybersecurity Analyst and Web Developer specializing in ethical hacking, penetration testing, and secure modern web development",
     "inLanguage": "en-US",
@@ -242,6 +242,13 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning className={`${jakarta.variable} ${jetbrainsMono.variable} ${kaushanScript.variable}`}>
       <head>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        {/* eslint-disable-next-line @next/next/no-page-custom-font */}
+        <link
+          rel="stylesheet"
+          href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Kaushan+Script&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
+        />
         <script
           id="theme-color-initializer"
           dangerouslySetInnerHTML={{
@@ -250,7 +257,7 @@ export default function RootLayout({
         />
         <script
           type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLdData) }}
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLdData).replace(/</g, "\\u003c") }}
         />
       </head>
       <body className="w-full min-h-screen font-sans antialiased bg-[var(--bg-black-900)] text-[var(--text-black-900)] transition-colors duration-300">

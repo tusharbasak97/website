@@ -60,9 +60,9 @@ export function Footer() {
   return (
     <footer
       ref={footerRef}
-      className="w-full border-t border-border bg-card/50 backdrop-blur-sm py-12 px-4 sm:px-8 md:px-12 lg:px-20 xl:px-28"
+      className="w-full border-t border-border bg-card/50 backdrop-blur-sm py-12 px-4 sm:px-8 md:px-12 lg:px-16 xl:px-20"
     >
-      <div className="w-full max-w-7xl 2xl:max-w-[1400px] mx-auto flex flex-col md:flex-row items-center justify-between gap-6 pb-16 md:pb-0">
+      <div className="w-full max-w-[1800px] 2xl:max-w-[1920px] mx-auto flex flex-col md:flex-row items-center justify-between gap-6 pb-16 md:pb-0">
         {/* Brand & secured indicator */}
         <div className="flex items-center gap-3">
           <span className="font-kaushan text-2xl font-bold text-foreground">
@@ -106,7 +106,7 @@ export function Footer() {
           <p className="mt-1">
             Designed by{" "}
             <a
-              href="https://bit.ly/m/DataBasak"
+              href="https://tusharbasak97.github.io/link-in-bio-website-dark/"
               target="_blank"
               rel="noopener noreferrer"
               className="font-semibold text-foreground hover:text-[var(--skin-color)] transition-colors underline decoration-[var(--skin-color)] underline-offset-4"

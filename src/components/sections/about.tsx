@@ -14,7 +14,7 @@ import {
   faBriefcase,
   faCode,
   faTerminal,
-  faPaperPlane,
+  faExternalLinkAlt,
 } from "@fortawesome/free-solid-svg-icons";
 import { faWhatsapp } from "@fortawesome/free-brands-svg-icons";
 import {
@@ -23,7 +23,6 @@ import {
   educationTimeline,
   experienceTimeline,
 } from "@/lib/data";
-import { useLenis } from "@/components/providers/lenis-provider";
 import { ContactSection } from "./contact";
 
 if (typeof window !== "undefined") {
@@ -54,7 +53,6 @@ interface AboutSectionProps {
 }
 
 export function AboutSection({ includeContact = false }: AboutSectionProps) {
-  const lenis = useLenis();
   const sectionRef = useRef<HTMLElement>(null);
   const skillsContainerRef = useRef<HTMLDivElement>(null);
   const [ageDisplay, setAgeDisplay] = useState<string>("");
@@ -128,8 +126,27 @@ export function AboutSection({ includeContact = false }: AboutSectionProps) {
         );
       }
 
-      // 3. Technical Proficiencies Progress Bars with smooth completion animation
+      // 3. Technical Proficiencies Cards Entrance & Progress Bars
       const skillCards = gsap.utils.toArray<HTMLElement>(".skill-card-item");
+      if (skillCards && skillCards.length > 0) {
+        gsap.fromTo(
+          skillCards,
+          { y: 30, opacity: 0 },
+          {
+            y: 0,
+            opacity: 1,
+            duration: 0.6,
+            stagger: 0.1,
+            ease: "power2.out",
+            scrollTrigger: {
+              trigger: skillsContainerRef.current,
+              start: "top 85%",
+              toggleActions: "play none none none",
+            },
+          }
+        );
+      }
+
       skillCards.forEach((card) => {
         const bar = card.querySelector<HTMLElement>(".skill-progress-bar");
         const shimmer = card.querySelector<HTMLElement>(".skill-shimmer");
@@ -191,7 +208,27 @@ export function AboutSection({ includeContact = false }: AboutSectionProps) {
         });
       });
 
-      // 4. Education & Experience Timeline Items Staggered Reveal
+      // 4. Education & Experience Timeline Containers & Items
+      const timelineContainers = sectionRef.current?.querySelectorAll(".timeline-container-card");
+      if (timelineContainers && timelineContainers.length > 0) {
+        gsap.fromTo(
+          timelineContainers,
+          { y: 35, opacity: 0 },
+          {
+            y: 0,
+            opacity: 1,
+            duration: 0.7,
+            stagger: 0.15,
+            ease: "power2.out",
+            scrollTrigger: {
+              trigger: ".timelines-container",
+              start: "top 85%",
+              toggleActions: "play none none none",
+            },
+          }
+        );
+      }
+
       const timelineCards = sectionRef.current?.querySelectorAll(".timeline-card-item");
       if (timelineCards && timelineCards.length > 0) {
         gsap.fromTo(
@@ -216,27 +253,15 @@ export function AboutSection({ includeContact = false }: AboutSectionProps) {
     return () => ctx.revert();
   }, []);
 
-  const scrollToContact = (e: React.MouseEvent<HTMLAnchorElement>) => {
-    e.preventDefault();
-    const target = document.getElementById("contact");
-    if (target) {
-      if (lenis) {
-        lenis.scrollTo(target, { offset: -70, duration: 1.2 });
-      } else {
-        target.scrollIntoView({ behavior: "smooth" });
-      }
-    }
-  };
-
   return (
     <section
       ref={sectionRef}
       id="about"
       role="region"
       aria-label="About Me and Professional Background"
-      className="w-full py-20 px-4 sm:px-8 md:px-12 lg:px-20 xl:px-28"
+      className="w-full py-20 px-4 sm:px-8 md:px-12 lg:px-16 xl:px-20"
     >
-      <div className="w-full max-w-7xl 2xl:max-w-[1400px] mx-auto">
+      <div className="w-full max-w-[1800px] 2xl:max-w-[1920px] mx-auto">
         {/* Section Title - NO DOT */}
         <div className="mb-14 text-left">
         <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight text-foreground flex items-center gap-4">
@@ -252,10 +277,10 @@ export function AboutSection({ includeContact = false }: AboutSectionProps) {
       <div className="about-intro-grid grid grid-cols-1 lg:grid-cols-12 gap-10 items-start mb-20">
         {/* Bio Paragraphs (Col 7) */}
         <div className="lg:col-span-7 space-y-6 text-muted-foreground leading-relaxed text-base sm:text-lg">
-          <p className="about-bio-item p-5 rounded-2xl bg-card border border-border shadow-sm">
+          <p className="about-bio-item p-5 rounded-2xl bg-card border border-border shadow-sm hover:border-[var(--skin-color)]/50 hover:shadow-lg hover:-translate-y-1 transition-all duration-300">
             {personalInfo.aboutP1}
           </p>
-          <p className="about-bio-item p-5 rounded-2xl bg-card border border-border shadow-sm">
+          <p className="about-bio-item p-5 rounded-2xl bg-card border border-border shadow-sm hover:border-[var(--skin-color)]/50 hover:shadow-lg hover:-translate-y-1 transition-all duration-300">
             {personalInfo.aboutP2}
           </p>
 
@@ -272,18 +297,19 @@ export function AboutSection({ includeContact = false }: AboutSectionProps) {
             </a>
 
             <a
-              href="#contact"
-              onClick={scrollToContact}
-              className="inline-flex items-center gap-2.5 px-6 py-3.5 rounded-xl font-semibold border-2 border-border/80 bg-card hover:bg-accent/80 hover:border-[var(--skin-color)]/60 text-foreground shadow-xs hover:shadow transition-all duration-200 cursor-pointer"
+              href={personalInfo.resumeUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 px-6 py-3.5 rounded-xl font-semibold border-2 border-border/80 bg-card hover:bg-accent/80 hover:border-[var(--skin-color)]/60 text-foreground shadow-xs hover:shadow hover:-translate-y-0.5 active:translate-y-0 transition-all duration-200 cursor-pointer"
             >
-              <FontAwesomeIcon icon={faPaperPlane} className="h-3.5 w-3.5 text-[var(--skin-color)]" />
-              <span>Get In Touch</span>
+              <FontAwesomeIcon icon={faExternalLinkAlt} className="h-3.5 w-3.5 text-[var(--skin-color)]" />
+              <span>View resume</span>
             </a>
           </div>
         </div>
 
         {/* Personal Details Grid (Col 5) */}
-        <div className="about-bio-item lg:col-span-5 p-6 rounded-2xl bg-card border border-border shadow-sm">
+        <div className="about-bio-item lg:col-span-5 p-6 rounded-2xl bg-card border border-border shadow-sm hover:border-[var(--skin-color)]/50 hover:shadow-lg hover:-translate-y-1 transition-all duration-300">
           <h3 className="text-xl font-bold text-foreground mb-6 pb-3 border-b border-border flex items-center justify-between">
             <span>Personal Information</span>
             <span className="text-xs font-mono px-2.5 py-1 rounded-md bg-[var(--skin-color)]/10 text-[var(--skin-color)]">
@@ -373,9 +399,12 @@ export function AboutSection({ includeContact = false }: AboutSectionProps) {
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           {skills.map((skill) => (
-            <div key={skill.name} className="skill-card-item p-5 rounded-2xl bg-card border border-border shadow-sm">
+            <div
+              key={skill.name}
+              className="skill-card-item p-5 rounded-2xl bg-card border border-border shadow-sm hover:border-[var(--skin-color)]/50 hover:shadow-lg hover:-translate-y-1 transition-all duration-300 group"
+            >
               <div className="flex justify-between items-center mb-2.5">
-                <span className="font-bold text-base sm:text-lg text-foreground flex items-center gap-2">
+                <span className="font-bold text-base sm:text-lg text-foreground flex items-center gap-2 group-hover:text-[var(--skin-color)] transition-colors">
                   <FontAwesomeIcon icon={faTerminal} className="h-3.5 w-3.5 text-[var(--skin-color)]" />
                   {skill.name}
                 </span>
@@ -401,7 +430,7 @@ export function AboutSection({ includeContact = false }: AboutSectionProps) {
       {/* Education & Experience Timelines */}
       <div className="timelines-container grid grid-cols-1 lg:grid-cols-2 gap-12 mb-16">
         {/* Education Timeline */}
-        <div className="p-6 sm:p-8 rounded-3xl bg-card border border-border shadow-sm">
+        <div className="timeline-container-card p-6 sm:p-8 rounded-3xl bg-card border border-border shadow-sm hover:border-[var(--skin-color)]/40 hover:shadow-lg transition-all duration-300">
           <h3 className="text-2xl font-bold text-foreground mb-8 flex items-center gap-3 border-b border-border pb-4">
             <div className="w-10 h-10 rounded-xl bg-[var(--skin-color)]/10 text-[var(--skin-color)] flex items-center justify-center">
               <FontAwesomeIcon icon={faGraduationCap} className="h-5 w-5" />
@@ -439,7 +468,7 @@ export function AboutSection({ includeContact = false }: AboutSectionProps) {
         </div>
 
         {/* Experience Timeline */}
-        <div className="p-6 sm:p-8 rounded-3xl bg-card border border-border shadow-sm">
+        <div className="timeline-container-card p-6 sm:p-8 rounded-3xl bg-card border border-border shadow-sm hover:border-[var(--skin-color)]/40 hover:shadow-lg transition-all duration-300">
           <h3 className="text-2xl font-bold text-foreground mb-8 flex items-center gap-3 border-b border-border pb-4">
             <div className="w-10 h-10 rounded-xl bg-[var(--skin-color)]/10 text-[var(--skin-color)] flex items-center justify-center">
               <FontAwesomeIcon icon={faBriefcase} className="h-5 w-5" />

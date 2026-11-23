@@ -43,11 +43,22 @@ function subscribe() {
   return () => {};
 }
 
+function getSavedThemeColor(): ThemeColor {
+  if (typeof window === "undefined") return "color-1";
+  try {
+    const saved = localStorage.getItem("portfolio-color-theme") as ThemeColor | null;
+    if (saved && ["color-1", "color-2", "color-3"].includes(saved)) {
+      return saved;
+    }
+  } catch {}
+  return "color-1";
+}
+
 export function TabletFloatingNav() {
   const lenis = useLenis();
   const { resolvedTheme, setTheme } = useTheme();
   const [activeSection, setActiveSection] = useState<string>("home");
-  const [activeColor, setActiveColor] = useState<ThemeColor>("color-1");
+  const [activeColor, setActiveColor] = useState<ThemeColor>(getSavedThemeColor);
   const [colorPickerOpen, setColorPickerOpen] = useState(false);
   const colorPickerRef = useRef<HTMLDivElement>(null);
 
@@ -57,16 +68,10 @@ export function TabletFloatingNav() {
     () => false
   );
 
-  // Sync saved theme color
+  // Sync document attribute on change
   useEffect(() => {
-    const savedColor = localStorage.getItem("portfolio-color-theme") as ThemeColor | null;
-    if (savedColor && ["color-1", "color-2", "color-3"].includes(savedColor)) {
-      setActiveColor(savedColor);
-      document.documentElement.setAttribute("data-theme-color", savedColor);
-    } else {
-      document.documentElement.setAttribute("data-theme-color", "color-1");
-    }
-  }, []);
+    document.documentElement.setAttribute("data-theme-color", activeColor);
+  }, [activeColor]);
 
   // Close color picker on outside click or Escape
   useEffect(() => {

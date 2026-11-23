@@ -161,13 +161,13 @@ export function HeroSection() {
       id="home"
       role="region"
       aria-label="Introduction and Overview"
-      className="relative min-h-screen w-full flex items-center justify-center pt-24 pb-16 px-4 sm:px-8 md:px-12 lg:px-20 xl:px-28 overflow-hidden"
+      className="relative min-h-screen w-full flex items-center justify-center pt-24 pb-16 px-4 sm:px-8 md:px-12 lg:px-16 xl:px-20 overflow-hidden"
     >
       {/* Background Ambient Glow Elements */}
       <div className="absolute top-1/4 -left-32 w-96 h-96 bg-[var(--skin-color)]/10 rounded-full blur-3xl pointer-events-none -z-10" />
       <div className="absolute bottom-1/4 -right-32 w-96 h-96 bg-[var(--skin-color-end)]/10 rounded-full blur-3xl pointer-events-none -z-10" />
 
-      <div className="w-full max-w-7xl 2xl:max-w-[1400px] mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center">
+      <div className="w-full max-w-[1800px] 2xl:max-w-[1920px] mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center">
         {/* Left Text Column (Col 7) */}
         <div
           ref={textColRef}
@@ -197,7 +197,7 @@ export function HeroSection() {
           </div>
 
           {/* Bio Description */}
-          <p className="text-base sm:text-lg text-muted-foreground leading-relaxed max-w-3xl">
+          <p className="text-base sm:text-lg text-muted-foreground leading-relaxed max-w-4xl">
             {personalInfo.description}
           </p>
 

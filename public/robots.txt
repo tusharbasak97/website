@@ -1,5 +1,5 @@
 # Robots.txt for Tushar Basak - Cybersecurity Analyst & Web Developer Portfolio
-# https://tusharbasak97.github.io/website/
+# https://tusharbasak.vercel.app/
 # Last updated: November 2026
 
 User-agent: *
@@ -8,10 +8,11 @@ Allow: /assets/
 Allow: /favicon.ico
 Allow: /sitemap.xml
 Allow: /.well-known/
+Allow: /site.webmanifest
 
-# Do not index error or internal pages
-Disallow: /404.html
-Disallow: /offline.html
+# Do not index internal next artifacts or error pages
+Disallow: /api/
+Disallow: /_next/
 
 # Allow major search engines and discovery crawlers
 User-agent: Googlebot
@@ -71,5 +72,5 @@ User-agent: BLEXBot
 Disallow: /
 
 # Canonical Sitemap and Host
-Sitemap: https://tusharbasak97.github.io/website/sitemap.xml
-Host: https://tusharbasak97.github.io
+Sitemap: https://tusharbasak.vercel.app/sitemap.xml
+Host: https://tusharbasak.vercel.app

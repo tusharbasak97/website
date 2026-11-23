@@ -26,6 +26,52 @@ export function ContactSection({ standalone = true }: ContactSectionProps) {
   const sectionRef = useRef<HTMLDivElement>(null);
   const [status, setStatus] = useState<"idle" | "submitting" | "success" | "error">("idle");
   const [errorMessage, setErrorMessage] = useState<string>("");
+  const [turnstileToken, setTurnstileToken] = useState<string>("");
+  const turnstileRef = useRef<HTMLDivElement>(null);
+  const turnstileSiteKey = process.env.NEXT_PUBLIC_CLOUDFLARE_TURNSTILE_SITE_KEY;
+
+  useEffect(() => {
+    if (!turnstileSiteKey || typeof window === "undefined") return;
+
+    const scriptId = "cf-turnstile-script";
+    if (!document.getElementById(scriptId)) {
+      const script = document.createElement("script");
+      script.id = scriptId;
+      script.src = "https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit";
+      script.async = true;
+      script.defer = true;
+      document.head.appendChild(script);
+    }
+
+    const interval = setInterval(() => {
+      const win = window as unknown as {
+        turnstile?: {
+          render: (
+            el: HTMLElement,
+            options: {
+              sitekey: string;
+              callback: (token: string) => void;
+              "expired-callback": () => void;
+              theme?: string;
+            }
+          ) => string;
+          reset: (widgetId?: string) => void;
+        };
+      };
+
+      if (win.turnstile && turnstileRef.current && !turnstileRef.current.hasChildNodes()) {
+        win.turnstile.render(turnstileRef.current, {
+          sitekey: turnstileSiteKey,
+          callback: (token: string) => setTurnstileToken(token),
+          "expired-callback": () => setTurnstileToken(""),
+          theme: "auto",
+        });
+        clearInterval(interval);
+      }
+    }, 200);
+
+    return () => clearInterval(interval);
+  }, [turnstileSiteKey]);
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -115,28 +161,86 @@ export function ContactSection({ standalone = true }: ContactSectionProps) {
     const form = e.currentTarget;
     const formData = new FormData(form);
 
+    // 1. Anti-Bot Honeypot verification
+    const honeypot = formData.get("_gotcha");
+    if (honeypot) {
+      // Silently discard bot submission
+      setStatus("success");
+      form.reset();
+      return;
+    }
+
+    // 2. Client-side Rate Limiting (prevent rapid spam abuse)
+    const lastSubmitTime = sessionStorage.getItem("contact_last_submit");
+    const now = Date.now();
+    if (lastSubmitTime && now - parseInt(lastSubmitTime, 10) < 20000) {
+      setErrorMessage("Please wait 20 seconds before submitting another inquiry.");
+      setStatus("error");
+      return;
+    }
+
+    // 3. Input Sanitization & Validation
+    const name = (formData.get("name") as string)?.trim() || "";
+    const email = (formData.get("email") as string)?.trim() || "";
+    const subject = (formData.get("subject") as string)?.trim() || "";
+    const message = (formData.get("message") as string)?.trim() || "";
+
+    const emailRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)+$/;
+    if (!name || name.length > 100) {
+      setErrorMessage("Please enter a valid name (maximum 100 characters).");
+      setStatus("error");
+      return;
+    }
+    if (!email || !emailRegex.test(email) || email.length > 120) {
+      setErrorMessage("Please enter a valid email address.");
+      setStatus("error");
+      return;
+    }
+    if (!subject || subject.length > 150) {
+      setErrorMessage("Please enter a valid subject line (maximum 150 characters).");
+      setStatus("error");
+      return;
+    }
+    if (!message || message.length > 3000) {
+      setErrorMessage("Please enter a valid message (maximum 3000 characters).");
+      setStatus("error");
+      return;
+    }
+
     setStatus("submitting");
     setErrorMessage("");
 
     try {
-      const response = await fetch("https://formspree.io/f/xvoeggne", {
+      const payload = {
+        name,
+        email,
+        subject,
+        message,
+        _gotcha: honeypot || "",
+        turnstileToken: turnstileToken || "",
+      };
+
+      const response = await fetch("/api/contact", {
         method: "POST",
-        body: formData,
         headers: {
-          Accept: "application/json",
+          "Content-Type": "application/json",
         },
+        body: JSON.stringify(payload),
       });
 
-      if (response.ok) {
+      const data = await response.json().catch(() => ({}));
+
+      if (response.ok && data.success) {
+        sessionStorage.setItem("contact_last_submit", now.toString());
         setStatus("success");
+        setTurnstileToken("");
         form.reset();
       } else {
-        const data = await response.json().catch(() => ({}));
-        setErrorMessage(data.error || "Failed to send message. Please try again or reach out directly via email.");
+        setErrorMessage(data.error || "Failed to deliver message. Please try again or reach out directly.");
         setStatus("error");
       }
     } catch {
-      setErrorMessage("Network error. Please reach out directly to tushar.basak9936@gmail.com.");
+      setErrorMessage("Network error. Please check your connection or reach out directly.");
       setStatus("error");
     }
   };
@@ -160,7 +264,7 @@ export function ContactSection({ standalone = true }: ContactSectionProps) {
           {/* Email Card */}
           <a
             href={`mailto:${personalInfo.email}`}
-            className="contact-info-card group flex items-start gap-4 p-5 rounded-2xl bg-card border border-border hover:border-[var(--skin-color)]/50 hover:shadow-lg transition-all duration-200"
+            className="contact-info-card group flex items-start gap-4 p-5 rounded-2xl bg-card border border-border hover:border-[var(--skin-color)]/50 hover:shadow-lg hover:-translate-y-1 transition-all duration-300"
           >
             <div className="w-12 h-12 rounded-xl bg-[var(--skin-color)]/10 text-[var(--skin-color)] flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform">
               <FontAwesomeIcon icon={faEnvelope} className="h-5 w-5" />
@@ -178,7 +282,7 @@ export function ContactSection({ standalone = true }: ContactSectionProps) {
             href={personalInfo.whatsapp}
             target="_blank"
             rel="noopener noreferrer"
-            className="contact-info-card group flex items-start gap-4 p-5 rounded-2xl bg-card border border-border hover:border-emerald-500/50 hover:shadow-lg transition-all duration-200"
+            className="contact-info-card group flex items-start gap-4 p-5 rounded-2xl bg-card border border-border hover:border-emerald-500/50 hover:shadow-lg hover:-translate-y-1 transition-all duration-300"
           >
             <div className="w-12 h-12 rounded-xl bg-emerald-500/10 text-emerald-500 flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform">
               <FontAwesomeIcon icon={faWhatsapp} className="h-5 w-5" />
@@ -192,13 +296,13 @@ export function ContactSection({ standalone = true }: ContactSectionProps) {
           </a>
 
           {/* Location Card */}
-          <div className="contact-info-card flex items-start gap-4 p-5 rounded-2xl bg-card border border-border">
-            <div className="w-12 h-12 rounded-xl bg-blue-500/10 text-blue-500 flex items-center justify-center shrink-0">
+          <div className="contact-info-card group flex items-start gap-4 p-5 rounded-2xl bg-card border border-border hover:border-blue-500/50 hover:shadow-lg hover:-translate-y-1 transition-all duration-300">
+            <div className="w-12 h-12 rounded-xl bg-blue-500/10 text-blue-500 flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform">
               <FontAwesomeIcon icon={faLocationDot} className="h-5 w-5" />
             </div>
             <div>
               <span className="text-xs uppercase font-semibold text-muted-foreground tracking-wider">Location</span>
-              <p className="text-sm sm:text-base font-medium text-foreground">
+              <p className="text-sm sm:text-base font-medium text-foreground group-hover:text-blue-500 transition-colors">
                 {personalInfo.location}
               </p>
             </div>
@@ -206,7 +310,7 @@ export function ContactSection({ standalone = true }: ContactSectionProps) {
         </div>
 
         {/* Contact Form (Col 8) */}
-        <div className="contact-form-container lg:col-span-8 p-6 sm:p-8 rounded-2xl bg-card border border-border shadow-sm">
+        <div className="contact-form-container lg:col-span-8 p-6 sm:p-8 rounded-2xl bg-card border border-border shadow-sm hover:border-[var(--skin-color)]/40 hover:shadow-lg transition-all duration-300">
           {status === "success" ? (
             <div className="py-12 flex flex-col items-center justify-center text-center space-y-4">
               <div className="w-16 h-16 rounded-full bg-emerald-500/10 text-emerald-500 flex items-center justify-center">
@@ -231,6 +335,16 @@ export function ContactSection({ standalone = true }: ContactSectionProps) {
               onSubmit={handleSubmit}
               className="space-y-5"
             >
+              {/* Anti-Bot Honeypot field (hidden from legitimate users) */}
+              <input
+                type="text"
+                name="_gotcha"
+                tabIndex={-1}
+                autoComplete="off"
+                className="hidden"
+                aria-hidden="true"
+              />
+
               {status === "error" && (
                 <div className="p-4 rounded-xl bg-destructive/10 border border-destructive/20 text-destructive text-sm flex items-center gap-3">
                   <FontAwesomeIcon icon={faExclamationCircle} className="h-4 w-4 shrink-0" />
@@ -248,6 +362,8 @@ export function ContactSection({ standalone = true }: ContactSectionProps) {
                     type="text"
                     name="name"
                     required
+                    maxLength={100}
+                    autoComplete="name"
                     placeholder="John Doe"
                     className="w-full px-4 py-3 rounded-xl bg-background dark:bg-card/60 border-2 border-border hover:border-border/90 focus:border-[var(--skin-color)] focus:ring-2 focus:ring-[var(--skin-color)]/20 outline-none text-foreground placeholder:text-muted-foreground/60 transition-all text-sm shadow-xs"
                   />
@@ -261,6 +377,8 @@ export function ContactSection({ standalone = true }: ContactSectionProps) {
                     type="email"
                     name="email"
                     required
+                    maxLength={120}
+                    autoComplete="email"
                     placeholder="john@example.com"
                     className="w-full px-4 py-3 rounded-xl bg-background dark:bg-card/60 border-2 border-border hover:border-border/90 focus:border-[var(--skin-color)] focus:ring-2 focus:ring-[var(--skin-color)]/20 outline-none text-foreground placeholder:text-muted-foreground/60 transition-all text-sm shadow-xs"
                   />
@@ -276,6 +394,7 @@ export function ContactSection({ standalone = true }: ContactSectionProps) {
                   type="text"
                   name="subject"
                   required
+                  maxLength={150}
                   placeholder="Security Assessment / Web Consultation"
                   className="w-full px-4 py-3 rounded-xl bg-background dark:bg-card/60 border-2 border-border hover:border-border/90 focus:border-[var(--skin-color)] focus:ring-2 focus:ring-[var(--skin-color)]/20 outline-none text-foreground placeholder:text-muted-foreground/60 transition-all text-sm shadow-xs"
                 />
@@ -289,11 +408,16 @@ export function ContactSection({ standalone = true }: ContactSectionProps) {
                   id="contact-message"
                   name="message"
                   required
+                  maxLength={3000}
                   rows={5}
                   placeholder="Tell me about your project, timeline, and requirements..."
                   className="w-full px-4 py-3 rounded-xl bg-background dark:bg-card/60 border-2 border-border hover:border-border/90 focus:border-[var(--skin-color)] focus:ring-2 focus:ring-[var(--skin-color)]/20 outline-none text-foreground placeholder:text-muted-foreground/60 transition-all text-sm resize-none shadow-xs"
                 />
               </div>
+
+              {turnstileSiteKey && (
+                <div ref={turnstileRef} className="my-3 min-h-[65px]" />
+              )}
 
               <div>
                 <button
@@ -317,8 +441,8 @@ export function ContactSection({ standalone = true }: ContactSectionProps) {
   }
 
   return (
-    <section id="contact" className="w-full py-16 px-4 sm:px-8 md:px-12 lg:px-20 xl:px-28">
-      <div className="w-full max-w-7xl 2xl:max-w-[1400px] mx-auto">
+    <section id="contact" className="w-full py-16 px-4 sm:px-8 md:px-12 lg:px-16 xl:px-20">
+      <div className="w-full max-w-[1800px] 2xl:max-w-[1920px] mx-auto">
         {content}
       </div>
     </section>

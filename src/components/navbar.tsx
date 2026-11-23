@@ -142,7 +142,7 @@ export function Navbar() {
           : "bg-background/60 dark:bg-[var(--bg-black-900)]/60 backdrop-blur-sm border-b border-transparent py-4 sm:py-5"
       }`}
     >
-      <div className="w-full px-4 sm:px-8 md:px-12 lg:px-16 flex items-center justify-between">
+      <div className="w-full max-w-[1800px] 2xl:max-w-[1920px] mx-auto px-4 sm:px-8 md:px-12 lg:px-16 xl:px-20 flex items-center justify-between">
         {/* Left: Logo & Secured Badge */}
         <div className="flex items-center gap-3 sm:gap-4">
           <Link

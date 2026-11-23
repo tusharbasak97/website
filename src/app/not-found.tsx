@@ -100,8 +100,12 @@ export default function NotFound() {
 
     // Main render loop
     const render = () => {
+      const isDark = document.documentElement.classList.contains("dark");
+
       // Semi-transparent fade for matrix rain trails
-      ctx.fillStyle = "oklch(0.12 0.015 260 / 0.12)";
+      ctx.fillStyle = isDark
+        ? "oklch(0.12 0.015 260 / 0.14)"
+        : "oklch(0.985 0.003 260 / 0.22)";
       ctx.fillRect(0, 0, width, height);
 
       // Render Matrix characters
@@ -111,15 +115,15 @@ export default function NotFound() {
         const x = i * fontSize;
         const y = drops[i] * fontSize;
 
-        // Leading char is bright/white, trail is matrix green
+        // Leading char is bright/accent, trail is matrix green
         if (Math.random() > 0.92) {
-          ctx.fillStyle = "oklch(1 0 0)";
-          ctx.shadowBlur = 8;
-          ctx.shadowColor = "oklch(0.86 0.28 142)";
+          ctx.fillStyle = isDark ? "oklch(1 0 0)" : "oklch(0.20 0.15 142)";
+          ctx.shadowBlur = isDark ? 8 : 2;
+          ctx.shadowColor = isDark ? "oklch(0.86 0.28 142)" : "oklch(0.45 0.18 142)";
         } else {
-          ctx.fillStyle = "oklch(0.86 0.28 142)";
-          ctx.shadowBlur = 4;
-          ctx.shadowColor = "oklch(0.80 0.26 142)";
+          ctx.fillStyle = isDark ? "oklch(0.86 0.28 142)" : "oklch(0.45 0.18 142)";
+          ctx.shadowBlur = isDark ? 4 : 0;
+          ctx.shadowColor = isDark ? "oklch(0.80 0.26 142)" : "transparent";
         }
 
         ctx.fillText(char, x, y);
@@ -242,37 +246,37 @@ export default function NotFound() {
   }, []);
 
   return (
-    <div className="dark relative min-h-screen w-full overflow-hidden bg-[oklch(0.12_0.015_260)] text-[oklch(0.96_0.005_260)] font-mono selection:bg-[var(--skin-color,oklch(0.70_0.19_55))] selection:text-[oklch(1_0_0)] flex items-center justify-center p-4 sm:p-6">
+    <div className="relative min-h-screen w-full overflow-hidden bg-background text-foreground font-mono selection:bg-[var(--skin-color)] selection:text-white flex items-center justify-center p-4 sm:p-6 transition-colors duration-300">
       {/* Custom Cursor active on this page */}
       <CustomCursor />
 
       {/* Matrix Canvas Background */}
       <canvas
         ref={canvasRef}
-        className="fixed inset-0 pointer-events-none z-0 opacity-40"
+        className="fixed inset-0 pointer-events-none z-0 opacity-40 dark:opacity-40"
       />
 
       {/* CRT Scanline & Vignette Effect */}
-      <div className="scanlines-overlay fixed inset-0 pointer-events-none z-10" />
-      <div className="fixed inset-0 pointer-events-none z-10 bg-[radial-gradient(ellipse_at_center,transparent_30%,oklch(0_0_0_/_0.8)_100%)]" />
+      <div className="scanlines-overlay fixed inset-0 pointer-events-none z-10 opacity-25 dark:opacity-80" />
+      <div className="fixed inset-0 pointer-events-none z-10 bg-[radial-gradient(ellipse_at_center,transparent_40%,oklch(0_0_0_/_0.06)_100%)] dark:bg-[radial-gradient(ellipse_at_center,transparent_30%,oklch(0_0_0_/_0.8)_100%)]" />
 
       {/* Hacker Terminal Card */}
       <div
         ref={containerRef}
-        className="relative z-20 w-full max-w-2xl bg-[oklch(0.14_0.015_260)]/90 backdrop-blur-md border border-[var(--skin-color,oklch(0.70_0.19_55))]/40 rounded-2xl shadow-[0_0_40px_oklch(0.70_0.19_55_/_0.25)] overflow-hidden"
+        className="relative z-20 w-full max-w-2xl bg-card/90 dark:bg-card/90 backdrop-blur-md border border-border dark:border-[var(--skin-color)]/40 rounded-2xl shadow-xl dark:shadow-[0_0_40px_oklch(0.70_0.19_55_/_0.25)] overflow-hidden"
       >
         {/* Terminal Header Bar */}
-        <div className="flex items-center justify-between px-4 py-3 bg-[oklch(0.17_0.015_260)] border-b border-[oklch(0.27_0.015_260)]">
+        <div className="flex items-center justify-between px-4 py-3 bg-muted/60 dark:bg-muted/40 border-b border-border">
           <div className="flex items-center gap-2">
             <span className="w-3 h-3 rounded-full bg-red-500/80 inline-block" />
             <span className="w-3 h-3 rounded-full bg-yellow-500/80 inline-block" />
             <span className="w-3 h-3 rounded-full bg-green-500/80 inline-block" />
-            <span className="ml-3 text-xs text-gray-400 flex items-center gap-1.5 font-mono">
-              <FontAwesomeIcon icon={faTerminal} className="w-3 h-3 text-[var(--skin-color,oklch(0.70_0.19_55))]" />
+            <span className="ml-3 text-xs text-muted-foreground flex items-center gap-1.5 font-mono">
+              <FontAwesomeIcon icon={faTerminal} className="w-3 h-3 text-[var(--skin-color)]" />
               security_audit_404.sh
             </span>
           </div>
-          <span className="text-[11px] font-semibold tracking-wider text-red-400 bg-red-500/10 px-2 py-0.5 rounded border border-red-500/30">
+          <span className="text-[11px] font-semibold tracking-wider text-rose-600 dark:text-red-400 bg-rose-500/10 px-2 py-0.5 rounded border border-rose-500/30">
             HTTP 404
           </span>
         </div>
@@ -282,9 +286,9 @@ export default function NotFound() {
           {/* Secured Badge with Shield Icon */}
           <div
             ref={badgeRef}
-            className="mb-5 inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-emerald-950/60 border border-emerald-500/50 text-emerald-400 text-xs sm:text-sm font-semibold tracking-wider shadow-[0_0_15px_oklch(0.72_0.19_155_/_0.2)]"
+            className="mb-5 inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-emerald-500/10 border border-emerald-500/40 text-emerald-600 dark:text-emerald-400 text-xs sm:text-sm font-semibold tracking-wider shadow-sm"
           >
-            <FontAwesomeIcon icon={faShieldHalved} className="w-4 h-4 text-emerald-400" />
+            <FontAwesomeIcon icon={faShieldHalved} className="w-4 h-4 text-emerald-500" />
             <span>SECURED • ZERO-TRUST PERIMETER ACTIVE</span>
           </div>
 
@@ -292,7 +296,7 @@ export default function NotFound() {
           <h1
             ref={glitchRef}
             data-text="404"
-            className="glitch-text text-8xl sm:text-9xl font-black font-mono tracking-widest text-[var(--skin-color,oklch(0.70_0.19_55))] select-none my-2 drop-shadow-[0_0_35px_oklch(0.70_0.19_55_/_0.4)]"
+            className="glitch-text text-8xl sm:text-9xl font-black font-mono tracking-widest text-[var(--skin-color)] select-none my-2 drop-shadow-[0_0_35px_oklch(0.70_0.19_55_/_0.3)]"
           >
             404
           </h1>
@@ -300,16 +304,16 @@ export default function NotFound() {
           {/* Page Not Found Heading */}
           <h2
             ref={headingRef}
-            className="mt-3 text-2xl sm:text-3xl font-bold tracking-tight text-white flex items-center justify-center gap-2"
+            className="mt-3 text-2xl sm:text-3xl font-bold tracking-tight text-foreground flex items-center justify-center gap-2"
           >
-            <FontAwesomeIcon icon={faTriangleExclamation} className="w-6 h-6 text-[var(--skin-color,oklch(0.70_0.19_55))]" />
+            <FontAwesomeIcon icon={faTriangleExclamation} className="w-6 h-6 text-[var(--skin-color)]" />
             Page Not Found
           </h2>
 
           {/* Description */}
           <p
             ref={descRef}
-            className="mt-3 max-w-md text-sm sm:text-base text-gray-300 font-sans"
+            className="mt-3 max-w-md text-sm sm:text-base text-muted-foreground font-sans"
           >
             The page you&apos;re looking for doesn&apos;t exist or has been moved.
           </p>
@@ -317,19 +321,19 @@ export default function NotFound() {
           {/* Terminal Diagnostics Log Box */}
           <div
             ref={logsRef}
-            className="w-full mt-6 p-4 rounded-xl bg-[oklch(0.12_0.015_260)]/80 border border-gray-800 text-left font-mono text-xs text-gray-400 space-y-1.5 overflow-hidden"
+            className="w-full mt-6 p-4 rounded-xl bg-muted/40 border border-border text-left font-mono text-xs text-muted-foreground space-y-1.5 overflow-hidden"
           >
-            <div className="flex items-center justify-between text-gray-500 pb-1 border-b border-gray-800 text-[10px] uppercase tracking-wider">
+            <div className="flex items-center justify-between text-muted-foreground/80 pb-1 border-b border-border text-[10px] uppercase tracking-wider">
               <span>Security Event Log</span>
-              <span className="text-emerald-400">IDS: ONLINE</span>
+              <span className="text-emerald-600 dark:text-emerald-400 font-semibold">IDS: ONLINE</span>
             </div>
-            <p className="text-red-400">
+            <p className="text-rose-600 dark:text-red-400">
               [!] ALERT: ROUTE_NOT_FOUND :: Access verification failed.
             </p>
-            <p className="text-emerald-400">
+            <p className="text-emerald-600 dark:text-emerald-400">
               [&check;] FIREWALL: Intrusion detection perimeter intact.
             </p>
-            <p className="text-[var(--skin-color,oklch(0.70_0.19_55))]">
+            <p className="text-[var(--skin-color)]">
               [&gt;] SYSTEM: Automated redirect protocol armed.
             </p>
           </div>
@@ -339,14 +343,14 @@ export default function NotFound() {
             ref={countdownRef}
             className="mt-6 flex flex-col items-center gap-2 w-full max-w-xs"
           >
-            <div className="flex items-center justify-between w-full text-xs text-gray-400">
+            <div className="flex items-center justify-between w-full text-xs text-muted-foreground">
               <span className="font-mono">
-                Redirecting in <span className="font-bold text-[var(--skin-color,oklch(0.70_0.19_55))] text-sm">{timeLeft}</span>s...
+                Redirecting in <span className="font-bold text-[var(--skin-color)] text-sm">{timeLeft}</span>s...
               </span>
               <button
                 type="button"
                 onClick={() => setIsRedirectPaused((prev) => !prev)}
-                className="text-[11px] text-gray-400 hover:text-white flex items-center gap-1 transition-colors px-2 py-0.5 rounded bg-gray-800/60 hover:bg-gray-800"
+                className="text-[11px] text-muted-foreground hover:text-foreground flex items-center gap-1 transition-colors px-2 py-0.5 rounded bg-muted hover:bg-muted/80 border border-border"
               >
                 <FontAwesomeIcon icon={isRedirectPaused ? faPlay : faPause} className="w-2.5 h-2.5" />
                 {isRedirectPaused ? "Resume" : "Pause"}
@@ -354,9 +358,9 @@ export default function NotFound() {
             </div>
 
             {/* Countdown Progress Bar */}
-            <div className="w-full h-1.5 bg-gray-800 rounded-full overflow-hidden">
+            <div className="w-full h-1.5 bg-muted rounded-full overflow-hidden border border-border/40">
               <div
-                className="h-full bg-gradient-to-r from-[var(--skin-color,oklch(0.70_0.19_55))] to-[oklch(0.62_0.22_38)] transition-all duration-1000 ease-linear rounded-full"
+                className="h-full bg-gradient-to-r from-[var(--skin-color)] to-[var(--skin-color-end)] transition-all duration-1000 ease-linear rounded-full"
                 style={{ width: `${(timeLeft / 30) * 100}%` }}
               />
             </div>
@@ -366,7 +370,7 @@ export default function NotFound() {
           <div ref={buttonRef} className="mt-7">
             <Link
               href="/"
-              className="pulse-glow relative inline-flex items-center gap-3 px-8 py-3.5 rounded-full bg-gradient-to-r from-[var(--skin-color,oklch(0.70_0.19_55))] to-[oklch(0.62_0.22_38)] text-white font-bold text-sm tracking-wide uppercase shadow-[0_0_20px_oklch(0.70_0.19_55_/_0.5)] hover:shadow-[0_0_35px_oklch(0.70_0.19_55_/_0.8)] hover:scale-105 active:scale-95 transition-all duration-300"
+              className="pulse-glow relative inline-flex items-center gap-3 px-8 py-3.5 rounded-full bg-gradient-to-r from-[var(--skin-color)] to-[var(--skin-color-end)] !text-white font-bold text-sm tracking-wide uppercase shadow-[0_0_20px_oklch(0.70_0.19_55_/_0.4)] hover:shadow-[0_0_35px_oklch(0.70_0.19_55_/_0.7)] hover:scale-105 active:scale-95 transition-all duration-300"
             >
               <FontAwesomeIcon icon={faHouse} className="w-4 h-4" />
               <span>Return Home</span>

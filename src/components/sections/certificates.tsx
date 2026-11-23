@@ -110,10 +110,46 @@ export function CertificatesSection() {
           }
         );
       }
+
+      // 3. Certificates Cards Entrance
+      const certCards = sectionRef.current?.querySelectorAll(".cert-card");
+      if (certCards && certCards.length > 0) {
+        gsap.fromTo(
+          certCards,
+          { y: 35, opacity: 0, scale: 0.96 },
+          {
+            y: 0,
+            opacity: 1,
+            scale: 1,
+            duration: 0.65,
+            stagger: 0.08,
+            ease: "power2.out",
+            scrollTrigger: {
+              trigger: gridRef.current,
+              start: "top 85%",
+              toggleActions: "play none none none",
+            },
+          }
+        );
+      }
     }, sectionRef);
 
     return () => ctx.revert();
   }, []);
+
+  // Animate cards smoothly when switching filter tabs
+  useEffect(() => {
+    if (gridRef.current) {
+      const cards = gridRef.current.querySelectorAll(".cert-card");
+      if (cards && cards.length > 0) {
+        gsap.fromTo(
+          cards,
+          { opacity: 0, y: 15, scale: 0.98 },
+          { opacity: 1, y: 0, scale: 1, duration: 0.4, stagger: 0.05, ease: "power2.out" }
+        );
+      }
+    }
+  }, [activeFilter]);
 
   // Compute real-time status and expiry details after mount to prevent SSR hydration mismatch
   useEffect(() => {
@@ -216,9 +252,9 @@ export function CertificatesSection() {
       id="certificates"
       role="region"
       aria-label="Professional Certifications"
-      className="w-full py-20 px-4 sm:px-8 md:px-12 lg:px-20 xl:px-28"
+      className="w-full py-20 px-4 sm:px-8 md:px-12 lg:px-16 xl:px-20"
     >
-      <div className="w-full max-w-7xl 2xl:max-w-[1400px] mx-auto">
+      <div className="w-full max-w-[1800px] 2xl:max-w-[1920px] mx-auto">
         {/* Section Title - NO DOT */}
         <div className="mb-12 text-left">
         <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight text-foreground flex items-center gap-4">
@@ -291,7 +327,7 @@ export function CertificatesSection() {
           return (
             <article
               key={cert.id}
-              className="cert-card flex flex-col justify-between p-6 rounded-2xl bg-card border border-border hover:border-[var(--skin-color)]/50 hover:shadow-xl transition-all duration-300 group"
+              className="cert-card flex flex-col justify-between p-6 rounded-2xl bg-card border border-border hover:border-[var(--skin-color)]/50 hover:shadow-xl hover:-translate-y-1 transition-all duration-300 group"
             >
               <div>
                 {/* Header: Icon & Status Badge */}
