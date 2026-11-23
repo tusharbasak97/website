@@ -196,14 +196,14 @@ body {
 
 @layer base {
   html, body {
-    scrollbar-width: thin;
-    scrollbar-color: var(--skin-color) transparent;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
   }
   * {
     border-color: var(--border);
     outline-color: color-mix(in oklch, var(--ring) 50%, transparent);
-    scrollbar-width: thin;
-    scrollbar-color: var(--skin-color) transparent;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
   }
   body {
     background-color: var(--background);
@@ -236,11 +236,12 @@ body {
 }
 
 /* ==========================================================================
-   DYNAMIC THEME-ADAPTIVE SCROLLBAR (MODERN WEB SPEC & WEBKIT)
+   CLEAN BORDERLESS SCROLLBAR (HIDE OBTRUSIVE RIGHT-SIDE SCROLLBAR STRIP)
    ========================================================================== */
 ::-webkit-scrollbar {
-  width: 9px;
-  height: 9px;
+  display: none;
+  width: 0px;
+  height: 0px;
 }
 
 ::-webkit-scrollbar-track {
@@ -248,19 +249,6 @@ body {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: var(--skin-color);
-  border-radius: 9999px;
-  border: 2px solid transparent;
-  background-clip: content-box;
-  transition: background 0.3s ease;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: var(--skin-color-end);
-  background-clip: content-box;
-}
-
-::-webkit-scrollbar-corner {
   background: transparent;
 }
 
