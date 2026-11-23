@@ -53,6 +53,9 @@ export function CertificatesSection() {
 
   // GSAP ScrollTrigger for Certificates entrance
   useEffect(() => {
+    const section = sectionRef.current;
+    if (!section) return;
+
     const isMobile = typeof window !== "undefined" && window.innerWidth < 768;
     const scrollStart = isMobile ? "top 96%" : "top 85%";
     const animDuration = isMobile ? 0.35 : 0.65;
@@ -61,8 +64,8 @@ export function CertificatesSection() {
 
     const ctx = gsap.context(() => {
       // 1. Title & Line Reveal
-      const title = sectionRef.current?.querySelector(".cert-title-text");
-      const line = sectionRef.current?.querySelector(".cert-title-line");
+      const title = section.querySelector(".cert-title-text");
+      const line = section.querySelector(".cert-title-line");
       if (title && line) {
         gsap.fromTo(
           title,
@@ -75,8 +78,8 @@ export function CertificatesSection() {
             scrollTrigger: {
               trigger: title,
               start: "top 96%",
+              toggleActions: "play none none none",
               fastScrollEnd: true,
-              once: true,
             },
           }
         );
@@ -91,15 +94,16 @@ export function CertificatesSection() {
             scrollTrigger: {
               trigger: line,
               start: "top 96%",
+              toggleActions: "play none none none",
               fastScrollEnd: true,
-              once: true,
             },
           }
         );
       }
 
       // 2. Filter buttons entrance
-      const filterBtns = sectionRef.current?.querySelectorAll(".cert-filter-btn");
+      const filterBtns = section.querySelectorAll(".cert-filter-btn");
+      const filtersGroup = section.querySelector(".cert-filters-group") || section;
       if (filterBtns && filterBtns.length > 0) {
         gsap.fromTo(
           filterBtns,
@@ -111,17 +115,18 @@ export function CertificatesSection() {
             stagger: cardStagger,
             ease: "power2.out",
             scrollTrigger: {
-              trigger: ".cert-filters-group",
+              trigger: filtersGroup,
               start: scrollStart,
+              toggleActions: "play none none none",
               fastScrollEnd: true,
-              once: true,
             },
           }
         );
       }
 
       // 3. Certificates Cards Entrance
-      const certCards = sectionRef.current?.querySelectorAll(".cert-card");
+      const certCards = section.querySelectorAll(".cert-card");
+      const grid = gridRef.current || section;
       if (certCards && certCards.length > 0) {
         gsap.fromTo(
           certCards,
@@ -134,15 +139,15 @@ export function CertificatesSection() {
             stagger: cardStagger,
             ease: "power2.out",
             scrollTrigger: {
-              trigger: gridRef.current,
+              trigger: grid,
               start: scrollStart,
+              toggleActions: "play none none none",
               fastScrollEnd: true,
-              once: true,
             },
           }
         );
       }
-    }, sectionRef);
+    });
 
     return () => ctx.revert();
   }, []);

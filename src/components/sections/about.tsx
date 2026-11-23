@@ -68,6 +68,9 @@ export function AboutSection({ includeContact = false }: AboutSectionProps) {
 
   // GSAP ScrollTrigger for all About section components
   useEffect(() => {
+    const section = sectionRef.current;
+    if (!section) return;
+
     const isMobile = typeof window !== "undefined" && window.innerWidth < 768;
     const scrollStart = isMobile ? "top 96%" : "top 88%";
     const animDuration = isMobile ? 0.35 : 0.7;
@@ -76,8 +79,8 @@ export function AboutSection({ includeContact = false }: AboutSectionProps) {
 
     const ctx = gsap.context(() => {
       // 1. Section Title & Underline Bar Reveal
-      const title = sectionRef.current?.querySelector(".about-title-text");
-      const line = sectionRef.current?.querySelector(".about-title-line");
+      const title = section.querySelector(".about-title-text");
+      const line = section.querySelector(".about-title-line");
       if (title && line) {
         gsap.fromTo(
           title,
@@ -90,8 +93,8 @@ export function AboutSection({ includeContact = false }: AboutSectionProps) {
             scrollTrigger: {
               trigger: title,
               start: "top 96%",
+              toggleActions: "play none none none",
               fastScrollEnd: true,
-              once: true,
             },
           }
         );
@@ -106,15 +109,16 @@ export function AboutSection({ includeContact = false }: AboutSectionProps) {
             scrollTrigger: {
               trigger: line,
               start: "top 96%",
+              toggleActions: "play none none none",
               fastScrollEnd: true,
-              once: true,
             },
           }
         );
       }
 
       // 2. Bio & Personal Info Cards Staggered Entrance
-      const bioElements = sectionRef.current?.querySelectorAll(".about-bio-item");
+      const bioElements = section.querySelectorAll(".about-bio-item");
+      const introGrid = section.querySelector(".about-intro-grid") || section;
       if (bioElements && bioElements.length > 0) {
         gsap.fromTo(
           bioElements,
@@ -126,17 +130,18 @@ export function AboutSection({ includeContact = false }: AboutSectionProps) {
             stagger: cardStagger,
             ease: "power3.out",
             scrollTrigger: {
-              trigger: ".about-intro-grid",
+              trigger: introGrid,
               start: scrollStart,
+              toggleActions: "play none none none",
               fastScrollEnd: true,
-              once: true,
             },
           }
         );
       }
 
       // 3. Technical Proficiencies Cards Entrance & Progress Bars
-      const skillCards = gsap.utils.toArray<HTMLElement>(".skill-card-item");
+      const skillCards = section.querySelectorAll<HTMLElement>(".skill-card-item");
+      const skillsContainer = skillsContainerRef.current || section;
       if (skillCards && skillCards.length > 0) {
         gsap.fromTo(
           skillCards,
@@ -148,10 +153,10 @@ export function AboutSection({ includeContact = false }: AboutSectionProps) {
             stagger: isMobile ? 0.04 : 0.1,
             ease: "power2.out",
             scrollTrigger: {
-              trigger: skillsContainerRef.current,
+              trigger: skillsContainer,
               start: scrollStart,
+              toggleActions: "play none none none",
               fastScrollEnd: true,
-              once: true,
             },
           }
         );
@@ -171,8 +176,8 @@ export function AboutSection({ includeContact = false }: AboutSectionProps) {
           scrollTrigger: {
             trigger: card,
             start: isMobile ? "top 96%" : "top 88%",
+            toggleActions: "play none none none",
             fastScrollEnd: true,
-            once: true,
           },
         });
 
@@ -221,7 +226,8 @@ export function AboutSection({ includeContact = false }: AboutSectionProps) {
       });
 
       // 4. Education & Experience Timeline Containers & Items
-      const timelineContainers = sectionRef.current?.querySelectorAll(".timeline-container-card");
+      const timelineContainers = section.querySelectorAll(".timeline-container-card");
+      const timelinesContainer = section.querySelector(".timelines-container") || section;
       if (timelineContainers && timelineContainers.length > 0) {
         gsap.fromTo(
           timelineContainers,
@@ -233,16 +239,16 @@ export function AboutSection({ includeContact = false }: AboutSectionProps) {
             stagger: cardStagger,
             ease: "power2.out",
             scrollTrigger: {
-              trigger: ".timelines-container",
+              trigger: timelinesContainer,
               start: scrollStart,
+              toggleActions: "play none none none",
               fastScrollEnd: true,
-              once: true,
             },
           }
         );
       }
 
-      const timelineCards = sectionRef.current?.querySelectorAll(".timeline-card-item");
+      const timelineCards = section.querySelectorAll(".timeline-card-item");
       if (timelineCards && timelineCards.length > 0) {
         gsap.fromTo(
           timelineCards,
@@ -255,15 +261,15 @@ export function AboutSection({ includeContact = false }: AboutSectionProps) {
             stagger: cardStagger,
             ease: "power2.out",
             scrollTrigger: {
-              trigger: ".timelines-container",
+              trigger: timelinesContainer,
               start: isMobile ? "top 95%" : "top 82%",
+              toggleActions: "play none none none",
               fastScrollEnd: true,
-              once: true,
             },
           }
         );
       }
-    }, sectionRef);
+    });
 
     return () => ctx.revert();
   }, []);

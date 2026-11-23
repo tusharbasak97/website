@@ -74,6 +74,9 @@ export function ContactSection({ standalone = true }: ContactSectionProps) {
   }, [turnstileSiteKey]);
 
   useEffect(() => {
+    const section = sectionRef.current;
+    if (!section) return;
+
     const isMobile = typeof window !== "undefined" && window.innerWidth < 768;
     const scrollStart = isMobile ? "top 96%" : "top 85%";
     const animDuration = isMobile ? 0.35 : 0.7;
@@ -82,8 +85,8 @@ export function ContactSection({ standalone = true }: ContactSectionProps) {
 
     const ctx = gsap.context(() => {
       // 1. Title & Underline Bar Reveal
-      const title = sectionRef.current?.querySelector(".contact-title-text");
-      const line = sectionRef.current?.querySelector(".contact-title-line");
+      const title = section.querySelector(".contact-title-text");
+      const line = section.querySelector(".contact-title-line");
       if (title && line) {
         gsap.fromTo(
           title,
@@ -96,8 +99,8 @@ export function ContactSection({ standalone = true }: ContactSectionProps) {
             scrollTrigger: {
               trigger: title,
               start: "top 96%",
+              toggleActions: "play none none none",
               fastScrollEnd: true,
-              once: true,
             },
           }
         );
@@ -112,15 +115,16 @@ export function ContactSection({ standalone = true }: ContactSectionProps) {
             scrollTrigger: {
               trigger: line,
               start: "top 96%",
+              toggleActions: "play none none none",
               fastScrollEnd: true,
-              once: true,
             },
           }
         );
       }
 
       // 2. Info Cards Staggered Reveal from Left
-      const infoCards = sectionRef.current?.querySelectorAll(".contact-info-card");
+      const infoCards = section.querySelectorAll(".contact-info-card");
+      const gridContainer = section.querySelector(".contact-grid-container") || section;
       if (infoCards && infoCards.length > 0) {
         gsap.fromTo(
           infoCards,
@@ -133,17 +137,17 @@ export function ContactSection({ standalone = true }: ContactSectionProps) {
             stagger: cardStagger,
             ease: "power2.out",
             scrollTrigger: {
-              trigger: ".contact-grid-container",
+              trigger: gridContainer,
               start: scrollStart,
+              toggleActions: "play none none none",
               fastScrollEnd: true,
-              once: true,
             },
           }
         );
       }
 
       // 3. Form Container Reveal from Right
-      const formCard = sectionRef.current?.querySelector(".contact-form-container");
+      const formCard = section.querySelector(".contact-form-container");
       if (formCard) {
         gsap.fromTo(
           formCard,
@@ -157,13 +161,13 @@ export function ContactSection({ standalone = true }: ContactSectionProps) {
             scrollTrigger: {
               trigger: formCard,
               start: scrollStart,
+              toggleActions: "play none none none",
               fastScrollEnd: true,
-              once: true,
             },
           }
         );
       }
-    }, sectionRef);
+    });
 
     return () => ctx.revert();
   }, []);

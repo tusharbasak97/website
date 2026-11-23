@@ -38,10 +38,13 @@ export function Footer() {
   );
 
   useEffect(() => {
-    if (footerRef.current) {
-      const isMobile = typeof window !== "undefined" && window.innerWidth < 768;
+    const footer = footerRef.current;
+    if (!footer) return;
+
+    const isMobile = typeof window !== "undefined" && window.innerWidth < 768;
+    const ctx = gsap.context(() => {
       gsap.fromTo(
-        footerRef.current,
+        footer,
         { opacity: 0, y: isMobile ? 12 : 25 },
         {
           opacity: 1,
@@ -49,14 +52,16 @@ export function Footer() {
           duration: isMobile ? 0.35 : 0.8,
           ease: "power2.out",
           scrollTrigger: {
-            trigger: footerRef.current,
+            trigger: footer,
             start: "top 98%",
+            toggleActions: "play none none none",
             fastScrollEnd: true,
-            once: true,
           },
         }
       );
-    }
+    });
+
+    return () => ctx.revert();
   }, []);
 
   return (

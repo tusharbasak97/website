@@ -78,6 +78,9 @@ export function HeroSection() {
   // GSAP Entrance Animations triggered seamlessly on preloader dismiss (or immediately if already cleared)
   useEffect(() => {
     const playEntrance = () => {
+      const hero = heroRef.current;
+      if (!hero) return null;
+
       const isMobile = typeof window !== "undefined" && window.innerWidth < 768;
       const ctx = gsap.context(() => {
         if (textColRef.current && imageColRef.current) {
@@ -119,7 +122,7 @@ export function HeroSection() {
             }
           );
         }
-      }, heroRef);
+      });
 
       return ctx;
     };

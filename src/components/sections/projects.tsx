@@ -29,6 +29,9 @@ export function ProjectsSection() {
   };
 
   useEffect(() => {
+    const section = sectionRef.current;
+    if (!section) return;
+
     const isMobile = typeof window !== "undefined" && window.innerWidth < 768;
     const scrollStart = isMobile ? "top 96%" : "top 80%";
     const animDuration = isMobile ? 0.35 : 0.7;
@@ -37,8 +40,8 @@ export function ProjectsSection() {
 
     const ctx = gsap.context(() => {
       // 1. Title & Underline Bar Reveal
-      const title = sectionRef.current?.querySelector(".projects-title-text");
-      const line = sectionRef.current?.querySelector(".projects-title-line");
+      const title = section.querySelector(".projects-title-text");
+      const line = section.querySelector(".projects-title-line");
       if (title && line) {
         gsap.fromTo(
           title,
@@ -51,8 +54,8 @@ export function ProjectsSection() {
             scrollTrigger: {
               trigger: title,
               start: "top 96%",
+              toggleActions: "play none none none",
               fastScrollEnd: true,
-              once: true,
             },
           }
         );
@@ -67,16 +70,17 @@ export function ProjectsSection() {
             scrollTrigger: {
               trigger: line,
               start: "top 96%",
+              toggleActions: "play none none none",
               fastScrollEnd: true,
-              once: true,
             },
           }
         );
       }
 
       // 2. Project Item Cards Staggered Entrance
-      if (gridRef.current) {
-        const cards = gridRef.current.querySelectorAll(".project-item");
+      const grid = gridRef.current;
+      if (grid) {
+        const cards = grid.querySelectorAll(".project-item");
         gsap.fromTo(
           cards,
           {
@@ -92,15 +96,15 @@ export function ProjectsSection() {
             stagger: cardStagger,
             ease: "power2.out",
             scrollTrigger: {
-              trigger: gridRef.current,
+              trigger: grid,
               start: scrollStart,
+              toggleActions: "play none none none",
               fastScrollEnd: true,
-              once: true,
             },
           }
         );
       }
-    }, sectionRef);
+    });
 
     return () => ctx.revert();
   }, []);

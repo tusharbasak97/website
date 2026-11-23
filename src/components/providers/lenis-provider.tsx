@@ -46,7 +46,9 @@ export function LenisProvider({ children }: { children: React.ReactNode }) {
     gsap.ticker.lagSmoothing(0);
 
     const handlePreloaderDone = () => {
-      ScrollTrigger.refresh();
+      requestAnimationFrame(() => {
+        ScrollTrigger.refresh();
+      });
     };
     window.addEventListener("preloaderDone", handlePreloaderDone);
 
