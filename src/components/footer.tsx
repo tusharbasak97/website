@@ -62,7 +62,7 @@ export function Footer() {
       ref={footerRef}
       className="w-full border-t border-border bg-card/50 backdrop-blur-sm py-12 px-4 sm:px-8 md:px-12 lg:px-16 xl:px-20"
     >
-      <div className="w-full max-w-[1800px] 2xl:max-w-[1920px] mx-auto flex flex-col md:flex-row items-center justify-between gap-6 pb-16 md:pb-0">
+      <div className="w-full max-w-[1800px] 2xl:max-w-[1920px] mx-auto flex flex-col md:flex-row items-center justify-between gap-6 pb-0">
         {/* Brand & secured indicator */}
         <div className="flex items-center gap-3">
           <span className="font-kaushan text-2xl font-bold text-foreground">
