@@ -1,7 +1,6 @@
 "use client";
 
 import React, { useEffect, useRef, useState } from "react";
-import Image from "next/image";
 import gsap from "gsap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -261,13 +260,13 @@ export function HeroSection() {
 
             {/* Hero Image Brought Forward Directly Over the Water-like Animation */}
             <div className="relative z-10 w-full h-full flex items-end justify-center pointer-events-auto">
-              <Image
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
                 src={personalInfo.avatarUrl}
                 alt={`${personalInfo.name} - ${personalInfo.jobTitle}`}
-                width={500}
-                height={500}
                 className="w-full h-full object-contain object-bottom drop-shadow-[0_20px_30px_oklch(0_0_0_/_0.5)] hover:scale-105 transition-transform duration-500 ease-out select-none"
-                priority
+                loading="eager"
+                fetchPriority="high"
               />
             </div>
           </div>
