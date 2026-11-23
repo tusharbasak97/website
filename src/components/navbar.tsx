@@ -136,10 +136,12 @@ export function Navbar() {
   return (
     <header
       ref={headerRef}
-      className={`fixed top-0 left-0 right-0 z-50 w-full transition-all duration-300 ${
-        scrolled
-          ? "bg-background/85 dark:bg-[var(--bg-black-900)]/85 backdrop-blur-md shadow-md border-b border-border/50 py-3"
-          : "bg-background/60 dark:bg-[var(--bg-black-900)]/60 backdrop-blur-sm border-b border-transparent py-4 sm:py-5"
+      className={`fixed top-0 left-0 right-0 z-50 w-full transition-all duration-300 ease-in-out ${
+        mobileMenuOpen
+          ? "bg-card/85 dark:bg-[var(--bg-black-900)]/85 backdrop-blur-2xl shadow-[0_20px_50px_oklch(0_0_0_/_0.3)] border-b border-border/60 py-3.5"
+          : scrolled
+          ? "bg-card/80 dark:bg-[var(--bg-black-900)]/80 backdrop-blur-xl shadow-md border-b border-border/50 py-3"
+          : "bg-background/50 dark:bg-[var(--bg-black-900)]/50 backdrop-blur-md border-b border-transparent py-4 sm:py-5"
       }`}
     >
       <div className="w-full max-w-[1800px] 2xl:max-w-[1920px] mx-auto px-4 sm:px-8 md:px-12 lg:px-16 xl:px-20 flex items-center justify-between">
@@ -242,13 +244,16 @@ export function Navbar() {
         </div>
       </div>
 
-      {/* Mobile Dropdown Menu */}
+      {/* Mobile Seamless Glassmorphic Extending Menu */}
       <div
-        className={`md:hidden overflow-hidden transition-all duration-300 ease-in-out border-b border-border/50 bg-background/95 dark:bg-[var(--bg-black-900)]/95 backdrop-blur-xl ${
-          mobileMenuOpen ? "max-h-72 opacity-100 py-3" : "max-h-0 opacity-0 py-0"
+        className={`md:hidden overflow-hidden transition-all duration-400 ease-[cubic-bezier(0.16,1,0.3,1)] ${
+          mobileMenuOpen ? "max-h-[26rem] opacity-100 pt-2 pb-6" : "max-h-0 opacity-0 py-0 pointer-events-none"
         }`}
       >
-        <div className="w-full px-6 flex flex-col space-y-1">
+        <div className="w-full max-w-[1800px] 2xl:max-w-[1920px] mx-auto px-4 sm:px-8 flex flex-col space-y-1.5">
+          {/* Subtle glass separator line */}
+          <div className="h-px w-full bg-gradient-to-r from-transparent via-border/70 to-transparent my-1.5" />
+
           {navItems.map((item) => {
             const sectionKey = item.href.replace("#", "");
             const isActive =
@@ -261,15 +266,34 @@ export function Navbar() {
                 key={item.href}
                 href={item.href}
                 onClick={(e) => handleNavClick(e, item.href)}
-                className={`flex items-center gap-3 px-4 py-2.5 rounded-lg text-sm font-medium transition-all duration-150 ${
+                className={`group flex items-center justify-between px-4 py-3 rounded-2xl text-sm font-medium transition-all duration-200 ${
                   isActive
-                    ? "bg-[var(--skin-color)]/10 text-[var(--skin-color)] font-semibold border-l-4 border-[var(--skin-color)]"
-                    : "text-muted-foreground hover:text-foreground hover:bg-accent/40"
+                    ? "bg-[var(--skin-color)]/15 text-[var(--skin-color)] font-semibold border border-[var(--skin-color)]/30 shadow-[0_4px_20px_color-mix(in_oklch,var(--skin-color)_20%,transparent)]"
+                    : "text-muted-foreground hover:text-foreground hover:bg-card/70 backdrop-blur-sm active:scale-[0.98]"
                 }`}
                 aria-current={isActive ? "page" : undefined}
               >
-                <FontAwesomeIcon icon={faIcon} className="h-4 w-4" />
-                <span>{item.label}</span>
+                <div className="flex items-center gap-3.5">
+                  <div
+                    className={`w-9 h-9 rounded-xl flex items-center justify-center transition-transform group-hover:scale-105 ${
+                      isActive
+                        ? "bg-[var(--skin-color)]/20 text-[var(--skin-color)]"
+                        : "bg-muted/70 text-muted-foreground group-hover:text-foreground"
+                    }`}
+                  >
+                    <FontAwesomeIcon icon={faIcon} className="h-4 w-4" />
+                  </div>
+                  <span className="tracking-wide text-sm font-medium">{item.label}</span>
+                </div>
+
+                {/* Right indicator */}
+                {isActive ? (
+                  <span className="w-2 h-2 rounded-full bg-[var(--skin-color)] shadow-[0_0_8px_var(--skin-color)]" />
+                ) : (
+                  <span className="text-muted-foreground/30 text-xs group-hover:text-muted-foreground group-hover:translate-x-0.5 transition-all">
+                    →
+                  </span>
+                )}
               </a>
             );
           })}
