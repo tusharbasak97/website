@@ -172,6 +172,7 @@ export function ProjectsSection() {
                         loop
                         muted
                         playsInline
+                        preload="none"
                         poster={project.posterUrl || project.imageUrl}
                         className="w-full h-full object-cover object-top transition-transform duration-500 hover:scale-105"
                         aria-label={project.title}
@@ -179,10 +180,11 @@ export function ProjectsSection() {
                         <source src={project.videoUrl} type="video/webm" />
                         {/* eslint-disable-next-line @next/next/no-img-element */}
                         <img
-                          src={project.imageUrl}
+                          src={project.posterUrl || project.imageUrl}
                           alt={project.title}
                           className="w-full h-full object-cover object-top"
                           loading="lazy"
+                          decoding="async"
                         />
                       </video>
                     ) : (

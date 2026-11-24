@@ -79,11 +79,11 @@ body {
 }
 
 :root {
-  /* Default Skin Color (Cyber Orange - color-1) migrated to OKLCH */
+  /* Default Skin Color (Cyber Orange - color-1) with WCAG AA 4.5:1 contrast for light surfaces */
   --skin-hue: 55;
-  --skin-color: oklch(0.70 0.19 55);
-  --skin-color-end: oklch(0.62 0.22 38);
-  --gradient-primary: linear-gradient(135deg, oklch(0.70 0.19 55), oklch(0.62 0.22 38));
+  --skin-color: oklch(0.56 0.20 48);
+  --skin-color-end: oklch(0.50 0.21 35);
+  --gradient-primary: linear-gradient(135deg, oklch(0.56 0.20 48), oklch(0.50 0.21 35));
 
   /* Light mode portfolio surfaces - Clean OKLCH High Contrast */
   --bg-black-900: oklch(0.985 0.003 260);
@@ -133,25 +133,43 @@ body {
   --sidebar-ring: oklch(0.708 0 0);
 }
 
-/* Color theme 1 (Cyber Orange - default) in OKLCH */
+/* Color theme 1 (Cyber Orange - default) in OKLCH with light/dark contrast tuning */
 [data-theme-color="color-1"], .color-1 {
   --skin-hue: 55;
+  --skin-color: oklch(0.56 0.20 48);
+  --skin-color-end: oklch(0.50 0.21 35);
+  --gradient-primary: linear-gradient(135deg, oklch(0.56 0.20 48), oklch(0.50 0.21 35));
+}
+
+.dark [data-theme-color="color-1"], .dark .color-1, .dark[data-theme-color="color-1"] {
   --skin-color: oklch(0.70 0.19 55);
   --skin-color-end: oklch(0.62 0.22 38);
   --gradient-primary: linear-gradient(135deg, oklch(0.70 0.19 55), oklch(0.62 0.22 38));
 }
 
-/* Color theme 2 (Neon Magenta) in OKLCH */
+/* Color theme 2 (Neon Magenta) in OKLCH with light/dark contrast tuning */
 [data-theme-color="color-2"], .color-2 {
   --skin-hue: 350;
+  --skin-color: oklch(0.52 0.26 350);
+  --skin-color-end: oklch(0.46 0.27 325);
+  --gradient-primary: linear-gradient(135deg, oklch(0.52 0.26 350), oklch(0.46 0.27 325));
+}
+
+.dark [data-theme-color="color-2"], .dark .color-2, .dark[data-theme-color="color-2"] {
   --skin-color: oklch(0.66 0.27 350);
   --skin-color-end: oklch(0.58 0.28 325);
   --gradient-primary: linear-gradient(135deg, oklch(0.66 0.27 350), oklch(0.58 0.28 325));
 }
 
-/* Color theme 3 (Electric Violet) in OKLCH */
+/* Color theme 3 (Electric Violet) in OKLCH with light/dark contrast tuning */
 [data-theme-color="color-3"], .color-3 {
   --skin-hue: 295;
+  --skin-color: oklch(0.50 0.25 295);
+  --skin-color-end: oklch(0.44 0.26 278);
+  --gradient-primary: linear-gradient(135deg, oklch(0.50 0.25 295), oklch(0.44 0.26 278));
+}
+
+.dark [data-theme-color="color-3"], .dark .color-3, .dark[data-theme-color="color-3"] {
   --skin-color: oklch(0.66 0.24 295);
   --skin-color-end: oklch(0.56 0.26 278);
   --gradient-primary: linear-gradient(135deg, oklch(0.66 0.24 295), oklch(0.56 0.26 278));

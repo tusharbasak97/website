@@ -393,7 +393,7 @@ export function AboutSection({ includeContact = false }: AboutSectionProps) {
                 href={personalInfo.whatsapp}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="font-semibold text-emerald-600 dark:text-emerald-400 hover:underline"
+                className="font-semibold text-emerald-700 dark:text-emerald-400 hover:underline"
               >
                 Chat on WhatsApp
               </a>
@@ -479,7 +479,7 @@ export function AboutSection({ includeContact = false }: AboutSectionProps) {
                 </p>
 
                 {edu.cgpaOrDistinction && (
-                  <span className="inline-block mt-3 px-3 py-1 rounded-full text-xs font-semibold bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20">
+                  <span className="inline-block mt-3 px-3 py-1 rounded-full text-xs font-semibold bg-emerald-500/10 text-emerald-700 dark:text-emerald-300 border border-emerald-500/25">
                     {edu.cgpaOrDistinction}
                   </span>
                 )}

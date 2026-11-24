@@ -321,20 +321,20 @@ export function CertificatesSection() {
           const icon = iconMap[cert.icon] || faCertificate;
 
           // Status colors: green for active, yellow for expiring, red for expired, blue for coming soon
-          let badgeBg = "bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border-emerald-500/20";
+          let badgeBg = "bg-emerald-500/10 text-emerald-700 dark:text-emerald-300 border-emerald-500/25";
           let badgeText = "Active";
           let badgeIcon = faCheckCircle;
 
           if (cert.effectiveStatus === "expiring") {
-            badgeBg = "bg-amber-500/10 text-amber-600 dark:text-amber-400 border-amber-500/20";
+            badgeBg = "bg-amber-500/10 text-amber-700 dark:text-amber-300 border-amber-500/25";
             badgeText = `Expiring (${cert.daysUntilExpiry}d)`;
             badgeIcon = faHourglassHalf;
           } else if (cert.effectiveStatus === "expired") {
-            badgeBg = "bg-rose-500/10 text-rose-600 dark:text-rose-400 border-rose-500/20";
+            badgeBg = "bg-rose-500/10 text-rose-700 dark:text-rose-300 border-rose-500/25";
             badgeText = "Expired";
             badgeIcon = faTimesCircle;
           } else if (cert.effectiveStatus === "coming-soon") {
-            badgeBg = "bg-sky-500/10 text-sky-600 dark:text-sky-400 border-sky-500/20";
+            badgeBg = "bg-sky-500/10 text-sky-700 dark:text-sky-300 border-sky-500/25";
             badgeText = "In Progress";
             badgeIcon = faClock;
           }
@@ -379,7 +379,7 @@ export function CertificatesSection() {
                   {cert.expiryDate && (
                     <div className="text-muted-foreground">
                       <span className="font-semibold text-foreground">Expires: </span>
-                      <span className={cert.expiryDate.toLowerCase() === "lifetime" ? "text-emerald-500 font-semibold" : ""}>
+                      <span className={cert.expiryDate.toLowerCase() === "lifetime" ? "text-emerald-700 dark:text-emerald-300 font-semibold" : ""}>
                         {cert.expiryDate}
                       </span>
                     </div>
@@ -387,7 +387,7 @@ export function CertificatesSection() {
                   {cert.expectedDate && (
                     <div className="text-muted-foreground">
                       <span className="font-semibold text-foreground">Target Year: </span>
-                      <span className="text-sky-500 font-semibold">{cert.expectedDate}</span>
+                      <span className="text-sky-700 dark:text-sky-300 font-semibold">{cert.expectedDate}</span>
                     </div>
                   )}
                 </div>

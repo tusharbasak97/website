@@ -15,6 +15,31 @@ export function Preloader() {
   const [isDone, setIsDone] = useState(false);
 
   useEffect(() => {
+    // Check if user already saw preloader in this session or prefers reduced motion
+    const prefersReducedMotion =
+      typeof window !== "undefined" &&
+      window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const hasSeen =
+      typeof window !== "undefined" &&
+      sessionStorage.getItem("portfolio-preloader-seen");
+
+    if (prefersReducedMotion || hasSeen) {
+      if (containerRef.current) {
+        containerRef.current.style.display = "none";
+      }
+      document.body.style.overflow = "";
+      if (typeof window !== "undefined") {
+        (window as unknown as { __preloaderDismissed?: boolean }).__preloaderDismissed = true;
+        window.dispatchEvent(new CustomEvent("preloaderDismiss"));
+        window.dispatchEvent(new CustomEvent("preloaderDone"));
+      }
+      return;
+    }
+
+    try {
+      sessionStorage.setItem("portfolio-preloader-seen", "true");
+    } catch {}
+
     // Lock body scroll during preloader
     document.body.style.overflow = "hidden";
 
@@ -23,27 +48,27 @@ export function Preloader() {
 
     const statusSteps = [
       { at: 0, text: "INITIALIZING SECURITY KERNEL..." },
-      { at: 20, text: "ENCRYPTING COMMUNICATIONS..." },
-      { at: 50, text: "LOADING SOC MONITORING MODULES..." },
-      { at: 75, text: "VERIFYING ZERO TRUST POLICY..." },
-      { at: 92, text: "SECURITY CLEARANCE: GRANTED" },
+      { at: 25, text: "ENCRYPTING COMMUNICATIONS..." },
+      { at: 55, text: "LOADING SOC MODULES..." },
+      { at: 80, text: "VERIFYING ZERO TRUST..." },
+      { at: 95, text: "ACCESS GRANTED" },
     ];
 
     const tl = gsap.timeline();
 
-    // 1. Animate logo entrance with a punchy bounce
+    // 1. Snappy logo entrance
     tl.fromTo(
       logoRef.current,
-      { scale: 0.7, opacity: 0 },
-      { scale: 1, opacity: 1, duration: 0.45, ease: "back.out(2)" }
+      { scale: 0.8, opacity: 0 },
+      { scale: 1, opacity: 1, duration: 0.22, ease: "power2.out" }
     );
 
-    // 2. Animate progress bar & counter directly on DOM for 60/120 FPS buttery updates
+    // 2. High-speed progress counter directly on DOM
     tl.to(
       progressObj,
       {
         value: 100,
-        duration: 1.2,
+        duration: 0.42,
         ease: "power1.inOut",
         onUpdate: () => {
           const current = Math.floor(progressObj.value);
@@ -59,15 +84,15 @@ export function Preloader() {
           }
         },
       },
-      "-=0.1" // Overlap slightly with logo entrance
+      "-=0.05"
     );
 
-    // 3. Smooth curtain slide away
+    // 3. Fast curtain slide away with immediate dismiss signal
     tl.to(containerRef.current, {
       yPercent: -100,
-      duration: 0.7,
-      ease: "power4.inOut",
-      delay: 0.15,
+      duration: 0.38,
+      ease: "power3.inOut",
+      delay: 0.04,
       onStart: () => {
         if (typeof window !== "undefined") {
           (window as unknown as { __preloaderDismissed?: boolean }).__preloaderDismissed = true;

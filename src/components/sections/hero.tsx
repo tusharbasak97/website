@@ -182,8 +182,8 @@ export function HeroSection() {
           className="lg:col-span-7 flex flex-col justify-center space-y-6 text-left"
         >
           {/* Status Chip */}
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs sm:text-sm font-medium bg-[var(--skin-color)]/10 text-[var(--skin-color)] border border-[var(--skin-color)]/25 w-fit">
-            <FontAwesomeIcon icon={faShieldHalved} className="h-3.5 w-3.5 animate-pulse" />
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs sm:text-sm font-semibold bg-accent/60 text-foreground border border-border w-fit">
+            <FontAwesomeIcon icon={faShieldHalved} className="h-3.5 w-3.5 text-[var(--skin-color)] animate-pulse" />
             <span>Cybersecurity Specialist & Full-Stack Builder</span>
           </div>
 
@@ -215,7 +215,7 @@ export function HeroSection() {
               href={personalInfo.hireMeUrl}
               target="_blank"
               rel="noopener noreferrer"
-              aria-label="Hire Tushar Basak on LinkedIn"
+              aria-label="Hire Me - Tushar Basak on LinkedIn"
               className="inline-flex items-center gap-2.5 px-7 py-3.5 rounded-xl font-semibold text-sm sm:text-base bg-gradient-to-r from-[var(--skin-color)] to-[var(--skin-color-end)] !text-white shadow-lg shadow-[var(--skin-color)]/30 hover:shadow-xl hover:shadow-[var(--skin-color)]/45 hover:-translate-y-0.5 active:translate-y-0 transition-all duration-200 cursor-pointer"
             >
               <FontAwesomeIcon icon={faLinkedin} className="h-4 w-4" />
@@ -262,11 +262,16 @@ export function HeroSection() {
             <div className="relative z-10 w-full h-full flex items-end justify-center pointer-events-auto">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
-                src={personalInfo.avatarUrl}
+                src="/assets/images/hero.webp"
+                srcSet="/assets/images/hero-sm.webp 512w, /assets/images/hero-md.webp 768w, /assets/images/hero.webp 1024w"
+                sizes="(max-width: 640px) 256px, (max-width: 768px) 320px, 384px"
+                width={384}
+                height={448}
                 alt={`${personalInfo.name} - ${personalInfo.jobTitle}`}
                 className="w-full h-full object-contain object-bottom drop-shadow-[0_20px_30px_oklch(0_0_0_/_0.5)] hover:scale-105 transition-transform duration-500 ease-out select-none"
                 loading="eager"
                 fetchPriority="high"
+                decoding="async"
               />
             </div>
           </div>

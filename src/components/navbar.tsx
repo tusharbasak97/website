@@ -113,6 +113,7 @@ export function Navbar() {
   // Realtime scroll spy for active section highlighting
   useEffect(() => {
     const sectionIds = ["home", "about", "certificates", "portfolio", "contact"];
+    let rafId: number | null = null;
 
     const updateActiveSection = () => {
       const scrollY = window.scrollY || document.documentElement.scrollTop;
@@ -142,18 +143,29 @@ export function Navbar() {
       setActiveSection(currentSection);
     };
 
-    window.addEventListener("scroll", updateActiveSection, { passive: true });
+    const handleScroll = () => {
+      if (rafId !== null) return;
+      rafId = requestAnimationFrame(() => {
+        rafId = null;
+        updateActiveSection();
+      });
+    };
+
+    window.addEventListener("scroll", handleScroll, { passive: true });
     if (lenis) {
-      lenis.on("scroll", updateActiveSection);
+      lenis.on("scroll", handleScroll);
     }
 
     // Initial check on mount
     updateActiveSection();
 
     return () => {
-      window.removeEventListener("scroll", updateActiveSection);
+      if (rafId !== null) {
+        cancelAnimationFrame(rafId);
+      }
+      window.removeEventListener("scroll", handleScroll);
       if (lenis) {
-        lenis.off("scroll", updateActiveSection);
+        lenis.off("scroll", handleScroll);
       }
     };
   }, [lenis]);
@@ -217,7 +229,7 @@ export function Navbar() {
 
           {/* Secured Badge */}
           <div
-            className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-mono font-medium tracking-wider bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/30 shadow-[0_0_12px_oklch(0.72_0.19_155_/_0.15)] select-none"
+            className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-mono font-semibold tracking-wider bg-emerald-500/10 text-emerald-700 dark:text-emerald-300 border border-emerald-500/30 shadow-[0_0_12px_oklch(0.72_0.19_155_/_0.15)] select-none"
             title="SSL/TLS Secured Application"
           >
             <FontAwesomeIcon icon={faShieldHalved} className="h-3 w-3" />

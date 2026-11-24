@@ -70,6 +70,7 @@ export function TabletFloatingNav() {
   // Real-time scroll spy
   useEffect(() => {
     const sectionIds = ["home", "about", "certificates", "portfolio", "contact"];
+    let rafId: number | null = null;
 
     const updateActiveSection = () => {
       const scrollY = window.scrollY || document.documentElement.scrollTop;
@@ -97,17 +98,28 @@ export function TabletFloatingNav() {
       setActiveSection(currentSection);
     };
 
-    window.addEventListener("scroll", updateActiveSection, { passive: true });
+    const handleScroll = () => {
+      if (rafId !== null) return;
+      rafId = requestAnimationFrame(() => {
+        rafId = null;
+        updateActiveSection();
+      });
+    };
+
+    window.addEventListener("scroll", handleScroll, { passive: true });
     if (lenis) {
-      lenis.on("scroll", updateActiveSection);
+      lenis.on("scroll", handleScroll);
     }
 
     updateActiveSection();
 
     return () => {
-      window.removeEventListener("scroll", updateActiveSection);
+      if (rafId !== null) {
+        cancelAnimationFrame(rafId);
+      }
+      window.removeEventListener("scroll", handleScroll);
       if (lenis) {
-        lenis.off("scroll", updateActiveSection);
+        lenis.off("scroll", handleScroll);
       }
     };
   }, [lenis]);

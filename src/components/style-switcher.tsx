@@ -113,10 +113,10 @@ export function StyleSwitcher() {
 
       {/* Main Panel Content */}
       <div className="w-60 p-5 bg-card/95 backdrop-blur-xl border-y border-l border-border rounded-l-2xl shadow-2xl">
-        <h4 className="text-sm font-bold text-foreground mb-3 pb-2 border-b border-border flex items-center justify-between">
+        <div role="heading" aria-level={3} className="text-sm font-bold text-foreground mb-3 pb-2 border-b border-border flex items-center justify-between">
           <span>Theme Colors</span>
           <span className="text-[10px] font-mono uppercase text-muted-foreground font-semibold">SKIN</span>
-        </h4>
+        </div>
 
         {/* Color Swatches */}
         <div className="flex items-center justify-between py-2 px-1" suppressHydrationWarning>

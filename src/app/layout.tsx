@@ -245,12 +245,13 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning className={`${jakarta.variable} ${jetbrainsMono.variable} ${kaushanScript.variable}`}>
       <head>
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        {/* eslint-disable-next-line @next/next/no-page-custom-font */}
         <link
-          rel="stylesheet"
-          href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Kaushan+Script&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
+          rel="preload"
+          as="image"
+          href="/assets/images/hero.webp"
+          imageSrcSet="/assets/images/hero-sm.webp 512w, /assets/images/hero-md.webp 768w, /assets/images/hero.webp 1024w"
+          imageSizes="(max-width: 640px) 256px, (max-width: 768px) 320px, 384px"
+          fetchPriority="high"
         />
         <script
           id="theme-color-initializer"
