@@ -15,12 +15,15 @@ This is the production portfolio website of **Tushar Basak**, highlighting dual 
 ### 🎯 Key Features
 
 - **Responsive & Fluid Layout**: Built for all screen sizes from mobile to ultra-wide displays (up to 1920px+) with consistent padding and fluid scaling.
-- **Dark & Light Mode Support**: Seamless theme switching with OKLCH high-contrast color themes and custom style customization.
+- **100% Offline Self-Hosted Typography**: Zero external Google Fonts network calls; variable fonts (Plus Jakarta Sans, JetBrains Mono, Kaushan Script) are bundled locally in WOFF2 format with `next/font/local` for zero FOUT/FOIT, instant rendering, and optimal privacy.
+- **Tailwind CSS v4 & Modern OKLCH Engine**: Fully upgraded to the modern Tailwind CSS v4 pipeline with linear gradients, custom utility animations, dynamic theme-variable styling, and unified custom scrollbars.
+- **Interactive Cyber Preloader**: Synchronized GSAP security initialization sequence with dual orbital shields, terminal logs, 100% completion hold, and Lenis scroll coordination.
+- **Dark & Light Mode Support**: Seamless theme switching with OKLCH high-contrast color themes and custom style switcher (Cyber Orange, Neon Magenta, Electric Violet).
 - **Interactive Terminal 404 Page**: Cyber-themed diagnostics terminal with matrix code rain animation, particle physics, and auto-redirect protocol supporting both light and dark themes.
 - **GSAP & ScrollTrigger Animations**: Hardware-accelerated stagger reveals, interactive 3D perspective tilts, and smooth transitions.
 - **Lenis Smooth Scrolling**: Butter-smooth inertial scrolling throughout the entire application.
 - **Enterprise-Grade SEO**: Fully configured JSON-LD Schema.org metadata, OpenGraph, Twitter Cards, dynamic XML sitemaps, robots.txt, and canonical URLs.
-- **Secure By Design**: Implemented with strict HTTP security headers (CSP, HSTS, X-Content-Type-Options, X-Frame-Options, Referrer-Policy).
+- **Secure By Design**: Implemented with strict HTTP security headers (CSP, HSTS, X-Content-Type-Options, X-Frame-Options, Referrer-Policy, RFC 9116 security.txt).
 - **Progressive Web App (PWA)**: Installable web manifest with offline compatibility.
 
 ## 🚀 Live Deployment
@@ -64,8 +67,9 @@ Comprehensive industrial trading platform featuring specialized product catalogs
 
 - **Framework**: Next.js 16 (App Router, Turbopack, Partial Prerendering)
 - **UI Library**: React 19
+- **Typography**: Next.js `next/font/local` with self-hosted variable WOFF2 fonts (Plus Jakarta Sans, JetBrains Mono, Kaushan Script)
 - **Styling**: Tailwind CSS v4, tw-animate-css, OKLCH Color Space
-- **Animation**: GSAP (GreenSock), ScrollTrigger, Lenis Smooth Scroll
+- **Animation**: GSAP 3 (GreenSock), ScrollTrigger, Lenis Smooth Scroll
 - **Icons**: Font Awesome 7 (Solid & Brands)
 - **Theming**: `next-themes` (Dark / Light / System) with Cyber Orange, Neon Magenta, Electric Violet accents
 - **Language**: TypeScript 5
@@ -78,6 +82,9 @@ Comprehensive industrial trading platform featuring specialized product catalogs
 website/
 ├── public/                 # Static public assets (favicons, manifests, robots, sitemaps)
 │   ├── assets/             # Images, resume, certification PDFs
+│   ├── fonts/              # Self-hosted variable WOFF2 fonts
+│   ├── .well-known/        # RFC 9116 security contact information
+│   ├── browserconfig.xml   # Windows tile & browser configuration
 │   ├── robots.txt          # Production crawler directives
 │   ├── sitemap.xml         # XML sitemap with image metadata
 │   └── site.webmanifest    # PWA configuration
@@ -93,6 +100,7 @@ website/
 ├── next.config.ts          # Security headers & Turbopack configuration
 ├── package.json            # Dependencies & scripts
 └── tsconfig.json           # TypeScript configuration
+```
 ```
 
 ## 🔒 Security Features

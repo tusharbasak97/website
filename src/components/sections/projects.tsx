@@ -55,7 +55,7 @@ export function ProjectsSection() {
             scrollTrigger: {
               trigger: title,
               start: "top 96%",
-              once: true,
+              toggleActions: "play none none none",
             },
           }
         );
@@ -70,7 +70,7 @@ export function ProjectsSection() {
             scrollTrigger: {
               trigger: line,
               start: "top 96%",
-              once: true,
+              toggleActions: "play none none none",
             },
           }
         );
@@ -97,7 +97,7 @@ export function ProjectsSection() {
             scrollTrigger: {
               trigger: grid,
               start: scrollStart,
-              once: true,
+              toggleActions: "play none none none",
             },
           }
         );
@@ -123,7 +123,7 @@ export function ProjectsSection() {
       <div className="mb-14 text-left">
         <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight text-foreground flex items-center gap-4">
           <span className="projects-title-text">My Projects</span>
-          <span className="projects-title-line h-1 flex-1 max-w-[100px] bg-[var(--skin-color)] rounded-full" />
+          <span className="projects-title-line h-1 flex-1 max-w-[100px] bg-skin rounded-full" />
         </h2>
         <p className="mt-2 text-muted-foreground text-base sm:text-lg">
           A showcase of cybersecurity utilities, web development platforms, and technical innovations
@@ -155,7 +155,7 @@ export function ProjectsSection() {
               >
                 {/* ================= FRONT OF CARD ================= */}
                 <div
-                  className="absolute inset-0 w-full h-full rounded-3xl overflow-hidden bg-card border border-border shadow-md hover:border-[var(--skin-color)]/50 hover:shadow-xl hover:-translate-y-1 flex flex-col justify-between p-6 transition-all duration-300 group"
+                  className="absolute inset-0 w-full h-full rounded-3xl overflow-hidden bg-card border border-border shadow-md hover:border-skin/50 hover:shadow-xl hover:-translate-y-1 flex flex-col justify-between p-6 transition-all duration-300 group"
                   style={{
                     backfaceVisibility: "hidden",
                     WebkitBackfaceVisibility: "hidden",
@@ -195,7 +195,7 @@ export function ProjectsSection() {
                       />
                     )}
                     <div className="absolute top-3 right-3 z-10">
-                      <span className="px-3 py-1 rounded-full text-xs font-semibold bg-background/90 dark:bg-card/90 backdrop-blur-md text-[var(--skin-color)] border border-border/60 shadow-sm">
+                      <span className="px-3 py-1 rounded-full text-xs font-semibold bg-background/90 dark:bg-card/90 backdrop-blur-md text-skin border border-border/60 shadow-sm">
                         {project.category}
                       </span>
                     </div>
@@ -204,11 +204,11 @@ export function ProjectsSection() {
                   {/* Bottom Info */}
                   <div className="pt-4 flex items-end justify-between">
                     <div>
-                      <h3 className="text-xl font-bold text-foreground group-hover:text-[var(--skin-color)] transition-colors">
+                      <h3 className="text-xl font-bold text-foreground group-hover:text-skin transition-colors">
                         {project.title}
                       </h3>
                       <p className="text-xs text-muted-foreground mt-1 flex items-center gap-1.5">
-                        <FontAwesomeIcon icon={faShieldHalved} className="h-3 w-3 text-[var(--skin-color)]" />
+                        <FontAwesomeIcon icon={faShieldHalved} className="h-3 w-3 text-skin" />
                         <span>Interactive Card</span>
                       </p>
                     </div>
@@ -228,7 +228,7 @@ export function ProjectsSection() {
 
                 {/* ================= BACK OF CARD ================= */}
                 <div
-                  className="absolute inset-0 w-full h-full rounded-3xl overflow-hidden bg-gradient-to-br from-card via-card to-card/95 border-2 border-[var(--skin-color)]/40 shadow-2xl p-7 flex flex-col justify-between"
+                  className="absolute inset-0 w-full h-full rounded-3xl overflow-hidden bg-linear-to-br from-card via-card to-card/95 border-2 border-skin/40 shadow-2xl p-7 flex flex-col justify-between"
                   style={{
                     backfaceVisibility: "hidden",
                     WebkitBackfaceVisibility: "hidden",
@@ -238,7 +238,7 @@ export function ProjectsSection() {
                   <div>
                     {/* Header */}
                     <div className="flex items-center justify-between pb-3 border-b border-border/60">
-                      <span className="text-xs font-mono font-bold uppercase tracking-wider text-[var(--skin-color)]">
+                      <span className="text-xs font-mono font-bold uppercase tracking-wider text-skin">
                         {project.category}
                       </span>
                       <button
@@ -268,7 +268,7 @@ export function ProjectsSection() {
                           href={project.liveUrl}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="flex-1 inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl text-xs sm:text-sm font-semibold bg-gradient-to-r from-[var(--skin-color)] to-[var(--skin-color-end)] !text-white shadow-md hover:shadow-lg hover:shadow-[var(--skin-color)]/35 transition-all cursor-pointer"
+                          className="flex-1 inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl text-xs sm:text-sm font-semibold bg-linear-to-r from-skin to-skin-end !text-white shadow-md hover:shadow-lg hover:shadow-skin/35 transition-all cursor-pointer"
                         >
                           <span>Live Demo</span>
                           <FontAwesomeIcon icon={faExternalLinkAlt} className="h-3 w-3" />

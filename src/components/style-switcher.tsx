@@ -76,14 +76,14 @@ export function StyleSwitcher() {
         <button
           type="button"
           onClick={() => setIsOpen((prev) => !prev)}
-          className="w-11 h-11 rounded-l-xl bg-card border-y border-l border-border shadow-lg flex items-center justify-center text-foreground hover:text-[var(--skin-color)] hover:bg-accent/60 focus:outline-none focus:ring-2 focus:ring-[var(--skin-color)]/30 cursor-pointer group transition-colors"
+          className="w-11 h-11 rounded-l-xl bg-card border-y border-l border-border shadow-lg flex items-center justify-center text-foreground hover:text-skin hover:bg-accent/60 focus:outline-none focus:ring-2 focus:ring-skin/30 cursor-pointer group transition-colors"
           aria-label={isOpen ? "Close style switcher" : "Open style switcher"}
           title="Toggle style switcher"
         >
           <FontAwesomeIcon
             icon={faGear}
             className={`h-5 w-5 transition-transform duration-500 group-hover:rotate-90 ${
-              isOpen ? "rotate-180 text-[var(--skin-color)]" : ""
+              isOpen ? "rotate-180 text-skin" : ""
             }`}
           />
         </button>
@@ -93,19 +93,19 @@ export function StyleSwitcher() {
           type="button"
           onClick={toggleDayNight}
           suppressHydrationWarning
-          className="w-11 h-11 rounded-l-xl bg-card border-y border-l border-border shadow-lg flex items-center justify-center text-foreground hover:text-[var(--skin-color)] hover:bg-accent/60 focus:outline-none focus:ring-2 focus:ring-[var(--skin-color)]/30 cursor-pointer group transition-colors"
+          className="w-11 h-11 rounded-l-xl bg-card border-y border-l border-border shadow-lg flex items-center justify-center text-foreground hover:text-skin hover:bg-accent/60 focus:outline-none focus:ring-2 focus:ring-skin/30 cursor-pointer group transition-colors"
           aria-label="Toggle dark/light theme"
           title={isClient ? `Switch to ${resolvedTheme === "dark" ? "light" : "dark"} mode` : "Toggle dark/light theme"}
         >
           {isClient && resolvedTheme === "dark" ? (
             <FontAwesomeIcon
               icon={faSun}
-              className="h-4 w-4 transition-colors group-hover:text-[var(--skin-color)]"
+              className="h-4 w-4 transition-colors group-hover:text-skin"
             />
           ) : (
             <FontAwesomeIcon
               icon={faMoon}
-              className="h-4 w-4 transition-colors group-hover:text-[var(--skin-color)]"
+              className="h-4 w-4 transition-colors group-hover:text-skin"
             />
           )}
         </button>
@@ -133,12 +133,12 @@ export function StyleSwitcher() {
                     ? "ring-3 ring-foreground ring-offset-2 ring-offset-card scale-110 shadow-lg"
                     : "hover:scale-105 opacity-85 hover:opacity-100 border border-white/20"
                 }`}
-                style={{ backgroundColor: color.hex }}
+                style={{ background: color.gradient }}
                 title={color.name}
                 aria-label={color.name}
               >
                 {isSelected && (
-                  <FontAwesomeIcon icon={faCheck} className="h-3.5 w-3.5 text-[oklch(1_0_0)] drop-shadow-md" />
+                  <FontAwesomeIcon icon={faCheck} className="h-3.5 w-3.5 text-white drop-shadow-md" />
                 )}
               </button>
             );

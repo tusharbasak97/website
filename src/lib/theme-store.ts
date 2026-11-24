@@ -6,12 +6,28 @@ export interface ColorOption {
   id: ThemeColor;
   name: string;
   hex: string;
+  gradient: string;
 }
 
 export const colorOptions: ColorOption[] = [
-  { id: "color-1", name: "Cyber Orange", hex: "oklch(0.70 0.19 55)" },
-  { id: "color-2", name: "Neon Magenta", hex: "oklch(0.66 0.27 350)" },
-  { id: "color-3", name: "Electric Violet", hex: "oklch(0.66 0.24 295)" },
+  {
+    id: "color-1",
+    name: "Cyber Orange",
+    hex: "oklch(0.7 0.19 55)",
+    gradient: "linear-gradient(135deg, oklch(0.7 0.19 55), oklch(0.62 0.22 38))",
+  },
+  {
+    id: "color-2",
+    name: "Neon Magenta",
+    hex: "oklch(0.66 0.27 350)",
+    gradient: "linear-gradient(135deg, oklch(0.66 0.27 350), oklch(0.58 0.28 325))",
+  },
+  {
+    id: "color-3",
+    name: "Electric Violet",
+    hex: "oklch(0.66 0.24 295)",
+    gradient: "linear-gradient(135deg, oklch(0.66 0.24 295), oklch(0.56 0.26 278))",
+  },
 ];
 
 const emptySubscribe = () => () => {};

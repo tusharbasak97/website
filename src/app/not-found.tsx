@@ -246,7 +246,7 @@ export default function NotFound() {
   }, []);
 
   return (
-    <div className="relative min-h-screen w-full overflow-hidden bg-background text-foreground font-mono selection:bg-[var(--skin-color)] selection:text-white flex items-center justify-center p-4 sm:p-6 transition-colors duration-300">
+    <div className="relative min-h-screen w-full overflow-hidden bg-background text-foreground font-mono selection:bg-skin selection:text-white flex items-center justify-center p-4 sm:p-6 transition-colors duration-300">
       {/* Custom Cursor active on this page */}
       <CustomCursor />
 
@@ -258,12 +258,12 @@ export default function NotFound() {
 
       {/* CRT Scanline & Vignette Effect */}
       <div className="scanlines-overlay fixed inset-0 pointer-events-none z-10 opacity-25 dark:opacity-80" />
-      <div className="fixed inset-0 pointer-events-none z-10 bg-[radial-gradient(ellipse_at_center,transparent_40%,oklch(0_0_0_/_0.06)_100%)] dark:bg-[radial-gradient(ellipse_at_center,transparent_30%,oklch(0_0_0_/_0.8)_100%)]" />
+      <div className="fixed inset-0 pointer-events-none z-10 bg-[radial-gradient(ellipse_at_center,transparent_40%,oklch(0_0_0/0.06)_100%)] dark:bg-[radial-gradient(ellipse_at_center,transparent_30%,oklch(0_0_0/0.8)_100%)]" />
 
       {/* Hacker Terminal Card */}
       <div
         ref={containerRef}
-        className="relative z-20 w-full max-w-2xl bg-card/90 dark:bg-card/90 backdrop-blur-md border border-border dark:border-[var(--skin-color)]/40 rounded-2xl shadow-xl dark:shadow-[0_0_40px_oklch(0.70_0.19_55_/_0.25)] overflow-hidden"
+        className="relative z-20 w-full max-w-2xl bg-card/90 dark:bg-card/90 backdrop-blur-md border border-border dark:border-skin/40 rounded-2xl shadow-xl dark:shadow-[0_0_40px_oklch(0.7_0.19_55/0.25)] overflow-hidden"
       >
         {/* Terminal Header Bar */}
         <div className="flex items-center justify-between px-4 py-3 bg-muted/60 dark:bg-muted/40 border-b border-border">
@@ -272,7 +272,7 @@ export default function NotFound() {
             <span className="w-3 h-3 rounded-full bg-yellow-500/80 inline-block" />
             <span className="w-3 h-3 rounded-full bg-green-500/80 inline-block" />
             <span className="ml-3 text-xs text-muted-foreground flex items-center gap-1.5 font-mono">
-              <FontAwesomeIcon icon={faTerminal} className="w-3 h-3 text-[var(--skin-color)]" />
+              <FontAwesomeIcon icon={faTerminal} className="w-3 h-3 text-skin" />
               security_audit_404.sh
             </span>
           </div>
@@ -296,7 +296,7 @@ export default function NotFound() {
           <h1
             ref={glitchRef}
             data-text="404"
-            className="glitch-text text-8xl sm:text-9xl font-black font-mono tracking-widest text-[var(--skin-color)] select-none my-2 drop-shadow-[0_0_35px_oklch(0.70_0.19_55_/_0.3)]"
+            className="glitch-text text-8xl sm:text-9xl font-black font-mono tracking-widest text-skin select-none my-2 drop-shadow-[0_0_35px_oklch(0.7_0.19_55/0.3)]"
           >
             404
           </h1>
@@ -306,7 +306,7 @@ export default function NotFound() {
             ref={headingRef}
             className="mt-3 text-2xl sm:text-3xl font-bold tracking-tight text-foreground flex items-center justify-center gap-2"
           >
-            <FontAwesomeIcon icon={faTriangleExclamation} className="w-6 h-6 text-[var(--skin-color)]" />
+            <FontAwesomeIcon icon={faTriangleExclamation} className="w-6 h-6 text-skin" />
             Page Not Found
           </h2>
 
@@ -333,7 +333,7 @@ export default function NotFound() {
             <p className="text-emerald-600 dark:text-emerald-400">
               [&check;] FIREWALL: Intrusion detection perimeter intact.
             </p>
-            <p className="text-[var(--skin-color)]">
+            <p className="text-skin">
               [&gt;] SYSTEM: Automated redirect protocol armed.
             </p>
           </div>
@@ -345,7 +345,7 @@ export default function NotFound() {
           >
             <div className="flex items-center justify-between w-full text-xs text-muted-foreground">
               <span className="font-mono">
-                Redirecting in <span className="font-bold text-[var(--skin-color)] text-sm">{timeLeft}</span>s...
+                Redirecting in <span className="font-bold text-skin text-sm">{timeLeft}</span>s...
               </span>
               <button
                 type="button"
@@ -360,7 +360,7 @@ export default function NotFound() {
             {/* Countdown Progress Bar */}
             <div className="w-full h-1.5 bg-muted rounded-full overflow-hidden border border-border/40">
               <div
-                className="h-full bg-gradient-to-r from-[var(--skin-color)] to-[var(--skin-color-end)] transition-all duration-1000 ease-linear rounded-full"
+                className="h-full bg-linear-to-r from-skin to-skin-end transition-all duration-1000 ease-linear rounded-full"
                 style={{ width: `${(timeLeft / 30) * 100}%` }}
               />
             </div>
@@ -370,7 +370,7 @@ export default function NotFound() {
           <div ref={buttonRef} className="mt-7">
             <Link
               href="/"
-              className="pulse-glow relative inline-flex items-center gap-3 px-8 py-3.5 rounded-full bg-gradient-to-r from-[var(--skin-color)] to-[var(--skin-color-end)] !text-white font-bold text-sm tracking-wide uppercase shadow-[0_0_20px_oklch(0.70_0.19_55_/_0.4)] hover:shadow-[0_0_35px_oklch(0.70_0.19_55_/_0.7)] hover:scale-105 active:scale-95 transition-all duration-300"
+              className="pulse-glow relative inline-flex items-center gap-3 px-8 py-3.5 rounded-full bg-linear-to-r from-skin to-skin-end !text-white font-bold text-sm tracking-wide uppercase shadow-[0_0_20px_oklch(0.7_0.19_55/0.4)] hover:shadow-[0_0_35px_oklch(0.7_0.19_55/0.7)] hover:scale-105 active:scale-95 transition-all duration-300"
             >
               <FontAwesomeIcon icon={faHouse} className="w-4 h-4" />
               <span>Return Home</span>

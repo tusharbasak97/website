@@ -93,7 +93,7 @@ export function AboutSection({ includeContact = false }: AboutSectionProps) {
             scrollTrigger: {
               trigger: title,
               start: "top 96%",
-              once: true,
+              toggleActions: "play none none none",
             },
           }
         );
@@ -108,7 +108,7 @@ export function AboutSection({ includeContact = false }: AboutSectionProps) {
             scrollTrigger: {
               trigger: line,
               start: "top 96%",
-              once: true,
+              toggleActions: "play none none none",
             },
           }
         );
@@ -130,7 +130,7 @@ export function AboutSection({ includeContact = false }: AboutSectionProps) {
             scrollTrigger: {
               trigger: introGrid,
               start: scrollStart,
-              once: true,
+              toggleActions: "play none none none",
             },
           }
         );
@@ -152,7 +152,7 @@ export function AboutSection({ includeContact = false }: AboutSectionProps) {
             scrollTrigger: {
               trigger: skillsContainer,
               start: scrollStart,
-              once: true,
+              toggleActions: "play none none none",
             },
           }
         );
@@ -172,7 +172,7 @@ export function AboutSection({ includeContact = false }: AboutSectionProps) {
           scrollTrigger: {
             trigger: card,
             start: isMobile ? "top 96%" : "top 88%",
-            once: true,
+            toggleActions: "play none none none",
           },
         });
 
@@ -236,7 +236,7 @@ export function AboutSection({ includeContact = false }: AboutSectionProps) {
             scrollTrigger: {
               trigger: timelinesContainer,
               start: scrollStart,
-              once: true,
+              toggleActions: "play none none none",
             },
           }
         );
@@ -257,7 +257,7 @@ export function AboutSection({ includeContact = false }: AboutSectionProps) {
             scrollTrigger: {
               trigger: timelinesContainer,
               start: isMobile ? "top 95%" : "top 82%",
-              once: true,
+              toggleActions: "play none none none",
             },
           }
         );
@@ -280,7 +280,7 @@ export function AboutSection({ includeContact = false }: AboutSectionProps) {
         <div className="mb-14 text-left">
         <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight text-foreground flex items-center gap-4">
           <span className="about-title-text">About Me</span>
-          <span className="about-title-line h-1 flex-1 max-w-[100px] bg-[var(--skin-color)] rounded-full" />
+          <span className="about-title-line h-1 flex-1 max-w-[100px] bg-skin rounded-full" />
         </h2>
         <p className="mt-2 text-muted-foreground text-base sm:text-lg">
           Get to know my journey, core expertise, educational background, and technical toolset
@@ -291,10 +291,10 @@ export function AboutSection({ includeContact = false }: AboutSectionProps) {
       <div className="about-intro-grid grid grid-cols-1 lg:grid-cols-12 gap-10 items-start mb-20">
         {/* Bio Paragraphs (Col 7) */}
         <div className="lg:col-span-7 space-y-6 text-muted-foreground leading-relaxed text-base sm:text-lg">
-          <p className="about-bio-item p-5 rounded-2xl bg-card border border-border shadow-sm hover:border-[var(--skin-color)]/50 hover:shadow-lg hover:-translate-y-1 transition-all duration-300">
+          <p className="about-bio-item p-5 rounded-2xl bg-card border border-border shadow-sm hover:border-skin/50 hover:shadow-lg hover:-translate-y-1 transition-all duration-300">
             {personalInfo.aboutP1}
           </p>
-          <p className="about-bio-item p-5 rounded-2xl bg-card border border-border shadow-sm hover:border-[var(--skin-color)]/50 hover:shadow-lg hover:-translate-y-1 transition-all duration-300">
+          <p className="about-bio-item p-5 rounded-2xl bg-card border border-border shadow-sm hover:border-skin/50 hover:shadow-lg hover:-translate-y-1 transition-all duration-300">
             {personalInfo.aboutP2}
           </p>
 
@@ -304,7 +304,7 @@ export function AboutSection({ includeContact = false }: AboutSectionProps) {
               target="_blank"
               rel="noopener noreferrer"
               download="Tushar_Basak_Resume.pdf"
-              className="inline-flex items-center gap-3 px-7 py-3.5 rounded-xl font-semibold bg-gradient-to-r from-[var(--skin-color)] to-[var(--skin-color-end)] !text-white shadow-md shadow-[var(--skin-color)]/30 hover:shadow-lg hover:shadow-[var(--skin-color)]/45 hover:-translate-y-0.5 active:translate-y-0 transition-all duration-200 cursor-pointer"
+              className="inline-flex items-center gap-3 px-7 py-3.5 rounded-xl font-semibold bg-linear-to-r from-skin to-skin-end !text-white shadow-md shadow-skin/30 hover:shadow-lg hover:shadow-skin/45 hover:-translate-y-0.5 active:translate-y-0 transition-all duration-200 cursor-pointer"
             >
               <FontAwesomeIcon icon={faDownload} className="h-4 w-4" />
               <span>Download Resume</span>
@@ -314,19 +314,19 @@ export function AboutSection({ includeContact = false }: AboutSectionProps) {
               href={personalInfo.resumeUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 px-6 py-3.5 rounded-xl font-semibold border-2 border-border/80 bg-card hover:bg-accent/80 hover:border-[var(--skin-color)]/60 text-foreground shadow-xs hover:shadow hover:-translate-y-0.5 active:translate-y-0 transition-all duration-200 cursor-pointer"
+              className="inline-flex items-center gap-2 px-6 py-3.5 rounded-xl font-semibold border-2 border-border/80 bg-card hover:bg-accent/80 hover:border-skin/60 text-foreground shadow-xs hover:shadow hover:-translate-y-0.5 active:translate-y-0 transition-all duration-200 cursor-pointer"
             >
-              <FontAwesomeIcon icon={faExternalLinkAlt} className="h-3.5 w-3.5 text-[var(--skin-color)]" />
+              <FontAwesomeIcon icon={faExternalLinkAlt} className="h-3.5 w-3.5 text-skin" />
               <span>View resume</span>
             </a>
           </div>
         </div>
 
         {/* Personal Details Grid (Col 5) */}
-        <div className="about-bio-item lg:col-span-5 p-6 rounded-2xl bg-card border border-border shadow-sm hover:border-[var(--skin-color)]/50 hover:shadow-lg hover:-translate-y-1 transition-all duration-300">
+        <div className="about-bio-item lg:col-span-5 p-6 rounded-2xl bg-card border border-border shadow-sm hover:border-skin/50 hover:shadow-lg hover:-translate-y-1 transition-all duration-300">
           <h3 className="text-xl font-bold text-foreground mb-6 pb-3 border-b border-border flex items-center justify-between">
             <span>Personal Information</span>
-            <span className="text-xs font-mono px-2.5 py-1 rounded-md bg-[var(--skin-color)]/10 text-[var(--skin-color)]">
+            <span className="text-xs font-mono px-2.5 py-1 rounded-md bg-skin/10 text-skin">
               Verified
             </span>
           </h3>
@@ -335,7 +335,7 @@ export function AboutSection({ includeContact = false }: AboutSectionProps) {
             {/* Birthday */}
             <div className="flex items-center justify-between py-1 border-b border-border/40">
               <span className="text-muted-foreground flex items-center gap-2">
-                <FontAwesomeIcon icon={faCalendarDay} className="h-3.5 w-3.5 text-[var(--skin-color)]" />
+                <FontAwesomeIcon icon={faCalendarDay} className="h-3.5 w-3.5 text-skin" />
                 Birthday:
               </span>
               <span className="font-semibold text-foreground">{personalInfo.birthdayDisplay}</span>
@@ -344,7 +344,7 @@ export function AboutSection({ includeContact = false }: AboutSectionProps) {
             {/* Realtime Age */}
             <div className="flex items-center justify-between py-1 border-b border-border/40">
               <span className="text-muted-foreground flex items-center gap-2">
-                <FontAwesomeIcon icon={faClock} className="h-3.5 w-3.5 text-[var(--skin-color)]" />
+                <FontAwesomeIcon icon={faClock} className="h-3.5 w-3.5 text-skin" />
                 Age:
               </span>
               <span className="font-semibold text-foreground font-mono">
@@ -355,12 +355,12 @@ export function AboutSection({ includeContact = false }: AboutSectionProps) {
             {/* Email */}
             <div className="flex items-center justify-between py-1 border-b border-border/40">
               <span className="text-muted-foreground flex items-center gap-2">
-                <FontAwesomeIcon icon={faEnvelope} className="h-3.5 w-3.5 text-[var(--skin-color)]" />
+                <FontAwesomeIcon icon={faEnvelope} className="h-3.5 w-3.5 text-skin" />
                 Email:
               </span>
               <a
                 href={`mailto:${personalInfo.email}`}
-                className="font-semibold text-foreground hover:text-[var(--skin-color)] transition-colors truncate max-w-[200px]"
+                className="font-semibold text-foreground hover:text-skin transition-colors truncate max-w-[200px]"
                 title={personalInfo.email}
               >
                 {personalInfo.email}
@@ -370,7 +370,7 @@ export function AboutSection({ includeContact = false }: AboutSectionProps) {
             {/* Degree */}
             <div className="flex items-center justify-between py-1 border-b border-border/40">
               <span className="text-muted-foreground flex items-center gap-2">
-                <FontAwesomeIcon icon={faGraduationCap} className="h-3.5 w-3.5 text-[var(--skin-color)]" />
+                <FontAwesomeIcon icon={faGraduationCap} className="h-3.5 w-3.5 text-skin" />
                 Degree:
               </span>
               <span className="font-semibold text-foreground">{personalInfo.degree}</span>
@@ -395,7 +395,7 @@ export function AboutSection({ includeContact = false }: AboutSectionProps) {
             {/* Location */}
             <div className="flex items-center justify-between py-1">
               <span className="text-muted-foreground flex items-center gap-2">
-                <FontAwesomeIcon icon={faLocationDot} className="h-3.5 w-3.5 text-[var(--skin-color)]" />
+                <FontAwesomeIcon icon={faLocationDot} className="h-3.5 w-3.5 text-skin" />
                 Location:
               </span>
               <span className="font-semibold text-foreground">{personalInfo.location}</span>
@@ -407,7 +407,7 @@ export function AboutSection({ includeContact = false }: AboutSectionProps) {
       {/* Skills Section with Animated Progress Bars */}
       <div ref={skillsContainerRef} className="mb-24">
         <h3 className="text-2xl sm:text-3xl font-bold text-foreground mb-8 flex items-center gap-3">
-          <FontAwesomeIcon icon={faCode} className="h-6 w-6 text-[var(--skin-color)]" />
+          <FontAwesomeIcon icon={faCode} className="h-6 w-6 text-skin" />
           <span>Technical Proficiencies</span>
         </h3>
 
@@ -415,25 +415,25 @@ export function AboutSection({ includeContact = false }: AboutSectionProps) {
           {skills.map((skill) => (
             <div
               key={skill.name}
-              className="skill-card-item p-5 rounded-2xl bg-card border border-border shadow-sm hover:border-[var(--skin-color)]/50 hover:shadow-lg hover:-translate-y-1 transition-all duration-300 group"
+              className="skill-card-item p-5 rounded-2xl bg-card border border-border shadow-sm hover:border-skin/50 hover:shadow-lg hover:-translate-y-1 transition-all duration-300 group"
             >
               <div className="flex justify-between items-center mb-2.5">
-                <span className="font-bold text-base sm:text-lg text-foreground flex items-center gap-2 group-hover:text-[var(--skin-color)] transition-colors">
-                  <FontAwesomeIcon icon={faTerminal} className="h-3.5 w-3.5 text-[var(--skin-color)]" />
+                <span className="font-bold text-base sm:text-lg text-foreground flex items-center gap-2 group-hover:text-skin transition-colors">
+                  <FontAwesomeIcon icon={faTerminal} className="h-3.5 w-3.5 text-skin" />
                   {skill.name}
                 </span>
-                <span className="skill-counter text-sm font-mono font-bold text-[var(--skin-color)] origin-right">
+                <span className="skill-counter text-sm font-mono font-bold text-skin origin-right">
                   0%
                 </span>
               </div>
               <div className="w-full h-3.5 bg-slate-200/90 dark:bg-muted/80 rounded-full overflow-hidden p-0.5 border border-border/50 shadow-inner">
                 <div
-                  className="skill-progress-bar relative h-full rounded-full bg-gradient-to-r from-[var(--skin-color)] to-[var(--skin-color-end)] transition-none shadow-sm overflow-hidden"
+                  className="skill-progress-bar relative h-full rounded-full bg-linear-to-r from-skin to-skin-end transition-none shadow-sm overflow-hidden"
                   data-percentage={skill.percentage}
                   style={{ width: "0%" }}
                 >
                   {/* Smooth shimmer sweep element */}
-                  <span className="skill-shimmer absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/50 to-transparent pointer-events-none" />
+                  <span className="skill-shimmer absolute inset-0 -translate-x-full bg-linear-to-r from-transparent via-white/50 to-transparent pointer-events-none" />
                 </div>
               </div>
             </div>
@@ -444,9 +444,9 @@ export function AboutSection({ includeContact = false }: AboutSectionProps) {
       {/* Education & Experience Timelines */}
       <div className="timelines-container grid grid-cols-1 lg:grid-cols-2 gap-12 mb-16">
         {/* Education Timeline */}
-        <div className="timeline-container-card p-6 sm:p-8 rounded-3xl bg-card border border-border shadow-sm hover:border-[var(--skin-color)]/40 hover:shadow-lg transition-all duration-300">
+        <div className="timeline-container-card p-6 sm:p-8 rounded-3xl bg-card border border-border shadow-sm hover:border-skin/40 hover:shadow-lg transition-all duration-300">
           <h3 className="text-2xl font-bold text-foreground mb-8 flex items-center gap-3 border-b border-border pb-4">
-            <div className="w-10 h-10 rounded-xl bg-[var(--skin-color)]/10 text-[var(--skin-color)] flex items-center justify-center">
+            <div className="w-10 h-10 rounded-xl bg-skin/10 text-skin flex items-center justify-center">
               <FontAwesomeIcon icon={faGraduationCap} className="h-5 w-5" />
             </div>
             <span>Education</span>
@@ -455,16 +455,16 @@ export function AboutSection({ includeContact = false }: AboutSectionProps) {
           <div className="relative pl-6 sm:pl-8 border-l-2 border-border space-y-10">
             {educationTimeline.map((edu, idx) => (
               <div key={idx} className="timeline-card-item relative group">
-                <div className="absolute -left-[31px] sm:-left-[39px] top-1.5 w-4 h-4 rounded-full border-4 border-background bg-[var(--skin-color)] group-hover:scale-125 transition-transform" />
+                <div className="absolute -left-[31px] sm:-left-[39px] top-1.5 w-4 h-4 rounded-full border-4 border-background bg-skin group-hover:scale-125 transition-transform" />
 
-                <div className="inline-block px-3 py-1 rounded-md text-xs font-mono font-semibold bg-accent text-[var(--skin-color)] mb-2">
+                <div className="inline-block px-3 py-1 rounded-md text-xs font-mono font-semibold bg-accent text-skin mb-2">
                   {edu.period}
                 </div>
 
                 <h4 className="text-lg sm:text-xl font-bold text-foreground">
                   {edu.title}
                 </h4>
-                <p className="text-sm font-medium text-[var(--skin-color)] mb-2">
+                <p className="text-sm font-medium text-skin mb-2">
                   {edu.organization}
                 </p>
                 <p className="text-sm text-muted-foreground leading-relaxed">
@@ -482,9 +482,9 @@ export function AboutSection({ includeContact = false }: AboutSectionProps) {
         </div>
 
         {/* Experience Timeline */}
-        <div className="timeline-container-card p-6 sm:p-8 rounded-3xl bg-card border border-border shadow-sm hover:border-[var(--skin-color)]/40 hover:shadow-lg transition-all duration-300">
+        <div className="timeline-container-card p-6 sm:p-8 rounded-3xl bg-card border border-border shadow-sm hover:border-skin/40 hover:shadow-lg transition-all duration-300">
           <h3 className="text-2xl font-bold text-foreground mb-8 flex items-center gap-3 border-b border-border pb-4">
-            <div className="w-10 h-10 rounded-xl bg-[var(--skin-color)]/10 text-[var(--skin-color)] flex items-center justify-center">
+            <div className="w-10 h-10 rounded-xl bg-skin/10 text-skin flex items-center justify-center">
               <FontAwesomeIcon icon={faBriefcase} className="h-5 w-5" />
             </div>
             <span>Experience</span>
@@ -493,16 +493,16 @@ export function AboutSection({ includeContact = false }: AboutSectionProps) {
           <div className="relative pl-6 sm:pl-8 border-l-2 border-border space-y-10">
             {experienceTimeline.map((exp, idx) => (
               <div key={idx} className="timeline-card-item relative group">
-                <div className="absolute -left-[31px] sm:-left-[39px] top-1.5 w-4 h-4 rounded-full border-4 border-background bg-[var(--skin-color)] group-hover:scale-125 transition-transform" />
+                <div className="absolute -left-[31px] sm:-left-[39px] top-1.5 w-4 h-4 rounded-full border-4 border-background bg-skin group-hover:scale-125 transition-transform" />
 
-                <div className="inline-block px-3 py-1 rounded-md text-xs font-mono font-semibold bg-accent text-[var(--skin-color)] mb-2">
+                <div className="inline-block px-3 py-1 rounded-md text-xs font-mono font-semibold bg-accent text-skin mb-2">
                   {exp.period}
                 </div>
 
                 <h4 className="text-lg sm:text-xl font-bold text-foreground">
                   {exp.title}
                 </h4>
-                <p className="text-sm font-medium text-[var(--skin-color)] mb-2">
+                <p className="text-sm font-medium text-skin mb-2">
                   {exp.organization}
                 </p>
                 <p className="text-sm text-muted-foreground leading-relaxed">

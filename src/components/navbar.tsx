@@ -207,10 +207,10 @@ export function Navbar() {
         ref={headerRef}
       className={`fixed top-0 left-0 right-0 z-50 w-full transition-all duration-300 ease-in-out ${
         mobileMenuOpen
-          ? "bg-card/85 dark:bg-[var(--bg-black-900)]/85 backdrop-blur-2xl shadow-[0_20px_50px_oklch(0_0_0_/_0.3)] border-b border-border/60 py-3.5"
+          ? "bg-card/85 dark:bg-bg-900/85 backdrop-blur-2xl shadow-[0_20px_50px_oklch(0_0_0/0.3)] border-b border-border/60 py-3.5"
           : scrolled
-          ? "bg-card/80 dark:bg-[var(--bg-black-900)]/80 backdrop-blur-xl shadow-md border-b border-border/50 py-3"
-          : "bg-background/50 dark:bg-[var(--bg-black-900)]/50 backdrop-blur-md border-b border-transparent py-4 sm:py-5"
+          ? "bg-card/80 dark:bg-bg-900/80 backdrop-blur-xl shadow-md border-b border-border/50 py-3"
+          : "bg-background/50 dark:bg-bg-900/50 backdrop-blur-md border-b border-transparent py-4 sm:py-5"
       }`}
     >
       <div className="w-full max-w-[1800px] 2xl:max-w-[1920px] mx-auto px-4 sm:px-8 md:px-12 lg:px-16 xl:px-20 flex items-center justify-between">
@@ -222,14 +222,14 @@ export function Navbar() {
             className="group flex items-center gap-1.5 focus:outline-none"
             aria-label="Tushar Basak Portfolio Home"
           >
-            <span className="font-kaushan text-2xl sm:text-3xl font-bold tracking-wide text-foreground group-hover:text-[var(--skin-color)] transition-colors">
+            <span className="font-kaushan text-2xl sm:text-3xl font-bold tracking-wide text-foreground group-hover:text-skin transition-colors">
               Tushar
             </span>
           </Link>
 
           {/* Secured Badge */}
           <div
-            className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-mono font-semibold tracking-wider bg-emerald-500/10 text-emerald-700 dark:text-emerald-300 border border-emerald-500/30 shadow-[0_0_12px_oklch(0.72_0.19_155_/_0.15)] select-none"
+            className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-mono font-semibold tracking-wider bg-emerald-500/10 text-emerald-700 dark:text-emerald-300 border border-emerald-500/30 shadow-[0_0_12px_oklch(0.72_0.19_155/0.15)] select-none"
             title="SSL/TLS Secured Application"
           >
             <FontAwesomeIcon icon={faShieldHalved} className="h-3 w-3" />
@@ -257,7 +257,7 @@ export function Navbar() {
                 onClick={(e) => handleNavClick(e, item.href)}
                 className={`relative px-3.5 py-2 rounded-lg text-sm font-medium transition-all duration-200 flex items-center gap-2 group ${
                   isActive
-                    ? "text-[var(--skin-color)] font-semibold"
+                    ? "text-skin font-semibold"
                     : "text-muted-foreground hover:text-foreground"
                 }`}
                 aria-current={isActive ? "page" : undefined}
@@ -265,12 +265,12 @@ export function Navbar() {
                 <FontAwesomeIcon
                   icon={faIcon}
                   className={`h-3.5 w-3.5 transition-transform duration-200 group-hover:scale-110 ${
-                    isActive ? "text-[var(--skin-color)]" : "text-muted-foreground"
+                    isActive ? "text-skin" : "text-muted-foreground"
                   }`}
                 />
                 <span>{item.label}</span>
                 {isActive && (
-                  <span className="absolute bottom-0 left-2 right-2 h-0.5 bg-[var(--skin-color)] rounded-full transition-all duration-300" />
+                  <span className="absolute bottom-0 left-2 right-2 h-0.5 bg-skin rounded-full transition-all duration-300" />
                 )}
               </a>
             );
@@ -282,7 +282,7 @@ export function Navbar() {
           <button
             type="button"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="p-2 rounded-lg text-foreground hover:text-[var(--skin-color)] hover:bg-accent/50 focus:outline-none focus:ring-2 focus:ring-[var(--skin-color)] transition-all"
+            className="p-2 rounded-lg text-foreground hover:text-skin hover:bg-accent/50 focus:outline-none focus:ring-2 focus:ring-skin transition-all"
             aria-label={mobileMenuOpen ? "Close menu" : "Open menu"}
             aria-expanded={mobileMenuOpen}
           >
@@ -321,7 +321,7 @@ export function Navbar() {
       >
         <div className="w-full max-w-[1800px] 2xl:max-w-[1920px] mx-auto px-4 sm:px-8 flex flex-col space-y-1.5">
           {/* Subtle glass separator line */}
-          <div className="h-px w-full bg-gradient-to-r from-transparent via-border/70 to-transparent my-1.5" />
+          <div className="h-px w-full bg-linear-to-r from-transparent via-border/70 to-transparent my-1.5" />
 
           {navItems.map((item) => {
             const sectionKey = item.href.replace("#", "");
@@ -337,7 +337,7 @@ export function Navbar() {
                 onClick={(e) => handleNavClick(e, item.href)}
                 className={`group flex items-center justify-between px-4 py-3 rounded-2xl text-sm font-medium transition-all duration-200 ${
                   isActive
-                    ? "bg-[var(--skin-color)]/15 text-[var(--skin-color)] font-semibold border border-[var(--skin-color)]/30 shadow-[0_4px_20px_color-mix(in_oklch,var(--skin-color)_20%,transparent)]"
+                    ? "bg-skin/15 text-skin font-semibold border border-skin/30 shadow-[0_4px_20px_color-mix(in_oklch,var(--skin-color)_20%,transparent)]"
                     : "text-muted-foreground hover:text-foreground hover:bg-card/70 backdrop-blur-sm active:scale-[0.98]"
                 }`}
                 aria-current={isActive ? "page" : undefined}
@@ -346,7 +346,7 @@ export function Navbar() {
                   <div
                     className={`w-9 h-9 rounded-xl flex items-center justify-center transition-transform group-hover:scale-105 ${
                       isActive
-                        ? "bg-[var(--skin-color)]/20 text-[var(--skin-color)]"
+                        ? "bg-skin/20 text-skin"
                         : "bg-muted/70 text-muted-foreground group-hover:text-foreground"
                     }`}
                   >
@@ -357,7 +357,7 @@ export function Navbar() {
 
                 {/* Right indicator */}
                 {isActive ? (
-                  <span className="w-2 h-2 rounded-full bg-[var(--skin-color)] shadow-[0_0_8px_var(--skin-color)]" />
+                  <span className="w-2 h-2 rounded-full bg-skin shadow-[0_0_8px_var(--skin-color)]" />
                 ) : (
                   <span className="text-muted-foreground/30 text-xs group-hover:text-muted-foreground group-hover:translate-x-0.5 transition-all">
                     →

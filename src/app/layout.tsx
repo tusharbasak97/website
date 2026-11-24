@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Plus_Jakarta_Sans, JetBrains_Mono, Kaushan_Script } from "next/font/google";
+import localFont from "next/font/local";
 import "./globals.css";
 import { ThemeProvider } from "@/components/providers/theme-provider";
 import { LenisProvider } from "@/components/providers/lenis-provider";
@@ -10,21 +10,49 @@ import "@fortawesome/fontawesome-svg-core/styles.css";
 // Prevent FontAwesome from dynamically adding inline CSS since we import it above
 config.autoAddCss = false;
 
-const jakarta = Plus_Jakarta_Sans({
-  subsets: ["latin"],
+const jakarta = localFont({
+  src: [
+    {
+      path: "../../public/fonts/plus-jakarta-sans.woff2",
+      style: "normal",
+    },
+    {
+      path: "../../public/fonts/plus-jakarta-sans-ext.woff2",
+      style: "normal",
+    },
+  ],
   variable: "--font-plus-jakarta",
   display: "swap",
 });
 
-const jetbrainsMono = JetBrains_Mono({
-  subsets: ["latin"],
+const jetbrainsMono = localFont({
+  src: [
+    {
+      path: "../../public/fonts/jetbrains-mono.woff2",
+      style: "normal",
+    },
+    {
+      path: "../../public/fonts/jetbrains-mono-ext.woff2",
+      style: "normal",
+    },
+  ],
   variable: "--font-jetbrains-mono",
   display: "swap",
 });
 
-const kaushanScript = Kaushan_Script({
-  weight: "400",
-  subsets: ["latin"],
+const kaushanScript = localFont({
+  src: [
+    {
+      path: "../../public/fonts/kaushan-script.woff2",
+      weight: "400",
+      style: "normal",
+    },
+    {
+      path: "../../public/fonts/kaushan-script-ext.woff2",
+      weight: "400",
+      style: "normal",
+    },
+  ],
   variable: "--font-kaushan-script",
   display: "swap",
 });
@@ -262,7 +290,7 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLdData).replace(/</g, "\\u003c") }}
         />
       </head>
-      <body className="w-full min-h-screen overflow-x-hidden font-sans antialiased bg-[var(--bg-black-900)] text-[var(--text-black-900)] transition-colors duration-300">
+      <body className="w-full min-h-screen font-sans antialiased bg-background text-foreground transition-colors duration-300">
         <ThemeProvider
           attribute="class"
           defaultTheme="dark"

@@ -12,10 +12,10 @@ import { StyleSwitcher } from "@/components/style-switcher";
 
 export default function Home() {
   return (
-    <div className="relative w-full min-h-screen overflow-x-hidden">
+    <div className="relative w-full min-h-screen overflow-x-clip">
       <CustomCursor />
       <Navbar />
-      <main className="w-full overflow-x-hidden">
+      <main className="w-full overflow-x-clip">
         <HeroSection />
         <AboutSection />
         <CertificatesSection />

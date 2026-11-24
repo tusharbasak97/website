@@ -79,7 +79,7 @@ const nextConfig: NextConfig = {
         ],
       },
       {
-        source: "/:file*.(svg|jpg|jpeg|png|webp|webm|ico|pdf)",
+        source: "/:file*.(svg|jpg|jpeg|png|webp|webm|ico|pdf|woff2)",
         headers: [
           {
             key: "Cache-Control",
@@ -88,7 +88,7 @@ const nextConfig: NextConfig = {
         ],
       },
       {
-        source: "/(site\\.webmanifest|robots\\.txt|sitemap\\.xml)",
+        source: "/(site\\.webmanifest|robots\\.txt|sitemap\\.xml|browserconfig\\.xml|security\\.txt)",
         headers: [
           {
             key: "Cache-Control",

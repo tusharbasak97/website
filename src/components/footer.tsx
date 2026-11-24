@@ -1,8 +1,6 @@
 "use client";
 
-import React, { useRef, useEffect } from "react";
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
+import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUserSecret, faShieldHalved } from "@fortawesome/free-solid-svg-icons";
 import {
@@ -12,10 +10,6 @@ import {
 } from "@fortawesome/free-brands-svg-icons";
 import { socialLinks } from "@/lib/data";
 
-if (typeof window !== "undefined") {
-  gsap.registerPlugin(ScrollTrigger);
-}
-
 const iconMap: Record<string, typeof faGithub | typeof faUserSecret> = {
   github: faGithub,
   linkedin: faLinkedin,
@@ -24,40 +18,10 @@ const iconMap: Record<string, typeof faGithub | typeof faUserSecret> = {
 };
 
 export function Footer() {
-  const footerRef = useRef<HTMLElement>(null);
   const year = 2026;
 
-  useEffect(() => {
-    const footer = footerRef.current;
-    if (!footer) return;
-
-    const isMobile = typeof window !== "undefined" && window.innerWidth < 768;
-    const ctx = gsap.context(() => {
-      gsap.fromTo(
-        footer,
-        { opacity: 0, y: isMobile ? 12 : 25 },
-        {
-          opacity: 1,
-          y: 0,
-          duration: isMobile ? 0.35 : 0.8,
-          ease: "power2.out",
-          scrollTrigger: {
-            trigger: footer,
-            start: "top 98%",
-            once: true,
-          },
-        }
-      );
-    });
-
-    return () => ctx.revert();
-  }, []);
-
   return (
-    <footer
-      ref={footerRef}
-      className="w-full border-t border-border bg-card/50 backdrop-blur-sm py-12 px-4 sm:px-8 md:px-12 lg:px-16 xl:px-20"
-    >
+    <footer id="footer" className="relative z-10 w-full border-t border-border bg-card/50 backdrop-blur-sm py-12 px-4 sm:px-8 md:px-12 lg:px-16 xl:px-20">
       <div className="w-full max-w-[1800px] 2xl:max-w-[1920px] mx-auto flex flex-col md:flex-row items-center justify-between gap-6 pb-0">
         {/* Brand & secured indicator */}
         <div className="flex items-center gap-3">
@@ -83,7 +47,7 @@ export function Footer() {
                 rel="noopener noreferrer"
                 aria-label={item.label}
                 title={item.platform}
-                className="w-10 h-10 rounded-xl bg-card border border-border flex items-center justify-center text-muted-foreground hover:text-[var(--skin-color)] hover:border-[var(--skin-color)]/50 hover:shadow-md transition-all duration-200 group"
+                className="w-10 h-10 rounded-xl bg-card border border-border flex items-center justify-center text-muted-foreground hover:text-skin hover:border-skin/50 hover:shadow-md transition-all duration-200 group"
               >
                 <FontAwesomeIcon
                   icon={icon}
@@ -105,7 +69,7 @@ export function Footer() {
               href="https://tusharbasak97.github.io/link-in-bio-website-dark/"
               target="_blank"
               rel="noopener noreferrer"
-              className="font-semibold text-foreground hover:text-[var(--skin-color)] transition-colors underline decoration-[var(--skin-color)] underline-offset-4"
+              className="font-semibold text-foreground hover:text-skin transition-colors underline decoration-skin underline-offset-4"
             >
               Tushar Basak
             </a>

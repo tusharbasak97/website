@@ -164,7 +164,7 @@ export function TabletFloatingNav() {
       className="fixed right-4 sm:right-6 top-1/2 -translate-y-1/2 z-40 hidden md:flex lg:hidden flex-col items-center select-none pointer-events-auto"
     >
       {/* Apple VisionOS / iPadOS 18 Unified Floating Glass Capsule */}
-      <div className="p-2 rounded-full bg-card/85 dark:bg-[var(--bg-black-900)]/85 backdrop-blur-2xl border border-white/25 dark:border-white/10 shadow-[0_20px_50px_oklch(0_0_0_/_0.35),0_0_1px_oklch(1_0_0_/_0.2)] flex flex-col items-center gap-2.5">
+      <div className="p-2 rounded-full bg-card/85 dark:bg-bg-900/85 backdrop-blur-2xl border border-white/25 dark:border-white/10 shadow-[0_20px_50px_oklch(0_0_0/0.35),0_0_1px_oklch(1_0_0/0.2)] flex flex-col items-center gap-2.5">
         {/* Navigation Section Icons */}
         {navItems.map((item) => {
           const sectionKey = item.href.replace("#", "");
@@ -182,7 +182,7 @@ export function TabletFloatingNav() {
               aria-current={isActive ? "page" : undefined}
               className={`group relative flex items-center justify-center w-11 h-11 rounded-full transition-all duration-300 active:scale-90 ${
                 isActive
-                  ? "bg-gradient-to-tr from-[var(--skin-color)] to-[var(--skin-color-end)] text-[oklch(1_0_0)] shadow-[0_0_20px_color-mix(in_oklch,var(--skin-color)_60%,transparent)] scale-105"
+                  ? "bg-linear-to-tr from-skin to-skin-end text-white shadow-[0_0_20px_color-mix(in_oklch,var(--skin-color)_60%,transparent)] scale-105"
                   : "text-muted-foreground hover:text-foreground hover:bg-accent/60"
               }`}
             >
@@ -195,15 +195,15 @@ export function TabletFloatingNav() {
 
               {/* Tooltip Pill on the Left */}
               <div
-                className={`absolute right-full mr-3.5 px-3 py-1.5 rounded-full text-xs font-semibold tracking-wide whitespace-nowrap bg-card/95 dark:bg-[var(--bg-black-900)]/95 backdrop-blur-xl border border-border/80 shadow-lg pointer-events-none transition-all duration-200 ${
+                className={`absolute right-full mr-3.5 px-3 py-1.5 rounded-full text-xs font-semibold tracking-wide whitespace-nowrap bg-card/95 dark:bg-bg-900/95 backdrop-blur-xl border border-border/80 pointer-events-none transition-all duration-200 ${
                   isActive
-                    ? "opacity-100 translate-x-0 text-foreground font-bold shadow-[0_4px_16px_oklch(0_0_0_/_0.2)]"
-                    : "opacity-0 translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 text-muted-foreground"
+                    ? "opacity-100 translate-x-0 text-foreground font-bold shadow-[0_4px_16px_oklch(0_0_0/0.2)]"
+                    : "opacity-0 translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 text-muted-foreground shadow-lg"
                 }`}
               >
                 <span>{item.label}</span>
                 {isActive && (
-                  <span className="inline-block w-1.5 h-1.5 rounded-full bg-[var(--skin-color)] ml-1.5" />
+                  <span className="inline-block w-1.5 h-1.5 rounded-full bg-skin ml-1.5" />
                 )}
               </div>
             </a>
@@ -224,17 +224,17 @@ export function TabletFloatingNav() {
           {isClient && resolvedTheme === "dark" ? (
             <FontAwesomeIcon
               icon={faSun}
-              className="h-4 w-4 transition-colors group-hover:text-[var(--skin-color)] text-amber-400"
+              className="h-4 w-4 transition-colors group-hover:text-skin text-amber-400"
             />
           ) : (
             <FontAwesomeIcon
               icon={faMoon}
-              className="h-4 w-4 transition-colors group-hover:text-[var(--skin-color)] text-sky-400"
+              className="h-4 w-4 transition-colors group-hover:text-skin text-sky-400"
             />
           )}
 
           {/* Tooltip Pill on the Left */}
-          <div className="absolute right-full mr-3.5 px-3 py-1.5 rounded-full text-xs font-semibold tracking-wide whitespace-nowrap bg-card/95 dark:bg-[var(--bg-black-900)]/95 backdrop-blur-xl border border-border/80 shadow-lg pointer-events-none opacity-0 translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 text-muted-foreground transition-all duration-200">
+          <div className="absolute right-full mr-3.5 px-3 py-1.5 rounded-full text-xs font-semibold tracking-wide whitespace-nowrap bg-card/95 dark:bg-bg-900/95 backdrop-blur-xl border border-border/80 shadow-lg pointer-events-none opacity-0 translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 text-muted-foreground transition-all duration-200">
             <span>{isClient && resolvedTheme === "dark" ? "Light Mode" : "Dark Mode"}</span>
           </div>
         </button>
@@ -247,20 +247,20 @@ export function TabletFloatingNav() {
             aria-label="Change Accent Color"
             className={`group relative flex items-center justify-center w-11 h-11 rounded-full transition-all duration-300 active:scale-90 cursor-pointer ${
               colorPickerOpen
-                ? "bg-[var(--skin-color)]/20 text-[var(--skin-color)] ring-2 ring-[var(--skin-color)]"
+                ? "bg-skin/20 text-skin ring-2 ring-skin"
                 : "text-muted-foreground hover:text-foreground hover:bg-accent/60"
             }`}
           >
             <FontAwesomeIcon
               icon={faPalette}
               className={`h-4 w-4 transition-transform duration-300 ${
-                colorPickerOpen ? "rotate-45 text-[var(--skin-color)]" : "group-hover:scale-110"
+                colorPickerOpen ? "rotate-45 text-skin" : "group-hover:scale-110"
               }`}
             />
 
             {/* Tooltip Pill on the Left (hidden when palette is open) */}
             {!colorPickerOpen && (
-              <div className="absolute right-full mr-3.5 px-3 py-1.5 rounded-full text-xs font-semibold tracking-wide whitespace-nowrap bg-card/95 dark:bg-[var(--bg-black-900)]/95 backdrop-blur-xl border border-border/80 shadow-lg pointer-events-none opacity-0 translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 text-muted-foreground transition-all duration-200">
+              <div className="absolute right-full mr-3.5 px-3 py-1.5 rounded-full text-xs font-semibold tracking-wide whitespace-nowrap bg-card/95 dark:bg-bg-900/95 backdrop-blur-xl border border-border/80 shadow-lg pointer-events-none opacity-0 translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 text-muted-foreground transition-all duration-200">
                 <span>Theme Colors</span>
               </div>
             )}
@@ -268,7 +268,7 @@ export function TabletFloatingNav() {
 
           {/* Apple VisionOS-style Color Picker Sub-Pill extending to the left */}
           {colorPickerOpen && (
-            <div className="absolute right-full mr-3 p-2 rounded-full bg-card/95 dark:bg-[var(--bg-black-900)]/95 backdrop-blur-2xl border border-white/20 dark:border-white/10 shadow-[0_16px_40px_oklch(0_0_0_/_0.35)] flex items-center gap-2.5 z-50 animate-in fade-in slide-in-from-right-3 duration-200">
+            <div className="absolute right-full mr-3 p-2 rounded-full bg-card/95 dark:bg-bg-900/95 backdrop-blur-2xl border border-white/20 dark:border-white/10 shadow-[0_16px_40px_oklch(0_0_0/0.35)] flex items-center gap-2.5 z-50 animate-in fade-in slide-in-from-right-3 duration-200">
               {colorOptions.map((color) => {
                 const isSelected = activeColor === color.id;
 
@@ -284,12 +284,12 @@ export function TabletFloatingNav() {
                         ? "ring-2 ring-foreground ring-offset-2 ring-offset-card scale-110"
                         : "hover:scale-105 opacity-80 hover:opacity-100"
                     }`}
-                    style={{ backgroundColor: color.hex }}
+                    style={{ background: color.gradient }}
                   >
                     {isSelected && (
                       <FontAwesomeIcon
                         icon={faCheck}
-                        className="h-3 w-3 text-[oklch(1_0_0)] drop-shadow-md"
+                        className="h-3 w-3 text-white drop-shadow-md"
                       />
                     )}
                   </button>

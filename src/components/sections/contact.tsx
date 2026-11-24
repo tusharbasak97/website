@@ -99,7 +99,7 @@ export function ContactSection({ standalone = true }: ContactSectionProps) {
             scrollTrigger: {
               trigger: title,
               start: "top 96%",
-              once: true,
+              toggleActions: "play none none none",
             },
           }
         );
@@ -114,7 +114,7 @@ export function ContactSection({ standalone = true }: ContactSectionProps) {
             scrollTrigger: {
               trigger: line,
               start: "top 96%",
-              once: true,
+              toggleActions: "play none none none",
             },
           }
         );
@@ -137,7 +137,7 @@ export function ContactSection({ standalone = true }: ContactSectionProps) {
             scrollTrigger: {
               trigger: gridContainer,
               start: scrollStart,
-              once: true,
+              toggleActions: "play none none none",
             },
           }
         );
@@ -158,7 +158,7 @@ export function ContactSection({ standalone = true }: ContactSectionProps) {
             scrollTrigger: {
               trigger: formCard,
               start: scrollStart,
-              once: true,
+              toggleActions: "play none none none",
             },
           }
         );
@@ -263,7 +263,7 @@ export function ContactSection({ standalone = true }: ContactSectionProps) {
       <div className="mb-10 text-left">
         <h2 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-foreground flex items-center gap-3">
           <span className="contact-title-text">Get In Touch</span>
-          <span className="contact-title-line h-1 flex-1 max-w-[80px] bg-[var(--skin-color)] rounded-full" />
+          <span className="contact-title-line h-1 flex-1 max-w-[80px] bg-skin rounded-full" />
         </h2>
         <p className="mt-2 text-muted-foreground text-sm sm:text-base">
           Have a question or interested in collaborating? Send me a message and I will get back to you promptly.
@@ -276,14 +276,14 @@ export function ContactSection({ standalone = true }: ContactSectionProps) {
           {/* Email Card */}
           <a
             href={`mailto:${personalInfo.email}`}
-            className="contact-info-card group flex items-start gap-4 p-5 rounded-2xl bg-card border border-border hover:border-[var(--skin-color)]/50 hover:shadow-lg hover:-translate-y-1 transition-all duration-300"
+            className="contact-info-card group flex items-start gap-4 p-5 rounded-2xl bg-card border border-border hover:border-skin/50 hover:shadow-lg hover:-translate-y-1 transition-all duration-300"
           >
-            <div className="w-12 h-12 rounded-xl bg-[var(--skin-color)]/10 text-[var(--skin-color)] flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform">
+            <div className="w-12 h-12 rounded-xl bg-skin/10 text-skin flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform">
               <FontAwesomeIcon icon={faEnvelope} className="h-5 w-5" />
             </div>
             <div>
               <span className="text-xs uppercase font-semibold text-muted-foreground tracking-wider">Email Me</span>
-              <p className="text-sm sm:text-base font-medium text-foreground group-hover:text-[var(--skin-color)] transition-colors break-all">
+              <p className="text-sm sm:text-base font-medium text-foreground group-hover:text-skin transition-colors break-all">
                 {personalInfo.email}
               </p>
             </div>
@@ -322,7 +322,7 @@ export function ContactSection({ standalone = true }: ContactSectionProps) {
         </div>
 
         {/* Contact Form (Col 8) */}
-        <div className="contact-form-container lg:col-span-8 p-6 sm:p-8 rounded-2xl bg-card border border-border shadow-sm hover:border-[var(--skin-color)]/40 hover:shadow-lg transition-all duration-300">
+        <div className="contact-form-container lg:col-span-8 p-6 sm:p-8 rounded-2xl bg-card border border-border shadow-sm hover:border-skin/40 hover:shadow-lg transition-all duration-300">
           {status === "success" ? (
             <div className="py-12 flex flex-col items-center justify-center text-center space-y-4">
               <div className="w-16 h-16 rounded-full bg-emerald-500/10 text-emerald-500 flex items-center justify-center">
@@ -335,7 +335,7 @@ export function ContactSection({ standalone = true }: ContactSectionProps) {
               <button
                 type="button"
                 onClick={() => setStatus("idle")}
-                className="mt-4 px-6 py-2.5 rounded-xl font-semibold text-white bg-[var(--skin-color)] hover:opacity-90 transition-opacity"
+                className="mt-4 px-6 py-2.5 rounded-xl font-semibold text-white bg-skin hover:opacity-90 transition-opacity"
               >
                 Send Another Message
               </button>
@@ -377,7 +377,7 @@ export function ContactSection({ standalone = true }: ContactSectionProps) {
                     maxLength={100}
                     autoComplete="name"
                     placeholder="John Doe"
-                    className="w-full px-4 py-3 rounded-xl bg-background dark:bg-card/60 border-2 border-border hover:border-border/90 focus:border-[var(--skin-color)] focus:ring-2 focus:ring-[var(--skin-color)]/20 outline-none text-foreground placeholder:text-muted-foreground/60 transition-all text-sm shadow-xs"
+                    className="w-full px-4 py-3 rounded-xl bg-background dark:bg-card/60 border-2 border-border hover:border-border/90 focus:border-skin focus:ring-2 focus:ring-skin/20 outline-none text-foreground placeholder:text-muted-foreground/60 transition-all text-sm shadow-xs"
                   />
                 </div>
                 <div className="space-y-2">
@@ -392,7 +392,7 @@ export function ContactSection({ standalone = true }: ContactSectionProps) {
                     maxLength={120}
                     autoComplete="email"
                     placeholder="john@example.com"
-                    className="w-full px-4 py-3 rounded-xl bg-background dark:bg-card/60 border-2 border-border hover:border-border/90 focus:border-[var(--skin-color)] focus:ring-2 focus:ring-[var(--skin-color)]/20 outline-none text-foreground placeholder:text-muted-foreground/60 transition-all text-sm shadow-xs"
+                    className="w-full px-4 py-3 rounded-xl bg-background dark:bg-card/60 border-2 border-border hover:border-border/90 focus:border-skin focus:ring-2 focus:ring-skin/20 outline-none text-foreground placeholder:text-muted-foreground/60 transition-all text-sm shadow-xs"
                   />
                 </div>
               </div>
@@ -408,7 +408,7 @@ export function ContactSection({ standalone = true }: ContactSectionProps) {
                   required
                   maxLength={150}
                   placeholder="Security Assessment / Web Consultation"
-                  className="w-full px-4 py-3 rounded-xl bg-background dark:bg-card/60 border-2 border-border hover:border-border/90 focus:border-[var(--skin-color)] focus:ring-2 focus:ring-[var(--skin-color)]/20 outline-none text-foreground placeholder:text-muted-foreground/60 transition-all text-sm shadow-xs"
+                  className="w-full px-4 py-3 rounded-xl bg-background dark:bg-card/60 border-2 border-border hover:border-border/90 focus:border-skin focus:ring-2 focus:ring-skin/20 outline-none text-foreground placeholder:text-muted-foreground/60 transition-all text-sm shadow-xs"
                 />
               </div>
 
@@ -423,7 +423,7 @@ export function ContactSection({ standalone = true }: ContactSectionProps) {
                   maxLength={3000}
                   rows={5}
                   placeholder="Tell me about your project, timeline, and requirements..."
-                  className="w-full px-4 py-3 rounded-xl bg-background dark:bg-card/60 border-2 border-border hover:border-border/90 focus:border-[var(--skin-color)] focus:ring-2 focus:ring-[var(--skin-color)]/20 outline-none text-foreground placeholder:text-muted-foreground/60 transition-all text-sm resize-none shadow-xs"
+                  className="w-full px-4 py-3 rounded-xl bg-background dark:bg-card/60 border-2 border-border hover:border-border/90 focus:border-skin focus:ring-2 focus:ring-skin/20 outline-none text-foreground placeholder:text-muted-foreground/60 transition-all text-sm resize-none shadow-xs"
                 />
               </div>
 
@@ -435,7 +435,7 @@ export function ContactSection({ standalone = true }: ContactSectionProps) {
                 <button
                   type="submit"
                   disabled={status === "submitting"}
-                  className="w-full sm:w-auto inline-flex items-center justify-center gap-2.5 px-8 py-3.5 rounded-xl font-semibold bg-gradient-to-r from-[var(--skin-color)] to-[var(--skin-color-end)] !text-white shadow-md shadow-[var(--skin-color)]/30 hover:shadow-lg hover:shadow-[var(--skin-color)]/45 hover:-translate-y-0.5 active:translate-y-0 disabled:opacity-50 transition-all duration-200 cursor-pointer"
+                  className="w-full sm:w-auto inline-flex items-center justify-center gap-2.5 px-8 py-3.5 rounded-xl font-semibold bg-linear-to-r from-skin to-skin-end !text-white shadow-md shadow-skin/30 hover:shadow-lg hover:shadow-skin/45 hover:-translate-y-0.5 active:translate-y-0 disabled:opacity-50 transition-all duration-200 cursor-pointer"
                 >
                   <FontAwesomeIcon icon={faPaperPlane} className="h-4 w-4" />
                   <span>{status === "submitting" ? "Sending..." : "Send Message"}</span>

@@ -78,7 +78,7 @@ export function CertificatesSection() {
             scrollTrigger: {
               trigger: title,
               start: "top 96%",
-              once: true,
+              toggleActions: "play none none none",
             },
           }
         );
@@ -93,7 +93,7 @@ export function CertificatesSection() {
             scrollTrigger: {
               trigger: line,
               start: "top 96%",
-              once: true,
+              toggleActions: "play none none none",
             },
           }
         );
@@ -115,7 +115,7 @@ export function CertificatesSection() {
             scrollTrigger: {
               trigger: filtersGroup,
               start: scrollStart,
-              once: true,
+              toggleActions: "play none none none",
             },
           }
         );
@@ -138,7 +138,7 @@ export function CertificatesSection() {
             scrollTrigger: {
               trigger: grid,
               start: scrollStart,
-              once: true,
+              toggleActions: "play none none none",
             },
           }
         );
@@ -270,7 +270,7 @@ export function CertificatesSection() {
         <div className="mb-12 text-left">
         <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight text-foreground flex items-center gap-4">
           <span className="cert-title-text">Professional Certifications</span>
-          <span className="cert-title-line h-1 flex-1 max-w-[100px] bg-[var(--skin-color)] rounded-full" />
+          <span className="cert-title-line h-1 flex-1 max-w-[100px] bg-skin rounded-full" />
         </h2>
         <p className="mt-2 text-muted-foreground text-base sm:text-lg">
           Industry-accredited qualifications validating advanced competencies in information security
@@ -290,8 +290,8 @@ export function CertificatesSection() {
               onClick={() => setActiveFilter(key)}
               className={`cert-filter-btn inline-flex items-center gap-2.5 px-4 sm:px-5 py-2.5 rounded-xl text-sm font-semibold transition-all duration-200 cursor-pointer ${
                 isActive
-                  ? "bg-gradient-to-r from-[var(--skin-color)] to-[var(--skin-color-end)] !text-white shadow-md shadow-[var(--skin-color)]/30 scale-[1.02]"
-                  : "bg-card border-2 border-border/80 text-foreground/80 hover:text-foreground hover:bg-accent/70 hover:border-[var(--skin-color)]/50 shadow-xs"
+                  ? "bg-linear-to-r from-skin to-skin-end !text-white shadow-md shadow-skin/30 scale-[1.02]"
+                  : "bg-card border-2 border-border/80 text-foreground/80 hover:text-foreground hover:bg-accent/70 hover:border-skin/50 shadow-xs"
               }`}
               aria-pressed={isActive}
             >
@@ -338,12 +338,12 @@ export function CertificatesSection() {
           return (
             <article
               key={cert.id}
-              className="cert-card flex flex-col justify-between p-6 rounded-2xl bg-card border border-border hover:border-[var(--skin-color)]/50 hover:shadow-xl hover:-translate-y-1 transition-all duration-300 group"
+              className="cert-card flex flex-col justify-between p-6 rounded-2xl bg-card border border-border hover:border-skin/50 hover:shadow-xl hover:-translate-y-1 transition-all duration-300 group"
             >
               <div>
                 {/* Header: Icon & Status Badge */}
                 <div className="flex items-center justify-between gap-3 mb-5">
-                  <div className="w-12 h-12 rounded-xl bg-[var(--skin-color)]/10 text-[var(--skin-color)] flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform">
+                  <div className="w-12 h-12 rounded-xl bg-skin/10 text-skin flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform">
                     <FontAwesomeIcon icon={icon} className="h-6 w-6" />
                   </div>
                   <span
@@ -355,7 +355,7 @@ export function CertificatesSection() {
                 </div>
 
                 {/* Title & Issuer */}
-                <h3 className="text-xl font-bold text-foreground group-hover:text-[var(--skin-color)] transition-colors">
+                <h3 className="text-xl font-bold text-foreground group-hover:text-skin transition-colors">
                   {cert.title}
                 </h3>
                 <p className="mt-1 text-sm font-medium text-muted-foreground">
@@ -393,7 +393,7 @@ export function CertificatesSection() {
                     href={cert.verifyUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs font-semibold bg-gradient-to-r from-[var(--skin-color)] to-[var(--skin-color-end)] !text-white shadow-sm hover:shadow-md hover:shadow-[var(--skin-color)]/30 transition-all cursor-pointer"
+                    className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs font-semibold bg-linear-to-r from-skin to-skin-end !text-white shadow-sm hover:shadow-md hover:shadow-skin/30 transition-all cursor-pointer"
                   >
                     <span>Verify</span>
                     <FontAwesomeIcon icon={faExternalLinkAlt} className="h-2.5 w-2.5" />

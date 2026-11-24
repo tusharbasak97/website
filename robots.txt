@@ -5,10 +5,12 @@
 User-agent: *
 Allow: /
 Allow: /assets/
+Allow: /fonts/
 Allow: /favicon.ico
 Allow: /sitemap.xml
 Allow: /.well-known/
 Allow: /site.webmanifest
+Allow: /browserconfig.xml
 
 # Do not index internal next artifacts or error pages
 Disallow: /api/

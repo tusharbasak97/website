@@ -172,8 +172,8 @@ export function HeroSection() {
       className="relative min-h-screen w-full flex items-center justify-center pt-24 pb-16 px-4 sm:px-8 md:px-12 lg:px-16 xl:px-20 overflow-hidden"
     >
       {/* Background Ambient Glow Elements */}
-      <div className="absolute top-1/4 -left-32 w-96 h-96 bg-[var(--skin-color)]/10 rounded-full blur-3xl pointer-events-none -z-10" />
-      <div className="absolute bottom-1/4 -right-32 w-96 h-96 bg-[var(--skin-color-end)]/10 rounded-full blur-3xl pointer-events-none -z-10" />
+      <div className="absolute top-1/4 -left-32 w-96 h-96 bg-skin/10 rounded-full blur-3xl pointer-events-none -z-10" />
+      <div className="absolute bottom-1/4 -right-32 w-96 h-96 bg-skin-end/10 rounded-full blur-3xl pointer-events-none -z-10" />
 
       <div className="w-full max-w-[1800px] 2xl:max-w-[1920px] mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center">
         {/* Left Text Column (Col 7) */}
@@ -183,14 +183,14 @@ export function HeroSection() {
         >
           {/* Status Chip */}
           <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs sm:text-sm font-semibold bg-accent/60 text-foreground border border-border w-fit">
-            <FontAwesomeIcon icon={faShieldHalved} className="h-3.5 w-3.5 text-[var(--skin-color)] animate-pulse" />
+            <FontAwesomeIcon icon={faShieldHalved} className="h-3.5 w-3.5 text-skin animate-pulse" />
             <span>Cybersecurity Specialist & Full-Stack Builder</span>
           </div>
 
           {/* Heading */}
           <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight text-foreground leading-[1.15]">
             Hello, my name is{" "}
-            <span className="text-[var(--skin-color)] font-extrabold tracking-tight inline-block drop-shadow-sm">
+            <span className="text-skin font-extrabold tracking-tight inline-block drop-shadow-sm">
               {personalInfo.name}
             </span>
           </h1>
@@ -198,10 +198,10 @@ export function HeroSection() {
           {/* Dynamic Typing Title */}
           <div className="text-xl sm:text-2xl md:text-3xl font-semibold text-muted-foreground flex items-center flex-wrap min-h-[2.5rem]">
             <span className="mr-2 text-foreground font-medium">I&apos;m a</span>
-            <span className="font-mono text-[var(--skin-color)] border-b-2 border-[var(--skin-color)] text-xl sm:text-2xl md:text-3xl font-bold tracking-tight">
+            <span className="font-mono text-skin border-b-2 border-skin text-xl sm:text-2xl md:text-3xl font-bold tracking-tight">
               {displayText}
             </span>
-            <span className="inline-block w-0.5 h-6 sm:h-7 bg-[var(--skin-color)] ml-1 animate-pulse" />
+            <span className="inline-block w-0.5 h-6 sm:h-7 bg-skin ml-1 animate-pulse" />
           </div>
 
           {/* Bio Description */}
@@ -216,7 +216,7 @@ export function HeroSection() {
               target="_blank"
               rel="noopener noreferrer"
               aria-label="Hire Me - Tushar Basak on LinkedIn"
-              className="inline-flex items-center gap-2.5 px-7 py-3.5 rounded-xl font-semibold text-sm sm:text-base bg-gradient-to-r from-[var(--skin-color)] to-[var(--skin-color-end)] !text-white shadow-lg shadow-[var(--skin-color)]/30 hover:shadow-xl hover:shadow-[var(--skin-color)]/45 hover:-translate-y-0.5 active:translate-y-0 transition-all duration-200 cursor-pointer"
+              className="inline-flex items-center gap-2.5 px-7 py-3.5 rounded-xl font-semibold text-sm sm:text-base bg-linear-to-r from-skin to-skin-end !text-white shadow-lg shadow-skin/30 hover:shadow-xl hover:shadow-skin/45 hover:-translate-y-0.5 active:translate-y-0 transition-all duration-200 cursor-pointer"
             >
               <FontAwesomeIcon icon={faLinkedin} className="h-4 w-4" />
               <span>Hire Me</span>
@@ -225,10 +225,10 @@ export function HeroSection() {
             <a
               href="#about"
               onClick={(e) => scrollToSection(e, "#about")}
-              className="inline-flex items-center gap-2 px-6 py-3.5 rounded-xl font-semibold text-sm sm:text-base border-2 border-border/80 bg-card hover:bg-accent/80 hover:border-[var(--skin-color)]/60 text-foreground shadow-xs hover:shadow hover:-translate-y-0.5 active:translate-y-0 transition-all duration-200 cursor-pointer"
+              className="inline-flex items-center gap-2 px-6 py-3.5 rounded-xl font-semibold text-sm sm:text-base border-2 border-border/80 bg-card hover:bg-accent/80 hover:border-skin/60 text-foreground shadow-xs hover:shadow hover:-translate-y-0.5 active:translate-y-0 transition-all duration-200 cursor-pointer"
             >
               <span>Explore Profile</span>
-              <FontAwesomeIcon icon={faArrowDown} className="h-3.5 w-3.5 text-[var(--skin-color)]" />
+              <FontAwesomeIcon icon={faArrowDown} className="h-3.5 w-3.5 text-skin" />
             </a>
           </div>
         </div>
@@ -247,14 +247,14 @@ export function HeroSection() {
             style={{ transformStyle: "preserve-3d" }}
           >
             {/* Ambient Multi-layered Glowing Water Aura */}
-            <div className="animate-morph-blob absolute w-[98%] h-[98%] bg-gradient-to-tr from-[var(--skin-color)] to-[var(--skin-color-end)] opacity-35 blur-3xl pointer-events-none" />
+            <div className="animate-morph-blob absolute w-[98%] h-[98%] bg-linear-to-tr from-skin to-skin-end opacity-35 blur-3xl pointer-events-none" />
 
             {/* Orbiting Cyber Dashed Ring */}
-            <div className="absolute -inset-3 sm:-inset-4 rounded-full border border-dashed border-[var(--skin-color)]/25 animate-spin [animation-duration:35s] pointer-events-none" />
+            <div className="absolute -inset-3 sm:-inset-4 rounded-full border border-dashed border-skin/25 animate-spin [animation-duration:35s] pointer-events-none" />
 
             {/* Circular Water-like Morphing Fluid Animation */}
             <div
-              className="animate-morph-blob absolute w-[86%] h-[86%] bg-gradient-to-tr from-[var(--skin-color)] via-[var(--skin-color)]/70 to-[var(--skin-color-end)] shadow-[0_15px_45px_color-mix(in_oklch,var(--skin-color)_45%,transparent)] transition-all duration-700 pointer-events-none"
+              className="animate-morph-blob absolute w-[86%] h-[86%] bg-linear-to-tr from-skin via-skin/70 to-skin-end shadow-[0_15px_45px_color-mix(in_oklch,var(--skin-color)_45%,transparent)] transition-all duration-700 pointer-events-none"
               style={{ zIndex: 1 }}
             />
 
@@ -268,7 +268,7 @@ export function HeroSection() {
                 width={384}
                 height={448}
                 alt={`${personalInfo.name} - ${personalInfo.jobTitle}`}
-                className="w-full h-full object-contain object-bottom drop-shadow-[0_20px_30px_oklch(0_0_0_/_0.5)] hover:scale-105 transition-transform duration-500 ease-out select-none"
+                className="w-full h-full object-contain object-bottom drop-shadow-[0_20px_30px_oklch(0_0_0/0.5)] hover:scale-105 transition-transform duration-500 ease-out select-none"
                 loading="eager"
                 fetchPriority="high"
                 decoding="async"
