@@ -19,9 +19,9 @@ body {
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: "Plus Jakarta Sans", var(--font-plus-jakarta), system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-  --font-mono: "JetBrains Mono", var(--font-jetbrains-mono), monospace;
-  --font-kaushan: "Kaushan Script", var(--font-kaushan-script), cursive;
+  --font-sans: var(--font-plus-jakarta), "Plus Jakarta Sans", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-mono: var(--font-jetbrains-mono), "JetBrains Mono", monospace;
+  --font-kaushan: var(--font-kaushan-script), "Kaushan Script", cursive;
   --color-skin: var(--skin-color);
   --color-skin-end: var(--skin-color-end);
   --color-bg-900: var(--bg-black-900);
@@ -69,16 +69,21 @@ body {
 }
 
 .font-kaushan {
-  font-family: "Kaushan Script", var(--font-kaushan-script), cursive;
+  font-family: var(--font-kaushan-script), "Kaushan Script", cursive;
 }
 .font-mono {
-  font-family: "JetBrains Mono", var(--font-jetbrains-mono), monospace;
+  font-family: var(--font-jetbrains-mono), "JetBrains Mono", monospace;
 }
 .font-sans {
-  font-family: "Plus Jakarta Sans", var(--font-plus-jakarta), system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  font-family: var(--font-plus-jakarta), "Plus Jakarta Sans", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
 }
 
 :root {
+  /* Font fallbacks for editor CSS validator */
+  --font-plus-jakarta: "Plus Jakarta Sans", system-ui, sans-serif;
+  --font-jetbrains-mono: "JetBrains Mono", monospace;
+  --font-kaushan-script: "Kaushan Script", cursive;
+
   /* Default Skin Color (Cyber Orange - color-1) with WCAG AA 4.5:1 contrast for light surfaces */
   --skin-hue: 55;
   --skin-color: oklch(0.56 0.20 48);
@@ -213,15 +218,26 @@ body {
 }
 
 @layer base {
-  html, body {
-    scrollbar-width: none;
-    -ms-overflow-style: none;
+  /* Mobile & touch devices: hide scrollbars for clean native feel */
+  @media (max-width: 1023px), (pointer: coarse) {
+    html, body, * {
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+    }
   }
+
+  /* Desktop pointer devices: enable modern stable layout */
+  @media (min-width: 1024px) and (pointer: fine) {
+    html {
+      scrollbar-gutter: stable;
+      scrollbar-width: thin;
+      scrollbar-color: var(--border) transparent;
+    }
+  }
+
   * {
     border-color: var(--border);
     outline-color: color-mix(in oklch, var(--ring) 50%, transparent);
-    scrollbar-width: none;
-    -ms-overflow-style: none;
   }
   body {
     background-color: var(--background);
@@ -254,20 +270,50 @@ body {
 }
 
 /* ==========================================================================
-   CLEAN BORDERLESS SCROLLBAR (HIDE OBTRUSIVE RIGHT-SIDE SCROLLBAR STRIP)
+   CLEAN, MODERN SCROLLBAR
+   Mobile/Touch: Hidden for native app feel
+   Desktop: Sleek, borderless semi-transparent floating pill scrollbar
    ========================================================================== */
-::-webkit-scrollbar {
-  display: none;
-  width: 0px;
-  height: 0px;
+@media (max-width: 1023px), (pointer: coarse) {
+  ::-webkit-scrollbar {
+    display: none;
+    width: 0px;
+    height: 0px;
+  }
+  ::-webkit-scrollbar-track,
+  ::-webkit-scrollbar-thumb {
+    background: transparent;
+  }
 }
 
-::-webkit-scrollbar-track {
-  background: transparent;
-}
+@media (min-width: 1024px) and (pointer: fine) {
+  ::-webkit-scrollbar {
+    display: block;
+    width: 8px;
+    height: 8px;
+  }
 
-::-webkit-scrollbar-thumb {
-  background: transparent;
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background-color: color-mix(in oklch, var(--foreground) 22%, transparent);
+    border-radius: 9999px;
+    border: 2px solid transparent;
+    background-clip: padding-box;
+    transition: background-color 0.2s ease;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background-color: color-mix(in oklch, var(--skin-color) 65%, transparent);
+    background-clip: padding-box;
+  }
+
+  ::-webkit-scrollbar-thumb:active {
+    background-color: var(--skin-color);
+    background-clip: padding-box;
+  }
 }
 
 /* Class styling for theme gradients */

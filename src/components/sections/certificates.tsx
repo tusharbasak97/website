@@ -78,8 +78,7 @@ export function CertificatesSection() {
             scrollTrigger: {
               trigger: title,
               start: "top 96%",
-              toggleActions: "play none none none",
-              fastScrollEnd: true,
+              once: true,
             },
           }
         );
@@ -94,8 +93,7 @@ export function CertificatesSection() {
             scrollTrigger: {
               trigger: line,
               start: "top 96%",
-              toggleActions: "play none none none",
-              fastScrollEnd: true,
+              once: true,
             },
           }
         );
@@ -117,8 +115,7 @@ export function CertificatesSection() {
             scrollTrigger: {
               trigger: filtersGroup,
               start: scrollStart,
-              toggleActions: "play none none none",
-              fastScrollEnd: true,
+              once: true,
             },
           }
         );
@@ -141,8 +138,7 @@ export function CertificatesSection() {
             scrollTrigger: {
               trigger: grid,
               start: scrollStart,
-              toggleActions: "play none none none",
-              fastScrollEnd: true,
+              once: true,
             },
           }
         );

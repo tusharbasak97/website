@@ -55,8 +55,7 @@ export function ProjectsSection() {
             scrollTrigger: {
               trigger: title,
               start: "top 96%",
-              toggleActions: "play none none none",
-              fastScrollEnd: true,
+              once: true,
             },
           }
         );
@@ -71,8 +70,7 @@ export function ProjectsSection() {
             scrollTrigger: {
               trigger: line,
               start: "top 96%",
-              toggleActions: "play none none none",
-              fastScrollEnd: true,
+              once: true,
             },
           }
         );
@@ -99,8 +97,7 @@ export function ProjectsSection() {
             scrollTrigger: {
               trigger: grid,
               start: scrollStart,
-              toggleActions: "play none none none",
-              fastScrollEnd: true,
+              once: true,
             },
           }
         );

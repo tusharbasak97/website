@@ -99,8 +99,7 @@ export function ContactSection({ standalone = true }: ContactSectionProps) {
             scrollTrigger: {
               trigger: title,
               start: "top 96%",
-              toggleActions: "play none none none",
-              fastScrollEnd: true,
+              once: true,
             },
           }
         );
@@ -115,8 +114,7 @@ export function ContactSection({ standalone = true }: ContactSectionProps) {
             scrollTrigger: {
               trigger: line,
               start: "top 96%",
-              toggleActions: "play none none none",
-              fastScrollEnd: true,
+              once: true,
             },
           }
         );
@@ -139,8 +137,7 @@ export function ContactSection({ standalone = true }: ContactSectionProps) {
             scrollTrigger: {
               trigger: gridContainer,
               start: scrollStart,
-              toggleActions: "play none none none",
-              fastScrollEnd: true,
+              once: true,
             },
           }
         );
@@ -161,8 +158,7 @@ export function ContactSection({ standalone = true }: ContactSectionProps) {
             scrollTrigger: {
               trigger: formCard,
               start: scrollStart,
-              toggleActions: "play none none none",
-              fastScrollEnd: true,
+              once: true,
             },
           }
         );

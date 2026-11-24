@@ -44,8 +44,7 @@ export function Footer() {
           scrollTrigger: {
             trigger: footer,
             start: "top 98%",
-            toggleActions: "play none none none",
-            fastScrollEnd: true,
+            once: true,
           },
         }
       );

@@ -93,8 +93,7 @@ export function AboutSection({ includeContact = false }: AboutSectionProps) {
             scrollTrigger: {
               trigger: title,
               start: "top 96%",
-              toggleActions: "play none none none",
-              fastScrollEnd: true,
+              once: true,
             },
           }
         );
@@ -109,8 +108,7 @@ export function AboutSection({ includeContact = false }: AboutSectionProps) {
             scrollTrigger: {
               trigger: line,
               start: "top 96%",
-              toggleActions: "play none none none",
-              fastScrollEnd: true,
+              once: true,
             },
           }
         );
@@ -132,8 +130,7 @@ export function AboutSection({ includeContact = false }: AboutSectionProps) {
             scrollTrigger: {
               trigger: introGrid,
               start: scrollStart,
-              toggleActions: "play none none none",
-              fastScrollEnd: true,
+              once: true,
             },
           }
         );
@@ -155,8 +152,7 @@ export function AboutSection({ includeContact = false }: AboutSectionProps) {
             scrollTrigger: {
               trigger: skillsContainer,
               start: scrollStart,
-              toggleActions: "play none none none",
-              fastScrollEnd: true,
+              once: true,
             },
           }
         );
@@ -176,8 +172,7 @@ export function AboutSection({ includeContact = false }: AboutSectionProps) {
           scrollTrigger: {
             trigger: card,
             start: isMobile ? "top 96%" : "top 88%",
-            toggleActions: "play none none none",
-            fastScrollEnd: true,
+            once: true,
           },
         });
 
@@ -241,8 +236,7 @@ export function AboutSection({ includeContact = false }: AboutSectionProps) {
             scrollTrigger: {
               trigger: timelinesContainer,
               start: scrollStart,
-              toggleActions: "play none none none",
-              fastScrollEnd: true,
+              once: true,
             },
           }
         );
@@ -263,8 +257,7 @@ export function AboutSection({ includeContact = false }: AboutSectionProps) {
             scrollTrigger: {
               trigger: timelinesContainer,
               start: isMobile ? "top 95%" : "top 82%",
-              toggleActions: "play none none none",
-              fastScrollEnd: true,
+              once: true,
             },
           }
         );
